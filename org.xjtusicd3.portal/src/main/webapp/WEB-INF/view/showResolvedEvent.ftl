@@ -35,7 +35,7 @@
                        <div class="form-group">
                            <label class="col-sm-2 control-label">问题标题</label>
                            <div class="col-sm-10">
-                               <p class="form-control-static" id="title">${a.QUESTIONTITLE}</p>
+                               <p class="form-control-static" >${a.QUESTIONTITLE}</p>
                            </div>
                        </div>
                        <div class="hr-line-dashed"></div>
@@ -62,7 +62,7 @@
                            <label class="col-sm-2 control-label">问题答案</label>
 
                            <div class="col-sm-10">
-                               <p class="form-control-static" id="faqcontent">${a.FAQANSWER}</p>
+                               <p class="form-control-static" >${a.FAQANSWER}</p>
                            </div>
                        </div>
                        <div class="hr-line-dashed"></div>
@@ -76,6 +76,10 @@
                        </form>
                    </div>
                     
+                     
+                     
+                     
+                     
                                      
                    <div class="ibox-content"  style="display:none" id="updateinfo">
                       <form method="" class="form-horizontal"  action="">
@@ -83,7 +87,7 @@
                               <span class="col-sm-2 control-label">问题标题</span>
 
                               <div class="col-sm-10">
-                                  <input type="text" name="UserName" class="form-control"  required="required" value="${a.QUESTIONTITLE}">
+                                  <input type="text" name="UserName" class="form-control"  required="required" value="${a.QUESTIONTITLE}" id="title" readonly="readonly">
                               </div>
                           </div>
                           <div class="hr-line-dashed"></div>
@@ -118,16 +122,16 @@
                           <div class="form-group">
                               <label class="col-sm-2 control-label">问题答案</label>
 
-                              <div class="col-sm-10">
-                                  <textarea name="UserBrief" id="message" required="required" class="form-control" rows="8">${a.FAQANSWER}</textarea>
+                              <div class="col-sm-10" id="faqcontent">
+                                  ${a.FAQANSWER}
                               </div>
                           </div>
                           <div class="hr-line-dashed"></div>
-                          
+                         
                           <div class="form-group" id ="" >
                               <div class="col-sm-4 col-sm-offset-2">
                                   <button class="btn btn-primary" "><a href="/org.xjtusicd3.portal/enentPage.html#tab-32">返回</a></button>
-                                  <input type="" name="" class="btn btn-submit" value="完成" id="">
+                                  <button class="btn btn-primary" "><a href="javascript:void(0);" onclick="addToFaq()">完成</a></button>
                               </div>
                           </div>
                       </form>
@@ -159,7 +163,7 @@
 			   function(){
 			         $.ajax({
 			             type: "GET",
-			             url: "/org.xjtusicd3.partner/getFirstLevel.html",            
+			             url: "/org.xjtusicd3.portal/getFirstLevel.html",            
 			             dataType: "json",
 			             success: function(data){            
 			     			 for(var i in data){ 
@@ -174,7 +178,7 @@
 			var classifyId = element.options[element.selectedIndex].value;
 			$.ajax({
 			     type: "GET",
-			     url: "/org.xjtusicd3.partner/getSecondLevel.html"+"?"+"classifyId="+classifyId,            
+			     url: "/org.xjtusicd3.portal/getSecondLevel.html"+"?"+"classifyId="+classifyId,            
 			     dataType: "json",
 			     success: function(data){
 			     			 document.getElementById("subspecialCategoryId").options.length=0;              	
@@ -188,30 +192,37 @@
 			
 			
 	function addToFaq(){
-		var userQuestionId = event.target.parentNode.parentNode.id;
+		var title = document.getElementById("title").value;
+		console.log(title);
 		var keywords = document.getElementById("keywords").value;
+		console.log(keywords);
 		var subspecialCategoryId = document.getElementById("subspecialCategoryId").value;
+		console.log(subspecialCategoryId);
 		var description = document.getElementById("description").value;
-		$.ajax({
+		console.log(description);
+		var faqcontent = document.getElementById("faqcontent").innerText;
+		console.log(faqcontent);
+	 	$.ajax({
 			type:"POST",
 			url:"/org.xjtusicd3.portal/saveFAQ.html",
 			data:{
-				"userQuestionId":userQuestionId,
+				"title":title,
 				"keywords":keywords,
 				"subspecialCategoryId":subspecialCategoryId,
 				"description":description,
+				"faqcontent":faqcontent
 			},
 			dataType:"json",
 			success:function(data){
 				if(data.value=="0"){
 					self.location='login.html';
 				}else if(data.value=="1"){
-					self.location='index.html';
+					self.location='eventPage.html#tab-32';
 				}else{
 					self.location='index.html';
 				}
 			}
-		})
+		}) 
 	}
 	
 	function windowclose(){

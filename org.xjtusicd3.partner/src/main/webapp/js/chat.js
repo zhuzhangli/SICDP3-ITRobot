@@ -25,7 +25,7 @@ function robot_welcome(){
 		 url: "/org.xjtusicd3.partner/getRobotInfo.html",            
 		 dataType: "json",
 		 success: function(data){
-			 	document.getElementById("chat01_content").innerHTML = '<li class="media"><div style="width:48px;float:left;margin-left: 7px;"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data[0].rOBOTIMAGE+'"></div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data[0].rOBOTNAME+'</div></div><div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+data[0].rOBOTWELCOME+'<img src="http://robotrs.lenovo.com.cn/animages/bq.png" class="mCS_img_loaded"><br>➢<span style="color:blue;display:inline"><a href="javascript:void(0);" onclick="questionSkill()">提问技巧</a></span></span></div><p></p></div></li>';
+			 	document.getElementById("chat01_content").innerHTML = '<li class="media"><div style="width:48px;float:left;margin-left: 7px;"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data[0].rOBOTIMAGE+'"></div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data[0].rOBOTNAME+'</div></div><div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+data[0].rOBOTWELCOME+'<img src="images/bq.png" class="mCS_img_loaded"><br>➢<span style="color:blue;display:inline"><a href="javascript:void(0);" onclick="questionSkill()">提问技巧</a></span></span></div><p></p></div></li>';
 		      }
 		 });
 }
@@ -153,11 +153,11 @@ function chatWithRobot(){
 								+'<div class="div_faqVoteText" name="div_faqVoteText">'
 								+'<div style="display:inline">以上内容是否对您有帮助？<br>  '
 								+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
-									+'<img src="http://robotrs.lenovo.com.cn/animagessmall/zan4_2.png">'
+									+'<img src="images/zan4_2.png">'
 								+'</a>'
 								+'<span style="display:none;"></span> '
 								+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
-									+'<img class="submitFou" src="http://robotrs.lenovo.com.cn/animagessmall/cai4_2.png" >'
+									+'<img class="submitFou" src="images/cai4_2.png" >'
 								+'</a>'
 								+'<span style="display:none;"></span>'
 								+'</div>'
@@ -202,11 +202,11 @@ function chatWithRobot(){
 							+'<div class="div_faqVoteText" name="div_faqVoteText">'
 							+'<div style="display:inline">以上内容是否对您有帮助？<br>  '
 							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
-								+'<img src="http://robotrs.lenovo.com.cn/animagessmall/zan4_2.png">'
+								+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
 							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
-								+'<img class="submitFou" src="http://robotrs.lenovo.com.cn/animagessmall/cai4_2.png" >'
+								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
 							+'</div>'
@@ -252,11 +252,11 @@ function chatWithRobot(){
 							+'<div class="div_faqVoteText" name="div_faqVoteText">'
 							+'<div style="display:inline">以上内容是否对您有帮助？<br>  '
 							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
-								+'<img src="http://robotrs.lenovo.com.cn/animagessmall/zan4_2.png">'
+								+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
 							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
-								+'<img class="submitFou" src="http://robotrs.lenovo.com.cn/animagessmall/cai4_2.png" >'
+								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
 							+'</div>'
@@ -304,11 +304,11 @@ function chatWithRobot(){
 								
 								
 								+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
-								+'<img src="http://robotrs.lenovo.com.cn/animagessmall/zan4_2.png">'
+								+'<img src="images/zan4_2.png">'
 								+'</a>'
 								+'<span style="display:none;"></span> '
 								+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
-									+'<img class="submitFou" src="http://robotrs.lenovo.com.cn/animagessmall/cai4_2.png" >'
+									+'<img class="submitFou" src="images/cai4_2.png" >'
 								+'</a>'
 								+'<span style="display:none;"></span>'
 								
@@ -355,11 +355,11 @@ function chatWithRobot(){
 							+'<div class="div_faqVoteText" name="div_faqVoteText"><div style="display:inline">以上内容是否对您有帮助？<br>  '
 							
 							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
-							+'<img src="http://robotrs.lenovo.com.cn/animagessmall/zan4_2.png">'
+							+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
 							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
-								+'<img class="submitFou" src="http://robotrs.lenovo.com.cn/animagessmall/cai4_2.png" >'
+								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
 							
@@ -405,11 +405,11 @@ function chatWithRobot(){
 							+'<div class="div_faqVoteText" name="div_faqVoteText"><div style="display:inline">以上内容是否对您有帮助？<br>  '
 							
 							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
-							+'<img src="http://robotrs.lenovo.com.cn/animagessmall/zan4_2.png">'
+							+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
 							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
-								+'<img class="submitFou" src="http://robotrs.lenovo.com.cn/animagessmall/cai4_2.png" >'
+								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
 						
@@ -512,11 +512,11 @@ function chatWithRobot2(){
 							+'<div class="div_faqVoteText" name="div_faqVoteText">'
 							+'<div style="display:inline">以上内容是否对您有帮助？<br>  '
 							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
-								+'<img src="http://robotrs.lenovo.com.cn/animagessmall/zan4_2.png">'
+								+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
 							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
-								+'<img class="submitFou" src="http://robotrs.lenovo.com.cn/animagessmall/cai4_2.png" >'
+								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
 							+'</div>'
@@ -558,11 +558,11 @@ function chatWithRobot2(){
 							+'<div class="div_faqVoteText" name="div_faqVoteText">'
 							+'<div style="display:inline">以上内容是否对您有帮助？<br>  '
 							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
-								+'<img src="http://robotrs.lenovo.com.cn/animagessmall/zan4_2.png">'
+								+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
 							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
-								+'<img class="submitFou" src="http://robotrs.lenovo.com.cn/animagessmall/cai4_2.png" >'
+								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
 							+'</div>'
@@ -605,11 +605,11 @@ function chatWithRobot2(){
 							+'<div class="div_faqVoteText" name="div_faqVoteText">'
 							+'<div style="display:inline">以上内容是否对您有帮助？<br>  '
 							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
-								+'<img src="http://robotrs.lenovo.com.cn/animagessmall/zan4_2.png">'
+								+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
 							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
-								+'<img class="submitFou" src="http://robotrs.lenovo.com.cn/animagessmall/cai4_2.png" >'
+								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
 							+'</div>'
@@ -652,11 +652,11 @@ function chatWithRobot2(){
 							
 							
 							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
-							+'<img src="http://robotrs.lenovo.com.cn/animagessmall/zan4_2.png">'
+							+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
 							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
-								+'<img class="submitFou" src="http://robotrs.lenovo.com.cn/animagessmall/cai4_2.png" >'
+								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
 							
@@ -701,11 +701,11 @@ function chatWithRobot2(){
 							
 							
 							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
-							+'<img src="http://robotrs.lenovo.com.cn/animagessmall/zan4_2.png">'
+							+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
 							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
-								+'<img class="submitFou" src="http://robotrs.lenovo.com.cn/animagessmall/cai4_2.png" >'
+								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
 							
@@ -751,11 +751,11 @@ function chatWithRobot2(){
 							
 							
 							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
-							+'<img src="http://robotrs.lenovo.com.cn/animagessmall/zan4_2.png">'
+							+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
 							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
-								+'<img class="submitFou" src="http://robotrs.lenovo.com.cn/animagessmall/cai4_2.png" >'
+								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
 							
@@ -898,7 +898,7 @@ function NoHelpful(){
 				 			+'<span style="">'
 				 				+'<div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none">'
 				 				+'</div>'
-				 				+'<div class="content_line">很抱歉没帮上您，小朵感到十分抱歉。可将您的问题<a href="javascript:void(0);" onclick="addToCommunity()">添加到社区中心</a>，让大家帮您解答~' +'</div>'
+				 				+'<div class="content_line">很抱歉没帮上您，小朵感到十分抱歉。可将您的问题<a href="question.html?c=all&type=all">添加到社区中心</a>，让大家帮您解答~' +'</div>'
 				 			+'</span>'
 				 		+'</div>'
 				 	+'</div>'
@@ -920,7 +920,7 @@ function NoHelpful(){
 			 			+'<span style="">'
 			 				+'<div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none">'
 			 				+'</div>'
-			 				+'<div class="content_line">很抱歉没帮上您，小朵感到十分抱歉。可将您的问题<a href="javascript:void(0);" onclick="addToCommunity()">添加到社区中心</a>，让大家帮您解答~' +'</div>'
+			 				+'<div class="content_line">很抱歉没帮上您，小朵感到十分抱歉。可将您的问题<a href="question.html?c=all&type=all">添加到社区中心</a>，让大家帮您解答~' +'</div>'
 			 			+'</span>'
 			 		+'</div>'
 			 	+'</div>'

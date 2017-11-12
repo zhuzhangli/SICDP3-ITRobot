@@ -149,7 +149,7 @@
 																				<th>推荐答案</th>
 																				<th>提问用户</th>
 																				<th>问题时间</th>																				
-																				<th>添加至知识库</th>
+																				<th>查看问题详情</th>
 																			</tr>
 																		</thead>
 
@@ -165,7 +165,8 @@
 																				
 																				<td style="width: 10%;">${eventResolved.USERNAME}</td>
 																				<td style="width: 10%;">${eventResolved.QUESTIONTIME}</td>
-																				<td style="width: 10%;"><a href="/org.xjtusicd3.portal/showResolvedEvent.html?q=${eventResolved.USERQUESTIONID}">查看问题详情</a></td>
+																				<td style="width: 10%;">
+																				<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看用户详情" ><a class="questioninfo" href="/org.xjtusicd3.portal/showResolvedEvent.html?q=${eventResolved.USERQUESTIONID}"><i class="fa fa-eye"></i></a></button>
 																			</tr>
 																			</#list>
 																		</tbody>
