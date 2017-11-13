@@ -103,22 +103,28 @@
 																	<table class="table table-striped table-hover table-bordered" id="sample_editable_1">
 																		<thead>
 																			<tr>
-																				<th>序号</th>
-																				<th>问题名称</th>
-																				<th>提问用户</th>
-																				<th>问题时间</th>
-																				<th>查看问题详情</th>
+																				<th style="text-align: center;">序号</th>
+																				<th style="text-align: center;">问题名称</th>
+																				<th style="text-align: center;">提问用户</th>
+																				<th style="text-align: center;">问题时间</th>
+																				<th style="text-align: center;">查看</th>
+																				<th style="text-align: center;">忽略</th>
 																			</tr>
 																		</thead>
 
 																		<tbody>
 																			<#list eventUnresolved as eventUnresolved>
 																			<tr class="" id = "${eventUnresolved.userQuestionId}">
-																				<td  width="15%">${eventUnresolved_index+1}</td>
-																				<td  width="40%">${eventUnresolved.userQuestionTitle}</td>
-																				<td  width="15%">${eventUnresolved.userName}</td>
-																				<td  width="15%" class="center">${eventUnresolved.userQuestionTime}</td>
-																				<td  width="15%"><a href="/org.xjtusicd3.portal/showUnResolvedEvent.html?q=${eventUnresolved.userQuestionId}">查看问题详情</a></td>
+																				<td  style="width: 5%;text-align: center;">${eventUnresolved_index+1}</td>
+																				<td  style="width: 70%;">${eventUnresolved.userQuestionTitle}</td>
+																				<td  style="width: 8%;text-align: center;">${eventUnresolved.userName}</td>
+																				<td  style="width: 12%;text-align: center;">${eventUnresolved.userQuestionTime}</td>
+																				<td  style="width: 5%;text-align: center;">
+																					<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看事件详情" ><a class="eventinfo" href="/org.xjtusicd3.portal/showUnResolvedEvent.html?q=${eventUnresolved.userQuestionId}"><i class="fa fa-eye"></i></a></button>
+																				</td>
+																				<td  style="width: 5%;text-align: center;" id = "${eventUnresolved.userQuestionId }">																				
+																					<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="忽略此问题" id="ignore" onclick="ignore(this.id)"><i class="fa fa-trash-o"></i>
+																				</td>
 																			</tr>
 																			</#list>
 																		</tbody>
@@ -144,28 +150,28 @@
 																	<table class="table table-striped table-hover table-bordered" id="sample_editable_2">
 																		<thead>
 																			<tr>
-																				<th>序号</th>
-																				<th>问题名称</th>
-																				<th>推荐答案</th>
-																				<th>提问用户</th>
-																				<th>问题时间</th>																				
-																				<th>查看问题详情</th>
+																				<th style="text-align: center;">序号</th>
+																				<th style="text-align: center;">问题名称</th>
+																				<th style="text-align: center;">推荐答案</th>
+																				<th style="text-align: center;">提问用户</th>
+																				<th style="text-align: center;">问题时间</th>																				
+																				<th style="text-align: center;">操作</th>
 																			</tr>
 																		</thead>
 
 																		<tbody>
 																			<#list eventResolved as eventResolved>
 																			<tr class="" id = "${eventResolved.USERQUESTIONID}">
-																				<td style="width: 10%;">${eventResolved_index+1}</td>
-																				<td style="width: 30%;">${eventResolved.QUESTIONTITLE}</td>
+																				<td style="width: 5%;text-align: center;">${eventResolved_index+1}</td>
+																				<td style="width: 35%;">${eventResolved.QUESTIONTITLE}</td>
 																				
 
-																				<td style="width: 30%;">${eventResolved.FAQANSWER }</td>
+																				<td style="width: 35%;">${eventResolved.FAQANSWER }</td>
 																				
 																				
-																				<td style="width: 10%;">${eventResolved.USERNAME}</td>
-																				<td style="width: 10%;">${eventResolved.QUESTIONTIME}</td>
-																				<td style="width: 10%;">
+																				<td style="width: 10%;text-align: center;">${eventResolved.USERNAME}</td>
+																				<td style="width: 10%;text-align: center;">${eventResolved.QUESTIONTIME}</td>
+																				<td style="width: 5%;text-align: center;">
 																				<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看用户详情" ><a class="questioninfo" href="/org.xjtusicd3.portal/showResolvedEvent.html?q=${eventResolved.USERQUESTIONID}"><i class="fa fa-eye"></i></a></button>
 																			</tr>
 																			</#list>
@@ -251,27 +257,35 @@
 	</script>
 
 	<script type="text/javascript">
-		function deleteUserQuestion() {
-			var userEmail = event.target.parentNode.parentNode.children[1].innerHTML;
-			var present_row = event.target.parentNode.parentNode;
-			if (confirm("确认删除？")) {
-				$.ajax({
-					type : "post",
-					url : "/org.xjtusicd3.portal/deleteUserQuestion.html",
-					data : {
-						"userEmail" : userEmail
-					},
-					dataType : "json",
-					success : function(data) {
-						alert("删除成功");
-						present_row.remove();
-					}
-				});
-			} else {
-				return;
-			}
+	/* 忽略未处理事件 */
+	    
+    function ignore(id) {
+    	
+    	var userQuestionId = document.getElementById(id).parentElement.id;
+    	alert(userQuestionId);
+    	 
+         $.ajax({
+             type: "POST",
+             url: "/org.xjtusicd3.portal/ignoreUserQuestion.html",
+             data: {
+                 "userQuestionId":userQuestionId                
+             },
+             dataType: "json",
+             success: function(data) {
+             	alert("忽略该问题成功");
+             	window.location.reload();
+             }
+            
+         }) 
+        return true;
 
-		}
+     }	
+	
+	
+	
+	
+	
+
 	</script>
 
 </body>

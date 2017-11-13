@@ -59,7 +59,7 @@ public class FaqManagerController {
 
 	
 	/**
-	 * 
+	 * @abstract:将已处理事件加入faq
 	 * @param request
 	 * @param response
 	 * @param session
@@ -77,6 +77,7 @@ public class FaqManagerController {
 		if (username==null) {
 			return "0";
 		}else {
+			String questionId = request.getParameter("questionId");
 			String title = request.getParameter("title");
 			String keywords = request.getParameter("keywords");
 			String subspecialCategoryId = request.getParameter("subspecialCategoryId");
@@ -91,7 +92,7 @@ public class FaqManagerController {
 			JSONObject jsonObject = new JSONObject();
 			if (isExist.size()==0) {
 				//zzl_保存知识
-				QuestionService.saveFAQ(username,title,keywords,subspecialCategoryId,description,faqcontent);
+				QuestionService.saveFAQ(username,title,keywords,subspecialCategoryId,description,faqcontent,questionId);
 				//保存知识成功返回1
 				jsonObject.put("value", "1");
 				jsonObject.put("url", url);
@@ -169,6 +170,64 @@ public class FaqManagerController {
 		return "1";
 	}
 	
-	
+
+	/**
+	 * @abstract:将已解决问题加入faq
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 * ！！！缺少关键字
+	 */
+	@ResponseBody
+	@RequestMapping(value={"/saveCommunityQuestionToFAQ"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/plain;charset=UTF-8")
+	public String saveCommunityQuestionToFAQ(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		//获取登录的管理员信息
+		String username = (String) session.getAttribute("UserName");
+		
+		System.out.println("用户名："+username);
+		
+		//获取路径
+		String url = (String) session.getAttribute("urlPath");
+		
+		if (username==null) {
+			return "0";
+		}else {			
+			String communityQuestionId = request.getParameter("communityQuestionId");
+			String faqTitle = request.getParameter("title");
+			String faqclassifyId = request.getParameter("classifyId");
+			String modifyTime = request.getParameter("problemTime");			
+			String faqDescription = request.getParameter("content");
+			String userId = request.getParameter("userId");
+			String answerContent = request.getParameter("answerContent");
+			String problemUser = request.getParameter("problemUser");
+			
+//			String problemUser = request.getParameter("problemUser");		
+//			String answerUser = request.getParameter("answerUser");
+//			String answerTime = request.getParameter("answerTime");
+
+
+			//zzl_faqAdd_校验知识是否重复增添
+			List<QuestionPersistence> isExist = FaqManagerService.faqAdd(faqTitle,problemUser);
+
+			JSONObject jsonObject = new JSONObject();
+			if (isExist.size()==0) {
+				//zzl_保存知识
+				QuestionService.saveCommunityQuestionToFAQ(faqTitle,null,faqclassifyId,modifyTime,faqDescription,userId,answerContent,communityQuestionId);
+				//保存知识成功返回1
+				jsonObject.put("value", "1");
+				jsonObject.put("url", url);
+				String result = JsonUtil.toJsonString(jsonObject);
+				return result;				
+			}else {			
+				//重复添加返回2
+				jsonObject.put("value", "2");
+				jsonObject.put("url", url);
+				String result = JsonUtil.toJsonString(jsonObject);
+				return result;
+			}
+
+		}
+	}
 	
 }

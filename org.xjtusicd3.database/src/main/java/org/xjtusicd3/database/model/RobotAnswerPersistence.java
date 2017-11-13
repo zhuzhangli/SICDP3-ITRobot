@@ -16,6 +16,18 @@ public class RobotAnswerPersistence {
 	private String USERQUESTIONID;
 	@TableField(columnName="FAQANSWERID")
 	private String FAQANSWERID;
+	@TableField(columnName="QUESTIONSTATE")
+	private int QUESTIONSTATE;
+	
+	
+	
+	
+	public int getQUESTIONSTATE() {
+		return QUESTIONSTATE;
+	}
+	public void setQUESTIONSTATE(int qUESTIONSTATE) {
+		QUESTIONSTATE = qUESTIONSTATE;
+	}
 	public String getROBOTANSWERID() {
 		return ROBOTANSWERID;
 	}

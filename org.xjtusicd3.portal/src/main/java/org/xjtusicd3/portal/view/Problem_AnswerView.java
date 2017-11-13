@@ -2,17 +2,34 @@ package org.xjtusicd3.portal.view;
 
 public class Problem_AnswerView {
 	//问题
-	private String problemId;
+	private String problemId;//社区问题id
 	private String problemTitle;
 	private String problemContent;
 	private String problemClassifyName;
+	private String problemClassifyId;
 	private String problemUserName;
+	private String problemUserId;
 	private String problemTime;
 	
 	//答案
 	private String answerUserName;
 	private String answerTime;
 	private String answerContent;
+	
+	
+	
+	public String getProblemUserId() {
+		return problemUserId;
+	}
+	public void setProblemUserId(String problemUserId) {
+		this.problemUserId = problemUserId;
+	}
+	public String getProblemClassifyId() {
+		return problemClassifyId;
+	}
+	public void setProblemClassifyId(String problemClassifyId) {
+		this.problemClassifyId = problemClassifyId;
+	}
 	public String getProblemId() {
 		return problemId;
 	}

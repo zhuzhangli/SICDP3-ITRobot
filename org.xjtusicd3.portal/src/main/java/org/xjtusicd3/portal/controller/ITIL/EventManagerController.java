@@ -2,13 +2,18 @@ package org.xjtusicd3.portal.controller.ITIL;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.xjtusicd3.database.helper.ClassifyHelper;
 import org.xjtusicd3.database.model.ClassifyPersistence;
 import org.xjtusicd3.portal.service.EventManagerService;
+import org.xjtusicd3.portal.service.UserService;
 import org.xjtusicd3.portal.view.EventView;
 import org.xjtusicd3.portal.view.Event_AnswerView;
 
@@ -84,6 +89,23 @@ public class EventManagerController{
 		modelAndView.addObject("FirstLevel", classifyPersistences);
 		
 		return modelAndView;
+	}
+	
+	/**
+	 * 忽略用户提问
+	 * @param request
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/ignoreUserQuestion",method=RequestMethod.POST)
+	public String ignoreUserQuestion(HttpServletRequest request,HttpSession session){
+	
+		String userQuestionId = request.getParameter("userQuestionId");
+	
+		//更新tbl_robotanswer表用户问题状态 -- 2是忽略
+		EventManagerService.updateQuestionState(userQuestionId,2);
+		return "1";
 	}
 	
 	/*

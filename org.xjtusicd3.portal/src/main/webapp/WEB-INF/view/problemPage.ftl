@@ -113,13 +113,14 @@
 																	<table class="table table-striped table-hover table-bordered" id="sample_editable_1">
 																		<thead>
 																			<tr>
-																				<th>问题编号</th>
-																				<th>问题标题</th>
-																				<th>内容</th>
-																				<th>问题分类</th>
-																				<th>提问用户</th>
-																				<th>提问时间</th>
-																				<th>查看详情</th>																				
+																				<th style="text-align: center;">序号</th>
+																				<th style="text-align: center;">问题标题</th>
+																				<th style="text-align: center;">内容</th>
+																				<th style="text-align: center;">问题分类</th>
+																				<th style="text-align: center;">提问用户</th>
+																				<th style="text-align: center;">提问时间</th>
+																				<th style="text-align: center;">查看</th>
+																				<th style="text-align: center;">忽略</th>																			
 																			</tr>
 																		</thead>
 
@@ -132,8 +133,13 @@
 																				<td style="width: 10%;" class="center">${a.problemClassifyName}</td>
 																				<td style="width: 10%;" class="center">${a.problemUserName}</td>														
 																				<td style="width: 10%;">${a.problemTime}</td>
-																				<td style="width: 10%;"><a class="faq"
-																					href="/org.xjtusicd3.portal/showUnResolvedProblem.html?p=${a.problemId}">查看问题详情</a></td>
+																				<td  style="width: 5%;text-align: center;">
+																					<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看问题详情" ><a class="questioninfo" href="/org.xjtusicd3.portal/showUnResolvedProblem.html?p=${a.problemId}"><i class="fa fa-eye"></i></a></button>
+																				</td>
+																				<td  style="width: 5%;text-align: center;" id = "${a.problemId }">																				
+																					<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="忽略此问题" id="ignoreProblem" onclick="ignore(this.id)"><i class="fa fa-trash-o"></i>
+																				</td>
+																			
 																			</tr>
 																			</#list>
 																		</tbody>
@@ -158,31 +164,32 @@
 																	<table class="table table-striped table-hover table-bordered" id="sample_editable_2">
 																		<thead>
 																			<tr>
-																				<th>序号</th>
-																				<th>问题标题</th>
-																				<th>问题内容</th>
-																				<th>分类名</th>
-																				<th>提问者</th>
-																				<th>提问时间</th>
-																				<th>回复者</th>																				
-																				<th>回复内容</th>
-																				<th>查看详情</th>
+																				<th style="text-align: center;">序号</th>
+																				<th style="text-align: center;">问题标题</th>
+																				<th style="text-align: center;">问题内容</th>
+																				<th style="text-align: center;">分类名</th>
+																				<th style="text-align: center;">提问者</th>
+																				<th style="text-align: center;">提问时间</th>
+																				<th style="text-align: center;">回复者</th>																				
+																				<th style="text-align: center;">回复内容</th>
+																				<th style="text-align: center;">查看详情</th>
 																			</tr>
 																		</thead>
 
 																		<tbody>
 																			<#list problemResolved as b>
 																			<tr class="" id = "${b.problemId}">
-																				<td style="width: 5%;">${b_index+1}</td>
+																				<td style="width: 5%;text-align: center;">${b_index+1}</td>
 																				<td style="width: 20%;">${b.problemTitle}</td>
 																				<td style="width: 20%;">${b.problemContent}</td>
-																				<td style="width: 7%;" class="center">${b.problemClassifyName}</td>
-																				<td style="width: 7%;" class="center">${b.problemUserName}</td>
-																				<td style="width: 7%;" class="center">${b.problemTime}</td>
-																				<td style="width: 7%;" class="center">${b.answerUserName}</td>
+																				<td style="width: 7%;text-align: center;" >${b.problemClassifyName}</td>
+																				<td style="width: 7%;text-align: center;" >${b.problemUserName}</td>
+																				<td style="width: 7%;text-align: center;" >${b.problemTime}</td>
+																				<td style="width: 7%;text-align: center;" >${b.answerUserName}</td>
 																				<td style="width: 20%;">${b.answerContent }</td>
-																				<td style="width: 7%;"><a class="faq" 
-																					href="/org.xjtusicd3.portal/showResolvedProblem.html?p=${b.problemId}">查看问题详情</a></td>
+																				<td style="width: 7%;text-align: center;">
+																					<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看问题详情" ><a class="questioninfo" href="/org.xjtusicd3.portal/showResolvedProblem.html?p=${b.problemId}"><i class="fa fa-eye"></i></a></button>
+																				</td>
 																			</tr>
 																			</#list>
 																		</tbody>
@@ -279,7 +286,7 @@
 </script>
 
 <script type="text/javascript">
-	function addProblemtoFAQ() {
+/* 	function addProblemtoFAQ() {
 		var problemID = event.target.parentNode.parentNode.id;
 		alert(problemID)
 		var present_row = event.target.parentNode.parentNode;
@@ -300,7 +307,31 @@
 			return;
 		}
 
-	}
+	} */
+	
+	/* 忽略未处理事件 */
+    
+    function ignore(id) {
+    	
+    	var questionId = document.getElementById(id).parentElement.id;
+    	alert(questionId);
+    	 
+         $.ajax({
+             type: "POST",
+             url: "/org.xjtusicd3.portal/ignoreQuestion.html",
+             data: {
+                 "questionId":questionId                
+             },
+             dataType: "json",
+             success: function(data) {
+             	alert("忽略该待处理问题成功");
+             	window.location.reload();
+             }
+            
+         }) 
+        return true;
+
+     }	
 </script>
 
 

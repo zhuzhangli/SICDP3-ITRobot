@@ -6,6 +6,7 @@ import java.util.List;
 import org.xjtusicd3.database.helper.ClassifyHelper;
 import org.xjtusicd3.database.helper.CommunityAnswerHelper;
 import org.xjtusicd3.database.helper.CommunityQuestionHelper;
+import org.xjtusicd3.database.helper.QuestionHelper;
 import org.xjtusicd3.database.helper.UserHelper;
 import org.xjtusicd3.database.model.ClassifyPersistence;
 import org.xjtusicd3.database.model.CommunityAnswerPersistence;
@@ -124,14 +125,18 @@ public class ProblemManagerService {
 
 		Problem_AnswerView problem_AnswerView = new Problem_AnswerView();
 		
-		problem_AnswerView.setProblemId(communityQuestionPersistence.get(0).getCOMMUNITYQUESTIONID()); 
+		problem_AnswerView.setProblemId(communityProblemId); 
 		problem_AnswerView.setProblemTitle(communityQuestionPersistence.get(0).getTITLE()); 
 		problem_AnswerView.setProblemContent(communityQuestionPersistence.get(0).getCONTENT());
 		
 		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.faq2_classify(communityQuestionPersistence.get(0).getCLASSIFYID());
+		System.out.println("分类ID号："+communityQuestionPersistence.get(0).getCLASSIFYID());
+		
+		problem_AnswerView.setProblemClassifyId(communityQuestionPersistence.get(0).getCLASSIFYID());
 		problem_AnswerView.setProblemClassifyName(classifyPersistences.get(0).getFAQCLASSIFYNAME());
 		
 		List<UserPersistence> userPersistences = UserHelper.getUserNameById(communityQuestionPersistence.get(0).getUSERID());
+		problem_AnswerView.setProblemUserId(communityQuestionPersistence.get(0).getUSERID());
 		problem_AnswerView.setProblemUserName(userPersistences.get(0).getUSERNAME());
 		 
 		problem_AnswerView.setProblemTime(communityQuestionPersistence.get(0).getTIME());
@@ -145,6 +150,17 @@ public class ProblemManagerService {
 		problem_AnswerView.setAnswerTime(communityAnswerPersistences.get(0).getTIME());
 			
 		return problem_AnswerView;
+	}
+
+	/**
+	 * 
+	 * @param questionId
+	 * @param questionState
+	 */
+	public static void updateCommunityQuestionState(String questionId, int questionState) {
+		
+		CommunityQuestionHelper.updateCommunityQuestionState(questionId, questionState);
+		
 	}
 
 }

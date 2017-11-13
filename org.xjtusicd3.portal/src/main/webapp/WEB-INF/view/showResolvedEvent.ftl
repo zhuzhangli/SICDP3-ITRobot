@@ -83,11 +83,18 @@
                                      
                    <div class="ibox-content"  style="display:none" id="updateinfo">
                       <form method="" class="form-horizontal"  action="">
+                          <div class="form-group" style="display: none;">
+                              <div class="col-sm-10">
+                                  <input type="text" name="UserName" class="form-control"  required="required" value="${a.USERQUESTIONID}" id="questionId" >
+                              </div>
+                          </div>
+                          
+                          
                           <div class="form-group">
                               <span class="col-sm-2 control-label">问题标题</span>
 
                               <div class="col-sm-10">
-                                  <input type="text" name="UserName" class="form-control"  required="required" value="${a.QUESTIONTITLE}" id="title" readonly="readonly">
+                                  <input type="text" name="UserName" class="form-control"  required="required" value="${a.QUESTIONTITLE}" id="title" >
                               </div>
                           </div>
                           <div class="hr-line-dashed"></div>
@@ -128,8 +135,8 @@
                           </div>
                           <div class="hr-line-dashed"></div>
                          
-                          <div class="form-group" id ="" >
-                              <div class="col-sm-4 col-sm-offset-2">
+                          <div class="form-group"  >
+                              <div class="col-sm-4 col-sm-offset-2" id="${a.USERQUESTIONID }">
                                   <button class="btn btn-primary" "><a href="/org.xjtusicd3.portal/enentPage.html#tab-32">返回</a></button>
                                   <button class="btn btn-primary" "><a href="javascript:void(0);" onclick="addToFaq()">完成</a></button>
                               </div>
@@ -192,6 +199,8 @@
 			
 			
 	function addToFaq(){
+		var questionId = document.getElementById("questionId").value;
+
 		var title = document.getElementById("title").value;
 		console.log(title);
 		var keywords = document.getElementById("keywords").value;
@@ -202,10 +211,11 @@
 		console.log(description);
 		var faqcontent = document.getElementById("faqcontent").innerText;
 		console.log(faqcontent);
-	 	$.ajax({
+	 	 $.ajax({
 			type:"POST",
 			url:"/org.xjtusicd3.portal/saveFAQ.html",
 			data:{
+				"questionId":questionId,
 				"title":title,
 				"keywords":keywords,
 				"subspecialCategoryId":subspecialCategoryId,

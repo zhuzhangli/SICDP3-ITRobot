@@ -9,7 +9,7 @@ import org.xjtusicd3.database.model.PermissionPersistence;
 import org.xjtusicd3.database.model.RolePermissionPersistence;
 import org.xjtusicd3.portal.view.rolePerView;
 
-public class rbacService
+public class PermissionManagerService
 {
 	/*
 	 * zpz_rbacindex展示

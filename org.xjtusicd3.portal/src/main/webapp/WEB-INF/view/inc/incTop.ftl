@@ -111,13 +111,36 @@
          <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
              <span class="ng-scope"></span>
          </li>
-
+<!-- 
          <li>
-             <a class="J_menuItem" href="rbacindex.html">
-                 <i class="fa fa-rebel"></i>
+             <a class="J_menuItem" href="">
+                 
                  <span class="nav-label">权限管理</span>
              </a>
-         </li>
+         </li> -->
+		 <li>
+		 <a href="">
+            <i class="fa fa-rebel"></i>
+            <span class="nav-label">权限管理</span>
+            <span class="fa arrow"></span>
+         </a>
+         <ul class="nav nav-second-level">
+            <li>
+                <a class="J_menuItem" href="permissionPage.html">
+                    <i class="fa fa-table"></i>
+                    <span class="nav-label">权限列表</span>
+                </a>
+            </li>
+
+            <li>
+                <a class="J_menuItem" href="premissionAssignPage.html">
+                    <i class="fa fa-warning"></i>
+                    <span class="nav-label">权限分配</span>
+                </a>
+            </li>
+	    </ul>
+		</li>
+
 
 		<li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
             <span class="ng-scope"></span>

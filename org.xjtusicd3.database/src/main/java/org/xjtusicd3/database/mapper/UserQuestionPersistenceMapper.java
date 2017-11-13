@@ -15,11 +15,11 @@ import org.xjtusicd3.database.model.UserQuestionPersistence;
 public interface UserQuestionPersistenceMapper extends IBaseDao<UserQuestionPersistence, String>
 {
 	//zzl_获取有满意度且满意度为0的前台问题_2017年11月4日20:01:36
-	@Select("SELECT * FROM TBL_UserQuestion,TBL_RobotAnswer WHERE TBL_UserQuestion.USERQUESTIONID = TBL_RobotAnswer.USERQUESTIONID AND TBL_RobotAnswer.SATICFACTION = 0 ORDER BY TBL_UserQuestion.QUESTIONTIME DESC")
+	@Select("SELECT * FROM TBL_UserQuestion,TBL_RobotAnswer WHERE TBL_UserQuestion.USERQUESTIONID = TBL_RobotAnswer.USERQUESTIONID AND TBL_RobotAnswer.SATICFACTION = 0 AND TBL_RobotAnswer.QUESTIONSTATE = 0 ORDER BY TBL_UserQuestion.QUESTIONTIME DESC")
 	List<UserQuestionPersistence> unResolvedEvent();
 	
 	//zzl_获取有满意度且满意度为1的前台问题_2017年11月4日20:47:35
-	@Select("SELECT * FROM TBL_UserQuestion,TBL_RobotAnswer WHERE TBL_UserQuestion.USERQUESTIONID = TBL_RobotAnswer.USERQUESTIONID AND TBL_RobotAnswer.SATICFACTION = 1 ORDER BY TBL_UserQuestion.QUESTIONTIME DESC")
+	@Select("SELECT * FROM TBL_UserQuestion,TBL_RobotAnswer WHERE TBL_UserQuestion.USERQUESTIONID = TBL_RobotAnswer.USERQUESTIONID AND TBL_RobotAnswer.SATICFACTION = 1 AND TBL_RobotAnswer.QUESTIONSTATE = 0 ORDER BY TBL_UserQuestion.QUESTIONTIME DESC")
 	List<UserQuestionPersistence> resolvedEvent();
 	
 	//zzl_获取应答表中问题对应的知识库答案id_2017年11月4日21:31:49

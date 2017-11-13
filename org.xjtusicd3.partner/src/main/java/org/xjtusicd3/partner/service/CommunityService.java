@@ -34,7 +34,7 @@ public class CommunityService {
     	Date date=new Date();
     	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     	String time = format.format(date);
-    	CommunityQuestionHelper.saveCommunityQuestion(UUID.randomUUID().toString(),time,title,content,classifyId,userPersistences.get(0).getUSERID(),"0",null,0);
+    	CommunityQuestionHelper.saveCommunityQuestion(UUID.randomUUID().toString(),time,title,content,classifyId,userPersistences.get(0).getUSERID(),"0",0,0);
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class CommunityService {
     	Date date=new Date();
     	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     	String time = format.format(date);
-    	CommunityQuestionHelper.saveCommunityQuestion(UUID.randomUUID().toString(),time,title,content,classifyId,userPersistences.get(0).getUSERID(),"0",null,0);
+    	CommunityQuestionHelper.saveCommunityQuestion(UUID.randomUUID().toString(),time,title,content,classifyId,userPersistences.get(0).getUSERID(),"0",0,0);
 	}
 	
 	

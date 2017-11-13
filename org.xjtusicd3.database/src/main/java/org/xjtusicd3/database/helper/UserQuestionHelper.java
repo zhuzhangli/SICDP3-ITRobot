@@ -66,7 +66,18 @@ public class UserQuestionHelper
 		return userlist;
 	}
 	
-	
+	/**
+	 * author:zzl
+	 * abstract:更新已处理的状态
+	 * data:2017年11月12日16:36:02
+	 */
+	public static void updateRobotAnswerState(String questionId, int questionState) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		RobotAnswerPersistenceMapper mapper = session.getMapper(RobotAnswerPersistenceMapper.class);
+		mapper.updateRobotAnswerState(questionId,questionState);
+		session.close();
+		
+	}
 	
 	
 	
@@ -121,10 +132,10 @@ public class UserQuestionHelper
 		}
 		
 		//用户满意度问答表
-		public static void addUserSaticfaction(String robotAnswerId, int saticfaction, String questionId, String answerId) {
+		public static void addUserSaticfaction(String robotAnswerId, int saticfaction, String questionId, String answerId, int questionState) {
 			SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 			RobotAnswerPersistenceMapper mapper = session.getMapper(RobotAnswerPersistenceMapper.class);
-			mapper.addUserSaticfaction(robotAnswerId,saticfaction,questionId,answerId);
+			mapper.addUserSaticfaction(robotAnswerId,saticfaction,questionId,answerId,questionState);
 			session.close();
 			
 		}
@@ -137,6 +148,8 @@ public class UserQuestionHelper
 			session.close();
 			return title;
 		}
+
+		
 		
 	
 }

@@ -23,7 +23,7 @@
  <#list resolvedProblemDetail as a>
     <div class="wrapper wrapper-content animated fadeInRight">
          
-       
+      
         <div class="row">
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
@@ -34,11 +34,19 @@
                     </div>
                     <div class="ibox-content">
                         <form method="get" class="form-horizontal">
+                           
+                           <div class="form-group" style="display: none;">
+                                <div class="col-sm-10" >
+                                    <input id="communityQuestionId" value="${a.problemId}"> 
+                                </div>
+                            </div>
+                           
+                           
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">问题标题</label>
 
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">${a.problemTitle}</p>
+                                <div class="col-sm-10" id="title">
+                                    ${a.problemTitle}
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -46,33 +54,45 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">提问内容</label>
 
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">${a.problemContent}</p>
+                                <div class="col-sm-10" id="content">
+                                    ${a.problemContent}
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             
+                            <div class="form-group" style="display: none;">
+                                <div class="col-sm-10" >
+                                   <input id="classifyId" value="${a.problemClassifyId}"> 
+                                </div>
+                            </div>
+                            
+                            <div class="form-group" style="display: none;">
+                                <div class="col-sm-10" >
+                                    <input id="userId" value="${a.problemUserId}">
+                                </div>
+                            </div>
+                            
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">问题类别</label>
 
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">${a.problemClassifyName}</p>
+                                <div class="col-sm-10" id="classifyName">
+                                    ${a.problemClassifyName}
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">提问用户</label>
 
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">${a.problemUserName}</p>
+                                <div class="col-sm-10" id="problemUser">
+                                    ${a.problemUserName}
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">提问时间</label>
 
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">${a.problemTime}</p>
+                                <div class="col-sm-10" id="problemTime">
+                                    ${a.problemTime}
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -80,8 +100,8 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">对应回复</label>
 
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">${a.answerContent}</p>
+                                <div class="col-sm-10" id="answerContent">
+                                    ${a.answerContent}
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -89,8 +109,8 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">回复用户</label>
 
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">${a.answerUserName}</p>
+                                <div class="col-sm-10" id="answerUser">
+                                    ${a.answerUserName}
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -98,8 +118,8 @@
                              <div class="form-group">
                                 <label class="col-sm-2 control-label">回复时间</label>
 
-                                <div class="col-sm-10">
-                                    <p class="form-control-static">${a.answerTime}</p>
+                                <div class="col-sm-10" id="answerTime">
+                                    ${a.answerTime}
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
@@ -107,7 +127,7 @@
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-2">
                                     <button class="btn btn-primary" ><a href="/org.xjtusicd3.portal/problemPage.html#tab-32">返回</a></button>
-                                     
+                                    <button class="btn btn-primary" "><a href="javascript:void(0);" onclick="addToFaq()">添加至知识库</a></button> 
                                 </div>
                             </div>
                         </form>
@@ -135,6 +155,64 @@
                 radioClass: 'iradio_square-green',
             });
         });
+        
+        
+        function addToFaq(){
+        	
+        	alert("进入addToFaq");
+        	var communityQuestionId = document.getElementById("communityQuestionId").value;
+    		alert(communityQuestionId);
+    		
+    		var title = document.getElementById("title").innerText;
+    		alert(title);
+    		var content = document.getElementById("content").innerText;
+    		console.log(content);
+    		var classifyId = document.getElementById("classifyId").value;
+    		alert(classifyId);
+    		console.log(classifyId);
+    		var problemUser = document.getElementById("problemUser").innerText;
+    		console.log(problemUser);
+    		
+    		var userId = document.getElementById("userId").value;
+    		console.log(userId);
+    		var problemTime = document.getElementById("problemTime").innerText;
+    		console.log(problemTime);
+    		
+    		var answerContent = document.getElementById("answerContent").innerText;
+    		console.log(answerContent);
+    		var answerUser = document.getElementById("answerUser").innerText;
+    		console.log(answerUser);
+    		var answerTime = document.getElementById("answerTime").innerText;
+    		console.log(answerTime);
+    	 	  $.ajax({
+    			type:"POST",
+    			url:"/org.xjtusicd3.portal/saveCommunityQuestionToFAQ.html",
+    			data:{
+    				"communityQuestionId":communityQuestionId,
+    				"title":title,
+    				"content":content,
+    				"classifyId":classifyId,
+    				"problemUser":problemUser,
+    				"problemTime":problemTime,
+    				"userId":userId,
+    				"answerContent":answerContent,
+    				"answerUser":answerUser,
+    				"answerTime":answerTime
+    			},
+    			dataType:"json",
+    			success:function(data){
+    				if(data.value=="0"){
+    					self.location='login.html';
+    				}else if(data.value=="1"){
+    					self.location='eventPage.html#tab-32';
+    				}else{
+    					self.location='index.html';
+    				} 
+    				alert("更改状态成功");
+                 	window.location.reload();
+    			}
+    		})  
+    	}
     </script>
 
     

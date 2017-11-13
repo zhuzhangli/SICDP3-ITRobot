@@ -153,12 +153,12 @@ public class RobotController {
 		 * 用户名为空value返回 0，不空返回 1
 		 */
 		if (username==null) {
-			UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),1,questionId,answerId);
+			UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),1,questionId,answerId,0);
 			jsonObject.put("value", "0");
 		}else {
 			
 			//获取用户信息
-			UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),1,questionId,answerId);
+			UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),1,questionId,answerId,0);
 //			List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
 //			jsonObject.put("robotUser", userPersistences);
 			jsonObject.put("value", "1");
@@ -200,12 +200,12 @@ public class RobotController {
 		 * 用户名为空value返回 0，不空返回 1
 		 */
 		if (username==null) {
-			UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),0,questionId,answerId);
+			UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),0,questionId,answerId,0);
 			jsonObject.put("value", "0");
 		}else {
 			
 			//获取用户信息
-			UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),0,questionId,answerId);
+			UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),0,questionId,answerId,0);
 //			List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
 //			jsonObject.put("robotUser", userPersistences);
 			jsonObject.put("value", "1");

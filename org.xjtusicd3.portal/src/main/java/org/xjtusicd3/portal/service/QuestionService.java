@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.UUID;
 
 import org.xjtusicd3.database.helper.AnswerHelper;
+import org.xjtusicd3.database.helper.CommunityQuestionHelper;
 import org.xjtusicd3.database.helper.QuestionHelper;
+import org.xjtusicd3.database.helper.RobotHelper;
 import org.xjtusicd3.database.helper.UserHelper;
+import org.xjtusicd3.database.helper.UserQuestionHelper;
 import org.xjtusicd3.database.model.AnswerPersistence;
 import org.xjtusicd3.database.model.QuestionPersistence;
 import org.xjtusicd3.database.model.UserPersistence;
@@ -18,8 +21,9 @@ public class QuestionService {
 	 * author:zzl
 	 * abstract:FAQ的增加
 	 * data:2017年9月22日12:00:25
+	 * @param userQuestionId 
 	 */
-	public static void saveFAQ(String username, String title, String keywords, String subspecialCategoryId,String description, String faqcontent) {
+	public static void saveFAQ(String username, String title, String keywords, String subspecialCategoryId,String description, String faqcontent, String userQuestionId) {
 	
 		String questionId = UUID.randomUUID().toString();
 
@@ -41,12 +45,19 @@ public class QuestionService {
 			//添加至知识库答案列表
 			AnswerHelper.insertIntoFaqAnswer(UUID.randomUUID().toString(),faqcontent,questionId,userId);
 			System.out.println("答案表插入完毕");
+			
+			//更新已处理事件的questionstate = 1
+			UserQuestionHelper.updateRobotAnswerState(userQuestionId,1);
 		}else {
 			QuestionHelper.insertIntoFaqQuestion(questionId,title,keywords, subspecialCategoryId,"0","0",time, description,"1","2",userId );
 			System.out.println("问题表插入完毕1");
 			//添加至知识库答案列表
 			AnswerHelper.insertIntoFaqAnswer(UUID.randomUUID().toString(),faqcontent,questionId,userId);	
 			System.out.println("答案表插入完毕1");
+			//更新已处理事件的questionstate = 1
+			System.out.println("问题id："+userQuestionId);
+			UserQuestionHelper.updateRobotAnswerState(userQuestionId,1);
+			System.out.println("已更新状态");
 		}
 		
 			
@@ -91,5 +102,34 @@ public class QuestionService {
 			AnswerHelper.updateFaqAnswerInfo(questionId,faqcontent);
 		}
 	}
+
+	/**
+	 * @abstract 保存社区有最佳答案问题到知识库
+	 * @param faqTitle
+	 * @param object
+	 * @param faqclassifyId
+	 * @param modifyTime
+	 * @param faqDescription
+	 * @param userId
+	 * @param answerContent
+	 * questionState  0:正常显示，1：已加入faq，2：已忽略
+	 * @param communityProblemId 
+	 */
+	public static void saveCommunityQuestionToFAQ(String faqTitle, String faqKeyWords, String faqclassifyId,
+			String modifyTime, String faqDescription, String userId, String answerContent, String communityProblemId) {
+		String questionId = UUID.randomUUID().toString();
+		QuestionHelper.insertIntoFaqQuestion(questionId,faqTitle,faqKeyWords, faqclassifyId,"0","0",modifyTime, faqDescription,"1","2",userId );
+		System.out.println("问题表插入完毕");
+		
+		//添加至知识库答案列表
+		AnswerHelper.insertIntoFaqAnswer(UUID.randomUUID().toString(),answerContent,questionId,userId);
+		System.out.println("答案表插入完毕");
+		
+		//UserQuestionHelper.updateRobotAnswerState(userQuestionId,1);
+		CommunityQuestionHelper.updateCommunityQuestionState(communityProblemId, 1);
+		System.out.println("已更新状态");
+	}
+
+
 
 }

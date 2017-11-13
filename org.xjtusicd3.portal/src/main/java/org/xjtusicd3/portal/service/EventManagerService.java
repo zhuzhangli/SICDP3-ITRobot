@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.xjtusicd3.database.helper.AnswerHelper;
+import org.xjtusicd3.database.helper.RobotHelper;
 import org.xjtusicd3.database.helper.UserHelper;
 import org.xjtusicd3.database.helper.UserQuestionHelper;
 import org.xjtusicd3.database.model.UserPersistence;
@@ -105,6 +106,7 @@ public class EventManagerService {
 		Event_AnswerView event_AnswerView = new Event_AnswerView();
 		
 		event_AnswerView.setUSERQUESTIONID(userQuestionId);
+		System.out.println(userQuestionPersistences.get(0).getQUESTIONTITLE());
 		event_AnswerView.setQUESTIONTITLE(userQuestionPersistences.get(0).getQUESTIONTITLE());
 		
 		//获取应答表中问题对应的知识库答案id
@@ -120,6 +122,17 @@ public class EventManagerService {
 		event_AnswerView.setQUESTIONTIME(userQuestionPersistences.get(0).getQUESTIONTIME());
 
 		return event_AnswerView;
+	}
+
+
+	/**
+	 * author:zzl
+	 * abstract:事件未处理_忽略用户问题 2是忽略
+	 * data:2017年11月12日16:31:25
+	 */
+	public static void updateQuestionState(String userQuestionId, int questionState) {
+		UserQuestionHelper.updateRobotAnswerState(userQuestionId, questionState);
+		
 	}
 	
 	
