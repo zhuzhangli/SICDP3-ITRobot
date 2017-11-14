@@ -15,6 +15,17 @@ public class PermissionPersistence
 	private String PERMISSIONPHYSICALNAME;
 	@TableField(columnName="PERMISSIONLOGICNAME")
 	private String PERMISSIONLOGICNAME;
+	@TableField(columnName="TIME")
+	private String TIME;
+	
+	
+	
+	public String getTIME() {
+		return TIME;
+	}
+	public void setTIME(String tIME) {
+		TIME = tIME;
+	}
 	public String getPERMISSIONID()
 	{
 		return PERMISSIONID;
