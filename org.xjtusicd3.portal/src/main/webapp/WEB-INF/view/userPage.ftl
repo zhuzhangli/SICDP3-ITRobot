@@ -49,7 +49,7 @@
                <h5>待审核用户信息</h5> 
                <div class="ibox-tools"> 
                 <button type="button" class="btn btn-w-m btn-success"  id="b1">批量审核通过</button>
-                <button type="button" class="btn btn-w-m btn-danger">批量审核不通过</button>               
+                <button type="button" class="btn btn-w-m btn-danger" id="b2">批量审核不通过</button>               
                </div> 
               </div> 
               <div class="ibox-content">               
@@ -85,11 +85,11 @@
                   <td>${a.USERSIGNATURE }</td> 
                   <td class="center">${a.CREATETIME }</td>
                   <td class="center">${a.ROLENAME }</td>
-                  <td style="text-align: center;" id = "${a.USERID }">
-                  	<button class="" type="button" id="pass" onclick="throughAudit(this.id)"><i class="fa fa-check text-navy"></i></button>
+                  <td style="text-align: center;" id = "">
+                  	<button class="" type="button" id="${a.USERID }" onclick="throughAudit(this.id)"><i class="fa fa-check text-navy"></i></button>
                   </td> 
-                  <td style="text-align: center;" id = "${a.USERID }">                  	
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="未通过审核" id="unPass" onclick="noAudit(this.id)"><i class="fa fa-trash-o"></i>
+                  <td style="text-align: center;" id = "">                  	
+                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="未通过审核" id="${a.USERID }" onclick="noAudit(this.id)"><i class="fa fa-trash-o"></i>
                   </td>
                  </tr>
                  </#list> 
@@ -143,10 +143,10 @@
                   <td>${a.USERADDRESS }</td> 
                   <td>${a.USERSIGNATURE }</td> 
                   <td class="center">${a.CREATETIME }</td>
-                  <td style="text-align: center;" id = "${a.USERID }">
-                 	 <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="注销该用户" id="cancel" onclick="noAudit(this.id)"><i class="fa fa-trash-o"></i>
+                  <td style="text-align: center;" id = "">
+                 	 <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="注销该用户" id="${a.USERID }" onclick="noAudit(this.id)"><i class="fa fa-trash-o"></i>
                   </td> 
-                  <td style="text-align: center;" id = "${a.USERID }"> 
+                  <td style="text-align: center;" id = ""> 
                   	<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看用户详情" ><a class="userinfo" href="/org.xjtusicd3.portal/showUserInfo.html?u=${a.USERID}"><i class="fa fa-eye"></i></a></button>
                   </td>
                  </tr>
@@ -201,10 +201,10 @@
                   <td>${a.USERADDRESS }</td> 
                   <td>${a.USERSIGNATURE }</td> 
                   <td class="center">${a.CREATETIME }</td>
-                  <td style="text-align: center;" id = "${a.USERID }">
-                 	 <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="注销该运维人员" id="cancelIT" onclick="noAudit(this.id)"><i class="fa fa-trash-o"></i>
+                  <td style="text-align: center;" id = "">
+                 	 <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="注销该运维人员" id="${a.USERID }" onclick="noAudit(this.id)"><i class="fa fa-trash-o"></i>
                   </td> 
-                  <td style="text-align: center;" id = "${a.USERID }"> 
+                  <td style="text-align: center;" id = ""> 
                   	<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看该用户详情" ><a class="userinfo" href="/org.xjtusicd3.portal/showUserInfo.html?u=${a.USERID}"><i class="fa fa-eye"></i></a></button>
                   </td>
                  </tr>
@@ -259,10 +259,10 @@
                   <td>${a.USERADDRESS }</td> 
                   <td>${a.USERSIGNATURE }</td> 
                   <td class="center">${a.CREATETIME }</td>
-                  <td style="text-align: center;" id = "${a.USERID }">
-                 	 <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="注销该管理员" id="cancelAdmin" onclick="noAudit(this.id)"><i class="fa fa-trash-o"></i>
+                  <td style="text-align: center;" id = "">
+                 	 <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="注销该管理员" id="${a.USERID }" onclick="noAudit(this.id)"><i class="fa fa-trash-o"></i>
                   </td> 
-                  <td style="text-align: center;" id = "${a.USERID }"> 
+                  <td style="text-align: center;" id = ""> 
                   	<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看该管理员详情" ><a class="userinfo" href="/org.xjtusicd3.portal/showUserInfo.html?u=${a.USERID}"><i class="fa fa-eye"></i></a></button>
                   </td>
                  </tr>
@@ -317,8 +317,8 @@
                   <td>${a.USERADDRESS }</td> 
                   <td>${a.USERSIGNATURE }</td> 
                   <td class="center">${a.CREATETIME }</td>
-                  <td style="text-align: center;" id = "${a.USERID }">
-                 	 <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="激活该用户" id="activeUser" onclick="throughAudit(this.id)"><i class="fa fa-check text-navy"></i>
+                  <td style="text-align: center;" id = "">
+                 	 <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="激活该用户" id="${a.USERID }" onclick="throughAudit(this.id)"><i class="fa fa-check text-navy"></i>
                   </td> 
                   <td style="text-align: center;" id = "${a.USERID }"> 
                   	<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看该用户详情" ><a class="userinfo" href="/org.xjtusicd3.portal/showUserInfo.html?u=${a.USERID}"><i class="fa fa-eye"></i></a></button>
@@ -393,7 +393,7 @@
     /* 审核通过 */
     function throughAudit(id) {
     	
-    	var userId = document.getElementById(id).parentElement.id;
+    	var userId = document.getElementById(id).id;
     	alert(userId);
     	 
          $.ajax({
@@ -417,10 +417,10 @@
     
     function noAudit(id) {
     	
-    	var userId = document.getElementById(id).parentElement.id;
+    	var userId = document.getElementById(id).id;
     	alert(userId);
     	 
-         $.ajax({
+        $.ajax({
              type: "POST",
              url: "/org.xjtusicd3.portal/noAudit.html",
              data: {
@@ -432,7 +432,7 @@
              	window.location.reload();
              }
             
-         }) 
+         })  
         return true;
 
      }
@@ -479,21 +479,20 @@
     
     //批量审核通过
     $("#b1").click(function(){
-        //$('input:checkbox:checked') 等同于 $('input[type=checkbox]:checked')
-        //意思是选择被选中的checkbox
-        
     	var checkedSubject=document.getElementsByName('input[]');//获取到复选框的名称  
     	var checkedIds="";
+ 
     	//因为获得的是数组，所以要循环 为每一个checked赋值  
-    	 
-    	  alert(checkedSubject.length);
-    	  checkedSubject.each(function() {
-              checkedIds=checkedIds+","+$(this).val();
-            });
+    	  for(var i=0;i<checkedSubject.length;i++){  
+    	        if(checkedSubject[i].checked == true){  
+    	        	checkedIds += checkedSubject[i].value+",";  
+    	        } 
+    	    } 
     	
-    	  $.ajax({
+    	 
+    	   $.ajax({
               type: "GET",
-              url: "/org.xjtusicd3.portal/selectAll.html",
+              url: "/org.xjtusicd3.portal/selectUserPass.html",
               data: {
             	  checkedIds:checkedIds                
               },
@@ -503,11 +502,38 @@
               	window.location.reload();
               }
              
-          }) 
+          })  
     
     });
     
+    //批量审核不通过
+    $("#b2").click(function(){
+    	var checkedSubject=document.getElementsByName('input[]');//获取到复选框的名称  
+    	var checkedIds="";
+ 
+    	//因为获得的是数组，所以要循环 为每一个checked赋值  
+    	  for(var i=0;i<checkedSubject.length;i++){  
+    	        if(checkedSubject[i].checked == true){  
+    	        	checkedIds += checkedSubject[i].value+",";  
+    	        } 
+    	    } 
+    	
+    	 
+    	   $.ajax({
+              type: "GET",
+              url: "/org.xjtusicd3.portal/selectUserUnPass.html",
+              data: {
+            	  checkedIds:checkedIds                
+              },
+              traditional: true,//这里设置为true
+              success: function(data) {
+              	alert("审核未通过成功");
+              	window.location.reload();
+              }
+             
+          })  
     
+    });
  
 
     </script>  

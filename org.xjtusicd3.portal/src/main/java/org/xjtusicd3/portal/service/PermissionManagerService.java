@@ -37,6 +37,7 @@ public class PermissionManagerService
 		return permissionViews;
 	}
 	
+	
 	//增加权限
 	public static void addPermission(String logicName, String physicalName) {
 		String permissionId = UUID.randomUUID().toString();
@@ -47,19 +48,27 @@ public class PermissionManagerService
 		
     	PermissionHelper.addPermission(permissionId,physicalName,logicName,time);
 	}
+
 	
-	//获取该permissionId对应的权限信息
-	public static PermissionView getPermissionById(String permissionId) {
-		PermissionView permissionView = new PermissionView();
+	//更改权限
+	public static void updatePermission(String permissionId, String physicalName, String logicName) {
+		Date date=new Date();
+    	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    	String time = format.format(date);
+    	
+    	PermissionHelper.updatePermission(permissionId,physicalName,logicName,time);
 		
-		PermissionPersistence permissionPersistence = PermissionHelper.getPermissionById(permissionId);
-		
-		permissionView.setPermissionId(permissionId);
-		permissionView.setPermissionPhysicalName(permissionPersistence.getPERMISSIONPHYSICALNAME());
-		permissionView.setPermissionLogicName(permissionPersistence.getPERMISSIONLOGICNAME());
-		
-		return permissionView;
 	}
+
+	
+	//删除权限
+	public static void deletePermission(String permissionId) {
+		
+		PermissionHelper.deletePermission(permissionId);
+		
+	}
+
+
 
 	
 	
@@ -69,10 +78,19 @@ public class PermissionManagerService
 	
 	
 	
-	
-	
-	
-	
+//	//获取该permissionId对应的权限信息
+//	public static PermissionView getPermissionById(String permissionId) {
+//		PermissionView permissionView = new PermissionView();
+//		
+//		PermissionPersistence permissionPersistence = PermissionHelper.getPermissionById(permissionId);
+//		
+//		permissionView.setPermissionId(permissionId);
+//		permissionView.setPermissionPhysicalName(permissionPersistence.getPERMISSIONPHYSICALNAME());
+//		permissionView.setPermissionLogicName(permissionPersistence.getPERMISSIONLOGICNAME());
+//		
+//		return permissionView;
+//	}
+
 	
 	/*
 	 * zpz_rbacindex展示

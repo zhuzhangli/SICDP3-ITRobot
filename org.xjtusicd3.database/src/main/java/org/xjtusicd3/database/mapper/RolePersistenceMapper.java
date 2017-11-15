@@ -9,6 +9,22 @@ import org.xjtusicd3.database.model.RolePersistence;
 
 public interface RolePersistenceMapper	extends IBaseDao<RolePersistence, String>
 {
+	//获取所有角色信息
+	@Select("SELECT * FROM TBL_Role")
+	List<RolePersistence> getAllRoles();
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//zpz_获取所有角色
 		@Select("SELECT * FROM TBL_Role")
 		List<RolePersistence> getAllRoleInfo();
@@ -16,4 +32,6 @@ public interface RolePersistenceMapper	extends IBaseDao<RolePersistence, String>
 		//zpz_get role name by RoleId
 		@Select("SELECT ROLENAME FROM TBL_Role WHERE ROLEID = #{0}")
 		String getRoleNameByRoleId(String Rid);
+
+		
 }

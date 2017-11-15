@@ -57,11 +57,7 @@ public class PageController {
 	
 	
 	
-	@RequestMapping(value="premissionAssignPage",method=RequestMethod.GET)
-    public ModelAndView  premissionAssignPage(){
- 	   ModelAndView mv=new ModelAndView("premissionAssignPage");
- 	   return mv;
-    }
+	
 	
 	 
 	

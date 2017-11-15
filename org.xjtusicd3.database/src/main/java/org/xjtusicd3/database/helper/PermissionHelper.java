@@ -20,15 +20,6 @@ public class PermissionHelper
 	}
 
 
-	//根据权限ID获取相对应的权限信息
-	public static PermissionPersistence getPermissionById(String permissionId) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		PermissionPersistenceMapper mapper = session.getMapper(PermissionPersistenceMapper.class);
-		PermissionPersistence list = mapper.getPermissionById(permissionId);
-		session.close();
-		return list;
-	}
-
 	//增加权限
 	public static void addPermission(String permissionId, String physicalName, String logicName, String time) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -36,11 +27,37 @@ public class PermissionHelper
 		mapper.addPermission(permissionId, physicalName, logicName, time);
 		session.close();	
 	}
+
+	
+	//更改权限
+	public static void updatePermission(String permissionId,  String physicalName,String logicName, String time) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		PermissionPersistenceMapper mapper = session.getMapper(PermissionPersistenceMapper.class);
+		mapper.updatePermission(permissionId, physicalName, logicName, time);
+		session.close();	
+	}
+
+
+	//删除权限
+	public static void deletePermission(String permissionId) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		PermissionPersistenceMapper mapper = session.getMapper(PermissionPersistenceMapper.class);
+		mapper.deletePermission(permissionId);
+		session.close();		
+	}
 	
 	
 	
-	
-	
+
+
+	//根据权限ID获取相对应的权限信息
+//	public static PermissionPersistence getPermissionById(String permissionId) {
+//		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+//		PermissionPersistenceMapper mapper = session.getMapper(PermissionPersistenceMapper.class);
+//		PermissionPersistence list = mapper.getPermissionById(permissionId);
+//		session.close();
+//		return list;
+//	}
 	
 	
 	

@@ -130,14 +130,14 @@ public class UserController
 	
 	
 	/**
-	 * 查看用户详情
+	 * 批量审核用户通过
 	 * @param request
 	 * @param session
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/selectAll",method=RequestMethod.GET)
-	public String selectAll(HttpServletRequest request){
+	@RequestMapping(value="/selectUserPass",method=RequestMethod.GET)
+	public String selectUserPass(HttpServletRequest request){
 		System.out.println("进入批量审核"); 
 		
 		String id=request.getParameter("checkedIds");    //获取前台隐藏域存着的选中的复选框的value
@@ -146,11 +146,8 @@ public class UserController
         
         for(int i =0;i<checkedIds.length;i++){
             if(!checkedIds[i].equals("")){
-                System.out.println(checkedIds[i]);
-                //temp=checkedIds[i];
-//                sbgl=sbglService.getById(temp);    //根据ID获取数据表中这条ID的整条记录
-//                sbgl.setDisplay("N");    //更改这个ID的display字段的值
-//                sbglService.save(sbgl);    //保存更改
+              //  System.out.println(checkedIds[i]);
+              UserService.updateUserState(checkedIds[i],2);
             }
         }
 		
@@ -158,7 +155,31 @@ public class UserController
 		return "1";
 	}
 	
+	/**
+	 * 批量审核用户不通过
+	 * @param request
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="/selectUserUnPass",method=RequestMethod.GET)
+	public String selectUserUnPass(HttpServletRequest request){
+		System.out.println("进入批量审核"); 
+		
+		String id=request.getParameter("checkedIds");    //获取前台隐藏域存着的选中的复选框的value
+        String checkedIds[]=id.split(","); //进行分割存到数组
+
+        
+        for(int i =0;i<checkedIds.length;i++){
+            if(!checkedIds[i].equals("")){
+              //  System.out.println(checkedIds[i]);
+              UserService.updateUserState(checkedIds[i],0);
+            }
+        }
+		
 	
+		return "1";
+	}
 	
 	
 	

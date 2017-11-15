@@ -11,6 +11,23 @@ import org.xjtusicd3.database.model.RolePersistence;
 
 public class RoleHelper
 {
+	//获取所有角色
+	public static List<RolePersistence> getAllRoles() {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		RolePersistenceMapper mapper = session.getMapper(RolePersistenceMapper.class);
+		List<RolePersistence> rolelist = mapper.getAllRoles();
+		session.close();
+		return rolelist;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/*
 	 * zpz_get info of role
 	 */
@@ -33,4 +50,5 @@ public class RoleHelper
 		session.close();
 		return role;
 	}
+	
 }
