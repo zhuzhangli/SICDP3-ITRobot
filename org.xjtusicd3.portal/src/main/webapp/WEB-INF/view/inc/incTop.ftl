@@ -133,7 +133,7 @@
             </li>
 
             <li>
-                <a class="J_menuItem" href="premissionAssignPage.html">
+                <a class="J_menuItem" href="permissionAssignPage.html">
                     <i class="fa fa-warning"></i>
                     <span class="nav-label">权限分配</span>
                 </a>

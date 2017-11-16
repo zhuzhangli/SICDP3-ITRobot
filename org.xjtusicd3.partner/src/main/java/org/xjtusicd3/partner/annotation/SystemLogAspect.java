@@ -25,8 +25,8 @@ import org.xjtusicd3.database.model.UserPersistence;
 import org.xjtusicd3.partner.service.LogService;
 
 /**
- * 切点类
- * 
+ * 切点类   
+ * 创建一个代理类使用@Aspect @Component注解进行标记
  */
 @Aspect
 @Component
@@ -44,9 +44,13 @@ public class SystemLogAspect {
   //本地异常日志记录对象  
     public Logger logger = Logger.getLogger(SystemLogAspect.class);  
    // private  static  final Logger logger = Logger.getLogger(SystemLogAspect.class);
+    
+    
+    //定义切入点point:自拦截有权限注解的方法，更能提升性能
     //Controller层切点     
     @Pointcut("@annotation(org.xjtusicd3.partner.annotation.SystemControllerLog)")  
     public void controllerAspect(){       
+    
     }  
     
     //Service层切点    

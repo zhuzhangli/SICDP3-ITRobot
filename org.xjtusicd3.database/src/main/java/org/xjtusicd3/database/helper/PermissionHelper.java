@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.xjtusicd3.database.logic.SqlSessionManager;
 import org.xjtusicd3.database.mapper.PermissionPersistenceMapper;
+import org.xjtusicd3.database.mapper.RolePermissionPersistenceMapper;
 import org.xjtusicd3.database.model.PermissionPersistence;
+import org.xjtusicd3.database.model.RolePermissionPersistence;
 
 
 public class PermissionHelper
@@ -45,6 +47,30 @@ public class PermissionHelper
 		mapper.deletePermission(permissionId);
 		session.close();		
 	}
+
+
+	//获取角色还未得到的权限
+	public static List<PermissionPersistence> notObtainRolePermission(String roleId) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		PermissionPersistenceMapper mapper = session.getMapper(PermissionPersistenceMapper.class);
+		List<PermissionPersistence> list = mapper.notObtainRolePermission(roleId);
+		session.close();
+		return list;
+		
+	}
+
+
+	//获取角色已得到的权限
+	public static List<PermissionPersistence> obtainRolePermission(String roleId) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		PermissionPersistenceMapper mapper = session.getMapper(PermissionPersistenceMapper.class);
+		List<PermissionPersistence> list = mapper.obtainRolePermission(roleId);
+		session.close();
+		return list;
+	}
+
+
+	
 	
 	
 	

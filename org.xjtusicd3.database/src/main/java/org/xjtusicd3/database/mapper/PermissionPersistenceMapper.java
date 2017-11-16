@@ -28,6 +28,16 @@ public interface PermissionPersistenceMapper
 	//删除权限
 	@Delete("DELETE FROM TBL_Permission WHERE PERMISSIONID=#{0}")
 	public void deletePermission(String permissionId);
+
+
+	//获取角色还未得到的权限
+	@Select("SELECT * FROM TBL_Permission WHERE PERMISSIONID NOT IN (SELECT PERMISSIONID FROM tbl_role_permission WHERE ROLEID=#{0})")
+	public List<PermissionPersistence> notObtainRolePermission(String roleId);
+
+
+	//获取角色已得到的权限
+	@Select("SELECT * FROM tbl_role_permission,TBL_Permission WHERE tbl_role_permission.PERMISSIONID = TBL_Permission.PERMISSIONID AND tbl_role_permission.ROLEID=#{0}")
+	public List<PermissionPersistence> obtainRolePermission(String roleId);
 	
 	
 	

@@ -10,7 +10,7 @@ import org.xjtusicd3.database.model.RolePersistence;
 public interface RolePersistenceMapper	extends IBaseDao<RolePersistence, String>
 {
 	//获取所有角色信息
-	@Select("SELECT * FROM TBL_Role")
+	@Select("SELECT * FROM TBL_Role ORDER BY ROLEID DESC")
 	List<RolePersistence> getAllRoles();
 	
 	
