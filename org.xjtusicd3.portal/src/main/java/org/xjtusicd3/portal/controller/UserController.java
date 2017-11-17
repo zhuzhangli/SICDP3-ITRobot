@@ -206,17 +206,17 @@ public class UserController
 	//login admin
 	@RequestMapping(value="adminLogin",method=RequestMethod.POST)
 	public String adminLogin(HttpSession session,UserView userView,HttpServletRequest request,HttpServletResponse response){
-		String email = request.getParameter("userName");
+		String nameOrEmail = request.getParameter("nameOrEmail");
 		String psw = request.getParameter("userPassword");
 		String password = StringToMd5(psw);
 		System.out.println(password);
-		List<UserPersistence> list = UserHelper.getEmail2(email, password);
+		List<UserPersistence> list = UserHelper.loginUser(nameOrEmail, password);
 		if (list.size()==0) 
 		{
 			return "redirect:login.html";
 		}else 
 		{
-			session.setAttribute("useremail", email);
+			session.setAttribute("nameOrEmail", nameOrEmail);
 			session.setAttribute("UserName", list.get(0).getUSERNAME());
 			request.getSession().setAttribute("user", list.get(0));
 			return "redirect:index.html" ;

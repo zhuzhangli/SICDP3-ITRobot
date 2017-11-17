@@ -27,41 +27,15 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
 
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp,
 			Object Handler) throws ServletException, IOException{
-		//1
-//	 	   List<UserPersistence> users = UserService.getAllUserList();
-//	 	   UserPersistence user = users.get(0);
-//	 	   
-//	 	   for (int i = 0; i < users.size(); i++){
-//	 		   
-//	 		   	if(users.get(i).getUSERNAME().equals("royals")){
-//	 		   		user = users.get(i);
-//	 		   	}
-//	 		   	
-//	 		   	if (users.get(i).getUSERNAME().equals("会员20170509000900zs58ii")){
-//	 		   		user = users.get(i);
-//				}
-//	 	   }
+	
 		UserPersistence user = (UserPersistence)req.getSession().getAttribute("user");
-		
-//		用来测试get请求，post请求		
-//		if("GET".equalsIgnoreCase(req.getMethod())){
-//			
-//			System.out.println("GET ......");
-//			
-//		}
-		//log.info("***************执行1：preHandler**************");
-		
-		//此处用来测试是否得到用户
-		//System.out.println(user == null);
 		
 		//如果用户为空
 		if(user == null){
 			//log.info("interceptor...跳转到login页面...");
 			req.getRequestDispatcher("login.html").forward(req, resp);
 			return false;
-		}
-		
-		else if(user != null){
+		} else {
 			//判断角色下royals该用户的权限：获取到request的路径和get，post
 			//System.out.println("asda:   "+req.getMethod() + " : "+ req.getServletPath());
 		
@@ -73,20 +47,15 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
 				 
 				if (rp.getPERMISSIONLOGICNAME().equals(path)){
 					System.out.println(rp.getPERMISSIONLOGICNAME());
-//					System.out.println(nowTime); 
-//					System.out.println(user.getUSERID());
-					String userId = user.getUSERID();
-					String logPermission = rp.getPERMISSIONLOGICNAME();
+
+			//		String userId = user.getUSERID();
+				//	String logPermission = rp.getPERMISSIONLOGICNAME();
 					
 					//注释_2017年10月22日14:52:12
 					//LogService.saveLog(userId, logPermission);
 					return true;
 				}
 			}			
-			return false;
-		}
-		else {
-			 
 			return false;
 		}
 	}

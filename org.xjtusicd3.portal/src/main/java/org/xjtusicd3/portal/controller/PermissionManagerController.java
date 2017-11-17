@@ -161,7 +161,7 @@ public class PermissionManagerController
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/permissionChecked",method=RequestMethod.GET)
+	@RequestMapping(value="/permissionChecked",method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
 	public String permissionChecked(HttpServletRequest request){
 		System.out.println("进入permissionChecked"); 
 		
@@ -179,7 +179,22 @@ public class PermissionManagerController
             }
         }
 			
-		return "1";
+                
+        //获取用户还未得到的权限
+  		List<Permission_RoleView> notObtainRolePermission = PermissionManagerService.notObtainRolePermission(roleId);
+  		
+  		//获取用户已得到的权限
+  		List<Permission_RoleView> obtainRolePermission = PermissionManagerService.obtainRolePermission(roleId);
+  		
+  		JSONObject jsonObject = new JSONObject();
+  		
+  		jsonObject.put("notObtainRolePermission", notObtainRolePermission);
+  		jsonObject.put("obtainPermission", obtainRolePermission);
+  		
+  		
+  		String result = JsonUtil.toJsonString(jsonObject);
+  		
+  		return result;
 	}
 	
 	
@@ -191,7 +206,7 @@ public class PermissionManagerController
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="/permissionUnChecked",method=RequestMethod.GET)
+	@RequestMapping(value="/permissionUnChecked",method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
 	public String permissionUnChecked(HttpServletRequest request){
 		System.out.println("进入permissionUnChecked"); 
 		
@@ -209,6 +224,20 @@ public class PermissionManagerController
             }
         }
 			
-		return "1";
+       //获取用户还未得到的权限
+  		List<Permission_RoleView> notObtainRolePermission = PermissionManagerService.notObtainRolePermission(roleId);
+  		
+  		//获取用户已得到的权限
+  		List<Permission_RoleView> obtainRolePermission = PermissionManagerService.obtainRolePermission(roleId);
+  		
+  		JSONObject jsonObject = new JSONObject();
+  		
+  		jsonObject.put("notObtainRolePermission", notObtainRolePermission);
+  		jsonObject.put("obtainPermission", obtainRolePermission);
+  		
+  		
+  		String result = JsonUtil.toJsonString(jsonObject);
+  		
+  		return result;
 	}
 }

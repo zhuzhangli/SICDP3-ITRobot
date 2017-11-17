@@ -160,16 +160,51 @@
     	     } 
 	    		    	 
     	     $.ajax({
-              type: "GET",
+              type: "POST",
               url: "/org.xjtusicd3.portal/permissionChecked.html",
               data: {
             	  roleId:roleId,
             	  checkedIds:checkedIds                
               },
-              traditional: true,//这里设置为true
-              success: function(data) {
-              	alert("添加成功");
-              	window.location.reload();
+              dataType: "json",
+              success: function(data) {             	
+              	var permissionList = data.notObtainRolePermission; //获取后台角色待获取权限
+            	var obtainPermission = data.obtainPermission;  //获取后台角色已获取权限
+            	
+            	
+            	if(permissionList.length == 0){
+    				$("#tbody1").html("");
+            	}else{
+            		var permissionHtml = "";
+    				for (var i = 0; i < permissionList.length; i++) {
+    					 permissionHtml = permissionHtml
+ 						+ "<tr class='gradeX'><td style='text-align: center;width: 13%'><input type='checkbox' class='i-checks' name='selectToObtain[]' value='"+permissionList[i].pERMISSIONID+"'></td>"
+ 						+ "<td style='text-align: center;width: 87%' id='editLogicName${p.PERMISSIONID }'>"
+ 						+ permissionList[i].pERMISSIONLOGICNAME
+ 						+"</td></tr>"
+    	
+ 						
+ 						
+ 						$("#tbody1")[0].innerHTML = permissionHtml;    
+    				}
+    				
+            	}
+            	
+            	if(obtainPermission.length == 0){
+				 $("#tbody2").html("");
+        		}else{
+        		var permissionHtml2 = "";
+				for (var i = 0; i < obtainPermission.length; i++) {
+					 permissionHtml2 = permissionHtml2
+						+ "<tr class='gradeX'><td style='text-align: center;width: 13%'><input type='checkbox' class='i-checks' name='input1[]' value='"+obtainPermission[i].pERMISSIONID+"'></td>"
+						+ "<td style='text-align: center;width: 87%' id='editLogicName_obtainPermission[i].pERMISSIONID'>"
+						+ obtainPermission[i].pERMISSIONLOGICNAME
+						+"</td></tr>"
+	
+						$("#tbody2")[0].innerHTML = permissionHtml2;    
+				} 
+            }
+              	
               }
              
           }) 
@@ -194,16 +229,51 @@
     	
     	 
     	    $.ajax({
-              type: "GET",
+              type: "POST",
               url: "/org.xjtusicd3.portal/permissionUnChecked.html",
               data: {
             	  roleId:roleId,
             	  checkedIds:checkedIds                
               },
-              traditional: true,//这里设置为true
+              dataType: "json",
               success: function(data) {
               	alert("移除成功");
-              	window.location.reload();
+              	var permissionList = data.notObtainRolePermission; //获取后台角色待获取权限
+            	var obtainPermission = data.obtainPermission;  //获取后台角色已获取权限
+            	
+            	
+            	if(permissionList.length == 0){
+    				$("#tbody1").html("");
+            	}else{
+            		var permissionHtml = "";
+    				for (var i = 0; i < permissionList.length; i++) {
+    					 permissionHtml = permissionHtml
+ 						+ "<tr class='gradeX'><td style='text-align: center;width: 13%'><input type='checkbox' class='i-checks' name='selectToObtain[]' value='"+permissionList[i].pERMISSIONID+"'></td>"
+ 						+ "<td style='text-align: center;width: 87%' id='editLogicName${p.PERMISSIONID }'>"
+ 						+ permissionList[i].pERMISSIONLOGICNAME
+ 						+"</td></tr>"
+    	
+ 						
+ 						
+ 						$("#tbody1")[0].innerHTML = permissionHtml;    
+    				}
+    				
+            	}
+            	
+            	if(obtainPermission.length == 0){
+				 $("#tbody2").html("");
+        		}else{
+        		var permissionHtml2 = "";
+				for (var i = 0; i < obtainPermission.length; i++) {
+					 permissionHtml2 = permissionHtml2
+						+ "<tr class='gradeX'><td style='text-align: center;width: 13%'><input type='checkbox' class='i-checks' name='input1[]' value='"+obtainPermission[i].pERMISSIONID+"'></td>"
+						+ "<td style='text-align: center;width: 87%' id='editLogicName_obtainPermission[i].pERMISSIONID'>"
+						+ obtainPermission[i].pERMISSIONLOGICNAME
+						+"</td></tr>"
+	
+						$("#tbody2")[0].innerHTML = permissionHtml2;    
+				} 
+            }
               }
              
            })   

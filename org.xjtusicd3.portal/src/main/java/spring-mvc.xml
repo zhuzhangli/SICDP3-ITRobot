@@ -100,8 +100,8 @@
 	    <mvc:interceptor>    
 	        <!--匹配的是url路径， 如果不配置或/**,将拦截所有的Controller-->  
 	        <mvc:mapping path="/index.html" />  
-	        <!-- <mvc:mapping path="/incidentindex.html" />  
-	        <mvc:mapping path="/problemindex.html" />  
+	        <mvc:mapping path="/permissionPage.html" />  
+	        <!--<mvc:mapping path="/problemindex.html" />  
 	        <mvc:mapping path="/changeindex.html" />  
 	        <mvc:mapping path="/cfgindex.html" />  
 	        <mvc:mapping path="/knowledgeindex.html" />  

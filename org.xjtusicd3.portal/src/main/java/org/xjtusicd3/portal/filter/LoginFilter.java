@@ -30,7 +30,7 @@ public class LoginFilter implements Filter {
 			
 			String url = request.getServletPath() + (request.getPathInfo() == null ? "" : request.getPathInfo());
 			HttpSession session = request.getSession();
-			Object object = session.getAttribute("useremail");
+			Object object = session.getAttribute("nameOrEmail");
 			
 			//没有登录就不允许访问页面的的链接
 			if (object==null&&(url.contains("index")||url.contains("incidentindex")||url.contains("problemindex")||url.contains("changeindex")||url.contains("cfgindex")||url.contains("knowledgeindex")||url.contains("spiderindex")||url.contains("logindex")||url.contains("userindex")||url.contains("messageindex")||url.contains("rbacindex"))) {

@@ -36,7 +36,7 @@
 
             <form class="m-t" role="form" action="adminLogin.html" method="post">
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="用户名" name="userName" required="">
+                    <input type="text" class="form-control" placeholder="用户名" name="nameOrEmail" required="">
                 </div>
                 <div class="form-group">
                     <input type="password" class="form-control" placeholder="密码" name="userPassword" required="">
