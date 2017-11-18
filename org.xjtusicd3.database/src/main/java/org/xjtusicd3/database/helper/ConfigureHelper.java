@@ -8,6 +8,7 @@ import org.xjtusicd3.database.mapper.ConfigureHistoryPersistenceMapper;
 import org.xjtusicd3.database.mapper.ConfigurePersistenceMapper;
 import org.xjtusicd3.database.model.ConfigureHistoryPersistence;
 import org.xjtusicd3.database.model.ConfigurePersistence;
+import org.xjtusicd3.database.model.SoftPersistence;
 
 public class ConfigureHelper {
 	/*
@@ -90,6 +91,25 @@ public class ConfigureHelper {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		ConfigurePersistenceMapper mapper = session.getMapper(ConfigurePersistenceMapper.class);
 		List<ConfigurePersistence> list = mapper.getCfgs(startNumber);
+		session.close();
+		return list;
+	}
+	
+	//获取所有软件配置信息
+	public static List<ConfigurePersistence> getAllSofts(int startNum) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		ConfigurePersistenceMapper mapper = session.getMapper(ConfigurePersistenceMapper.class);
+		List<ConfigurePersistence> list = mapper.getAllSofts(startNum);
+		session.close();
+		return list;
+	}
+	
+	
+	//获取软件总数量
+	public static int getAllSoftCounts() {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		ConfigurePersistenceMapper mapper = session.getMapper(ConfigurePersistenceMapper.class);
+		int list = mapper.getAllSoftCounts();
 		session.close();
 		return list;
 	}

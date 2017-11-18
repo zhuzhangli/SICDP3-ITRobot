@@ -4,13 +4,82 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.xjtusicd3.database.helper.ConfigureHelper;
+import org.xjtusicd3.database.helper.SoftHelper;
 import org.xjtusicd3.database.model.ConfigureHistoryPersistence;
 import org.xjtusicd3.database.model.ConfigurePersistence;
+import org.xjtusicd3.database.model.SoftPersistence;
 import org.xjtusicd3.portal.view.ChangeIndexView;
+import org.xjtusicd3.portal.view.ConfigureSoftView;
 
 public class ConfigureService 
 {
+	//获取所有软件配置信息
+	public static List<ConfigureSoftView> getAllSofts() {
+		List<ConfigureSoftView> configureSoftViews = new ArrayList<ConfigureSoftView>();
+		
+		List<ConfigurePersistence> softLists = ConfigureHelper.getAllSofts(0);
 
+		for(ConfigurePersistence softList:softLists){
+			ConfigureSoftView configureSoftView = new ConfigureSoftView();
+			
+			configureSoftView.setCONFIGUREID(softList.getCONFIGUREID());
+			configureSoftView.setCONFIGURENAME(softList.getCONFIGURENAME());
+			configureSoftView.setCONFIGURETYPE(softList.getCONFIGURETYPE());
+			configureSoftView.setFILESIZE(softList.getFILESIZE());
+			configureSoftView.setURL(softList.getURL());
+			configureSoftView.setDOWNLOADTIMES(softList.getDOWNLOADTIMES());			
+			configureSoftView.setPRODUCER(softList.getPRODUCER());
+			configureSoftView.setCONFIGURETIME(softList.getCONFIGURETIME());
+			configureSoftView.setISCONFIGURE(softList.getISCONFIGURE());
+			
+			//查找软件信息
+			List<SoftPersistence> sList = SoftHelper.getSoftInfo(softList.getCONFIGUREID());			
+			configureSoftView.setLOGO(sList.get(0).getLOGO());
+			configureSoftView.setSCORE(sList.get(0).getSCORE());
+			configureSoftView.setDESCRIPTION(sList.get(0).getDESCRIPTION());
+			
+			configureSoftViews.add(configureSoftView);
+			
+		}
+		
+		return configureSoftViews;
+	}
+	
+	
+	//获取ID对应软件信息
+	public static ConfigureSoftView getSoftInfoById(String configureId) {
+		ConfigureSoftView softView = new ConfigureSoftView();
+		
+		List<SoftPersistence> softInfo = SoftHelper.getSoftInfo(configureId);
+		
+		softView.setCONFIGUREID(configureId);
+		softView.setINTRODUCTION(softInfo.get(0).getINTRODUCTION());
+		softView.setVERSIONTYPE(softInfo.get(0).getVERSIONTYPE());
+		softView.setVERSION(softInfo.get(0).getVERSION());
+		softView.setSOFTTYPE(softInfo.get(0).getSOFTTYPE());
+		softView.setWEBSITE(softInfo.get(0).getWEBSITE());
+		
+		
+		return softView;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 //	public static String getPartConfig() 
 //	{
 //		String result = "";
@@ -63,4 +132,7 @@ public class ConfigureService
 				
 				return changeIndexViews;
 			}
+
+
+	
 }

@@ -18,10 +18,9 @@
 <link href="css/style.css?v=4.1.0" rel="stylesheet">
 
 
+
 <!-- BEGIN GLOBAL MANDATORY STYLES -->
 
-<link href="media/css/bootstrap.min.css" rel="stylesheet"
-	type="text/css" />
 
 <link href="media/css/bootstrap-responsive.min.css" rel="stylesheet"
 	type="text/css" />
@@ -53,7 +52,8 @@
 <!-- END PAGE LEVEL STYLES -->
 
 <link rel="shortcut icon" href="media/image/favicon.ico" />
-
+<!-- Data Tables --> 
+  <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" />
 <!-- echarts JS -->
 <script src="media/js/echarts.js"></script>
 
@@ -195,136 +195,47 @@
 
 						<div id="tab-2" class="tab-pane">
 
-							<div class="wrapper wrapper-content  animated fadeInRight">
-								<div class="row">
-									<div class="col-sm-12">
-										<div class="ibox ">
-											<div class="ibox-title">
-												<h5>系统配置</h5>
-											</div>
-											<div class="ibox-content">
-
-												<div class="jqGrid_wrapper">
-
-
-													<!-- BEGIN EXAMPLE TABLE PORTLET-->
-
-													<div class="portlet box blue">
-
-														<div class="portlet-title">
-
-															<div class="caption">
-																<i class="icon-edit"></i>系统配置列表
-															</div>
-
-															<div class="tools">
-
-																<a href="javascript:;" class="collapse"></a> <a
-																	href="#portlet-config" data-toggle="modal"
-																	class="config"></a> <a href="javascript:;"
-																	class="reload"></a> <a href="javascript:;"
-																	class="remove"></a>
-
-															</div>
-
-														</div>
-
-														<div class="portlet-body">
-
-															<!-- <div class="clearfix">
-
-														<div class="btn-group">
-
-															<button class="btn green"
-																onclick="window.location='addUserInformation.html'">
-
-																<i class="icon-plus">增加FAQ</i>
-
-															</button>
-
-														</div>
-
-												 	<div class="btn-group pull-right">
-
-										<button class="btn dropdown-toggle" data-toggle="dropdown">Tools <i class="icon-angle-down"></i>
-
-										</button>
-
-										<ul class="dropdown-menu pull-right">
-
-											<li><a href="#">Print</a></li>
-
-											<li><a href="#">Save as PDF</a></li>
-
-											<li><a href="#">Export to Excel</a></li>
-
-										</ul>
-
-									</div> 
-
-													</div> -->
-
-															<table
-																class="table table-striped table-hover table-bordered"
-																id="sample_editable_3">
-
-																<thead>
-
-																	<tr>
-
-
-																		<th>配置名称</th>
-
-																		<th>配置类型</th>
-
-																		<th>URL</th>
-
-																		<th>配置时间</th>
-
-																		<th>操作</th>
-
-																		<th>操作</th>
-
-																		<th>查看配置详情</th>
-
-																	</tr>
-
-																</thead>
-
-																<tbody>
-																	<#list cfgList as cfgList>
-																	<tr class="">
-
-																		<td>${cfgList.CONFIGURENAME}</td>
-																		<td>${cfgList.CONFIGURETYPE}</td>
-
-																		<td class="center">${cfgList.URL}</td>
-
-																		<td class="center">${cfgList.CONFIGURETIME}</td>
-
-																		<td><a class="faq"
-																			href="/org.xjtusicd3.portal/editUserInformation.html?u=${cfgList.USERID}">编辑</a></td>
-
-																		<td><a onclick="deleteUser()">删除</a></td>
-
-																		<td><a class="faq"
-																			href="/org.xjtusicd3.portal/showUserInfo.html?u=${cfgList.USERID}">查看配置信息</a></td>
-
-																	</tr>
-																	</#list>
-
-
-																</tbody>
-
-															</table>
-
-														</div>
-
-													</div>
-
-													<!-- END EXAMPLE TABLE PORTLET-->
-												</div>
-											</div>
+							<div class="wrapper wrapper-content animated fadeIn"> 
+   <div class="row"> 
+    <div class="col-sm-12"> 
+     <div class="ibox float-e-margins"> 
+										<div class="ibox-title"> 
+       <h5>权限列表</h5> 
+      </div> 
+      <div class="ibox-content"> 
+       <!-- 模态框弹出权限 --> 
+       <div class=""> 
+        <button class="btn btn-primary " data-toggle="modal" data-target="#myModal">添加权限</button> 
+       </div> 
+       
+       <table class="table table-striped table-bordered table-hover dataTables-example"> 
+        <thead> 
+         <tr> 
+          <th style="text-align: center;">权限编号</th> 
+          <th style="text-align: center;">权限逻辑名：汉字</th> 
+          <th style="text-align: center;">权限物理名</th> 
+          <th style="text-align: center;">最新修改时间</th> 
+          <th style="text-align: center;">操作</th> 
+         </tr> 
+        </thead> 
+        
+        <tbody>
+         <#list permissionList as a>
+         <tr class="gradeX" id=""> 
+          <td style="text-align: center;width: 6%">${a_index+1 }</td> 
+          <td style="text-align: center;width: 38%" id="editLogicName${a.permissionId }">${a.permissionLogicName }</td> 
+          <td style="text-align: center;width: 38%" id="editPhysicalName${a.permissionId }">${a.permissionPhysicalName }</td>
+          <td style="text-align: center;width: 10%">${a.time }</td> 
+          <td style="text-align: center;width: 8%" id=""> 
+          	<button class="btn btn-white btn-sm" type="button" id="${a.permissionId }" onclick="editPermission(this.id)" title="编辑" data-toggle="modal" data-target="#myModalEdit" physicalName=""><i class="glyphicon glyphicon-pencil"></i></button> 
+          	<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="删除" id="${a.permissionId }" onclick="deletePermission(this.id)"><i class="fa fa-trash-o"></i> </button>
+          </td> 
+         </tr> 
+         </#list> 
+        </tbody> 
+       </table> 
+      
+      </div> 
 										</div>
 									</div>
 								</div>
@@ -771,6 +682,10 @@
 
 	<!-- 自定义js -->
 	<script src="js/content.js?v=1.0.0"></script>
+	
+	 <!-- Data Tables --> 
+  <script src="js/plugins/dataTables/jquery.dataTables.js"></script> 
+  <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
 
 	<!-- BEGIN CORE PLUGINS -->
 

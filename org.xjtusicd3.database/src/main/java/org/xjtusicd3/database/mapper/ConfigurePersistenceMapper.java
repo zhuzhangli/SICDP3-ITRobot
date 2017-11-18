@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.xjtusicd3.database.logic.IBaseDao;
 import org.xjtusicd3.database.model.ConfigurePersistence;
+import org.xjtusicd3.database.model.SoftPersistence;
 
 public interface ConfigurePersistenceMapper extends IBaseDao<ConfigurePersistence, String>{
 
@@ -33,6 +34,15 @@ public interface ConfigurePersistenceMapper extends IBaseDao<ConfigurePersistenc
 	 */
 	@Select("SELECT * FROM TBL_Configure ORDER BY CONFIGURETIME DESC LIMIT #{0},100")
 	public List<ConfigurePersistence> getCfgs(int startNumber);
+	
+	//获取所有软件配置信息
+	@Select("SELECT * FROM TBL_Configure,TBL_Soft WHERE TBL_Configure.CONFIGUREID = TBL_Soft.CONFIGUREID ORDER BY TBL_Configure.CONFIGURETIME DESC LIMIT #{0},200 ")
+	public List<ConfigurePersistence> getAllSofts(int startNum);
+
+	
+	//获取软件总数量
+	@Select("SELECT COUNT(1) FROM TBL_Configure,TBL_Soft WHERE TBL_Configure.CONFIGUREID = TBL_Soft.CONFIGUREID ")
+	public int getAllSoftCounts();
 
 	
 }

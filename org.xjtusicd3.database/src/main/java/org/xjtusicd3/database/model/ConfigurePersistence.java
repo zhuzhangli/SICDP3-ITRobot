@@ -24,6 +24,18 @@ public class ConfigurePersistence {
 	private String FILESIZE;
 	@TableField(columnName="CONFIGURETIME")
 	private String CONFIGURETIME;
+	@TableField(columnName="ISCONFIGURE")
+	private int ISCONFIGURE;
+	
+	
+	
+	
+	public int getISCONFIGURE() {
+		return ISCONFIGURE;
+	}
+	public void setISCONFIGURE(int iSCONFIGURE) {
+		ISCONFIGURE = iSCONFIGURE;
+	}
 	public String getCONFIGUREID() {
 		return CONFIGUREID;
 	}

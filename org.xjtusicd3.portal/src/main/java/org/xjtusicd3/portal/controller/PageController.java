@@ -54,6 +54,20 @@ public class PageController {
 
 	
 	
+	//知识库增加
+	@RequestMapping(value="configureEquipmentPage",method=RequestMethod.GET)
+    public ModelAndView  configureEquipmentPage(){
+ 	   ModelAndView mv=new ModelAndView("configureEquipmentPage");
+ 	   return mv;
+    }
+	
+	//知识库增加
+	@RequestMapping(value="configureBasicPage",method=RequestMethod.GET)
+    public ModelAndView  configureBasicPage(){
+ 	   ModelAndView mv=new ModelAndView("configureBasicPage");
+ 	   return mv;
+    }
+	
 	
 	
 	

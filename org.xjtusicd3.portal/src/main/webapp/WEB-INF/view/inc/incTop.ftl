@@ -52,10 +52,16 @@
               </li>
               
               <li>
-                  <a class="J_menuItem" href="configurePage.html">
-                      <i class="fa fa-edit"></i>
-                      <span class="nav-label">配置管理</span>
+                  <a  href="">
+                  	<i class="fa fa-edit"></i>&nbsp;配置管理<span class="fa arrow"></span>
                   </a>
+				  <ul class="nav nav-third-level">
+                      <li><a class="J_menuItem" href="configureSoftPage.html">软件资源库</a></li>
+
+                      <li><a class="J_menuItem" href="configureEquipmentPage.html">设备资源库</a></li>
+                      
+                      <li><a class="J_menuItem" href="configureBasicPage.html">标准配置信息</a></li>
+                  </ul>
               </li>
             
               <li>
