@@ -2,7 +2,9 @@ package org.xjtusicd3.portal.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
+import org.xjtusicd3.database.helper.BasicConfigureHelper;
 import org.xjtusicd3.database.helper.ConfigureHelper;
 import org.xjtusicd3.database.helper.SoftHelper;
 import org.xjtusicd3.database.model.ConfigureHistoryPersistence;
@@ -64,6 +66,11 @@ public class ConfigureService
 	}
 	
 	
+	//添加至标准配置库
+	public static void addToBasicCfg(String configureId) {
+		
+		BasicConfigureHelper.addToBasicCfg(UUID.randomUUID().toString(),configureId,null);
+	}
 	
 	
 	
@@ -132,6 +139,8 @@ public class ConfigureService
 				
 				return changeIndexViews;
 			}
+
+	
 
 
 	

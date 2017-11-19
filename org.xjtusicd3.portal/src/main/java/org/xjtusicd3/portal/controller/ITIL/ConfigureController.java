@@ -11,18 +11,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.xjtusicd3.common.util.JsonUtil;
+import org.xjtusicd3.database.helper.BasicConfigureHelper;
 import org.xjtusicd3.database.helper.ConfigureHelper;
+import org.xjtusicd3.database.model.BasicConfigurePersistence;
 import org.xjtusicd3.database.model.ComputerPersistence;
 import org.xjtusicd3.database.model.ConfigurePersistence;
 import org.xjtusicd3.database.model.ServerPersistence;
 import org.xjtusicd3.portal.service.ComputerService;
 import org.xjtusicd3.portal.service.ConfigureService;
-import org.xjtusicd3.portal.service.PermissionManagerService;
 import org.xjtusicd3.portal.service.ServerService;
 import org.xjtusicd3.portal.view.ChangeIndexView;
 import org.xjtusicd3.portal.view.ConfigureSoftView;
-import org.xjtusicd3.portal.view.Permission_RoleView;
-
 import com.alibaba.fastjson.JSONObject;
 
 @Controller
@@ -75,7 +74,31 @@ public class ConfigureController {
 	}
 	
 	
-	
+	//查看软件更多信息
+	@ResponseBody
+	@RequestMapping(value="/addSoftToBasicCfg",method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
+	public String addSoftToBasicCfg(HttpServletRequest request,HttpSession session){
+		//获取ajax传来数据
+		String configureId = request.getParameter("configureId");
+		
+		//查看该软件是否已添加至标准配置库
+		List<BasicConfigurePersistence> basicConfigurePersistences = BasicConfigureHelper.getCfgInfoFromBasic(configureId);
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		if (basicConfigurePersistences.size() == 0) {
+			//将软件添加至标准配置库
+			ConfigureService.addToBasicCfg(configureId);
+			jsonObject.put("value", "1");
+			String result = JsonUtil.toJsonString(jsonObject); 
+			return result;
+		}else {
+			//将软件从标准配置库移除
+			jsonObject.put("value", "2");
+			String result = JsonUtil.toJsonString(jsonObject); 
+			return result;
+		}
+	}
 	
 	
 	

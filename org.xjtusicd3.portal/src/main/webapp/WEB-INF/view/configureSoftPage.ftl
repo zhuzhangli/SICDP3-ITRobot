@@ -53,11 +53,12 @@
                   <th style="text-align: center;">文件大小</th> 
                   <th style="text-align: center;">下载次数</th>                   
                   <th style="text-align: center;">更多详情</th> 
-                  <th style="text-align: center;">下载/配置</th> 
+                  <th style="text-align: center;">下载</th>
+                  <th style="text-align: center;">加入标准库</th> 
                  </tr> 
                 </thead> 
                 
-                <tbody>    
+                <tbody id = "option1">    
                  <#list softList as a>
                  <tr class="gradeX" id="${a.CONFIGUREID }"> 
                   <td style="text-align: center;width: 3%"><input type="checkbox" class="i-checks" name="input[]" value="${a.CONFIGUREID }"></td>
@@ -68,12 +69,18 @@
                   <td style="text-align: center;width: 5%">${a.SCORE }</td>
                   <td style="text-align: center;width: 5%">${a.FILESIZE }</td> 
                   <td style="text-align: center;width: 5%">${a.DOWNLOADTIMES }</td> 
-                  <td style="text-align: center;width: 5%" id = "">
+                  <td style="text-align: center;width: 5%" >
                   	<button class="btn btn-white btn-sm" type="button" id="${a.CONFIGUREID }" title="更多详情" onclick="lookMoreSoftInfo(this.id)" data-toggle="modal" data-target="#myModalSoft"><i class="fa fa-eye"></i></button>
                   </td> 
-                  <td style="text-align: center;width: 8%" id = "">
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="下载" id="${a.USERID }" onclick="noAudit(this.id)"><a href="${a.URL }"><i class="fa fa-download"></i>                  	
-                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="添加至标准配置" id="${a.USERID }" onclick="noAudit(this.id)"><i class="fa fa-plus"></i>
+                  <td style="text-align: center;width: 4%" >
+                    <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="下载"  ><a href="${a.URL }"><i class="fa fa-download"></i></a></button>               	
+                  </td>
+                  <td style="text-align: center;width: 4%">
+                    <#if a.ISCONFIGURE = 0>
+                    <button class="btn btn-white btn-sm fa fa-plus" data-toggle="tooltip" data-placement="top" title="添加至标准配置" id="favoriteHeart" onclick="addSoftToBasicCfg(this.id)"></button>
+                    <#else>
+                    <button class="btn btn-white btn-sm fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="从标准配置移除" id="favoriteHeart" onclick="noAudit(this.id)"></button>
+                 	</#if>
                   </td>
                  </tr>
                  </#list> 
@@ -205,43 +212,40 @@
                   <div class="form-group"> 
                    <label class="col-sm-3 control-label">更多描述：</label> 
                    <div class="col-sm-8"> 
-                    <input id="editLogicName" name="logicName" minlength="2" type="text" class="form-control" required="" aria-required="true" /> 
+                    <textarea id="introduction" name="logicName"  class="form-control" style="overflow-y:auto;height: 100px"  aria-required="true" readonly="readonly"></textarea> 
                    </div> 
                   </div> 
                   
                   <div class="form-group"> 
                    <label class="col-sm-3 control-label">版本类型：</label> 
                    <div class="col-sm-8"> 
-                    <input id="editPhysicalName" name="logicName" type="text" class="form-control" required="" aria-required="true" /> 
+                    <input id="versionType" name="logicName" type="text" class="form-control" required="" aria-required="true" readonly="readonly"/> 
                    </div> 
                   </div> 
                  
                   <div class="form-group"> 
                    <label class="col-sm-3 control-label">版本号：</label> 
                    <div class="col-sm-8"> 
-                    <input id="editPhysicalName" name="logicName" type="text" class="form-control" required="" aria-required="true" /> 
+                    <input id="version" name="logicName" type="text" class="form-control" required="" aria-required="true" readonly="readonly"/> 
                    </div> 
                   </div> 
                   
                   <div class="form-group"> 
                    <label class="col-sm-3 control-label">软件类型：</label> 
                    <div class="col-sm-8"> 
-                    <input id="editPhysicalName" name="logicName" type="text" class="form-control" required="" aria-required="true" /> 
+                    <input id="softType" name="logicName" type="text" class="form-control" required="" aria-required="true" readonly="readonly"/> 
                    </div> 
                   </div> 
                   
                   <div class="form-group"> 
                    <label class="col-sm-3 control-label">网址：</label> 
                    <div class="col-sm-8"> 
-                    <input id="editPhysicalName" name="logicName" type="text" class="form-control" required="" aria-required="true" /> 
+                    <input id="website" name="logicName" type="text" class="form-control" required="" aria-required="true" readonly="readonly"/> 
                    </div> 
                   </div> 
                  
                  </div> 
-                 <div class="modal-footer"> 
-                  <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭 </button> 
-                  <button type="button" class="btn btn-primary" onclick="update()"> 提交 </button> 
-                 </div> 
+
                 </form> 
                </div> 
                <!-- /.modal-content --> 
@@ -322,18 +326,49 @@
             dataType: "json",
             success: function(data) {
             	
-            	var moreSoftInfo = data.moreSoftInfo; //获取后台角色待获取权限
+            	var moreSoftInfo = data.moreSoftInfo; //获取后台json'
             	
-            	$("#editPermissionId").val(moreSoftInfo.iNTRODUCTION); 
-            	$("#editLogicName").val(moreSoftInfo.vERSIONTYPE);
-            	$("#editPhysicalName").val(editPhysicalName);
-            }
-           
-        }) 	 
-    	
-    	
+            	var obj = document.getElementById("introduction");        
+                obj.innerText= moreSoftInfo.iNTRODUCTION;
+            	
+            	$("#versionType").val(moreSoftInfo.vERSIONTYPE);
+            	$("#version").val(moreSoftInfo.vERSION);
+            	$("#softType").val(moreSoftInfo.sOFTTYPE);
+            	$("#website").val(moreSoftInfo.wEBSITE);
+            }           
+        }) 	   	    	
      }
     
+    
+    
+	/* 增加权限 */      
+    function addSoftToBasicCfg(id) {  
+		//获取权限ID
+    	var configureId = document.getElementById(id).id;  
+    	
+        $.ajax({
+            type: "POST",
+            url: "/org.xjtusicd3.portal/addSoftToBasicCfg.html",
+            data: {
+                "configureId":configureId
+            },
+            dataType: "json",
+            success: function(data) {
+            	if(data.value=="1"){
+            		document.getElementById("favoriteHeart").setAttribute("class","btn btn-white btn-sm fa fa-trash-o");
+            	}else if(data.value=="2"){
+            		document.getElementById("favoriteHeart").setAttribute("class","share heart");
+            	}
+            }
+           
+        }) 
+    } 
+	
+    
+    
+    
+    
+ 	
     </script>
     
    </div> 

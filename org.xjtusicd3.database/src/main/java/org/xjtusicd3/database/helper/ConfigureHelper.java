@@ -8,7 +8,6 @@ import org.xjtusicd3.database.mapper.ConfigureHistoryPersistenceMapper;
 import org.xjtusicd3.database.mapper.ConfigurePersistenceMapper;
 import org.xjtusicd3.database.model.ConfigureHistoryPersistence;
 import org.xjtusicd3.database.model.ConfigurePersistence;
-import org.xjtusicd3.database.model.SoftPersistence;
 
 public class ConfigureHelper {
 	/*
