@@ -43,6 +43,31 @@ public interface ConfigurePersistenceMapper extends IBaseDao<ConfigurePersistenc
 	//获取软件总数量
 	@Select("SELECT COUNT(1) FROM TBL_Configure,TBL_Soft WHERE TBL_Configure.CONFIGUREID = TBL_Soft.CONFIGUREID ")
 	public int getAllSoftCounts();
+	
+	
+	//更新tbl_configure表中ISCONFIGURE字段信息    1-已加至标准库  0-未加入
+	@Update("UPDATE TBL_Configure SET ISCONFIGURE=#{1} WHERE CONFIGUREID=#{0}")
+	public void updateCfgStatus(String configureId, int isConfigure);
+	
+	
+	//获取所有驱动信息
+	@Select("SELECT * FROM TBL_Configure,TBL_Driver WHERE TBL_Configure.CONFIGUREID = TBL_Driver.CONFIGUREID ORDER BY TBL_Configure.CONFIGURETIME DESC LIMIT #{0},200 ")
+	public List<ConfigurePersistence> getAllDrivers(int startNum);
+	
+	
+	//获取驱动总数量
+	@Select("SELECT COUNT(1) FROM TBL_Configure,TBL_Driver WHERE TBL_Configure.CONFIGUREID = TBL_Driver.CONFIGUREID ")
+	public int getAllDriverCounts();
+	
+	
+	//获取所有补丁信息
+	@Select("SELECT * FROM TBL_Configure,TBL_Patch WHERE TBL_Configure.CONFIGUREID = TBL_Patch.CONFIGUREID ORDER BY TBL_Configure.CONFIGURETIME DESC LIMIT #{0},200 ")
+	public List<ConfigurePersistence> getAllPatchs(int startNum);
+	
+	
+	//获取补丁总数量
+	@Select("SELECT COUNT(1) FROM TBL_Configure,TBL_Patch WHERE TBL_Configure.CONFIGUREID = TBL_Patch.CONFIGUREID ")
+	public int getAllPatchCounts();
 
 	
 }

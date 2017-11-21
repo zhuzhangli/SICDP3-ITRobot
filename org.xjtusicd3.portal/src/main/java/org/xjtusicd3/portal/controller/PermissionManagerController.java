@@ -86,7 +86,7 @@ public class PermissionManagerController
 	}
 	
 	
-	//更改权限信息		
+	//删除权限信息		
 	@ResponseBody
 	@RequestMapping(value="/deletePermission",method=RequestMethod.POST)
 	public String deletePermission(HttpServletRequest request,HttpSession session){

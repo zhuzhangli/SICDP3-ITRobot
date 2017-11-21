@@ -24,8 +24,6 @@ public class EquipmentPersistence {
 	private String STORAGE;
 	@TableField(columnName="IP")
 	private String IP;
-	@TableField(columnName="EQUIPMENTIMAGE")
-	private String EQUIPMENTIMAGE;
 	@TableField(columnName="STATE")
 	private int STATE;
 	public String getEQUIPMENTID() {
@@ -70,12 +68,7 @@ public class EquipmentPersistence {
 	public void setIP(String iP) {
 		IP = iP;
 	}
-	public String getEQUIPMENTIMAGE() {
-		return EQUIPMENTIMAGE;
-	}
-	public void setEQUIPMENTIMAGE(String eQUIPMENTIMAGE) {
-		EQUIPMENTIMAGE = eQUIPMENTIMAGE;
-	}
+
 	public int getSTATE() {
 		return STATE;
 	}

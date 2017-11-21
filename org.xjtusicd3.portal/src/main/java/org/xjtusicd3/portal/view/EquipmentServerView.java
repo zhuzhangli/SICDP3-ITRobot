@@ -1,40 +1,91 @@
-package org.xjtusicd3.database.model;
+package org.xjtusicd3.portal.view;
 
-import org.xjtusicd3.database.ann.Table;
-import org.xjtusicd3.database.ann.TableField;
-import org.xjtusicd3.database.ann.TableKey;
-import org.xjtusicd3.database.ann.TableKey.Strategy;
-
-@Table(tablename="TBL_Server")
-public class ServerPersistence {
-	@TableKey(strategy=Strategy.NORMAL)
-	@TableField(columnName="EQUIPMENTID")
+public class EquipmentServerView {
+	//设备表通用
 	private String EQUIPMENTID;
-	@TableField(columnName="OSVERSION")
+	private String MACADDRESS;
+	private String EQUIPMENTMODEL;
+	private String BUYTIME;
+	private String CPU;
+	private String RAM;
+	private String STORAGE; 
+	private String IP;
+	private int STATE;
+	
+	//服务器特有
 	private String OSVERSION;
-	@TableField(columnName="COMPUTERNAME")
 	private String COMPUTERNAME;
-	@TableField(columnName="PCI")
 	private String PCI;
-	@TableField(columnName="USB")
 	private String USB;
-	@TableField(columnName="PATH")
 	private String PATH;
-	@TableField(columnName="RAM_EXCHANGEAREAUSE")
 	private String RAM_EXCHANGEAREAUSE;
-	@TableField(columnName="PARTATIONUSE")
 	private String PARTATIONUSE;
-	@TableField(columnName="IDLERAM")
 	private String IDLERAM;
-	@TableField(columnName="OS_TIME_USERNUM_LOAD")
 	private String OS_TIME_USERNUM_LOAD;
-	@TableField(columnName="OSLOAD")
 	private String OSLOAD;
+	private String FIREWALL;
+	private String ROUTINGTABLE;
+	private String HASCONTACT;
+	private String NETWORK;
+	
+	private String PROCESS;
+	private String REALTIMEPROCESS;
+	private String ACTIVEUSER;
+	private String BIOS;
+	private String NETWORKCARD;
 	public String getEQUIPMENTID() {
 		return EQUIPMENTID;
 	}
 	public void setEQUIPMENTID(String eQUIPMENTID) {
 		EQUIPMENTID = eQUIPMENTID;
+	}
+	public String getMACADDRESS() {
+		return MACADDRESS;
+	}
+	public void setMACADDRESS(String mACADDRESS) {
+		MACADDRESS = mACADDRESS;
+	}
+	public String getEQUIPMENTMODEL() {
+		return EQUIPMENTMODEL;
+	}
+	public void setEQUIPMENTMODEL(String eQUIPMENTMODEL) {
+		EQUIPMENTMODEL = eQUIPMENTMODEL;
+	}
+	public String getBUYTIME() {
+		return BUYTIME;
+	}
+	public void setBUYTIME(String bUYTIME) {
+		BUYTIME = bUYTIME;
+	}
+	public String getCPU() {
+		return CPU;
+	}
+	public void setCPU(String cPU) {
+		CPU = cPU;
+	}
+	public String getRAM() {
+		return RAM;
+	}
+	public void setRAM(String rAM) {
+		RAM = rAM;
+	}
+	public String getSTORAGE() {
+		return STORAGE;
+	}
+	public void setSTORAGE(String sTORAGE) {
+		STORAGE = sTORAGE;
+	}
+	public String getIP() {
+		return IP;
+	}
+	public void setIP(String iP) {
+		IP = iP;
+	}
+	public int getSTATE() {
+		return STATE;
+	}
+	public void setSTATE(int sTATE) {
+		STATE = sTATE;
 	}
 	public String getOSVERSION() {
 		return OSVERSION;
@@ -66,7 +117,6 @@ public class ServerPersistence {
 	public void setPATH(String pATH) {
 		PATH = pATH;
 	}
-	
 	public String getRAM_EXCHANGEAREAUSE() {
 		return RAM_EXCHANGEAREAUSE;
 	}
@@ -151,24 +201,7 @@ public class ServerPersistence {
 	public void setNETWORKCARD(String nETWORKCARD) {
 		NETWORKCARD = nETWORKCARD;
 	}
-	@TableField(columnName="FIREWALL")
-	private String FIREWALL;
-	@TableField(columnName="ROUTINGTABLE")
-	private String ROUTINGTABLE;
-	@TableField(columnName="HASCONTACT")
-	private String HASCONTACT;
-	@TableField(columnName="NETWORK")
-	private String NETWORK;
-	@TableField(columnName="PROCESS")
-	private String PROCESS;
-	@TableField(columnName="REALTIMEPROCESS")
-	private String REALTIMEPROCESS;
-	@TableField(columnName="ACTIVEUSER")
-	private String ACTIVEUSER;
-	@TableField(columnName="BIOS")
-	private String BIOS;
-	@TableField(columnName="NETWORKCARD")
-	private String NETWORKCARD; 
+	
 	
 	
 }

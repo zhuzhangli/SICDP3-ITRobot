@@ -113,4 +113,52 @@ public class ConfigureHelper {
 		return list;
 	}
 	
+	//更新tbl_configure表中ISCONFIGURE字段信息    1-已加至标准库  0-未加入
+	public static void updateCfgStatus(String configureId, int isConfigure) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		ConfigurePersistenceMapper mapper = session.getMapper(ConfigurePersistenceMapper.class);
+		mapper.updateCfgStatus(configureId,isConfigure);
+		session.close();		
+	}
+	
+	
+	//获取所有驱动信息
+	public static List<ConfigurePersistence> getAllDrivers(int startNum) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		ConfigurePersistenceMapper mapper = session.getMapper(ConfigurePersistenceMapper.class);
+		List<ConfigurePersistence> list = mapper.getAllDrivers(startNum);
+		session.close();
+		return list;
+	}
+	
+	
+	//获取驱动总数量
+	public static int getAllDriverCounts() {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		ConfigurePersistenceMapper mapper = session.getMapper(ConfigurePersistenceMapper.class);
+		int list = mapper.getAllDriverCounts();
+		session.close();
+		return list;
+	}
+	
+	
+	//获取所有补丁信息
+	public static List<ConfigurePersistence> getAllPatchs(int startNum) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		ConfigurePersistenceMapper mapper = session.getMapper(ConfigurePersistenceMapper.class);
+		List<ConfigurePersistence> list = mapper.getAllPatchs(startNum);
+		session.close();
+		return list;
+	}
+	
+	
+	//获取补丁总数量
+	public static int getAllPatchCounts() {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		ConfigurePersistenceMapper mapper = session.getMapper(ConfigurePersistenceMapper.class);
+		int list = mapper.getAllPatchCounts();
+		session.close();
+		return list;
+	}
+	
 }
