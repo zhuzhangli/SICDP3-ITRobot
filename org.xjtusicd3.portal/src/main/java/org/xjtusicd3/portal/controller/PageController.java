@@ -55,12 +55,6 @@ public class PageController {
 
 	
 	
-	//知识库增加
-	@RequestMapping(value="configureBasicPage",method=RequestMethod.GET)
-    public ModelAndView  configureBasicPage(){
- 	   ModelAndView mv=new ModelAndView("configureBasicPage");
- 	   return mv;
-    }
 	
 	
 	

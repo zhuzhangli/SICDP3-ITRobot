@@ -11,24 +11,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.xjtusicd3.common.util.JsonUtil;
-import org.xjtusicd3.database.helper.BasicConfigureHelper;
 import org.xjtusicd3.database.helper.ConfigureHelper;
+import org.xjtusicd3.database.helper.DepartmentHelper;
 import org.xjtusicd3.database.helper.EquipmentHelper;
-import org.xjtusicd3.database.model.BasicConfigurePersistence;
 import org.xjtusicd3.database.model.ComputerPersistence;
 import org.xjtusicd3.database.model.ConfigurePersistence;
+import org.xjtusicd3.database.model.DepartmentPersistence;
 import org.xjtusicd3.database.model.EquipmentPersistence;
 import org.xjtusicd3.database.model.ServerPersistence;
 import org.xjtusicd3.portal.service.ComputerService;
 import org.xjtusicd3.portal.service.ConfigureService;
+import org.xjtusicd3.portal.service.DepartmentService;
 import org.xjtusicd3.portal.service.EquipmentService;
+import org.xjtusicd3.portal.service.PermissionManagerService;
+import org.xjtusicd3.portal.service.RoleService;
 import org.xjtusicd3.portal.service.ServerService;
 import org.xjtusicd3.portal.view.ChangeIndexView;
 import org.xjtusicd3.portal.view.ConfigureDriverView;
 import org.xjtusicd3.portal.view.ConfigurePatchView;
 import org.xjtusicd3.portal.view.ConfigureSoftView;
+import org.xjtusicd3.portal.view.DepConfigureView;
 import org.xjtusicd3.portal.view.EquipmentComputerView;
 import org.xjtusicd3.portal.view.EquipmentServerView;
+import org.xjtusicd3.portal.view.Permission_RoleView;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -57,9 +62,9 @@ public class ConfigureController {
  	   List<ConfigureDriverView> driverList = ConfigureService.getAllDrivers();
  	   
  	   //获取驱动总数量
- 	   int driverSize = ConfigureHelper.getAllDriverCounts();
+ 	  int driverSize = ConfigureHelper.getAllDriverCounts();
  	   
- 	  //获取所有补丁信息  -- tbl_patch表
+ 	   //获取所有补丁信息  -- tbl_patch表
  	  List<ConfigurePatchView> patchList = ConfigureService.getAllPatchs();
  	   
  	  //获取补丁总数量
@@ -69,10 +74,10 @@ public class ConfigureController {
  	   mv.addObject("softSize", softSize);
  	   
  	   mv.addObject("driverList", driverList);
-	   mv.addObject("driverSize", driverSize);
+ 	   mv.addObject("driverSize", driverSize);
  	   
  	   
- 	   mv.addObject("patchList", patchList);
+	   mv.addObject("patchList", patchList);
 	   mv.addObject("patchSize", patchSize);
  	   return mv;
     }
@@ -108,34 +113,55 @@ public class ConfigureController {
 		//获取ajax传来数据
 		String configureId = request.getParameter("configureId");
 		
-		//查看该软件是否已添加至标准配置库
-		List<BasicConfigurePersistence> basicConfigurePersistences = BasicConfigureHelper.getCfgInfoFromBasic(configureId);
+		//查看还未获取该配置的部门
+		List<DepartmentPersistence> list = DepartmentHelper.getUnGotDepList(configureId);
+		System.out.println("changdu"+list.size());
 		
 		JSONObject jsonObject = new JSONObject();
 		
-		if (basicConfigurePersistences.size() == 0) {
-			//将软件添加至标准配置库
-			ConfigureService.addToBasicCfg(configureId);
-			
-			//更新tbl_configure表中ISCONFIGURE字段为1
-			ConfigureService.updateCfgStatus(configureId,1);
-			
+		if (list.size() != 0) {			
 			jsonObject.put("value", "1");
+			jsonObject.put("list", list);
 			jsonObject.put("configureId", configureId);
 			String result = JsonUtil.toJsonString(jsonObject); 
 			return result;
-		}else {
-			//将软件从标准配置库移除
-			ConfigureService.deleteFromBasicCfg(configureId);
-			
+		}else {			
 			//更新tbl_configure表中ISCONFIGURE字段为0
-			ConfigureService.updateCfgStatus(configureId,0);
+			ConfigureService.updateCfgStatus(configureId,1);
 			
 			jsonObject.put("value", "2");
 			jsonObject.put("configureId", configureId);
 			String result = JsonUtil.toJsonString(jsonObject); 
 			return result;
 		}
+	}
+	
+	
+	//将软件按选定的部门添加至标准配置表中
+	@ResponseBody
+	@RequestMapping(value="/addSoftToBasic",method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
+	public String addSoftToBasic(HttpServletRequest request){
+		System.out.println("进入addSoftToBasic"); 
+		
+		String configureId=request.getParameter("configureId");
+		String departmentId=request.getParameter("checkedIds");    //获取前台隐藏域存着的选中的复选框的value
+		
+		
+		String checkedIds[]=departmentId.split(","); //进行分割存到数组
+
+        
+        for(int i =0;i<checkedIds.length;i++){
+            if(!checkedIds[i].equals("")){
+        	//将软件按选定的部门添加至标准配置表中
+        	ConfigureService.addSoftToDepartment(configureId,checkedIds[i]);
+            }
+        }
+ 		
+  		JSONObject jsonObject = new JSONObject();
+  				
+  		String result = JsonUtil.toJsonString(jsonObject);
+  		
+  		return result;
 	}
 	
 	
@@ -173,29 +199,21 @@ public class ConfigureController {
 		String[] str = configureid.split("_");
 		String configureId = str[1];
 		
-		
-		//查看该驱动是否已添加至标准配置库
-		List<BasicConfigurePersistence> basicConfigurePersistences = BasicConfigureHelper.getCfgInfoFromBasic(configureId);
+		//查看还未获取该配置的部门
+		List<DepartmentPersistence> list = DepartmentHelper.getUnGotDepList(configureId);
+		System.out.println("长度"+list.size());
 		
 		JSONObject jsonObject = new JSONObject();
 		
-		if (basicConfigurePersistences.size() == 0) {
-			//将驱动添加至标准配置库
-			ConfigureService.addToBasicCfg(configureId);
-			
-			//更新tbl_configure表中ISCONFIGURE字段为1
-			ConfigureService.updateCfgStatus(configureId,1);
-			
+		if (list.size() != 0) {			
 			jsonObject.put("value", "1");
+			jsonObject.put("list", list);
 			jsonObject.put("configureId", configureId);
 			String result = JsonUtil.toJsonString(jsonObject); 
 			return result;
-		}else {
-			//将驱动从标准配置库移除
-			ConfigureService.deleteFromBasicCfg(configureId);
-			
+		}else {			
 			//更新tbl_configure表中ISCONFIGURE字段为0
-			ConfigureService.updateCfgStatus(configureId,0);
+			ConfigureService.updateCfgStatus(configureId,1);
 			
 			jsonObject.put("value", "2");
 			jsonObject.put("configureId", configureId);
@@ -204,7 +222,43 @@ public class ConfigureController {
 		}
 	}
 	
+	
+	//将驱动按选定的部门添加至标准配置表中
+	@ResponseBody
+	@RequestMapping(value="/addDriverToBasic",method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
+	public String addDriverToBasic(HttpServletRequest request){
+		System.out.println("进入addDriverToBasic"); 
 		
+		String configureId=request.getParameter("configureId");
+		String departmentId=request.getParameter("checkedIds");    //获取前台隐藏域存着的选中的复选框的value
+		
+		
+		String checkedIds[]=departmentId.split(","); //进行分割存到数组
+
+        
+        for(int i =0;i<checkedIds.length;i++){
+            if(!checkedIds[i].equals("")){
+        	//将软件按选定的部门添加至标准配置表中
+        	ConfigureService.addSoftToDepartment(configureId,checkedIds[i]);
+            }
+        }
+ 		
+        List<DepartmentPersistence> list = DepartmentHelper.getUnGotDepList(configureId);
+        
+        if (list.size() == 0) {
+        	//更新tbl_configure表中ISCONFIGURE字段为0
+			ConfigureService.updateCfgStatus(configureId,1);
+		}
+        
+        
+  		JSONObject jsonObject = new JSONObject();
+  				
+  		String result = JsonUtil.toJsonString(jsonObject);
+  		
+  		return result;
+	}
+	
+			
 	//查看补丁更多信息
 	@ResponseBody
 	@RequestMapping(value="/lookMorePatchInfo",method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
@@ -239,28 +293,21 @@ public class ConfigureController {
 		String[] str = configureid.split("_");
 		String configureId = str[1];
 				
-		//查看该补丁是否已添加至标准配置库
-		List<BasicConfigurePersistence> basicConfigurePersistences = BasicConfigureHelper.getCfgInfoFromBasic(configureId);
+		//查看还未获取该配置的部门
+		List<DepartmentPersistence> list = DepartmentHelper.getUnGotDepList(configureId);
+		System.out.println("长度"+list.size());
 		
 		JSONObject jsonObject = new JSONObject();
 		
-		if (basicConfigurePersistences.size() == 0) {
-			//将补丁添加至标准配置库
-			ConfigureService.addToBasicCfg(configureId);
-			
-			//更新tbl_configure表中ISCONFIGURE字段为1
-			ConfigureService.updateCfgStatus(configureId,1);
-			
+		if (list.size() != 0) {			
 			jsonObject.put("value", "1");
+			jsonObject.put("list", list);
 			jsonObject.put("configureId", configureId);
 			String result = JsonUtil.toJsonString(jsonObject); 
 			return result;
-		}else {
-			//将补丁从标准配置库移除
-			ConfigureService.deleteFromBasicCfg(configureId);
-			
+		}else {			
 			//更新tbl_configure表中ISCONFIGURE字段为0
-			ConfigureService.updateCfgStatus(configureId,0);
+			ConfigureService.updateCfgStatus(configureId,1);
 			
 			jsonObject.put("value", "2");
 			jsonObject.put("configureId", configureId);
@@ -269,8 +316,41 @@ public class ConfigureController {
 		}
 	}
 	
-	
-	
+
+		//将补丁按选定的部门添加至标准配置表中
+		@ResponseBody
+		@RequestMapping(value="/addPatchToBasic",method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
+		public String addPatchToBasic(HttpServletRequest request){
+			System.out.println("进入addPatchToBasic"); 
+			
+			String configureId=request.getParameter("configureId");
+			String departmentId=request.getParameter("checkedIds");    //获取前台隐藏域存着的选中的复选框的value
+			
+			
+			String checkedIds[]=departmentId.split(","); //进行分割存到数组
+
+	        
+	        for(int i =0;i<checkedIds.length;i++){
+	            if(!checkedIds[i].equals("")){
+	        	//将软件按选定的部门添加至标准配置表中
+	        	ConfigureService.addSoftToDepartment(configureId,checkedIds[i]);
+	            }
+	        }
+	 		
+	        List<DepartmentPersistence> list = DepartmentHelper.getUnGotDepList(configureId);
+	        
+	        if (list.size() == 0) {
+	        	//更新tbl_configure表中ISCONFIGURE字段为0
+				ConfigureService.updateCfgStatus(configureId,1);
+			}
+	        
+	        
+	  		JSONObject jsonObject = new JSONObject();
+	  				
+	  		String result = JsonUtil.toJsonString(jsonObject);
+	  		
+	  		return result;
+		}
 	
 
 	
@@ -604,6 +684,92 @@ public class ConfigureController {
 			return "1";
 		}		
 	}
+	
+	
+	/********************        configureBasicPage  BEGIN            ************************************/	
+	//标准配置信息
+	@RequestMapping(value="configureBasicPage",method=RequestMethod.GET)
+    public ModelAndView  configureBasicPage(){
+ 	   ModelAndView mv=new ModelAndView("configureBasicPage");
+ 	  
+ 	   //获取所有部门名
+ 	   List<DepConfigureView> depList = DepartmentService.getAllDepartment();
+ 	   
+ 	   if (depList.size()!=0) { 
+ 		   
+ 		   //分类显示
+ 		   List<DepConfigureView> softList = ConfigureService.getSoftCfgById(depList.get(0).getDEPARTMENTID()); 		   
+ 		   
+ 		   List<DepConfigureView> driverList = ConfigureService.getDriverCfgById(depList.get(0).getDEPARTMENTID());
+ 		 
+ 		   List<DepConfigureView> patchList = ConfigureService.getPatchCfgById(depList.get(0).getDEPARTMENTID()); 	
+ 		  	
+ 		   mv.addObject("softList", softList);		   
+ 		   mv.addObject("driverList", driverList);
+ 		   mv.addObject("patchList", patchList);
+ 	   }
+   
+ 	   mv.addObject("depList", depList);
+ 	   
+ 	   return mv;
+    }
+		
+	
+	//查找不用部门的配置信息
+	@ResponseBody
+	@RequestMapping(value="/selectDepartmentCfg",method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
+	public String selectDepartmentCfg(HttpServletRequest request,HttpSession session){
+		
+		String departmentId = request.getParameter("departmentId");
+		
+		//分类显示
+	    List<DepConfigureView> softList = ConfigureService.getSoftCfgById(departmentId); 		   
+	   
+	    List<DepConfigureView> driverList = ConfigureService.getDriverCfgById(departmentId);
+	 
+	    List<DepConfigureView> patchList = ConfigureService.getPatchCfgById(departmentId); 	
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		jsonObject.put("softList", softList);
+		jsonObject.put("driverList", driverList);	
+		jsonObject.put("patchList", patchList);
+
+		
+		String result = JsonUtil.toJsonString(jsonObject);
+		
+		return result;
+	}
+	
+	
+	//移除部门配置	
+	@ResponseBody
+	@RequestMapping(value="/removeConfigure",method=RequestMethod.POST)
+	public String removeConfigure(HttpServletRequest request,HttpSession session){
+		
+		//获取ajax传值
+		String configureid = request.getParameter("configureId");
+		String[] str = configureid.split("_");
+    	String configureId = str[1];
+		
+		String departmentId = request.getParameter("departmentId");
+	
+		if (configureId==null) {
+			
+			return "0";
+		}else {	
+			if (departmentId == null) {
+				return "0";
+			}else {
+				//移除部门配置	
+				ConfigureService.removeConfigure(configureId,departmentId);
+				return "1";
+			}
+			
+		}		
+	}
+	
+	
 	
 	
 	

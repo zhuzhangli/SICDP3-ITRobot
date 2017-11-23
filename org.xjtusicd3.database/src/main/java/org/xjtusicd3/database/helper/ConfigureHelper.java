@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.xjtusicd3.database.logic.SqlSessionManager;
 import org.xjtusicd3.database.mapper.ConfigureHistoryPersistenceMapper;
 import org.xjtusicd3.database.mapper.ConfigurePersistenceMapper;
+import org.xjtusicd3.database.model.BasicConfigurePersistence;
 import org.xjtusicd3.database.model.ConfigureHistoryPersistence;
 import org.xjtusicd3.database.model.ConfigurePersistence;
 
@@ -160,5 +161,37 @@ public class ConfigureHelper {
 		session.close();
 		return list;
 	}
+	
+	
+	//通过configureId获得对应配置信息
+	public static List<ConfigurePersistence> getInfoByCfgId(String configureid) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		ConfigurePersistenceMapper mapper = session.getMapper(ConfigurePersistenceMapper.class);
+		List<ConfigurePersistence> list = mapper.getInfoByCfgId(configureid);
+		session.close();
+		return list;
+	}
+	
+	
+	//分类查找
+	public static List<ConfigurePersistence> getCfgByType(String configureType) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		ConfigurePersistenceMapper mapper = session.getMapper(ConfigurePersistenceMapper.class);
+		List<ConfigurePersistence> list = mapper.getCfgByType(configureType);
+		session.close();
+		return list;
+	}
+	
+	
+	//查找特定部门特定配置信息
+	public static List<ConfigurePersistence> getCfgById(String departmentId, String configureType) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		ConfigurePersistenceMapper mapper = session.getMapper(ConfigurePersistenceMapper.class);
+		List<ConfigurePersistence> list = mapper.getCfgById(departmentId,configureType);
+		session.close();
+		return list;
+	}
+	
+
 	
 }

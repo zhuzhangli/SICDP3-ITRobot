@@ -20,10 +20,10 @@ public class BasicConfigureHelper {
 
 
 	//添加至标准配置库
-	public static void addToBasicCfg(String basicConfigureId, String configureId, Object department) {
+	public static void addToBasicCfg(String basicConfigureId, String configureId, String departmentId) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		BasicConfigurePersistenceMapper mapper = session.getMapper(BasicConfigurePersistenceMapper.class);
-		mapper.addToBasicCfg( basicConfigureId,  configureId,  department);
+		mapper.addToBasicCfg( basicConfigureId,  configureId,  departmentId);
 		session.close();		
 	}
 		
@@ -34,6 +34,36 @@ public class BasicConfigureHelper {
 		BasicConfigurePersistenceMapper mapper = session.getMapper(BasicConfigurePersistenceMapper.class);
 		mapper.deleteFromBasicCfg(configureId);
 		session.close();	
+	}
+
+
+	//判断标准配置表中是否已存在此部门该配置记录
+	public static List<BasicConfigurePersistence> isExist(String configureId, String departmentId) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		BasicConfigurePersistenceMapper mapper = session.getMapper(BasicConfigurePersistenceMapper.class);
+		List<BasicConfigurePersistence> list = mapper.isExist(configureId, departmentId);
+		session.close();
+		return list;
+	}
+
+	
+	//通过部门ID查看标准配置信息
+	public static List<BasicConfigurePersistence> getCfgByDepID(String departmentId) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		BasicConfigurePersistenceMapper mapper = session.getMapper(BasicConfigurePersistenceMapper.class);
+		List<BasicConfigurePersistence> list = mapper.getCfgByDepID(departmentId);
+		session.close();
+		return list;
+	}
+
+
+	//移除部门配置	
+	public static void removeConfigure(String configureId, String departmentId) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		BasicConfigurePersistenceMapper mapper = session.getMapper(BasicConfigurePersistenceMapper.class);
+		mapper.removeConfigure(configureId,departmentId);
+		session.close();	
+		
 	}
 
 }

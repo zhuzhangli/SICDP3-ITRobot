@@ -3,7 +3,6 @@ package org.xjtusicd3.portal.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -12,16 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.xjtusicd3.common.util.JsonUtil;
-import org.xjtusicd3.database.helper.ClassifyHelper;
-import org.xjtusicd3.database.helper.RoleHelper;
-import org.xjtusicd3.database.model.ClassifyPersistence;
-import org.xjtusicd3.database.model.PermissionPersistence;
-import org.xjtusicd3.database.model.RolePermissionPersistence;
-import org.xjtusicd3.database.model.RolePersistence;
-import org.xjtusicd3.portal.service.EventManagerService;
 import org.xjtusicd3.portal.service.PermissionManagerService;
 import org.xjtusicd3.portal.service.RoleService;
-import org.xjtusicd3.portal.service.UserService;
 import org.xjtusicd3.portal.view.PermissionView;
 import org.xjtusicd3.portal.view.Permission_RoleView;
 

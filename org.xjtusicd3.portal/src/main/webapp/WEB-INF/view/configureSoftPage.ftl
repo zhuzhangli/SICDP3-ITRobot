@@ -62,7 +62,7 @@
                 <tbody id = "option1">    
                  <#list softList as a>
                  <tr class="gradeX"> 
-                  <td style="text-align: center;width: 3%"><input type="checkbox" class="i-checks" name="input[]" value="${a.CONFIGUREID }"></td>
+                  <td style="text-align: center;width: 3%">${a.index+1 }</td>
                   <td style="width: 12%"><img class="answerImg" src="${a.LOGO }" style="width: 20px;height: 20px">${a.CONFIGURENAME }</td> 
                   <td style="width: 35%">${a.DESCRIPTION }</td>
                   <td style="text-align: center;width: 12%">${a.PRODUCER }</td> 
@@ -78,9 +78,9 @@
                   </td>
                   <td style="text-align: center;width: 4%">
                     <#if a.ISCONFIGURE = 0>
-                    <button class="btn btn-white btn-sm fa fa-plus" data-toggle="tooltip" data-placement="top" title="添加至标准配置" id="${a.CONFIGUREID }" onclick="SoftBasicCfg(this.id)"></button>
+                    <button class="btn btn-white btn-sm fa fa-plus"  data-placement="top" title="添加至标准配置" id="${a.CONFIGUREID }" onclick="SoftBasicCfg(this.id)" data-toggle="modal" data-target="#myModalSoft"></button>
                     <#else>
-                    <button class="btn btn-white btn-sm fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="从标准配置移除" id="${a.CONFIGUREID }" onclick="SoftBasicCfg(this.id)"></button>
+                    <button class="btn btn-white btn-sm fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="从标准配置移除" id="${a.CONFIGUREID }" onclick=""></button>
                  	</#if>
                   </td>
                  </tr>
@@ -119,7 +119,7 @@
                 <tbody id = "option1">    
                  <#list driverList as driver>
                  <tr class="gradeX"> 
-                  <td style="text-align: center;width: 3%"><input type="checkbox" class="i-checks" name="input[]" value="${driver.CONFIGUREID }"></td>
+                  <td style="text-align: center;width: 3%">${driver.index+1 }</td>
                   <td style="width: 35%">${driver.CONFIGURENAME }</td> 
                   <td style="text-align: center;width: 20%">${driver.OS }</td>
                   <td style="text-align: center;width: 10%">${driver.PRODUCER }</td> 
@@ -134,9 +134,9 @@
                   </td>
                   <td style="text-align: center;width: 4%">
                     <#if driver.ISCONFIGURE = 0>
-                    <button class="btn btn-white btn-sm fa fa-plus" data-toggle="tooltip" data-placement="top" title="添加至标准配置" id="driver_${driver.CONFIGUREID }" onclick="driverBasicCfg(this.id)"></button>
+                    <button class="btn btn-white btn-sm fa fa-plus"  data-placement="top" title="添加至标准配置" id="driver_${driver.CONFIGUREID }" onclick="driverBasicCfg(this.id)" data-toggle="modal" data-target="#myModalDriverDepartment"></button>
                     <#else>
-                    <button class="btn btn-white btn-sm fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="从标准配置移除" id="driver_${driver.CONFIGUREID }" onclick="driverBasicCfg(this.id)"></button>
+                    <button class="btn btn-white btn-sm fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="从标准配置移除" id="driver_${driver.CONFIGUREID }" onclick=""></button>
                  	</#if>
                   </td>
                  </tr>
@@ -176,7 +176,7 @@
                 <tbody id = "option1">    
                  <#list patchList as patch>
                  <tr class="gradeX"> 
-                  <td style="text-align: center;width: 3%"><input type="checkbox" class="i-checks" name="input[]" value="${patch.CONFIGUREID }"></td>
+                  <td style="text-align: center;width: 3%">${patch.index+1 }</td>
                   <td style="width: 35%">${patch.CONFIGURENAME }</td> 
                   <td style="width: 12%">${patch.OS }</td>
                   <td style="text-align: center;width: 12%">${patch.PRODUCER }</td> 
@@ -192,9 +192,9 @@
                   </td>
                   <td style="text-align: center;width: 4%">
                     <#if patch.ISCONFIGURE = 0>
-                    <button class="btn btn-white btn-sm fa fa-plus" data-toggle="tooltip" data-placement="top" title="添加至标准配置" id="patch_${patch.CONFIGUREID }" onclick="patchBasicCfg(this.id)"></button>
+                    <button class="btn btn-white btn-sm fa fa-plus"  data-placement="top" title="添加至标准配置" id="patch_${patch.CONFIGUREID }" onclick="patchBasicCfg(this.id)" data-toggle="modal" data-target="#myModalPatchDepartment"></button>
                     <#else>
-                    <button class="btn btn-white btn-sm fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="从标准配置移除" id="patch_${patch.CONFIGUREID }" onclick="patchBasicCfg(this.id)"></button>
+                    <button class="btn btn-white btn-sm fa fa-trash-o" data-toggle="tooltip" data-placement="top" title="从标准配置移除" id="patch_${patch.CONFIGUREID }" onclick=""></button>
                  	</#if>
                   </td>
                  </tr>
@@ -204,8 +204,49 @@
                </table>  
               </div> 
              </div> 
+           
+                                     
+             <!-- 给选定软件分配部门_模态框（Modal） --> 
+		      <div class="modal fade" id="myModalSoft" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+		       <div class="modal-dialog"> 
+		        <div class="modal-content" style="vertical-align: middle;margin-top: 100px"> 
+		         <div class="modal-header"> 
+		          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button> 
+		          <h4 class="modal-title" id="myModalLabel"> 将本软件分配给如下部门 </h4> 
+		         </div> 
+		        
+		         <div class="modal-body">
+		          <table class="table table-striped table-bordered table-hover "> 
+		          <thead> 		          
+		           <tr> 
+		            <th style="text-align: center;"><input type="checkbox" class="i-checks"  onclick="departmentCheck()">全选</th>  
+		            <th style="text-align: center;">部门名</th> 
+		           </tr>		           
+		          </thead> 
+		         
+		          <tbody id="tbody1">
+		         	<input id="softId"  type="text" style="display: none;"></input>
+		           
+		           <tr class="gradeX" id=""> 
+		            <td style="text-align: center;width: 13%"><input type="checkbox" class="i-checks" name="inputSoft[]" value=""></td>
+		            <td style="text-align: center;width: 87%" id="editPhysicalName${obtain.PERMISSIONID }"></td> 
+		           </tr> 
+		          </tbody> 
+		         </table> 		         		        
+		         </div>
+		         
+		         <div class="modal-footer"> 
+		           <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭 </button> 
+		           <button type="button" class="btn btn-primary" onclick="addSoftToBasic()"> 提交 </button> 
+		         </div>
+		        </div>
+		        <!-- /.modal-content --> 
+		       </div>
+		       <!-- /.modal-dialog --> 
+		      </div>
+		      <!-- /.modal --> 
              
-             
+                      
              <!-- 查看软件更多信息_模态框（Modal） --> 
              <div class="modal fade" id="myModalSoft" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
               <div class="modal-dialog"> 
@@ -268,6 +309,47 @@
              <!-- /.modal --> 
              
              
+             <!-- 给选定驱动分配部门_模态框（Modal） --> 
+		      <div class="modal fade" id="myModalDriverDepartment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+		       <div class="modal-dialog"> 
+		        <div class="modal-content" style="vertical-align: middle;margin-top: 100px"> 
+		         <div class="modal-header"> 
+		          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button> 
+		          <h4 class="modal-title" id="myModalLabel"> 将本驱动分配给如下部门 </h4> 
+		         </div> 
+		        
+		         <div class="modal-body">
+		          <table class="table table-striped table-bordered table-hover "> 
+		          <thead> 		          
+		           <tr> 
+		            <th style="text-align: center;"><input type="checkbox" class="i-checks"  onclick="driverDepartmentCheck()">全选</th>  
+		            <th style="text-align: center;">部门名</th> 
+		           </tr>		           
+		          </thead> 
+		         
+		          <tbody id="tbody2">
+		         	<input id="driverId"  type="text" style="display: none;"></input>
+		           
+		           <tr class="gradeX" id=""> 
+		            <td style="text-align: center;width: 13%"><input type="checkbox" class="i-checks" name="inputDriver[]" value=""></td>
+		            <td style="text-align: center;width: 87%" id="editPhysicalName${obtain.PERMISSIONID }"></td> 
+		           </tr> 
+		          </tbody> 
+		         </table> 		         		        
+		         </div>
+		         
+		         <div class="modal-footer"> 
+		           <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭 </button> 
+		           <button type="button" class="btn btn-primary" onclick="addDriverToBasic()"> 提交 </button> 
+		         </div>
+		        </div>
+		        <!-- /.modal-content --> 
+		       </div>
+		       <!-- /.modal-dialog --> 
+		      </div>
+		      <!-- /.modal --> 
+		      
+             
              <!-- 查看驱动更多信息_模态框（Modal） --> 
              <div class="modal fade" id="myModalDriver" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
               <div class="modal-dialog"> 
@@ -323,13 +405,45 @@
              <!-- /.modal --> 
              
              
-             
-             
-             
-             
-             
-             
-             
+             <!-- 给选定补丁分配部门_模态框（Modal） --> 
+		      <div class="modal fade" id="myModalPatchDepartment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+		       <div class="modal-dialog"> 
+		        <div class="modal-content" style="vertical-align: middle;margin-top: 100px"> 
+		         <div class="modal-header"> 
+		          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button> 
+		          <h4 class="modal-title" id="myModalLabel"> 将本补丁分配给如下部门 </h4> 
+		         </div> 
+		        
+		         <div class="modal-body">
+		          <table class="table table-striped table-bordered table-hover "> 
+		          <thead> 		          
+		           <tr> 
+		            <th style="text-align: center;"><input type="checkbox" class="i-checks"  onclick="patchDepartmentCheck()">全选</th>  
+		            <th style="text-align: center;">部门名</th> 
+		           </tr>		           
+		          </thead> 
+		         
+		          <tbody id="tbody3">
+		         	<input id="patchId"  type="text" style="display: none;"></input>
+		           
+		           <tr class="gradeX" id=""> 
+		            <td style="text-align: center;width: 13%"><input type="checkbox" class="i-checks" name="inputPatch[]" value=""></td>
+		            <td style="text-align: center;width: 87%" id="editPhysicalName${obtain.PERMISSIONID }"></td> 
+		           </tr> 
+		          </tbody> 
+		         </table> 		         		        
+		         </div>
+		         
+		         <div class="modal-footer"> 
+		           <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭 </button> 
+		           <button type="button" class="btn btn-primary" onclick="addPatchToBasic()"> 提交 </button> 
+		         </div>
+		        </div>
+		        <!-- /.modal-content --> 
+		       </div>
+		       <!-- /.modal-dialog --> 
+		      </div>
+		      <!-- /.modal --> 
              
             </div> 
            </div> 
@@ -388,7 +502,7 @@
         }
     </script> 
     
-    <script>
+    <script>    
     /* 查看软件更多信息 */
     function lookMoreSoftInfo(id) {
     	//获取权限ID
@@ -418,7 +532,7 @@
      }
     
         
-	/* 将软件添加/删除至标准库 */      
+	/* 将软件添加至标准库 */      
     function SoftBasicCfg(id) {  
 		//获取配置软件ID
     	var configureId = document.getElementById(id).id;  
@@ -431,15 +545,76 @@
             },
             dataType: "json",
             success: function(data) {
-            	if(data.value=="1"){
-            		document.getElementById(data.configureId).setAttribute("class","btn btn-white btn-sm fa fa-trash-o");
-            	}else if(data.value=="2"){
-            		document.getElementById(data.configureId).setAttribute("class","btn btn-white btn-sm fa fa-plus");
-            	}
+            	var list = data.list; //获取后台json'
+            	$("#softId").val(data.configureId);
+            	
+            	if(list.length == 0){
+    				$("#tbody1").html("");
+            	}else{
+            		var permissionHtml = "";
+            		
+    				for (var i = 0; i < list.length; i++) {
+    					 permissionHtml = permissionHtml
+ 						+ "<tr class='gradeX'><td style='text-align: center;width: 13%'><input type='checkbox' class='i-checks' name='inputSoft[]' value='"+list[i].dEPARTMENTID+"'></td>"
+ 						+ "<td style='text-align: center;width: 87%' id='"+list[i].dEPARTMENTID+"'>"
+ 						+ list[i].dEPARTMENTNAME
+ 						+"</td></tr>"
+ 						
+ 						$("#tbody1")[0].innerHTML = permissionHtml;    
+    				}
+            	}	
+            	
             }
            
         }) 
-    } 	
+    }
+	
+    /* 选择软件分配的部门     全选 */
+	  var isCheckAll = false;
+	
+	  function departmentCheck() {
+	
+	      if (isCheckAll) {
+	          $("input[name='inputSoft[]']").each(function() {
+	              this.checked = false;
+	          });
+	          isCheckAll = false;
+	      } else {
+	          $("input[name='inputSoft[]']").each(function() {
+	              this.checked = true;
+	          });
+	          isCheckAll = true;
+	      }
+	  }
+  
+		/* 将软件分配给不同部门 */ 
+	    function addSoftToBasic() {  
+	    	var configureId = $('#softId').val(); 
+	    	
+			var checkedSubject=document.getElementsByName('inputSoft[]');//获取到复选框的名称  
+	    	var checkedIds="";
+	 
+	    	//因为获得的是数组，所以要循环 为每一个checked赋值  
+    	    for(var i=0;i<checkedSubject.length;i++){  
+    	        if(checkedSubject[i].checked == true){  
+    	        	checkedIds += checkedSubject[i].value+",";  
+    	        } 
+    	     } 
+    	    $.ajax({
+                type: "POST",
+                url: "/org.xjtusicd3.portal/addSoftToBasic.html",
+                data: {
+                	configureId:configureId,
+              	    checkedIds:checkedIds                
+                },
+                dataType: "json",
+                success: function(data) {             	
+        			alert("添加软件至部门成功")
+        			window.location.reload();
+                }
+               
+            })         
+	    } 
     </script>
     
    
@@ -482,15 +657,77 @@
            },
            dataType: "json",
            success: function(data) {
-           	if(data.value=="1"){
-           		document.getElementById("driver_"+data.configureId).setAttribute("class","btn btn-white btn-sm fa fa-trash-o");
-           	}else if(data.value=="2"){
-           		document.getElementById("driver_"+data.configureId).setAttribute("class","btn btn-white btn-sm fa fa-plus");
-           	}
+        	   var list = data.list; //获取后台json'
+	           	$("#driverId").val(data.configureId);
+	           	
+	           	if(list.length == 0){
+	   				$("#tbody2").html("");
+	           	}else{
+	           		var permissionHtml = "";
+	           		
+	   				for (var i = 0; i < list.length; i++) {
+	   					 permissionHtml = permissionHtml
+							+ "<tr class='gradeX'><td style='text-align: center;width: 13%'><input type='checkbox' class='i-checks' name='inputDriver[]' value='"+list[i].dEPARTMENTID+"'></td>"
+							+ "<td style='text-align: center;width: 87%' id='"+list[i].dEPARTMENTID+"'>"
+							+ list[i].dEPARTMENTNAME
+							+"</td></tr>"
+							
+							$("#tbody2")[0].innerHTML = permissionHtml;    
+	   				}
+	           	}
            }
           
        }) 
    } 	
+   
+   
+   /* 选择驱动分配的部门     全选 */
+  var isDriverCheckAll = false;
+
+  function driverDepartmentCheck() {
+
+      if (isDriverCheckAll) {
+          $("input[name='inputDriver[]']").each(function() {
+              this.checked = false;
+          });
+          isDriverCheckAll = false;
+      } else {
+          $("input[name='inputDriver[]']").each(function() {
+              this.checked = true;
+          });
+          isDriverCheckAll = true;
+      }
+  }
+	  
+   
+   /* 将驱动分配给不同部门 */ 
+   function addDriverToBasic() {  
+   	var configureId = $('#driverId').val(); 
+   	
+	var checkedSubject=document.getElementsByName('inputDriver[]');//获取到复选框的名称  
+   	var checkedIds="";
+
+   	//因为获得的是数组，所以要循环 为每一个checked赋值  
+	    for(var i=0;i<checkedSubject.length;i++){  
+	        if(checkedSubject[i].checked == true){  
+	        	checkedIds += checkedSubject[i].value+",";  
+	        } 
+	     } 
+	    $.ajax({
+           type: "POST",
+           url: "/org.xjtusicd3.portal/addDriverToBasic.html",
+           data: {
+           	    configureId:configureId,
+         	    checkedIds:checkedIds                
+           },
+           dataType: "json",
+           success: function(data) {             	
+   			alert("添加驱动至部门成功")
+   			window.location.reload();
+           }
+          
+       })         
+   } 
    </script> 
     
     
@@ -521,7 +758,7 @@
     }
    
    
-   /* 将补丁添加至标准库 OR 从标准库删除 */      
+   /* 将补丁添加至标准库  */      
    function patchBasicCfg(id) {  
 	//获取配置补丁ID
    	var configureId = document.getElementById(id).id;  
@@ -534,15 +771,78 @@
            },
            dataType: "json",
            success: function(data) {
-           	if(data.value=="1"){
-           		document.getElementById("patch_"+data.configureId).setAttribute("class","btn btn-white btn-sm fa fa-trash-o");
-           	}else if(data.value=="2"){
-           		document.getElementById("patch_"+data.configureId).setAttribute("class","btn btn-white btn-sm fa fa-plus");
-           	}
+        	   var list = data.list; //获取后台json'
+	           	$("#patchId").val(data.configureId);
+	           	
+	           	if(list.length == 0){
+	   				$("#tbody3").html("");
+	           	}else{
+	           		var permissionHtml = "";
+	           		
+	   				for (var i = 0; i < list.length; i++) {
+	   					 permissionHtml = permissionHtml
+							+ "<tr class='gradeX'><td style='text-align: center;width: 13%'><input type='checkbox' class='i-checks' name='inputPatch[]' value='"+list[i].dEPARTMENTID+"'></td>"
+							+ "<td style='text-align: center;width: 87%' id='"+list[i].dEPARTMENTID+"'>"
+							+ list[i].dEPARTMENTNAME
+							+"</td></tr>"
+							
+							$("#tbody3")[0].innerHTML = permissionHtml;    
+	   				}
+	           	}
            }
           
        }) 
-   } 	
+   } 
+   
+   /* 选择补丁分配的部门     全选 */
+   var isPatchCheckAll = false;
+
+   function patchDepartmentCheck() {
+
+       if (isPatchCheckAll) {
+           $("input[name='inputPatch[]']").each(function() {
+               this.checked = false;
+           });
+           isPatchCheckAll = false;
+       } else {
+           $("input[name='inputPatch[]']").each(function() {
+               this.checked = true;
+           });
+           isPatchCheckAll = true;
+       }
+   }
+ 	  
+    
+    /* 将驱动分配给不同部门 */ 
+    function addPatchToBasic() {  
+    	var configureId = $('#patchId').val(); 
+    	
+ 	var checkedSubject=document.getElementsByName('inputPatch[]');//获取到复选框的名称  
+    	var checkedIds="";
+
+    	//因为获得的是数组，所以要循环 为每一个checked赋值  
+ 	    for(var i=0;i<checkedSubject.length;i++){  
+ 	        if(checkedSubject[i].checked == true){  
+ 	        	checkedIds += checkedSubject[i].value+",";  
+ 	        } 
+ 	     } 
+ 	    $.ajax({
+            type: "POST",
+            url: "/org.xjtusicd3.portal/addPatchToBasic.html",
+            data: {
+            	configureId:configureId,
+          	    checkedIds:checkedIds                
+            },
+            dataType: "json",
+            success: function(data) {             	
+    			alert("添加补丁至部门成功")
+    			window.location.reload();
+            }
+           
+        })         
+    } 
+   
+   
    </script>
    </div> 
   </div>  

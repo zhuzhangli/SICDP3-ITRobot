@@ -6,11 +6,15 @@ import java.util.UUID;
 
 import org.xjtusicd3.database.helper.BasicConfigureHelper;
 import org.xjtusicd3.database.helper.ConfigureHelper;
+import org.xjtusicd3.database.helper.DepartmentHelper;
 import org.xjtusicd3.database.helper.DriversHelper;
 import org.xjtusicd3.database.helper.PatchHelper;
+import org.xjtusicd3.database.helper.PermissionHelper;
 import org.xjtusicd3.database.helper.SoftHelper;
+import org.xjtusicd3.database.model.BasicConfigurePersistence;
 import org.xjtusicd3.database.model.ConfigureHistoryPersistence;
 import org.xjtusicd3.database.model.ConfigurePersistence;
+import org.xjtusicd3.database.model.DepartmentPersistence;
 import org.xjtusicd3.database.model.DriverPersistence;
 import org.xjtusicd3.database.model.PatchPersistence;
 import org.xjtusicd3.database.model.SoftPersistence;
@@ -18,6 +22,7 @@ import org.xjtusicd3.portal.view.ChangeIndexView;
 import org.xjtusicd3.portal.view.ConfigureDriverView;
 import org.xjtusicd3.portal.view.ConfigurePatchView;
 import org.xjtusicd3.portal.view.ConfigureSoftView;
+import org.xjtusicd3.portal.view.DepConfigureView;
 
 public class ConfigureService 
 {
@@ -260,6 +265,148 @@ public class ConfigureService
 				
 				return changeIndexViews;
 			}
+
+	
+	//将软件按选定的部门添加至标准配置表中
+	public static void addSoftToDepartment(String configureId, String departmentId) {	
+		//判断标准配置表中是否已存在此部门该配置记录
+		List<BasicConfigurePersistence> list = BasicConfigureHelper.isExist(configureId,departmentId);
+		if(list.size()==0){
+			String basicConfigureId = UUID.randomUUID().toString();
+			
+			BasicConfigureHelper.addToBasicCfg(basicConfigureId, configureId, departmentId);
+		}
+	}
+
+
+	//通过部门ID查看标准配置信息
+	public static List<DepConfigureView> getCfgByDepID(String departmentId) {
+		List<DepConfigureView> configureViews = new ArrayList<DepConfigureView>();
+		
+		//通过部门ID查看标准配置信息
+		List<BasicConfigurePersistence> cfgLists = BasicConfigureHelper.getCfgByDepID(departmentId);
+		
+		for(BasicConfigurePersistence cfgList:cfgLists){
+			DepConfigureView configureView = new DepConfigureView();
+			
+			configureView.setCONFIGUREID(cfgList.getCONFIGUREID());
+			
+			//通过configureId获得对应配置信息
+			List<ConfigurePersistence> cList = ConfigureHelper.getInfoByCfgId(cfgList.getCONFIGUREID());
+			configureView.setCONFIGURENAME(cList.get(0).getCONFIGURENAME());
+			configureView.setCONFIGURETYPE(cList.get(0).getCONFIGURETYPE());
+			
+			configureView.setDEPARTMENTID(cfgList.getDEPARTMENTID());
+			
+			configureViews.add(configureView);
+		}
+				
+		return configureViews;
+	}
+
+
+	//分类查找
+	public static List<DepConfigureView> getCfgByType(String configureType) {
+		List<DepConfigureView> configureViews = new ArrayList<DepConfigureView>();
+		
+		//分类查找
+		List<ConfigurePersistence> cfgLists = ConfigureHelper.getCfgByType(configureType);
+		
+		for(ConfigurePersistence cfgList:cfgLists){
+			DepConfigureView configureView = new DepConfigureView();
+			
+			configureView.setCONFIGUREID(cfgList.getCONFIGUREID());
+			
+			//通过configureId获得对应配置信息
+			List<ConfigurePersistence> cList = ConfigureHelper.getInfoByCfgId(cfgList.getCONFIGUREID());
+			configureView.setCONFIGURENAME(cList.get(0).getCONFIGURENAME());
+			
+			configureViews.add(configureView);
+		}
+				
+		return configureViews;
+	}
+
+
+	//查找特定部门软件配置信息
+	public static List<DepConfigureView> getSoftCfgById(String departmentId) {
+		List<DepConfigureView> configureViews = new ArrayList<DepConfigureView>();
+		
+		String configureType = "软件";
+		
+		//查找特定部门软件配置信息
+		List<ConfigurePersistence> cfgLists = ConfigureHelper.getCfgById(departmentId,configureType);
+		
+		for(ConfigurePersistence cfgList:cfgLists){
+			DepConfigureView configureView = new DepConfigureView();
+			
+			configureView.setCONFIGUREID(cfgList.getCONFIGUREID());
+			
+			//通过configureId获得对应配置信息
+			List<ConfigurePersistence> cList = ConfigureHelper.getInfoByCfgId(cfgList.getCONFIGUREID());
+			configureView.setCONFIGURENAME(cList.get(0).getCONFIGURENAME());
+			
+			configureViews.add(configureView);
+		}
+				
+		return configureViews;
+	}
+
+	//查找特定部门驱动配置信息
+	public static List<DepConfigureView> getDriverCfgById(String departmentId) {
+		List<DepConfigureView> configureViews = new ArrayList<DepConfigureView>();
+		
+		String configureType = "驱动";
+		
+		//查找特定部门软件配置信息
+		List<ConfigurePersistence> cfgLists = ConfigureHelper.getCfgById(departmentId,configureType);
+		
+		for(ConfigurePersistence cfgList:cfgLists){
+			DepConfigureView configureView = new DepConfigureView();
+			
+			configureView.setCONFIGUREID(cfgList.getCONFIGUREID());
+			
+			//通过configureId获得对应配置信息
+			List<ConfigurePersistence> cList = ConfigureHelper.getInfoByCfgId(cfgList.getCONFIGUREID());
+			configureView.setCONFIGURENAME(cList.get(0).getCONFIGURENAME());
+			
+			configureViews.add(configureView);
+		}
+				
+		return configureViews;
+	}
+
+
+	//查找特定部门补丁配置信息
+	public static List<DepConfigureView> getPatchCfgById(String departmentId) {
+List<DepConfigureView> configureViews = new ArrayList<DepConfigureView>();
+		
+		String configureType = "补丁";
+		
+		//查找特定部门软件配置信息
+		List<ConfigurePersistence> cfgLists = ConfigureHelper.getCfgById(departmentId,configureType);
+		
+		for(ConfigurePersistence cfgList:cfgLists){
+			DepConfigureView configureView = new DepConfigureView();
+			
+			configureView.setCONFIGUREID(cfgList.getCONFIGUREID());
+			
+			//通过configureId获得对应配置信息
+			List<ConfigurePersistence> cList = ConfigureHelper.getInfoByCfgId(cfgList.getCONFIGUREID());
+			configureView.setCONFIGURENAME(cList.get(0).getCONFIGURENAME());
+			
+			configureViews.add(configureView);
+		}
+				
+		return configureViews;
+	}
+
+
+	//移除部门配置	
+	public static void removeConfigure(String configureId, String departmentId) {
+		
+		BasicConfigureHelper.removeConfigure(configureId,departmentId);
+	}
 
 
 	

@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.xjtusicd3.database.logic.IBaseDao;
 import org.xjtusicd3.database.model.ConfigurePersistence;
-import org.xjtusicd3.database.model.SoftPersistence;
 
 public interface ConfigurePersistenceMapper extends IBaseDao<ConfigurePersistence, String>{
 
@@ -68,6 +67,22 @@ public interface ConfigurePersistenceMapper extends IBaseDao<ConfigurePersistenc
 	//获取补丁总数量
 	@Select("SELECT COUNT(1) FROM TBL_Configure,TBL_Patch WHERE TBL_Configure.CONFIGUREID = TBL_Patch.CONFIGUREID ")
 	public int getAllPatchCounts();
+	
+	
+	//通过configureId获得对应配置信息
+	@Select("SELECT * FROM TBL_Configure WHERE CONFIGUREID = #{0} ")
+	public List<ConfigurePersistence> getInfoByCfgId(String configureId);
+	
+	
+	//分类查找
+	@Select("SELECT * FROM TBL_Configure WHERE CONFIGURETYPE = #{0} ")
+	public List<ConfigurePersistence> getCfgByType(String configureType);
+	
+	
+	//查找特定部门特定配置信息
+	@Select("SELECT * FROM TBL_Configure,TBL_BasicConfigure WHERE TBL_Configure.CONFIGUREID = TBL_BasicConfigure.CONFIGUREID AND TBL_BasicConfigure.DEPARTMENTID = #{0} AND CONFIGURETYPE = #{1}")
+	public List<ConfigurePersistence> getCfgById(String departmentId, String configureType);
+
 
 	
 }

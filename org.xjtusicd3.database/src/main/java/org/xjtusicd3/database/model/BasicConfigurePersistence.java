@@ -12,8 +12,8 @@ public class BasicConfigurePersistence {
 	private String BASICCONFIGUREID;
 	@TableField(columnName="CONFIGUREID")
 	private String CONFIGUREID;
-	@TableField(columnName="DEPARTMENT")
-	private String DEPARTMENT;
+	@TableField(columnName="DEPARTMENTID")
+	private String DEPARTMENTID;
 	public String getBASICCONFIGUREID() {
 		return BASICCONFIGUREID;
 	}
@@ -26,12 +26,13 @@ public class BasicConfigurePersistence {
 	public void setCONFIGUREID(String cONFIGUREID) {
 		CONFIGUREID = cONFIGUREID;
 	}
-	public String getDEPARTMENT() {
-		return DEPARTMENT;
+	public String getDEPARTMENTID() {
+		return DEPARTMENTID;
 	}
-	public void setDEPARTMENT(String dEPARTMENT) {
-		DEPARTMENT = dEPARTMENT;
+	public void setDEPARTMENTID(String dEPARTMENTID) {
+		DEPARTMENTID = dEPARTMENTID;
 	}
+	
 	
 	
 	
