@@ -89,7 +89,7 @@
 	
 	<!-- 主体开始 -->
 	<section id="shortcodes">
-		<div id="main" style="min-height:825px">
+		<div id="main" >
 			<div id="notices" class="noticesPage">
 				<ul class="n-tab clearfix">
 	    			<li class="active">

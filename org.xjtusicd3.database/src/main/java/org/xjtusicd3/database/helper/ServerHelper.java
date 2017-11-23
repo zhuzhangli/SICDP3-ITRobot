@@ -17,12 +17,14 @@ public class ServerHelper {
 		return list;
 	}
 	
+	
 	//添加服务器信息
 	public static void addServerEquipment(String equipmentId, String osVersion, String computerName, String pCI,
 			String uSB, String path, String rAM_EXCHANGEAREAUSE, String pARTATIONUSE, String iDLERAM,
 			String oS_TIME_USERNUM_LOAD, String oSLOAD, String fIREWALL, String rOUTINGTABLE, String hASCONTACT,
 			String nETWORK, String pROCESS, String rEALTIMEPROCESS, String aCTIVEUSER, String bIOS,
 			String networkCard) {
+		
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		ServerPersistenceMapper mapper = session.getMapper(ServerPersistenceMapper.class);
 	    mapper.addServerEquipment( equipmentId,  osVersion,  computerName,  pCI,uSB,  path,  rAM_EXCHANGEAREAUSE,  pARTATIONUSE,  iDLERAM,
@@ -33,6 +35,21 @@ public class ServerHelper {
 	}
 	
 	
+	//更新服务器信息
+	public static void updateServerInfo(String equipmentId, String osVersion, String computerName, String pCI,
+			String uSB, String path, String rAM_EXCHANGEAREAUSE, String pARTATIONUSE, String iDLERAM,
+			String oS_TIME_USERNUM_LOAD, String oSLOAD, String fIREWALL, String rOUTINGTABLE, String hASCONTACT,
+			String nETWORK, String pROCESS, String rEALTIMEPROCESS, String aCTIVEUSER, String bIOS,
+			String nETWORKCARD) {
+		
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		ServerPersistenceMapper mapper = session.getMapper(ServerPersistenceMapper.class);
+	    mapper.updateServerInfo( equipmentId,  osVersion,  computerName,  pCI,uSB,  path,  rAM_EXCHANGEAREAUSE,  pARTATIONUSE,  iDLERAM,
+				 oS_TIME_USERNUM_LOAD,  oSLOAD,  fIREWALL,  rOUTINGTABLE,  hASCONTACT, nETWORK,  pROCESS,  rEALTIMEPROCESS,  aCTIVEUSER,  bIOS,nETWORKCARD);
+		session.close();
+
+		
+	}
 	
 	
 	
@@ -54,6 +71,9 @@ public class ServerHelper {
 				
 
 			}
+
+			
+			
 
 
 

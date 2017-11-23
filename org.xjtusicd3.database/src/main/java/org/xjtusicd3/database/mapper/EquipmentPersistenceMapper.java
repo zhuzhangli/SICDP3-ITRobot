@@ -23,7 +23,7 @@ public interface EquipmentPersistenceMapper extends IBaseDao<EquipmentPersistenc
 	List<EquipmentPersistence> getAllComupters();
 
 	//获取计算机总数
-	@Select("SELECT COUNT(1) FROM TBL_Equipment,TBL_Computer WHERE TBL_Equipment.EQUIPMENTID = TBL_Computer.EQUIPMENTID ")
+	@Select("SELECT COUNT(1) FROM TBL_Equipment,TBL_Computer WHERE TBL_Equipment.EQUIPMENTID = TBL_Computer.EQUIPMENTID AND TBL_Equipment.STATE=1")
 	int getAllComputerCounts();
 
 	//添加至通用设备表
@@ -48,6 +48,6 @@ public interface EquipmentPersistenceMapper extends IBaseDao<EquipmentPersistenc
 	List<EquipmentPersistence> getAllServers();
 
 	//获取服务器总数
-	@Select("SELECT COUNT(1) FROM TBL_Equipment,TBL_Server WHERE TBL_Equipment.EQUIPMENTID = TBL_Server.EQUIPMENTID ")
+	@Select("SELECT COUNT(1) FROM TBL_Equipment,TBL_Server WHERE TBL_Equipment.EQUIPMENTID = TBL_Server.EQUIPMENTID AND TBL_Equipment.STATE=1")
 	int getAllServerCounts();
 }

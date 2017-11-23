@@ -31,8 +31,10 @@ public class StopLibrary {
 				put(entry.getKey(), entry.getValue());
 			}
 		}
-		String localurl = System.getProperty("user.dir");
-		putIfAbsent(DEFAULT, localurl+"/workspace/robot-master/org.xjtusicd3.partner/library/stop.dic");
+		//!!!String localurl = System.getProperty("user.dir");
+		
+		String tomcatPath = System.getProperty("user.dir").replace("bin", "webapps");
+		putIfAbsent(DEFAULT, tomcatPath+"/org.xjtusicd3.partner/library/stop.dic");
 	}
 
 	/**

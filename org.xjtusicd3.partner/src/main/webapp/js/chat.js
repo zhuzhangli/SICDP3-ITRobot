@@ -32,13 +32,23 @@ function robot_welcome(){
 //输入框中直接聊天
 function chat(){
 	chatWithRobot();
-	setTimeout("scroll()",2500);
+	setTimeout("scroll()",500);
 }
 //点击列表
 function chat2(){
 	chatWithRobot2();
-	setTimeout("scroll()",2500);
+	setTimeout("scroll()",500);
 }
+
+
+
+//提问技巧
+function questionSkill(){
+	questionSkill1();
+	setTimeout("scroll()",500);
+}
+
+
 function chatWithRobot(){
 	var comment = document.getElementById("textarea").value;
 	var comments = comment.replace(/\s+/g,"");
@@ -54,9 +64,12 @@ function chatWithRobot(){
 			},
 			dataType:"json",
 			success:function(data){
+				$("#answerId").attr("value",data.answerId);
+				$("#questionId").attr("value",data.questionId);
 				if(data.value=="0"){
 					self.location='login.html';
 				}else if(data.value=="1"){
+					
 					/*
 					 * robotChat为推荐问题答案
 					 */
@@ -85,7 +98,13 @@ function chatWithRobot(){
 								+'<a href="javascript:void(0);" onclick=""></a>'
 								+'</span></span>'
 							+'</div><p></p></div></li>'
-							+'<li class="media"><div style="width:48px;float:left;margin-left: 7px;"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div></div><div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">对不起，我没有理解您的意思，麻烦您换个问法试试。<span style="color:blue"><a href="javascript:void(0);" onclick="questionSkill()">查看提问技巧</a></span><span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>';
+							+'<li class="media"><div style="width:48px;float:left;margin-left: 7px;">'
+							+'<div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div>'
+							+'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div></div>'
+							+'<div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p>'
+							+'<div style="float:left;"><span style="">对不起，我没有理解您的意思，麻烦您换个问法试试。<span style="color:blue">'
+							+'<a href="javascript:void(0);" onclick="questionSkill()">查看提问技巧</a></span><span style="color:blue">'
+							+'<a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>';
 						}else{
 							//已登录用户执行
 							document.getElementById("chat01_content").innerHTML = html+'<li class="media">'
@@ -121,6 +140,7 @@ function chatWithRobot(){
 							 * 系统只推送回一条回答
 							 */
 							if(data.robotChat.length==1){
+													
 								document.getElementById("chat01_content").innerHTML = html+'<li class="media">'
 								+'<div style="width:48px;float:right;margin-left: 7px;">'
 									+'<a><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="static/image/user.png"></div></a>'
@@ -141,8 +161,8 @@ function chatWithRobot(){
 								+'</div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div>'
 								+'</div><div class="media-body chat-pop">'
 								
-								+'<input type="hidden" id = "answerId" value="'+data.answerId+'"/>'
-								+'<input type="hidden" id = "questionId" value = "'+data.questionId+'"/> '
+								+'<input type="hidden" id = "answerId'+data.answerId+'" value="'+data.answerId+'"/>'
+								+'<input type="hidden" id = "questionId'+data.questionId+'" value = "'+data.questionId+'"/> '
 								
 								+'<div class="head_msg">'+data.robotInfo[0].rOBOTNAME+'为您推荐</div><span class="pull-right"><i class="fa fa-clock-o"></i> '
 								+'<abbr class="timeago">'+showTime()+'</abbr> </span><p></p>'
@@ -152,11 +172,11 @@ function chatWithRobot(){
 								+'<div class="content_line">  </div>'
 								+'<div class="div_faqVoteText" name="div_faqVoteText">'
 								+'<div style="display:inline">以上内容是否对您有帮助？<br>  '
-								+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
-									+'<img src="images/zan4_2.png">'
+								+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
+								+'<img src="images/zan4_2.png">'
 								+'</a>'
 								+'<span style="display:none;"></span> '
-								+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
+								+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 									+'<img class="submitFou" src="images/cai4_2.png" >'
 								+'</a>'
 								+'<span style="display:none;"></span>'
@@ -190,8 +210,8 @@ function chatWithRobot(){
 							+'</div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div>'
 							+'</div><div class="media-body chat-pop">'
 							
-							+'<input type="hidden" id = "answerId" value="'+data.answerId+'"/>'
-							+'<input type="hidden" id = "questionId" value = "'+data.questionId+'"/> '
+							+'<input type="hidden" id = "answerId'+data.answerId+'" value="'+data.answerId+'"/>'
+							+'<input type="hidden" id = "questionId'+data.questionId+'" value = "'+data.questionId+'"/> '
 							
 							+'<div class="head_msg">'+data.robotInfo[0].rOBOTNAME+'为您推荐</div><span class="pull-right"><i class="fa fa-clock-o"></i> '
 							+'<abbr class="timeago">'+showTime()+'</abbr> </span><p></p>'
@@ -199,13 +219,16 @@ function chatWithRobot(){
 							+'<b>经过我的判断，方案如下：</b>'
 							+'</div>'
 							+'<div class="content_line">  </div>'
+							
+							+'<div class="guess">我猜您还关注<a href="#">这些问题</a><div class="guessinfo">'+htmlss+'</div></div>'
+							
 							+'<div class="div_faqVoteText" name="div_faqVoteText">'
 							+'<div style="display:inline">以上内容是否对您有帮助？<br>  '
-							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
-								+'<img src="images/zan4_2.png">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
+							+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
-							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
@@ -239,8 +262,8 @@ function chatWithRobot(){
 							+'</div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div>'
 							+'</div><div class="media-body chat-pop">'
 							
-							+'<input type="hidden" id = "answerId" value="'+data.answerId+'">'
-							+'<input type="hidden" id = "questionId" value = "'+data.questionId+'"/> '
+							+'<input type="hidden" id = "answerId'+data.answerId+'" value="'+data.answerId+'"/>'
+							+'<input type="hidden" id = "questionId'+data.questionId+'" value = "'+data.questionId+'"/> '
 							
 							
 							+'<div class="head_msg">'+data.robotInfo[0].rOBOTNAME+'为您推荐</div><span class="pull-right"><i class="fa fa-clock-o"></i> '
@@ -249,13 +272,16 @@ function chatWithRobot(){
 							+'<b>经过我的判断，方案如下：</b>'
 							+'</div>'
 							+'<div class="content_line">  </div>'
+							
+							+'<div class="guess">我猜您还关注<a href="#">这些问题</a><div class="guessinfo">'+htmlss+'</div></div>'
+							
 							+'<div class="div_faqVoteText" name="div_faqVoteText">'
 							+'<div style="display:inline">以上内容是否对您有帮助？<br>  '
-							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
-								+'<img src="images/zan4_2.png">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
+							+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
-							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
@@ -290,8 +316,8 @@ function chatWithRobot(){
 								+'</div>'
 								+'<div class="media-body chat-pop">'
 								
-								+'<input type="hidden" id = "answerId" value="'+data.answerId+'"/>'
-								+'<input type="hidden" id = "questionId" value = "'+data.questionId+'"/> '
+								+'<input type="hidden" id = "answerId'+data.answerId+'" value="'+data.answerId+'"/>'
+								+'<input type="hidden" id = "questionId'+data.questionId+'" value = "'+data.questionId+'"/> '
 								
 								+'<div class="head_msg">'+data.robotInfo[0].rOBOTNAME+'为您推荐</div>'
 								+'<span class="pull-right"><i class="fa fa-clock-o"></i> '
@@ -303,11 +329,11 @@ function chatWithRobot(){
 								+'<div class="div_faqVoteText" name="div_faqVoteText"><div style="display:inline">以上内容是否对您有帮助？<br>  '
 								
 								
-								+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
+								+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 								+'<img src="images/zan4_2.png">'
 								+'</a>'
 								+'<span style="display:none;"></span> '
-								+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
+								+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 									+'<img class="submitFou" src="images/cai4_2.png" >'
 								+'</a>'
 								+'<span style="display:none;"></span>'
@@ -342,8 +368,8 @@ function chatWithRobot(){
 							+'</div>'
 							+'<div class="media-body chat-pop">'
 							
-							+'<input type="hidden" id = "answerId" value="'+data.answerId+'"/>'
-							+'<input type="hidden" id = "questionId" value = "'+data.questionId+'"/> '
+							+'<input type="hidden" id = "answerId'+data.answerId+'" value="'+data.answerId+'"/>'
+							+'<input type="hidden" id = "questionId'+data.questionId+'" value = "'+data.questionId+'"/> '
 							
 							+'<div class="head_msg">'+data.robotInfo[0].rOBOTNAME+'为您推荐</div>'
 							+'<span class="pull-right"><i class="fa fa-clock-o"></i> '
@@ -352,13 +378,16 @@ function chatWithRobot(){
 							+'<div style="float:left;"><span style="">'+data.robotChat[0].answer+'<div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none">'
 							+'<b>经过我的判断，方案如下：</b></div>'
 							+'<div class="content_line">  </div>'
+							
+							+'<div class="guess">我猜您还关注<a href="#">这些问题</a><div class="guessinfo">'+htmlss+'</div></div>'
+							
 							+'<div class="div_faqVoteText" name="div_faqVoteText"><div style="display:inline">以上内容是否对您有帮助？<br>  '
 							
-							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 							+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
-							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
@@ -392,8 +421,8 @@ function chatWithRobot(){
 							+'</div>'
 							+'<div class="media-body chat-pop">'
 							
-							+'<input type="hidden" id = "answerId" value="'+data.answerId+'"/>'
-							+'<input type="hidden" id = "questionId" value = "'+data.questionId+'"/> '
+							+'<input type="hidden" id = "answerId'+data.answerId+'" value="'+data.answerId+'"/>'
+							+'<input type="hidden" id = "questionId'+data.questionId+'" value = "'+data.questionId+'"/> '
 							
 							+'<div class="head_msg">'+data.robotInfo[0].rOBOTNAME+'为您推荐</div>'
 							+'<span class="pull-right"><i class="fa fa-clock-o"></i> '
@@ -402,13 +431,16 @@ function chatWithRobot(){
 							+'<div style="float:left;"><span style="">'+data.robotChat[0].answer+'<div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none">'
 							+'<b>经过我的判断，方案如下：</b></div>'
 							+'<div class="content_line">  </div>'
+							
+							+'<div class="guess">我猜您还关注<a href="#">这些问题</a><div class="guessinfo">'+htmlss+'</div></div>'
+							
 							+'<div class="div_faqVoteText" name="div_faqVoteText"><div style="display:inline">以上内容是否对您有帮助？<br>  '
 							
-							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 							+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
-							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
@@ -500,8 +532,8 @@ function chatWithRobot2(){
 							+'</div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div>'
 							+'</div><div class="media-body chat-pop">'
 							
-							+'<input type="hidden" id = "answerId" value="'+data.answerId+'"/>'
-							+'<input type="hidden" id = "questionId" value = "'+data.questionId+'"/> '
+							+'<input type="hidden" id = "answerId'+data.answerId+'" value="'+data.answerId+'"/>'
+							+'<input type="hidden" id = "questionId'+data.questionId+'" value = "'+data.questionId+'"/> '
 							
 							+'<div class="head_msg">'+data.robotInfo[0].rOBOTNAME+'为您推荐</div><span class="pull-right"><i class="fa fa-clock-o"></i> '
 							+'<abbr class="timeago">'+showTime()+'</abbr> </span><p></p>'
@@ -509,13 +541,15 @@ function chatWithRobot2(){
 							+'<b>经过我的判断，方案如下：</b>'
 							+'</div>'
 							+'<div class="content_line">  </div>'
+
+							
 							+'<div class="div_faqVoteText" name="div_faqVoteText">'
 							+'<div style="display:inline">以上内容是否对您有帮助？<br>  '
-							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 								+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
-							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
@@ -546,8 +580,8 @@ function chatWithRobot2(){
 							+'</div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div>'
 							+'</div><div class="media-body chat-pop">'
 							
-							+'<input type="hidden" id = "answerId" value="'+data.answerId+'"/>'
-							+'<input type="hidden" id = "questionId" value = "'+data.questionId+'"/> '
+							+'<input type="hidden" id = "answerId'+data.answerId+'" value="'+data.answerId+'"/>'
+							+'<input type="hidden" id = "questionId'+data.questionId+'" value = "'+data.questionId+'"/> '
 							
 							+'<div class="head_msg">'+data.robotInfo[0].rOBOTNAME+'为您推荐</div><span class="pull-right"><i class="fa fa-clock-o"></i> '
 							+'<abbr class="timeago">'+showTime()+'</abbr> </span><p></p>'
@@ -555,13 +589,16 @@ function chatWithRobot2(){
 							+'<b>经过我的判断，方案如下：</b>'
 							+'</div>'
 							+'<div class="content_line">  </div>'
+							
+							+'<div class="guess">我猜您还关注<a href="#">这些问题</a><div class="guessinfo">'+htmlss+'</div></div>'
+							
 							+'<div class="div_faqVoteText" name="div_faqVoteText">'
 							+'<div style="display:inline">以上内容是否对您有帮助？<br>  '
-							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 								+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
-							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
@@ -593,8 +630,8 @@ function chatWithRobot2(){
 							+'</div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div>'
 							+'</div><div class="media-body chat-pop">'
 							
-							+'<input type="hidden" id = "answerId" value="'+data.answerId+'"/>'
-							+'<input type="hidden" id = "questionId" value = "'+data.questionId+'"/> '
+							+'<input type="hidden" id = "answerId'+data.answerId+'" value="'+data.answerId+'"/>'
+							+'<input type="hidden" id = "questionId'+data.questionId+'" value = "'+data.questionId+'"/> '
 							
 							+'<div class="head_msg">'+data.robotInfo[0].rOBOTNAME+'为您推荐</div><span class="pull-right"><i class="fa fa-clock-o"></i> '
 							+'<abbr class="timeago">'+showTime()+'</abbr> </span><p></p>'
@@ -602,13 +639,16 @@ function chatWithRobot2(){
 							+'<b>经过我的判断，方案如下：</b>'
 							+'</div>'
 							+'<div class="content_line">  </div>'
+							
+							+'<div class="guess">我猜您还关注<a href="#">这些问题</a><div class="guessinfo">'+htmlss+'</div></div>'
+							
 							+'<div class="div_faqVoteText" name="div_faqVoteText">'
 							+'<div style="display:inline">以上内容是否对您有帮助？<br>  '
-							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 								+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
-							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
@@ -638,8 +678,8 @@ function chatWithRobot2(){
 							+'</div>'
 							+'<div class="media-body chat-pop">'
 							
-							+'<input type="hidden" id = "answerId" value="'+data.answerId+'"/>'
-							+'<input type="hidden" id = "questionId" value = "'+data.questionId+'"/> '
+							+'<input type="hidden" id = "answerId'+data.answerId+'" value="'+data.answerId+'"/>'
+							+'<input type="hidden" id = "questionId'+data.questionId+'" value = "'+data.questionId+'"/> '
 							
 							+'<div class="head_msg">'+data.robotInfo[0].rOBOTNAME+'为您推荐</div>'
 							+'<span class="pull-right"><i class="fa fa-clock-o"></i> '
@@ -651,11 +691,11 @@ function chatWithRobot2(){
 							+'<div class="div_faqVoteText" name="div_faqVoteText"><div style="display:inline">以上内容是否对您有帮助？<br>  '
 							
 							
-							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 							+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
-							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
@@ -687,8 +727,8 @@ function chatWithRobot2(){
 							+'</div>'
 							+'<div class="media-body chat-pop">'
 							
-							+'<input type="hidden" id = "answerId" value="'+data.answerId+'"/>'
-							+'<input type="hidden" id = "questionId" value = "'+data.questionId+'"/> '
+							+'<input type="hidden" id = "answerId'+data.answerId+'" value="'+data.answerId+'"/>'
+							+'<input type="hidden" id = "questionId'+data.questionId+'" value = "'+data.questionId+'"/> '
 							
 							+'<div class="head_msg">'+data.robotInfo[0].rOBOTNAME+'为您推荐</div>'
 							+'<span class="pull-right"><i class="fa fa-clock-o"></i> '
@@ -697,14 +737,17 @@ function chatWithRobot2(){
 							+'<div style="float:left;"><span style="">'+data.robotChat[0].answer+'<div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none">'
 							+'<b>经过我的判断，方案如下：</b></div>'
 							+'<div class="content_line">  </div>'
+							
+							+'<div class="guess">我猜您还关注<a href="#">这些问题</a><div class="guessinfo">'+htmlss+'</div></div>'
+							
 							+'<div class="div_faqVoteText" name="div_faqVoteText"><div style="display:inline">以上内容是否对您有帮助？<br>  '
 							
 							
-							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 							+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
-							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
@@ -737,8 +780,8 @@ function chatWithRobot2(){
 							+'</div>'
 							+'<div class="media-body chat-pop">'
 							
-							+'<input type="hidden" id = "answerId" value="'+data.answerId+'"/>'
-							+'<input type="hidden" id = "questionId" value = "'+data.questionId+'"/> '
+							+'<input type="hidden" id = "answerId'+data.answerId+'" value="'+data.answerId+'"/>'
+							+'<input type="hidden" id = "questionId'+data.questionId+'" value = "'+data.questionId+'"/> '
 							
 							+'<div class="head_msg">'+data.robotInfo[0].rOBOTNAME+'为您推荐</div>'
 							+'<span class="pull-right"><i class="fa fa-clock-o"></i> '
@@ -747,14 +790,17 @@ function chatWithRobot2(){
 							+'<div style="float:left;"><span style="">'+data.robotChat[0].answer+'<div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none">'
 							+'<b>经过我的判断，方案如下：</b></div>'
 							+'<div class="content_line">  </div>'
+							
+							+'<div class="guess">我猜您还关注<a href="#">这些问题</a><div class="guessinfo">'+htmlss+'</div></div>'
+							
 							+'<div class="div_faqVoteText" name="div_faqVoteText"><div style="display:inline">以上内容是否对您有帮助？<br>  '
 							
 							
-							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="beHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 							+'<img src="images/zan4_2.png">'
 							+'</a>'
 							+'<span style="display:none;"></span> '
-							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful()">'
+							+'<a id="submitLink" href="javascript:void(0);" onclick="NoHelpful(\''+data.answerId+'\',\''+data.questionId+'\')">'
 								+'<img class="submitFou" src="images/cai4_2.png" >'
 							+'</a>'
 							+'<span style="display:none;"></span>'
@@ -783,8 +829,13 @@ function scrollToLocation(number) {
     	scrollTop: scrollToContainer.offset().top - mainContainer.offset().top + mainContainer.scrollTop()
     }, 1500);//1.5秒滑动到指定位置
 }
+
+
+
+
+
 //提问技巧
-function questionSkill(){
+function questionSkill1(){
 	var html = document.getElementById("chat01_content").innerHTML;
 	 $.ajax({
 		 type: "GET",
@@ -792,9 +843,9 @@ function questionSkill(){
 		 dataType: "json",
 		 success: function(data){
 			 if(data.value=="0"){
-				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:left;margin-left: 7px;"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div></div><div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style=""><div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none"><b>经过我的判断，方案如下：</b></div><div class="head_msg">小朵为您推荐</div><div class="content_line">为了更快的帮您解决问题，您可以试着简短描述，如输入:"<b>如何下载驱动、"CPU占用率高"</b>。您也可以直接点击右侧热点区域。<br>现在，让我们愉快的交流吧^_^ </div></span></div><p></p></div></li>';
+				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:right;margin-left: 7px;"><a><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="static/image/user.png"></div></a><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">我</div></div><div class="media-body chat-pop2"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+"查看提问技巧"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'+'<li class="media"><div style="width:48px;float:left;margin-left: 7px;"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div></div><div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style=""><div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none"><b>经过我的判断，方案如下：</b></div><div class="head_msg">小朵为您推荐</div><div class="content_line">为了更快的帮您解决问题，您可以试着简短描述，如输入:"<b>如何下载驱动、"CPU占用率高"</b>。您也可以直接点击右侧热点区域。<br>现在，让我们愉快的交流吧^_^ </div></span></div><p></p></div></li>';
 			 }else{
-				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:left;margin-left: 7px;"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div></div><div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style=""><div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none"><b>经过我的判断，方案如下：</b></div><div class="head_msg">小朵为您推荐</div><div class="content_line">为了更快的帮您解决问题，您可以试着简短描述，如输入:"<b>如何下载驱动、"CPU占用率高"</b>。您也可以直接点击右侧热点区域。<br>现在，让我们愉快的交流吧^_^ </div></span></div><p></p></div></li>';
+				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:right;margin-left: 7px;"><a href="personal2.html?='+data.robotUser[0].uSERID+'" target="_blank"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotUser[0].aVATAR+'"></div></a><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotUser[0].uSERNAME+'</div></div><div class="media-body chat-pop2"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+"查看提问技巧"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'+'<li class="media"><div style="width:48px;float:left;margin-left: 7px;"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div></div><div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style=""><div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none"><b>经过我的判断，方案如下：</b></div><div class="head_msg">小朵为您推荐</div><div class="content_line">为了更快的帮您解决问题，您可以试着简短描述，如输入:"<b>如何下载驱动、"CPU占用率高"</b>。您也可以直接点击右侧热点区域。<br>现在，让我们愉快的交流吧^_^ </div></span></div><p></p></div></li>';
 			 }
 		 }
 	 });
@@ -802,9 +853,9 @@ function questionSkill(){
 }
 
 //推荐内容有帮助
-function beHelpful(){
-	var answerId = document.getElementById("answerId").value;
-	var questionId = document.getElementById("questionId").value;
+function beHelpful(answerId, questionId){
+	var answerId = document.getElementById("answerId"+answerId).value;
+	var questionId = document.getElementById("questionId"+questionId).value;
 	var comment = document.getElementById("textarea").value;
 	var comments = comment.replace(/\s+/g,"");
 	var html = document.getElementById("chat01_content").innerHTML;
@@ -838,7 +889,9 @@ function beHelpful(){
 				 		+'</div>'
 				 	+'</div>'
 				 +'</li>';
-			 }else{
+				 
+				 
+			 }else if(data.value=="1"){
 				 document.getElementById("chat01_content").innerHTML = html+'<li class="media">'
 				 	+'<div style="width:48px;float:left;margin-left: 7px;">'
 			 		+'<div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div>'
@@ -858,16 +911,19 @@ function beHelpful(){
 			 		+'</div>'
 			 	+'</div>'
 			 +'</li>';
-			 }
+			 }else {
+					alert("满意度重复提交");
+				}
+			 
 		 }
 	 });	
 }
 
 
 //用户对问题答案不满意
-function NoHelpful(){
-	var answerId = document.getElementById("answerId").value;
-	var questionId = document.getElementById("questionId").value;
+function NoHelpful(answerId, questionId){
+	var answerId = document.getElementById("answerId"+answerId).value;
+	var questionId = document.getElementById("questionId"+questionId).value;
 	var comment = document.getElementById("textarea").value;
 	var comments = comment.replace(/\s+/g,"");
 	var html = document.getElementById("chat01_content").innerHTML;
@@ -903,7 +959,7 @@ function NoHelpful(){
 				 		+'</div>'
 				 	+'</div>'
 				 +'</li>';
-			 }else{
+			 }else if(data.value=="1"){
 				 document.getElementById("chat01_content").innerHTML = html+'<li class="media">'
 				 	+'<div style="width:48px;float:left;margin-left: 7px;">'
 			 		+'<div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div>'
@@ -924,7 +980,10 @@ function NoHelpful(){
 			 			+'</span>'
 			 		+'</div>'
 			 	+'</div>'
-			 +'</li>';}
+			 +'</li>';
+			 }else {
+				alert("满意度重复提交");
+			}
 		 }
 	 });	
 }
@@ -932,10 +991,9 @@ function NoHelpful(){
 
 //将未解决问题添加至问题中心
 function addToCommunity(){
-	//var answerId = document.getElementById("answerId").value;
+
 	var questionId = document.getElementById("questionId").value;
-//	var comment = document.getElementById("textarea").value;
-//	var comments = comment.replace(/\s+/g,"");
+
 	var html = document.getElementById("chat01_content").innerHTML;
 	 $.ajax({
 		 type: "GET",

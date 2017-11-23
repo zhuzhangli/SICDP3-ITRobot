@@ -19,7 +19,7 @@ public interface CommunityQuestionPersistenceMapper extends IBaseDao<CommunityQu
 	/*
 	 * zyq_ajax_question的增加
 	 */
-	@Insert("INSERT INTO TBL_CommunityQuestion(COMMUNITYQUESTIONID,TIME,TITLE,CONTENT,CLASSIFYID,USERID,SCAN,QUESTIONSTATE,ISANSWER) VALUES (#{0},#{1},#{2},#{3},#{4},#{5},#{6},#{7},#{8}})")
+	@Insert("INSERT INTO TBL_CommunityQuestion(COMMUNITYQUESTIONID,TIME,TITLE,CONTENT,CLASSIFYID,USERID,SCAN,QUESTIONSTATE,ISANSWER) VALUES (#{0},#{1},#{2},#{3},#{4},#{5},#{6},#{7},#{8})")
 	void saveCommunityQuestion(String id, String time, String title, String content, String classifyid, String userid, String scan, int questionState,int isanswer);
 	/* 
 	 * 返回  对应分类   的全部问题

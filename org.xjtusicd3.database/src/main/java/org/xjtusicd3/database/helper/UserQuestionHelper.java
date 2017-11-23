@@ -150,6 +150,16 @@ public class UserQuestionHelper
 		}
 
 		
+		//查看是否已填写过满意度
+		public static List<RobotAnswerPersistence> getQuertionInfo(String questionId) {
+			SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+			RobotAnswerPersistenceMapper mapper = session.getMapper(RobotAnswerPersistenceMapper.class);
+			List<RobotAnswerPersistence> userlist = mapper.getQuertionInfo( questionId);
+			session.close();
+			return userlist;
+		}
+
+		
 		
 	
 }

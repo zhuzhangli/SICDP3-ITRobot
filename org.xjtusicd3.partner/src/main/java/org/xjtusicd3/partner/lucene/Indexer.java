@@ -56,13 +56,15 @@ public class Indexer {
 
 
     public static void main(String[] args) throws Exception {
-		String localurl = System.getProperty("user.dir");
-		File file = new File(localurl+"/luence");
+		//!!!String localurl = System.getProperty("user.dir");
+    	String tomcatPath = System.getProperty("user.dir").replace("bin", "webapps");
+    	
+		File file = new File(tomcatPath+"/luence");
 		if (file.exists()) {
 			deleteDir(file);
 		}else{
 			file.mkdir();
-			new Indexer().index(localurl+"/luence");
+			new Indexer().index(tomcatPath+"/luence");
 		}
     }
     private static boolean deleteDir(File dir) {

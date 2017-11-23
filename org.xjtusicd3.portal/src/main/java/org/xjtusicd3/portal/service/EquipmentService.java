@@ -275,4 +275,21 @@ public class EquipmentService {
 		return computerView;
 	}
 
+	
+	//更改服务器信息
+	public static void updateServer(String equipmentId, String macAddress, String equipmentModel, String buytime,
+			String cPU, String rAM, String storage, String iP, String osVersion, String computerName, String pCI,
+			String uSB, String path, String rAM_EXCHANGEAREAUSE, String pARTATIONUSE, String iDLERAM,
+			String oS_TIME_USERNUM_LOAD, String oSLOAD, String fIREWALL, String rOUTINGTABLE, String hASCONTACT,
+			String nETWORK, String pROCESS, String rEALTIMEPROCESS, String aCTIVEUSER, String bIOS,
+			String nETWORKCARD) {
+		//更新通用设备信息
+		EquipmentHelper.updateEquipment(equipmentId,macAddress,equipmentModel,cPU,rAM,storage,iP,buytime);
+		
+		//更新服务器信息
+		ServerHelper.updateServerInfo(equipmentId, osVersion,  computerName,  pCI,uSB,  path,  rAM_EXCHANGEAREAUSE,  pARTATIONUSE,  iDLERAM,
+				 oS_TIME_USERNUM_LOAD,  oSLOAD,  fIREWALL,  rOUTINGTABLE,  hASCONTACT,nETWORK,  pROCESS,  rEALTIMEPROCESS,  aCTIVEUSER,  bIOS, nETWORKCARD);
+		
+	}
+
 }

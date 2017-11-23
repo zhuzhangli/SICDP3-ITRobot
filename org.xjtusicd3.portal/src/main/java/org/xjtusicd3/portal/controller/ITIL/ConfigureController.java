@@ -575,15 +575,35 @@ public class ConfigureController {
 			
 			return "0";
 		}else {			
-			//更改用户计算机信息
-		//	EquipmentService.updateComputer(equipmentId,macAddress,equipmentModel,CPU,RAM,storage,IP,buytime,graphicCard,audioCard,networkCard,motherboard,OSName,OSID);	
+			//更改服务器信息
+			EquipmentService.updateServer(equipmentId,macAddress,equipmentModel,buytime,CPU,RAM,storage,IP,osVersion,computerName,PCI,USB,path,RAM_EXCHANGEAREAUSE,PARTATIONUSE,
+					IDLERAM,OS_TIME_USERNUM_LOAD,OSLOAD,FIREWALL,ROUTINGTABLE,HASCONTACT,NETWORK,PROCESS,REALTIMEPROCESS,ACTIVEUSER,BIOS,NETWORKCARD);	
 			
 			return "1";
 		}	
 	}
 	
 	
-	
+	//删除服务器信息		
+	@ResponseBody
+	@RequestMapping(value="/deleteServer",method=RequestMethod.POST)
+	public String deleteServer(HttpServletRequest request,HttpSession session){
+		
+		//获取ajax传值
+		String equipmentid = request.getParameter("equipmentId");
+		String[] str = equipmentid.split("_");
+    	String equipmentId = str[1];
+    	
+    	
+		if (equipmentId==null) {
+			
+			return "0";
+		}else {			
+			//更改服务器状态
+			EquipmentService.updateEquipmentState(equipmentId,0);			
+			return "1";
+		}		
+	}
 	
 	
 	

@@ -15,6 +15,7 @@ import org.xjtusicd3.common.util.JsonUtil;
 import org.xjtusicd3.database.helper.RobotHelper;
 import org.xjtusicd3.database.helper.UserHelper;
 import org.xjtusicd3.database.helper.UserQuestionHelper;
+import org.xjtusicd3.database.model.RobotAnswerPersistence;
 import org.xjtusicd3.database.model.RobotPersistence;
 import org.xjtusicd3.database.model.UserPersistence;
 import org.xjtusicd3.database.model.UserQuestionPersistence;
@@ -137,32 +138,38 @@ public class RobotController {
 			answerId = "00000000-0000-0000-0000-000000000000";
 		}
 		
-		System.out.println("问题id："+questionId);
-		System.out.println("答案id："+answerId);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
-		//String useremail = (String) session.getAttribute("UserEmail");
+
 		String username = (String) session.getAttribute("UserName");
 		JSONObject jsonObject = new JSONObject();
 		
 		//获取机器人信息
 		List<RobotPersistence> robotPersistences = RobotHelper.robotinfo();
 		jsonObject.put("robotInfo", robotPersistences);
-		/*
-		 * 用户满意SATICFACTION置为 1 
-		 * 用户名为空value返回 0，不空返回 1
-		 */
-		if (username==null) {
-			UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),1,questionId,answerId,0);
-			jsonObject.put("value", "0");
+	
+		//查看是否已填写过满意度
+		List<RobotAnswerPersistence> list = UserQuestionHelper.getQuertionInfo(questionId);
+		
+		if (list.size()==0) {
+			/*
+			 * 用户满意SATICFACTION置为 1 
+			 * 用户名为空value返回 0，不空返回 1
+			 */
+			if (username==null) {
+				UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),1,questionId,answerId,0);
+				jsonObject.put("value", "0");
+			}else {
+				
+				//获取用户信息
+				UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),1,questionId,answerId,0);
+
+				jsonObject.put("value", "1");
+			}
 		}else {
-			
-			//获取用户信息
-			UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),1,questionId,answerId,0);
-//			List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
-//			jsonObject.put("robotUser", userPersistences);
-			jsonObject.put("value", "1");
+			jsonObject.put("value", "2");
 		}
+		
 		String result = JsonUtil.toJsonString(jsonObject);
 		return result;
 	 }
@@ -182,34 +189,39 @@ public class RobotController {
 		if (answerId == null) {
 			answerId = "00000000-0000-0000-0000-000000000000";
 		}
-		
-		
-		System.out.println("问题id："+questionId);
-		System.out.println("答案id："+answerId);
+
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
-		//String useremail = (String) session.getAttribute("UserEmail");
+
 		String username = (String) session.getAttribute("UserName");
 		JSONObject jsonObject = new JSONObject();
 		
 		//获取机器人信息
 		List<RobotPersistence> robotPersistences = RobotHelper.robotinfo();
 		jsonObject.put("robotInfo", robotPersistences);
-		/*
-		 * 用户不满意SATICFACTION置为 0 
-		 * 用户名为空value返回 0，不空返回 1
-		 */
-		if (username==null) {
-			UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),0,questionId,answerId,0);
-			jsonObject.put("value", "0");
+		
+		//查看是否已填写过满意度
+		List<RobotAnswerPersistence> list = UserQuestionHelper.getQuertionInfo(questionId);
+		
+		if (list.size() ==0) {
+			/*
+			 * 用户不满意SATICFACTION置为 0 
+			 * 用户名为空value返回 0，不空返回 1
+			 */
+			if (username==null) {
+				UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),0,questionId,answerId,0);
+				jsonObject.put("value", "0");
+			}else {
+				
+				//获取用户信息
+				UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),0,questionId,answerId,0);
+
+				jsonObject.put("value", "1");
+			}
 		}else {
-			
-			//获取用户信息
-			UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),0,questionId,answerId,0);
-//			List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
-//			jsonObject.put("robotUser", userPersistences);
-			jsonObject.put("value", "1");
+			jsonObject.put("value", "2");
 		}
+		
 		String result = JsonUtil.toJsonString(jsonObject);
 		return result;
 	 }

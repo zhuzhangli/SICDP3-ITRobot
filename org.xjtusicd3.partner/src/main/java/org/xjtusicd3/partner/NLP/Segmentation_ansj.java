@@ -25,8 +25,11 @@ public class Segmentation_ansj {
 	 * date:2017年8月18日 18:51:34
 	 */
 	public static List<NLP_Word> similarScoreFirst(String text) throws Exception{
-		String localurl = System.getProperty("user.dir");
-		Forest forest = Library.makeForest(localurl+"/workspace/robot-master/org.xjtusicd3.partner/library/computer.dic");
+//!!!		String localurl = System.getProperty("user.dir");
+		String tomcatPath = System.getProperty("user.dir").replace("bin", "webapps");
+		
+		
+		Forest forest = Library.makeForest(tomcatPath+"/org.xjtusicd3.partner/library/computer.dic");
 		Result terms = ToAnalysis.parse(text,forest);
 //		Result terms = ToAnalysis.parse(text);
 		System.out.println("获取当前路径"+forest);
@@ -49,8 +52,11 @@ public class Segmentation_ansj {
 	
 	
 	public static List<robot_ChatView> similarScoreSecond1() throws Exception{
-		String localurl = System.getProperty("user.dir");
-		Forest forest = Library.makeForest(localurl+"/workspace/robot-master/org.xjtusicd3.partner/library/computer.dic");
+		//!!!String localurl = System.getProperty("user.dir");
+		
+		String tomcatPath = System.getProperty("user.dir").replace("bin", "webapps");
+		
+		Forest forest = Library.makeForest(tomcatPath+"/org.xjtusicd3.partner/library/computer.dic");
 		List<QuestionPersistence> questionPersistences = QuestionHelper.getFaqTotal();
 		List<robot_ChatView> robot_ChatViews = new ArrayList<robot_ChatView>();
 		for(QuestionPersistence questionPersistence:questionPersistences){
@@ -123,9 +129,12 @@ public class Segmentation_ansj {
 		
 		//File file = new File("library/faqKeywords.txt");//Text文件
  
-		String localurl = System.getProperty("user.dir");
-		System.out.println("用户目录："+localurl);
-		File file1 = new File(localurl+"/workspace/robot-master/org.xjtusicd3.partner/library/faqKeywords.txt");//Text文件
+		//!!!String localurl = System.getProperty("user.dir");
+		String tomcatPath = System.getProperty("user.dir").replace("bin", "webapps");
+		
+		
+		System.out.println("用户目录："+tomcatPath);
+		File file1 = new File(tomcatPath+"/org.xjtusicd3.partner/library/faqKeywords.txt");//Text文件
 		BufferedReader br = new BufferedReader(new FileReader(file1));//构造一个BufferedReader类来读取文件
 		String s = null;
 		List<robot_Chat> robot_Chats = new ArrayList<robot_Chat>();

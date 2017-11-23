@@ -1367,7 +1367,7 @@
         }) 	        
     }  
     
-    /* 删除权限 */
+    /* 删除配置 */
 	function deleteComputer(id){  
         //获取模态框数据  
         var equipmentId = document.getElementById(id).id; 	       
@@ -1563,7 +1563,7 @@
    
    
    /* 提交服务器更改  */ 
-   function updateComputer() {  
+   function updateServer() {  
    	   //获取模态框数据  
    	   var equipmentId = $('#editServerId').val(); 
        var macAddress = $('#MacAddress1').val();  
@@ -1634,7 +1634,30 @@
            }
           
        }) 	        
+   } 
+   
+   
+   /* 删除服务器配置 */
+	function deleteServer(id){  
+       //获取模态框数据  
+       var equipmentId = document.getElementById(id).id; 	       
+
+       $.ajax({
+           type: "POST",
+           url: "/org.xjtusicd3.portal/deleteServer.html",
+           data: {
+               "equipmentId":equipmentId
+           },
+           dataType: "json",
+           success: function(data) {
+           	alert("删除成功");
+           	window.location.reload();
+           }
+          
+       }) 	        
    }  
+   
+   
    </script>
 	
    </div> 
