@@ -86,6 +86,8 @@ public class FaqManagerController {
 
 			System.out.println(faqcontent);
 
+			
+			
 			//zzl_faqAdd_校验知识是否重复增添
 			List<QuestionPersistence> isExist = FaqManagerService.faqAdd(title,username);
 

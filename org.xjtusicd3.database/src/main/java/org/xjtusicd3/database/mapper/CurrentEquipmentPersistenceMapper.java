@@ -1,10 +1,10 @@
 package org.xjtusicd3.database.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.xjtusicd3.database.helper.CurrentConfigureHelper;
 import org.xjtusicd3.database.logic.IBaseDao;
 import org.xjtusicd3.database.model.CurrentEquipmentPersistence;
 
@@ -30,5 +30,10 @@ public interface CurrentEquipmentPersistenceMapper extends IBaseDao<CurrentEquip
 	//zzl_2017年9月30日15:20:41
 	@Select("SELECT * FROM TBL_CurrentEquipment WHERE USERID=#{0}")
 	List<CurrentEquipmentPersistence> getMacAdress(String userid);
+	
+	
+	//获取当前用户配置信息
+	@Select("SELECT * FROM TBL_CurrentEquipment")
+	List<Map<String, Object>> findCurrentCfgInfo();
 
 }

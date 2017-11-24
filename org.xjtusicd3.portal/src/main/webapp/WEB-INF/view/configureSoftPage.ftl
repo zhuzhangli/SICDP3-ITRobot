@@ -71,7 +71,7 @@
                   <td style="text-align: center;width: 5%">${a.FILESIZE }</td> 
                   <td style="text-align: center;width: 5%">${a.DOWNLOADTIMES }</td> 
                   <td style="text-align: center;width: 5%" >
-                  	<button class="btn btn-white btn-sm" type="button" id="soft_${a.CONFIGUREID }" title="更多详情" onclick="lookMoreSoftInfo(this.id)" data-toggle="modal" data-target="#myModalSoft"><i class="fa fa-eye"></i></button>
+                  	<button class="btn btn-white btn-sm" type="button" id="soft_${a.CONFIGUREID }" title="更多详情" onclick="lookMoreSoftInfo(this.id)" data-toggle="modal" data-target="#myModalSoftLook"><i class="fa fa-eye"></i></button>
                   </td> 
                   <td style="text-align: center;width: 4%" >
                     <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="下载"  ><a href="${a.URL }"><i class="fa fa-download"></i></a></button>               	
@@ -248,7 +248,7 @@
              
                       
              <!-- 查看软件更多信息_模态框（Modal） --> 
-             <div class="modal fade" id="myModalSoft" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+             <div class="modal fade" id="myModalSoftLook" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
               <div class="modal-dialog"> 
                <div class="modal-content" style="vertical-align: middle;margin-top: 100px"> 
                 <div class="modal-header"> 

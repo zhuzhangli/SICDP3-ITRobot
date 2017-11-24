@@ -80,12 +80,12 @@
                      
                      
                      
-                                     
+                   <!-- 添加至知识库编辑页 -->                  
                    <div class="ibox-content"  style="display:none" id="updateinfo">
                       <form method="" class="form-horizontal"  action="">
                           <div class="form-group" style="display: none;">
                               <div class="col-sm-10">
-                                  <input type="text" name="UserName" class="form-control"  required="required" value="${a.USERQUESTIONID}" id="questionId" >
+                                  <input type="text" name="UserName" class="form-control"  required="required" value="${a.USERQUESTIONID}" id="questionId" readonly="readonly">
                               </div>
                           </div>
                           
@@ -94,7 +94,8 @@
                               <span class="col-sm-2 control-label">问题标题</span>
 
                               <div class="col-sm-10">
-                                  <input type="text" name="UserName" class="form-control"  required="required" value="${a.QUESTIONTITLE}" id="title" >
+                                  <input type="text" name="UserName" class="form-control" minlength="2"  aria-required="true"  required="required" value="${a.QUESTIONTITLE}" id="title" readonly="readonly">
+                              		
                               </div>
                           </div>
                           <div class="hr-line-dashed"></div>
@@ -103,7 +104,8 @@
                           <div class="form-group">
                               <label class="col-sm-2 control-label">关键字</label>
                               <div class="col-sm-10">
-                                  <input type="text" class="form-control" id="keywords" placeholder="在输入关键词时请使用半角逗号间隔" style="height: 35px">
+                                  <input type="text" class="form-control" id="keywords"  placeholder="在输入多个关键词时请使用半角逗号间隔" onblur="checkUser()" style="height: 35px" name="username">
+                              <span id="namespan"></span><br/>
                               </div>
                           </div>
                           <div class="hr-line-dashed "></div>
@@ -121,7 +123,7 @@
                           <div class="form-group">
                               <label class="col-sm-2 control-label">摘要说明</label>
                               <div class="col-sm-10">
-                                  <textarea class="text" id="description" style="width: 1200px;height: 60px"></textarea>
+                                  <textarea class="form-control" id="description" style="width: 1200px;height: 60px" minlength="1"></textarea>
                               </div>
                           </div>
                           <div class="hr-line-dashed"></div>
@@ -137,7 +139,7 @@
                          
                           <div class="form-group"  >
                               <div class="col-sm-4 col-sm-offset-2" id="${a.USERQUESTIONID }">
-                                  <button class="btn btn-primary" "><a href="/org.xjtusicd3.portal/enentPage.html#tab-32">返回</a></button>
+                                  <button class="btn btn-primary" "><a href="/org.xjtusicd3.portal/eventPage.html#tab-32">返回</a></button>
                                   <button class="btn btn-primary" "><a href="javascript:void(0);" onclick="addToFaq()">完成</a></button>
                               </div>
                           </div>
@@ -155,8 +157,15 @@
     <!-- 自定义js -->
     <script src="js/content.js?v=1.0.0"></script>
 
+	<!-- jQuery Validation plugin javascript-->
+    <script src="js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="js/plugins/validate/messages_zh.min.js"></script>
+
+
     <!-- iCheck -->
     <script src="js/plugins/iCheck/icheck.min.js"></script>
+    
+    <script src="js/validation.js"></script>
     <script>
         $(document).ready(function () {
             $('.i-checks').iCheck({
@@ -164,6 +173,8 @@
                 radioClass: 'iradio_square-green',
             });
         });
+        
+        
     </script>
 	<script>
 	$(document).ready(
@@ -211,7 +222,7 @@
 		console.log(description);
 		var faqcontent = document.getElementById("faqcontent").innerText;
 		console.log(faqcontent);
-	 	 $.ajax({
+	 	/*  $.ajax({
 			type:"POST",
 			url:"/org.xjtusicd3.portal/saveFAQ.html",
 			data:{
@@ -229,10 +240,11 @@
 				}else if(data.value=="1"){
 					self.location='eventPage.html#tab-32';
 				}else{
+					
 					self.location='index.html';
 				}
 			}
-		}) 
+		})  */
 	}
 	
 	function windowclose(){

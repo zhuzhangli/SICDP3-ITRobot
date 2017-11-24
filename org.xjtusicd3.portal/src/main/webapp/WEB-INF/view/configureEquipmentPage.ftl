@@ -1244,8 +1244,12 @@
            },
            dataType: "json",
            success: function(data) {
-           	alert("添加成功");
-           	window.location.reload();
+           if(data == "1"){
+        	   alert("添加成功");
+               window.location.reload();
+           }else if(data == "0")
+	           alert("macAddress重复添加");
+	           window.location.reload();
            }
           
        }) 

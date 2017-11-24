@@ -417,9 +417,13 @@ public class ConfigureController {
 		if (eList.size() == 0) {
 			//添加用户设备
 			EquipmentService.addUserEquipment(macAddress,equipmentModel,buytime,CPU,RAM,storage,IP,graphicCard,audioCard,networkCard,motherboard,OSName,OSID);
+			return "1";
+		}else {
+			return "0";
 		}
+		
 				
-		return "1";
+		
 	}
 	
 	

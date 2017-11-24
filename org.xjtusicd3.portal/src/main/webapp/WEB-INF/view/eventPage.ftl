@@ -49,8 +49,6 @@
 	
 	<link rel="shortcut icon" href="media/image/favicon.ico" />
 	
-	<!-- echarts JS -->
-	<script src="media/js/echarts.js"></script>
 
 </head>
 

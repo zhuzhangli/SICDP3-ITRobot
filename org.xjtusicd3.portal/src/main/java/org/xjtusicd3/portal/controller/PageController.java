@@ -31,12 +31,7 @@ public class PageController {
  	   return mv;
     }
 		
-	//ITIL管理流程_变更管理
-	@RequestMapping(value="changePage",method=RequestMethod.GET)
-    public ModelAndView  changePage(){
- 	   ModelAndView mv=new ModelAndView("changePage");
- 	   return mv;
-    }
+	
 		
 	//ITIL管理流程_配置管理
 	@RequestMapping(value="configurePage",method=RequestMethod.GET)

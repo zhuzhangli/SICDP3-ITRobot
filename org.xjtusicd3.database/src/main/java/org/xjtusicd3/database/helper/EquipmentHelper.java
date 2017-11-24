@@ -4,12 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.xjtusicd3.database.logic.SqlSessionManager;
-import org.xjtusicd3.database.mapper.ConfigurePersistenceMapper;
 import org.xjtusicd3.database.mapper.CurrentEquipmentPersistenceMapper;
 import org.xjtusicd3.database.mapper.EquipmentPersistenceMapper;
-import org.xjtusicd3.database.model.ConfigurePersistence;
 import org.xjtusicd3.database.model.CurrentEquipmentPersistence;
 import org.xjtusicd3.database.model.EquipmentPersistence;
+
 
 public class EquipmentHelper {
 	/**
@@ -114,5 +113,15 @@ public class EquipmentHelper {
 		int count = mapper.getAllServerCounts();
 		session.close();
 		return count;
+	}
+	
+	
+	//根据macAddress去设备标准库中查找
+	public static List<EquipmentPersistence> FindEquipmentFromBasicByMac(String macAddress) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		EquipmentPersistenceMapper mapper = session.getMapper(EquipmentPersistenceMapper.class);
+		List<EquipmentPersistence> list = mapper.getEquipmentList(macAddress);
+		session.close();
+		return list;
 	}
 }
