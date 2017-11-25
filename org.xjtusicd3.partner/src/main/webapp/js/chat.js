@@ -49,6 +49,20 @@ function questionSkill(){
 }
 
 
+//满意
+function beHelpful(answerId, questionId){
+	beHelpful1(answerId, questionId);
+	setTimeout("scroll()",500);
+}
+
+//不满意
+function NoHelpful(answerId, questionId){
+	NoHelpful1(answerId, questionId);
+	setTimeout("scroll()",500);
+}
+
+
+
 function chatWithRobot(){
 	var comment = document.getElementById("textarea").value;
 	var comments = comment.replace(/\s+/g,"");
@@ -853,7 +867,7 @@ function questionSkill1(){
 }
 
 //推荐内容有帮助
-function beHelpful(answerId, questionId){
+function beHelpful1(answerId, questionId){
 	var answerId = document.getElementById("answerId"+answerId).value;
 	var questionId = document.getElementById("questionId"+questionId).value;
 	var comment = document.getElementById("textarea").value;
@@ -870,7 +884,8 @@ function beHelpful(answerId, questionId){
 		 dataType: "json",
 		 success: function(data){
 			 if(data.value=="0"){
-				 document.getElementById("chat01_content").innerHTML = html+'<li class="media">'
+				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:right;margin-left: 7px;"><a><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="static/image/user.png"></div></a><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">我</div></div><div class="media-body chat-pop2"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+"满意"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'
+				 +'<li class="media">'
 				 	+'<div style="width:48px;float:left;margin-left: 7px;">'
 				 		+'<div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div>'
 				 		+'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div>'
@@ -892,7 +907,8 @@ function beHelpful(answerId, questionId){
 				 
 				 
 			 }else if(data.value=="1"){
-				 document.getElementById("chat01_content").innerHTML = html+'<li class="media">'
+				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:right;margin-left: 7px;"><a href="personal2.html?='+data.robotUser[0].uSERID+'" target="_blank"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotUser[0].aVATAR+'"></div></a><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotUser[0].uSERNAME+'</div></div><div class="media-body chat-pop2"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+"满意"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'
+				 +'<li class="media">'
 				 	+'<div style="width:48px;float:left;margin-left: 7px;">'
 			 		+'<div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div>'
 			 		+'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div>'
@@ -921,7 +937,7 @@ function beHelpful(answerId, questionId){
 
 
 //用户对问题答案不满意
-function NoHelpful(answerId, questionId){
+function NoHelpful1(answerId, questionId){
 	var answerId = document.getElementById("answerId"+answerId).value;
 	var questionId = document.getElementById("questionId"+questionId).value;
 	var comment = document.getElementById("textarea").value;
@@ -938,7 +954,8 @@ function NoHelpful(answerId, questionId){
 		 dataType: "json",
 		 success: function(data){
 			 if(data.value=="0"){
-				 document.getElementById("chat01_content").innerHTML = html+'<li class="media">'
+				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:right;margin-left: 7px;"><a><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="static/image/user.png"></div></a><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">我</div></div><div class="media-body chat-pop2"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+"不满意"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'
+				 +'<li class="media">'
 				 	+'<div style="width:48px;float:left;margin-left: 7px;">'
 				 		+'<div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div>'
 				 		+'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div>'
@@ -960,7 +977,8 @@ function NoHelpful(answerId, questionId){
 				 	+'</div>'
 				 +'</li>';
 			 }else if(data.value=="1"){
-				 document.getElementById("chat01_content").innerHTML = html+'<li class="media">'
+				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:right;margin-left: 7px;"><a href="personal2.html?='+data.robotUser[0].uSERID+'" target="_blank"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotUser[0].aVATAR+'"></div></a><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotUser[0].uSERNAME+'</div></div><div class="media-body chat-pop2"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+"不满意"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'
+				 +'<li class="media">'
 				 	+'<div style="width:48px;float:left;margin-left: 7px;">'
 			 		+'<div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div>'
 			 		+'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div>'

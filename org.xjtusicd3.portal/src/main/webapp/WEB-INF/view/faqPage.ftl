@@ -203,15 +203,17 @@
 
 																		<tbody>
 																			<#list faqAudited as b>
-																			<tr class="" id="${b.FAQQUESTIONID}">
+																			<tr class="" ">
 																				<td style="width: 3%;vertical-align: middle;"><input type="checkbox" checked class="i-checks" name="input[]"/></td>
 																				<td style="width: 3%;vertical-align: middle;">${b_index+1}</td>
 																				<td style="width: 3%;vertical-align: middle;">${b.FAQTITLE}</td>
 																				<td style="width: 3%;vertical-align: middle;">${b.FAQCLASSIFYNAME}</td>
 																				<td style="width: 3%;vertical-align: middle;">${b.FAQCONTENT}</td>
-																				<td style="width: 3%;vertical-align: middle;"><a class="faq" href="/org.xjtusicd3.portal/editFAQ.html?u=${b.USERID}">${b.USERNAME}</a></td>
+																				<td style="width: 3%;vertical-align: middle;">${b.USERNAME}</td>
 																				<td style="width: 3%;vertical-align: middle;"><a onclick="deleteFAQ()">删除</a></td>
-																				<td style="width: 3%;vertical-align: middle;"><a class="faqinfo" href="/org.xjtusicd3.portal/showFAQ.html?u=${b.FAQQUESTIONID}">查看FAQ信息</a></td>
+																				<td style="width: 3%;vertical-align: middle;">
+																					<button class="btn btn-white btn-sm" type="button" id="${b.FAQQUESTIONID} title="更多详情" onclick="lookMoreFaqInfo(this.id)" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye"></i></button>
+																				</td>
 																			</tr>
 																			</#list>
 																		</tbody>

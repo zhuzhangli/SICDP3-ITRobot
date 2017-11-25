@@ -555,9 +555,9 @@
             		
     				for (var i = 0; i < list.length; i++) {
     					 permissionHtml = permissionHtml
- 						+ "<tr class='gradeX'><td style='text-align: center;width: 13%'><input type='checkbox' class='i-checks' name='inputSoft[]' value='"+list[i].dEPARTMENTID+"'></td>"
- 						+ "<td style='text-align: center;width: 87%' id='"+list[i].dEPARTMENTID+"'>"
- 						+ list[i].dEPARTMENTNAME
+ 						+ "<tr class='gradeX'><td style='text-align: center;width: 13%'><input type='checkbox' class='i-checks' name='inputSoft[]' value='"+list[i].dATADICTIONARYID+"'></td>"
+ 						+ "<td style='text-align: center;width: 87%' id='"+list[i].dATADICTIONARYID+"'>"
+ 						+ list[i].dATANAME
  						+"</td></tr>"
  						
  						$("#tbody1")[0].innerHTML = permissionHtml;    
@@ -667,9 +667,9 @@
 	           		
 	   				for (var i = 0; i < list.length; i++) {
 	   					 permissionHtml = permissionHtml
-							+ "<tr class='gradeX'><td style='text-align: center;width: 13%'><input type='checkbox' class='i-checks' name='inputDriver[]' value='"+list[i].dEPARTMENTID+"'></td>"
-							+ "<td style='text-align: center;width: 87%' id='"+list[i].dEPARTMENTID+"'>"
-							+ list[i].dEPARTMENTNAME
+							+ "<tr class='gradeX'><td style='text-align: center;width: 13%'><input type='checkbox' class='i-checks' name='inputDriver[]' value='"+list[i].dATADICTIONARYID+"'></td>"
+							+ "<td style='text-align: center;width: 87%' id='"+list[i].dATADICTIONARYID+"'>"
+							+ list[i].dATANAME
 							+"</td></tr>"
 							
 							$("#tbody2")[0].innerHTML = permissionHtml;    
@@ -781,9 +781,9 @@
 	           		
 	   				for (var i = 0; i < list.length; i++) {
 	   					 permissionHtml = permissionHtml
-							+ "<tr class='gradeX'><td style='text-align: center;width: 13%'><input type='checkbox' class='i-checks' name='inputPatch[]' value='"+list[i].dEPARTMENTID+"'></td>"
-							+ "<td style='text-align: center;width: 87%' id='"+list[i].dEPARTMENTID+"'>"
-							+ list[i].dEPARTMENTNAME
+							+ "<tr class='gradeX'><td style='text-align: center;width: 13%'><input type='checkbox' class='i-checks' name='inputPatch[]' value='"+list[i].dATADICTIONARYID+"'></td>"
+							+ "<td style='text-align: center;width: 87%' id='"+list[i].dATADICTIONARYID+"'>"
+							+ list[i].dATANAME
 							+"</td></tr>"
 							
 							$("#tbody3")[0].innerHTML = permissionHtml;    

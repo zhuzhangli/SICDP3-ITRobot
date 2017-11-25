@@ -1,5 +1,5 @@
 <div class="rightBarWrapper knowledgeCount">
-	<div class="barBox" id="countTplWrapper" style="margin-bottom: 20px;padding-right: 100px;width: 275px">
+	<div class="barBox" id="countTplWrapper" style="margin-bottom: 20px;width: 400px">
 		<h3 class="box-title">知识统计</h3>
 		<ul class="countList">
 			<li><label>浏览次数：</label><span>${faq3Views.faqScan}次</span></li>
@@ -19,12 +19,12 @@
 		</ul>
 	</div>
 
-	<div class="barAdBox " id="" data="1" style="left:0px;top:209px;z-index:1">
+	<div class="barAdBox " id="" data="1" style="left:0px;top:209px;z-index:1;width: 400px">
 		<a href="" onclick="clickadd()"><img src="images/erweima.PNG"
 			alt=""></a>
 	</div>
 	
-	<div class="barBox relateKnowledge" style="margin-top: 500px;width: 380px">
+	<div class="barBox relateKnowledge" style="margin-top: 500px;width: 400px">
 		<h3 class="box-title">相关知识</h3>
 		<ul class="relateKnowledgeList" id="relateTplWrapper">
 		<#assign n = faqSimilarity?size />
@@ -44,8 +44,5 @@
 		</#if>			
 		</ul>
 	</div>
-	
-	
-	
-	
+		
 </div>

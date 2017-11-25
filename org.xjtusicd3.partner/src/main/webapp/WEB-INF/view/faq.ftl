@@ -115,12 +115,14 @@
            <!-- 右侧开始 -->
            <div class="rightBarWrapper">
 	           <#include "inc/incRight.ftl">
-				<div class="barBox " id="dynamicBox" data="1" style="left:0px;top:621px;z-index:1">
+				<div class="barBox " id="dynamicBox" data="1" style="left:0px;top:621px;z-index:1;width: 340px">
 					<h3 class="box-title">用户动态</h3>
 					<ul class="dynamicList">
 						<#list userDynamics as userDynamics>
 						<li class="dynamicItem">
-							<p class="dynamicTime">${userDynamics.time}</p><p class="dynamicDesc"><a href="personal2.html?p=${userDynamics.userId}">${userDynamics.userName}</a>: ${userDynamics.how}“<a href="faq3.html?q=${userDynamics.faqId}">${userDynamics.faqTitle}</a>”</p>
+							<p class="dynamicTime">${userDynamics.time}</p>
+							<p class="dynamicDesc">
+								<a href="personal2.html?p=${userDynamics.userId}">${userDynamics.userName}</a>: ${userDynamics.how}“<a href="faq3.html?q=${userDynamics.faqId}">${userDynamics.faqTitle}</a>”</p>
 						</li>
 						</#list>
 					</ul>
@@ -131,9 +133,9 @@
 	</div>            
     <!-- 主体结束 -->
     
-    <!-- 底部开始 -->
+<!--     底部开始
 	<#include "inc/incFoot.ftl">
-	<!-- 底部结束 -->
+	底部结束 -->
      
     <!-- Slider -->
     <script type="text/javascript" src="zhao/lunbo_1/js/jquery-1.6.4.min.js"></script>

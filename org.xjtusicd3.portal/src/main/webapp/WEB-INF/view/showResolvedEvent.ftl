@@ -94,8 +94,8 @@
                               <span class="col-sm-2 control-label">问题标题</span>
 
                               <div class="col-sm-10">
-                                  <input type="text" name="UserName" class="form-control" minlength="2"  aria-required="true"  required="required" value="${a.QUESTIONTITLE}" id="title" readonly="readonly">
-                              		
+                                  <input type="text"  class="form-control"  aria-required="true"  required="required" value="${a.QUESTIONTITLE}" id="title" style="width: 80%;float: left;">
+                              	  <div class="validate_faqadd spa1"></div>
                               </div>
                           </div>
                           <div class="hr-line-dashed"></div>
@@ -104,8 +104,8 @@
                           <div class="form-group">
                               <label class="col-sm-2 control-label">关键字</label>
                               <div class="col-sm-10">
-                                  <input type="text" class="form-control" id="keywords"  placeholder="在输入多个关键词时请使用半角逗号间隔" onblur="checkUser()" style="height: 35px" name="username">
-                              <span id="namespan"></span><br/>
+                                  <input type="text" class="form-control" id="keywords"  placeholder="在输入多个关键词时请使用半角逗号间隔" style="width: 80%;float: left;" >
+                              	  <div class="validate_faqadd spa3"></div>
                               </div>
                           </div>
                           <div class="hr-line-dashed "></div>
@@ -115,7 +115,8 @@
 
                               <div class="col-sm-10">
                                   <select class="select" id="specialCategoryId" onchange="selectSecondChild()" style="height: 35px;width: 180px"></select>
-                 			 		<select class="select" id="subspecialCategoryId" name="classifyName" style="height: 35px;width: 180px"></select>
+                 			 	  <select class="select" id="subspecialCategoryId" name="classifyName" style="height: 35px;width: 180px"></select>
+                 			 	  <div class="validate_faqadd spa4"></div>
                               </div>
                           </div>
                           <div class="hr-line-dashed"></div>
@@ -123,7 +124,8 @@
                           <div class="form-group">
                               <label class="col-sm-2 control-label">摘要说明</label>
                               <div class="col-sm-10">
-                                  <textarea class="form-control" id="description" style="width: 1200px;height: 60px" minlength="1"></textarea>
+                                  <textarea class="form-control" id="description" style="width: 80%;height: 60px;float: left;" ></textarea>
+                             	  <div class="validate_faqadd spa5"></div>                           
                               </div>
                           </div>
                           <div class="hr-line-dashed"></div>
@@ -140,7 +142,8 @@
                           <div class="form-group"  >
                               <div class="col-sm-4 col-sm-offset-2" id="${a.USERQUESTIONID }">
                                   <button class="btn btn-primary" "><a href="/org.xjtusicd3.portal/eventPage.html#tab-32">返回</a></button>
-                                  <button class="btn btn-primary" "><a href="javascript:void(0);" onclick="addToFaq()">完成</a></button>
+                                  <!-- <button class="btn btn-primary" "><a href="javascript:void(0);" onclick="addToFaq()">完成</a></button> -->
+                                  <button class="btn btn-primary" "><a  class="blue"  id="sub" data-dialog="somedialog" >提交</a></button>
                               </div>
                           </div>
                       </form>
@@ -209,7 +212,7 @@
 			
 			
 			
-	function addToFaq(){
+	/* function addToFaq(){
 		var questionId = document.getElementById("questionId").value;
 
 		var title = document.getElementById("title").value;
@@ -222,7 +225,7 @@
 		console.log(description);
 		var faqcontent = document.getElementById("faqcontent").innerText;
 		console.log(faqcontent);
-	 	/*  $.ajax({
+	 	 $.ajax({
 			type:"POST",
 			url:"/org.xjtusicd3.portal/saveFAQ.html",
 			data:{
@@ -244,8 +247,88 @@
 					self.location='index.html';
 				}
 			}
-		})  */
-	}
+		})  
+	}*/
+	
+	
+	$("#sub").click(function(){
+		$(".spa2").text("");
+		$(".spa4").text("");
+		var na = /^\S{2,44}$/   
+		var kw = /^\S{2,30}$/  
+		var dp = /^\S{2,100}$/
+		var ss = /^\S*$/
+		if(na.test($("#title").val())&&kw.test($("#keywords").val())&&$("#subspecialCategoryId").val()&&$("#questionId").val()&&dp.test($("#description").val())){
+				var title = document.getElementById("title").value;
+				var keywords = document.getElementById("keywords").value;
+				var subspecialCategoryId = document.getElementById("subspecialCategoryId").value;
+				var description = document.getElementById("description").value;
+				var faqcontent = document.getElementById("faqcontent").innerText;
+				var questionId = document.getElementById("questionId").value;
+				$.ajax({
+					type:"POST",
+					url:"/org.xjtusicd3.portal/saveFAQ.html",
+					data:{
+						"questionId":questionId,
+						"title":title,
+						"keywords":keywords,
+						"subspecialCategoryId":subspecialCategoryId,
+						"description":description,
+						"faqcontent":faqcontent
+					},
+					dataType:"json",
+					success:function(data){
+						if(data.value=="0"){
+							self.location='login.html';
+						}else if(data.value=="1"){
+							alert("添加成功");
+							window.location.reload();
+						}else{
+							alert("重复提交");
+							window.location.reload();
+						}
+					}
+				})
+			return true;
+		}else{
+			if($("#title").val()==""){
+				$(".spa1").text('请您填写标题')
+			}
+			if($('input:radio[name="resource"]:checked').val()==null){
+				$(".spa2").text('请您选择类型')
+			}
+			if($("#keywords").val()==""){
+				$(".spa3").text('请您填写关键词')
+			}
+			if($("#subspecialCategoryId").val()==null){
+				$(".spa4").text('请您选择知识分类')
+			} 
+			if($("#description").val()==""){
+				$(".spa5").text('请您填写简单描述')
+			}
+			return false;
+		}
+	})
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	function windowclose(){
 		var url = document.getElementById('lasturl').innerHTML;

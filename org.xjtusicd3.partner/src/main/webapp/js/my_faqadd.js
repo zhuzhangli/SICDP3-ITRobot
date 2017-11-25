@@ -128,7 +128,7 @@ $("#sub").click(function(){
 	var na = /^\S{2,44}$/   
 	var kw = /^\S{2,30}$/  
 	var dp = /^\S{2,100}$/
-	if(na.test($("#title").val())&&kw.test($("#keywords").val())&&$("#subspecialCategoryId").val&&dp.test($("#description").val())){
+	if(na.test($("#title").val())&&kw.test($("#keywords").val())&&$("#subspecialCategoryId").val()&&dp.test($("#description").val())){
 			var title = document.getElementById("title").value;
 			var keywords = document.getElementById("keywords").value;
 			var subspecialCategoryId = document.getElementById("subspecialCategoryId").value;

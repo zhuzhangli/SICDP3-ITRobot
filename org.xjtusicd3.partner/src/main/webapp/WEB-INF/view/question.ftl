@@ -234,6 +234,7 @@
 						<label>${classifyList.FAQCLASSIFYNAME}</label>
 					</li>
 					</#list>
+					<div class="validate_faqadd spa4"></div>
 				</ul>					
 		<ul id="customTag"></ul>					
 		<div></div>					

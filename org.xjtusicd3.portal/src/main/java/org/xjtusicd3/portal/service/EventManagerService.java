@@ -106,7 +106,7 @@ public class EventManagerService {
 		Event_AnswerView event_AnswerView = new Event_AnswerView();
 		
 		event_AnswerView.setUSERQUESTIONID(userQuestionId);
-		System.out.println(userQuestionPersistences.get(0).getQUESTIONTITLE());
+
 		event_AnswerView.setQUESTIONTITLE(userQuestionPersistences.get(0).getQUESTIONTITLE());
 		
 		//获取应答表中问题对应的知识库答案id

@@ -15,7 +15,7 @@ public interface QuestionPersistenceMapper extends IBaseDao<QuestionPersistence,
 	/*
 	 * zyq_robot-分类
 	 */
-	@Select("SELECT TBL_FAQquestion.FAQQUESTIONID,TBL_FAQquestion.FAQTITLE FROM TBL_FAQquestion WHERE TBL_FAQquestion.FAQCLASSIFYID=#{0} ORDER BY TBL_FAQquestion.COLLECTION DESC LIMIT 4 ")
+	@Select("SELECT TBL_FAQquestion.FAQQUESTIONID,TBL_FAQquestion.FAQTITLE FROM TBL_FAQquestion WHERE TBL_FAQquestion.FAQCLASSIFYID=#{0} ORDER BY TBL_FAQquestion.COLLECTION DESC LIMIT 3 ")
 	public List<QuestionPersistence> SecondClassify_robot(String ClassifyId);
 	/*
 	 * zyq_faq2_知识列表

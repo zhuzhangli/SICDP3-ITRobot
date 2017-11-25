@@ -22,6 +22,7 @@ import org.xjtusicd3.database.mapper.ConfigureHistoryPersistenceMapper;
 import org.xjtusicd3.database.mapper.ConfigurePersistenceMapper;
 import org.xjtusicd3.database.mapper.CurrentConfigurePersistenceMapper;
 import org.xjtusicd3.database.mapper.CurrentEquipmentPersistenceMapper;
+import org.xjtusicd3.database.mapper.DataDictionaryPersistenceMapper;
 import org.xjtusicd3.database.mapper.DepartmentPersistenceMapper;
 import org.xjtusicd3.database.mapper.DriversPersistenceMapper;
 import org.xjtusicd3.database.mapper.EquipmentPersistenceMapper;
@@ -107,7 +108,7 @@ public class SqlSessionManager {
 			configuration.addMapper(RobotAnswerPersistenceMapper.class);
 			configuration.addMapper(BasicConfigurePersistenceMapper.class);
 			configuration.addMapper(DepartmentPersistenceMapper.class);
-			
+			configuration.addMapper(DataDictionaryPersistenceMapper.class);
 			
 			
 			configuration.addInterceptor(new BasePlugin());

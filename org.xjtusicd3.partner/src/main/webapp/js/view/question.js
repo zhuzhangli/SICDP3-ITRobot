@@ -93,6 +93,19 @@
 		box.style.display="none"; 
 	}
 	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	function saveCommunityQuestion(){
 		var title = document.getElementById("title").value;
 		var description = UE.getEditor('editor').getContent();
@@ -102,7 +115,10 @@
 	        if(obj[k].checked)
 	            check_val.push(obj[k].value);
 	    }
-			$.ajax({
+			
+	    
+	    if(check_val[0]!=null){
+	    $.ajax({
 				type:"POST",
 				url:"/org.xjtusicd3.partner/saveCommunityQuestion.html",
 				data:{
@@ -138,7 +154,25 @@
 					}
 				}
 			})
+		}else {
+				$(".validate_faqadd").css("color","#BD362F")
+				$(".spa4").text('请您选择分类')
+				
+		 
 		}
+	} 
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 		function create_edit(){
 			var _event= browserEvent();
 			var a = document.getElementById(_event.id+"_");

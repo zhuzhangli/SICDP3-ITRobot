@@ -179,21 +179,21 @@
 																<div class="macth_xv_cat_catlist ">
 																	<ul class="macth-dropdown-menu" data-bind="foreach:navData">
 																		<li class="macth_xvitem" data-bind="attr:{'data-submenu-id':$data.id}"  style="height: 6%;width: 100%;">
-																			<h3 style="height: 73%;width: 89%;">
+																			<h3 style="height: 73%;width: 100%;">
 																				<span>
 																					<i><img src="zhao/classify/images/homeicon.png"></i>
 																				</span>
 																				<span class="macth_xvh3_a">
 																					<a href="javascript:void(0)" data-bind="text:$data.title"></a>
 																				</span>
-																				<s></s>
+																				<s style="float: right;margin-right: 7%"></s>
 																			</h3>
-																			<div data-bind="attr:{'id':$data.id}" class="macth_popover">
-																				<div class="macth_popover-content" style="height: 44%;width: 127%;">
-																					<ul class="macth_content_ul"  data-bind="foreach:$data.content">
+																			<div data-bind="attr:{'id':$data.id}" class="macth_popover" style="width:130%;height:100%;overflow-x: scroll;overflow-y: scroll;" >
+																				<div class="macth_popover-content" style="height: 44%;width: 100%;">
+																					<ul class="macth_content_ul"  data-bind="foreach:$data.content" style="width: 100%;">
 																						<li class="macth_nav_li">
-																						<span class="macth_xvnav_li_alist" data-bind="text:$data.title"></span>
-																							<ul class="macth_xvnav_li_ul" data-bind="foreach:$data.content">
+																						<span class="macth_xvnav_li_alist" data-bind="text:$data.title" style="width: 100%;"></span>
+																							<ul class="macth_xvnav_li_ul" data-bind="foreach:$data.content" style="width: 100%;">
 																								<li><a onclick="chat2()" data-bind="text:$data.faqTitle"></a></li>
 																							</ul>
 																						</li>

@@ -185,9 +185,7 @@ public class FaqManagerController {
 	@RequestMapping(value={"/saveCommunityQuestionToFAQ"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/plain;charset=UTF-8")
 	public String saveCommunityQuestionToFAQ(HttpServletRequest request,HttpServletResponse response,HttpSession session){
 		//获取登录的管理员信息
-		String username = (String) session.getAttribute("UserName");
-		
-		System.out.println("用户名："+username);
+		String username = (String) session.getAttribute("UserName");		
 		
 		//获取路径
 		String url = (String) session.getAttribute("urlPath");
@@ -203,11 +201,6 @@ public class FaqManagerController {
 			String userId = request.getParameter("userId");
 			String answerContent = request.getParameter("answerContent");
 			String problemUser = request.getParameter("problemUser");
-			
-//			String problemUser = request.getParameter("problemUser");		
-//			String answerUser = request.getParameter("answerUser");
-//			String answerTime = request.getParameter("answerTime");
-
 
 			//zzl_faqAdd_校验知识是否重复增添
 			List<QuestionPersistence> isExist = FaqManagerService.faqAdd(faqTitle,problemUser);

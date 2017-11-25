@@ -136,8 +136,8 @@
 																				<td  style="width: 5%;text-align: center;">
 																					<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看问题详情" ><a class="questioninfo" href="/org.xjtusicd3.portal/showUnResolvedProblem.html?p=${a.problemId}"><i class="fa fa-eye"></i></a></button>
 																				</td>
-																				<td  style="width: 5%;text-align: center;" id = "${a.problemId }">																				
-																					<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="忽略此问题" id="ignoreProblem" onclick="ignore(this.id)"><i class="fa fa-trash-o"></i>
+																				<td  style="width: 5%;text-align: center;" >																				
+																					<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="忽略此问题" id = "${a.problemId }" onclick="ignore(this.id)"><i class="fa fa-trash-o"></i>
 																				</td>
 																			
 																			</tr>
@@ -313,7 +313,7 @@
     
     function ignore(id) {
     	
-    	var questionId = document.getElementById(id).parentElement.id;
+    	var questionId = document.getElementById(id).id;
     	alert(questionId);
     	 
          $.ajax({

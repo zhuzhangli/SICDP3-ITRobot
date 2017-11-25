@@ -159,31 +159,16 @@
         
         function addToFaq(){
         	
-        	alert("进入addToFaq");
-        	var communityQuestionId = document.getElementById("communityQuestionId").value;
-    		alert(communityQuestionId);
-    		
+        	var communityQuestionId = document.getElementById("communityQuestionId").value;    		
     		var title = document.getElementById("title").innerText;
-    		alert(title);
     		var content = document.getElementById("content").innerText;
-    		console.log(content);
     		var classifyId = document.getElementById("classifyId").value;
-    		alert(classifyId);
-    		console.log(classifyId);
-    		var problemUser = document.getElementById("problemUser").innerText;
-    		console.log(problemUser);
-    		
+    		var problemUser = document.getElementById("problemUser").innerText;   		
     		var userId = document.getElementById("userId").value;
-    		console.log(userId);
-    		var problemTime = document.getElementById("problemTime").innerText;
-    		console.log(problemTime);
-    		
+    		var problemTime = document.getElementById("problemTime").innerText;  		
     		var answerContent = document.getElementById("answerContent").innerText;
-    		console.log(answerContent);
     		var answerUser = document.getElementById("answerUser").innerText;
-    		console.log(answerUser);
     		var answerTime = document.getElementById("answerTime").innerText;
-    		console.log(answerTime);
     	 	  $.ajax({
     			type:"POST",
     			url:"/org.xjtusicd3.portal/saveCommunityQuestionToFAQ.html",
@@ -204,12 +189,13 @@
     				if(data.value=="0"){
     					self.location='login.html';
     				}else if(data.value=="1"){
-    					self.location='eventPage.html#tab-32';
+    					alert("添加成功");
+    					self.location.href = "/org.xjtusicd3.portal/problemPage.html#tab-32";
     				}else{
-    					self.location='index.html';
+    					alert("重复添加");
+    					self.location.href = "/org.xjtusicd3.portal/problemPage.html";
     				} 
-    				alert("更改状态成功");
-                 	window.location.reload();
+    				
     			}
     		})  
     	}

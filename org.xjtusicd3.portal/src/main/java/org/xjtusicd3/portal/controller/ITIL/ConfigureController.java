@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.xjtusicd3.common.util.JsonUtil;
 import org.xjtusicd3.database.helper.ConfigureHelper;
+import org.xjtusicd3.database.helper.DataDictionaryHelper;
 import org.xjtusicd3.database.helper.DepartmentHelper;
 import org.xjtusicd3.database.helper.EquipmentHelper;
 import org.xjtusicd3.database.model.ComputerPersistence;
 import org.xjtusicd3.database.model.ConfigurePersistence;
+import org.xjtusicd3.database.model.DataDictionaryPersistence;
 import org.xjtusicd3.database.model.DepartmentPersistence;
 import org.xjtusicd3.database.model.EquipmentPersistence;
 import org.xjtusicd3.database.model.ServerPersistence;
@@ -114,8 +116,10 @@ public class ConfigureController {
 		String configureId = request.getParameter("configureId");
 		
 		//查看还未获取该配置的部门
-		List<DepartmentPersistence> list = DepartmentHelper.getUnGotDepList(configureId);
-		System.out.println("changdu"+list.size());
+		//List<DepartmentPersistence> list = DepartmentHelper.getUnGotDepList(configureId);
+		List<DataDictionaryPersistence> list = DataDictionaryHelper.getUnGotDepList(configureId);
+		
+		System.out.println("长度"+list.size());
 		
 		JSONObject jsonObject = new JSONObject();
 		
@@ -200,7 +204,7 @@ public class ConfigureController {
 		String configureId = str[1];
 		
 		//查看还未获取该配置的部门
-		List<DepartmentPersistence> list = DepartmentHelper.getUnGotDepList(configureId);
+		List<DataDictionaryPersistence> list = DataDictionaryHelper.getUnGotDepList(configureId);
 		System.out.println("长度"+list.size());
 		
 		JSONObject jsonObject = new JSONObject();
@@ -294,7 +298,7 @@ public class ConfigureController {
 		String configureId = str[1];
 				
 		//查看还未获取该配置的部门
-		List<DepartmentPersistence> list = DepartmentHelper.getUnGotDepList(configureId);
+		List<DataDictionaryPersistence> list = DataDictionaryHelper.getUnGotDepList(configureId);
 		System.out.println("长度"+list.size());
 		
 		JSONObject jsonObject = new JSONObject();
@@ -699,6 +703,7 @@ public class ConfigureController {
  	   //获取所有部门名
  	   List<DepConfigureView> depList = DepartmentService.getAllDepartment();
  	   
+ 	  
  	   if (depList.size()!=0) { 
  		   
  		   //分类显示
