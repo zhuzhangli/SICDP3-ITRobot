@@ -43,6 +43,7 @@ import org.xjtusicd3.database.mapper.ScorePersistenceMapper;
 import org.xjtusicd3.database.mapper.ServerPersistenceMapper;
 import org.xjtusicd3.database.mapper.SharePersistenceMapper;
 import org.xjtusicd3.database.mapper.SoftPersistenceMapper;
+import org.xjtusicd3.database.mapper.TimeStampPersistenceMapper;
 import org.xjtusicd3.database.mapper.UserPersistenceMapper;
 import org.xjtusicd3.database.mapper.UserQuestionPersistenceMapper;
 import org.xjtusicd3.database.mapper.User_Equipment_HistoryPersistenceMapper;
@@ -109,7 +110,7 @@ public class SqlSessionManager {
 			configuration.addMapper(BasicConfigurePersistenceMapper.class);
 			configuration.addMapper(DepartmentPersistenceMapper.class);
 			configuration.addMapper(DataDictionaryPersistenceMapper.class);
-			
+			configuration.addMapper(TimeStampPersistenceMapper.class);
 			
 			configuration.addInterceptor(new BasePlugin());
 			bizSqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);

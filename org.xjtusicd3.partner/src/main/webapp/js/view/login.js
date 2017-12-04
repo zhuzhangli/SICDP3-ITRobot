@@ -14,7 +14,7 @@ get$("#register").click(function(){
 			dataType:"json",
 			success:function(data){
 				if(data=="1"){
-					$(".spa1").text('该邮箱已被注册');
+					$(".spa1").text('该用户名已被注册');
 				}else if(data=="2"){
 					$(".spa1").text('该邮箱还未验证');
 				}else{

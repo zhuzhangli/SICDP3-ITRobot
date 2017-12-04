@@ -34,11 +34,13 @@ $("#submitupdatePassword").click(function(){
 		success:function(data){
 			if(data=="0"){
 				$(".spa2").text('新密码不能与原密码相同');
-			}if(data=="1"){
+			}
+			else if(data=="1"){
 				$(".spa1").text('原密码错误');
 				document.getElementById("modal_bg").style.display="none";
 				document.getElementById("myModal").style.display="none";
-			}if(data=="2"){
+			}
+			else if(data=="2"){
 				document.getElementById("modal_bg").style.display="block";
 				document.getElementById("myModal").style.display="";
 				document.getElementById("myModal").style.visibility="visible";

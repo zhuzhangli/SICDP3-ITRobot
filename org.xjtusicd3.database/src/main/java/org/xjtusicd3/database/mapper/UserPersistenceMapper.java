@@ -117,9 +117,10 @@ public interface UserPersistenceMapper extends IBaseDao<UserPersistence, String>
 	 * author:zzl
 	 * abstract:修改用户信息
 	 * data:2017年9月21日10:21:20
+	 * @param userbrief2 
 	 */
-	@Update("UPDATE TBL_User SET USERNAME=#{1},GENDER=#{2},USERBIRTHDAY=#{3},USERADDRESS=#{4},USERSIGNATURE=#{5} WHERE USERID=#{0}")
-	public void updateUserInfo2(String userid, String username, String usersex, String userbirthday, String address,String userbrief);
+	@Update("UPDATE TBL_User SET USERNAME=#{1},USEREMAIL=#{2},GENDER=#{3},USERBIRTHDAY=#{4},USERADDRESS=#{5},USERSIGNATURE=#{6} WHERE USERID=#{0}")
+	public void updateUserInfo2(String userid, String username, String useremail,String usersex, String userbirthday, String address,String userbrief );
 	
 	/**
 	 * author:zzl
@@ -134,7 +135,7 @@ public interface UserPersistenceMapper extends IBaseDao<UserPersistence, String>
 	 * abstract:获取登录用户信息
 	 * data:2017年9月26日16:48:15
 	 */
-	@Select("SELECT * FROM TBL_User WHERE (USERNAME=#{0} OR USEREMAIL=#{0}) AND USERPASSWORD=#{1}")
+	@Select("SELECT * FROM TBL_User WHERE (USERNAME=#{0} OR USEREMAIL=#{0}) AND USERPASSWORD=#{1} AND USERSTATE=2")
 	public List<UserPersistence> loginUser(String nameOrEmail, String password);
 
 	@Select("SELECT USERID FROM TBL_User WHERE USERNAME=#{0}")
@@ -159,6 +160,11 @@ public interface UserPersistenceMapper extends IBaseDao<UserPersistence, String>
 	//zzl_获取指定用户信息_2017年11月10日11:46:39
 	@Select("SELECT * FROM TBL_User WHERE USERID=#{0}")
 	public List<UserPersistence> getUserInfoById(String userId);
+
+	
+	//更新员工角色
+	@Update("UPDATE TBL_User SET ROLEID = #{1} WHERE USERID=#{0}")
+	public void updateUserRole(String userId, String roleId);
 	
 
 }

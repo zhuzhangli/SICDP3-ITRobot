@@ -10,12 +10,10 @@
   <!-- Data Tables --> 
   <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet" /> 
  
-  <link href="css/animate.css" rel="stylesheet" /> 
   <link href="css/style.css?v=4.1.0" rel="stylesheet" /> 
-  
-  <!-- BEGIN GLOBAL MANDATORY STYLES --> 
-  <link href="media/css/bootstrap.min.css" rel="stylesheet" type="text/css" /> 
+ 
   <link href="media/css/style.css" rel="stylesheet" type="text/css" /> 
+  
  </head> 
  
  
@@ -38,7 +36,7 @@
              <li class=""><a data-toggle="tab" href="#tab-32" aria-expanded="false">普通用户【${pordinaryUserCounts }】</a></li> 
              <li class=""><a data-toggle="tab" href="#tab-33" aria-expanded="false">运维人员【${ITUserCounts }】</a></li> 
              <li class=""><a data-toggle="tab" href="#tab-34" aria-expanded="false">管理员【${adminUserCounts }】</a></li> 
-             <li class=""><a data-toggle="tab" href="#tab-35" aria-expanded="false">无效用户【${inValidtUserCounts }】</a></li> 
+          
             </ul> 
             
             
@@ -143,8 +141,8 @@
                   <td>${a.USERADDRESS }</td> 
                   <td>${a.USERSIGNATURE }</td> 
                   <td class="center">${a.CREATETIME }</td>
-                  <td style="text-align: center;" id = "">
-                 	 <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="注销该用户" id="${a.USERID }" onclick="noAudit(this.id)"><i class="fa fa-trash-o"></i>
+                  <td style="text-align: center;" >
+                 	 <button class="btn btn-white btn-sm fa fa-plus"  data-placement="top" title="角色变更" id="${a.USERID }" onclick="changeRole(this.id)" data-toggle="modal" data-target="#myModalSoft"></button>
                   </td> 
                   <td style="text-align: center;" id = ""> 
                   	<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看用户详情" ><a class="userinfo" href="/org.xjtusicd3.portal/showUserInfo.html?u=${a.USERID}"><i class="fa fa-eye"></i></a></button>
@@ -202,7 +200,7 @@
                   <td>${a.USERSIGNATURE }</td> 
                   <td class="center">${a.CREATETIME }</td>
                   <td style="text-align: center;" id = "">
-                 	 <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="注销该运维人员" id="${a.USERID }" onclick="noAudit(this.id)"><i class="fa fa-trash-o"></i>
+                 	<button class="btn btn-white btn-sm fa fa-plus"  data-placement="top" title="角色变更" id="${a.USERID }" onclick="changeRole(this.id)" data-toggle="modal" data-target="#myModalSoft"></button>
                   </td> 
                   <td style="text-align: center;" id = ""> 
                   	<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看该用户详情" ><a class="userinfo" href="/org.xjtusicd3.portal/showUserInfo.html?u=${a.USERID}"><i class="fa fa-eye"></i></a></button>
@@ -260,7 +258,7 @@
                   <td>${a.USERSIGNATURE }</td> 
                   <td class="center">${a.CREATETIME }</td>
                   <td style="text-align: center;" id = "">
-                 	 <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="注销该管理员" id="${a.USERID }" onclick="noAudit(this.id)"><i class="fa fa-trash-o"></i>
+                 	 <button class="btn btn-white btn-sm fa fa-plus"  data-placement="top" title="角色变更" id="${a.USERID }" onclick="changeRole(this.id)" data-toggle="modal" data-target="#myModalSoft"></button>
                   </td> 
                   <td style="text-align: center;" id = ""> 
                   	<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看该管理员详情" ><a class="userinfo" href="/org.xjtusicd3.portal/showUserInfo.html?u=${a.USERID}"><i class="fa fa-eye"></i></a></button>
@@ -272,63 +270,50 @@
               </div> 
              </div> 
             
-                <!--无效用户信息  -->
-             <div id="tab-35" class="tab-pane"> 
-              <div class="ibox-title"> 
-               <h5>无效用户信息</h5> 
-               <div class="ibox-tools"> 
-                <a class="collapse-link"> <i class="fa fa-chevron-up"></i> </a> 
-                <a class="dropdown-toggle" data-toggle="dropdown" href="table_data_tables.html#"> <i class="fa fa-wrench"></i> </a> 
-                <ul class="dropdown-menu dropdown-user"> 
-                 <li><a href="table_data_tables.html#">选项1</a> </li> 
-                 <li><a href="table_data_tables.html#">选项2</a> </li> 
-                </ul> 
-                <a class="close-link"> <i class="fa fa-times"></i> </a> 
-               </div> 
-              </div> 
-              <div class="ibox-content"> 
-               <table class="table table-striped table-bordered table-hover dataTables-example"> 
-               <thead> 
-                 <tr> 
-                 
-                  <th style="text-align: center;">序号</th>                   
-                  <th style="text-align: center;">头像</th> 
-                  <th style="text-align: center;">用户名</th> 
-                  <th style="text-align: center;">邮箱</th> 
-                  <th style="text-align: center;">性别</th> 
-                  <th style="text-align: center;">生日</th> 
-                  <th style="text-align: center;">地址</th> 
-                  <th style="text-align: center;">签名</th> 
-                  <th style="text-align: center;">注册时间</th>
-                  <th style="text-align: center;">操作</th> 
-                  <th style="text-align: center;">操作</th>             
-                 </tr> 
-                </thead> 
-                <tbody> 
-                <#list inValidtUsers as a>
-                 <tr class="gradeX" id="${a.USERID }"> 
-                  
-                  <td style="text-align: center;">${a_index+1 }</td> 
-                  <td style="text-align: center;"><img class="answerImg" src="${a.AVATAR }" style="width: 50px;height: 50px"></td> 
-                  <td>${a.USERNAME }</td> 
-                  <td class="center">${a.USEREMAIL }</td> 
-                  <td style="text-align: center;">${a.GENDER }</td> 
-                  <td>${a.USERBIRTHDAY }</td> 
-                  <td>${a.USERADDRESS }</td> 
-                  <td>${a.USERSIGNATURE }</td> 
-                  <td class="center">${a.CREATETIME }</td>
-                  <td style="text-align: center;" id = "">
-                 	 <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="激活该用户" id="${a.USERID }" onclick="throughAudit(this.id)"><i class="fa fa-check text-navy"></i>
-                  </td> 
-                  <td style="text-align: center;" id = "${a.USERID }"> 
-                  	<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看该用户详情" ><a class="userinfo" href="/org.xjtusicd3.portal/showUserInfo.html?u=${a.USERID}"><i class="fa fa-eye"></i></a></button>
-                  </td>
-                 </tr>
-                 </#list> 
-                </tbody>
-               </table> 
-              </div> 
-             </div>
+          
+            
+            
+            <!-- 给选定软件分配部门_模态框（Modal） --> 
+		      <div class="modal fade" id="myModalSoft" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+		       <div class="modal-dialog"> 
+		        <div class="modal-content" style="vertical-align: middle;margin-top: 100px"> 
+		         <div class="modal-header"> 
+		          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button> 
+		          <h4 class="modal-title" id="myModalLabel"> 为该用户分配角色 </h4> 
+		         </div> 
+		        
+		         <div class="modal-body">
+		          <table class="table table-striped table-bordered table-hover " id="table"> 
+		          <thead> 		          
+		           <tr>  
+		            <th style="text-align: center;">角色名</th> 
+		           </tr>		           
+		          </thead> 
+		         
+		          <tbody id="tbody1">
+		         	<input id="userId"  type="text" style="display: none;"></input>
+		           
+		           <tr class="gradeX" id=""> 
+		            <td style="text-align: center;width: 87%" id="">
+		            	<input type="radio" name="browser" onclick="check(this.value)" value=""><br />
+		            </td> 
+		            
+		           </tr> 
+		          </tbody> 
+		          	您为该用户分配的角色是：<input type="text" id="answer" size="20">
+		         </table> 		         		        
+		         </div>
+		         
+		         <div class="modal-footer"> 
+		           <button type="button" class="btn btn-default" data-dismiss="modal"> 关闭 </button> 
+		           <button type="button" class="btn btn-primary" onclick="updateUserRole()"> 提交 </button> 
+		         </div>
+		        </div>
+		        <!-- /.modal-content --> 
+		       </div>
+		       <!-- /.modal-dialog --> 
+		      </div>
+		      <!-- /.modal --> 
             
             
             
@@ -394,7 +379,6 @@
     function throughAudit(id) {
     	
     	var userId = document.getElementById(id).id;
-    	alert(userId);
     	 
          $.ajax({
              type: "POST",
@@ -535,7 +519,82 @@
     
     });
  
+    /* 将软件添加至标准库 */      
+    function changeRole(id) {  
+		//获取配置软件ID
+    	var userId = document.getElementById(id).id;  
+    	
+        $.ajax({
+            type: "POST",
+            url: "/org.xjtusicd3.portal/changeRole.html",
+            data: {
+                "userId":userId
+            },
+            dataType: "json",
+            success: function(data) {
+            	var list = data.list; //获取后台json'
+            	$("#userId").val(data.userId);
+            	
+            	if(list.length == 0){
+    				$("#tbody1").html("");
+            	}else{
+            		var permissionHtml = "";
+            		
+    				for (var i = 0; i < list.length; i++) {
+    					 permissionHtml = permissionHtml
+ 						
+    					 +'<tr class="gradeX" id=""><td style="text-align: center;width: 87%" >'
+    					 +'<input type="radio" name="browser" onclick="check(this.value)" id="'+list[i].roleId+'" value="'+list[i].roleName+'">'+list[i].roleName+'<br /> </td>  </tr> '
+						
+ 						$("#tbody1")[0].innerHTML = permissionHtml;    
+    				}
+    				
+    				var permissionHtml2 = '您为该用户分配的角色是：<input type="text" id="answer" size="20">';
+    				$("#table")[2].innerHTML = permissionHtml2;
+            	}	
+            	
+            }
+           
+        }) 
+    }
+    
+    function check(browser)
+    {
+    document.getElementById("answer").value=browser
+    }
+    
+    
+    
+    /* 提交计算机更改  */ 
+    function updateUserRole() {  
+    	//获取模态框数据  
+    	var userId = $('#userId').val(); 
+    	var roleId = $('input[name="browser"]:checked ').attr('id');
 
+        $.ajax({
+            type: "POST",
+            url: "/org.xjtusicd3.portal/updateUserRole.html",
+            data: {
+            	"userId":userId,
+            	"roleId":roleId
+            },
+            dataType: "json",
+            success: function(data) {
+            	if(data.value == 0){
+            	alert("用户名或者角色为空");
+            	window.location.reload();
+            }else {
+            	alert("角色替换成功");
+            	window.location.reload();
+			}
+            }
+        }) 	         
+    }  
+    
+    
+    
+    
+    
     </script>  
    </div>
   </div>

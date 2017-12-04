@@ -16,8 +16,6 @@ import org.xjtusicd3.database.helper.ClassifyHelper;
 import org.xjtusicd3.database.model.ClassifyPersistence;
 import org.xjtusicd3.partner.annotation.SystemControllerLog;
 import org.xjtusicd3.partner.service.ClassifyService;
-import org.xjtusicd3.partner.service.EquipmentService;
-import org.xjtusicd3.partner.view.Personal3_EquipmentView;
 
 @Controller
 public class ClassifyController {
@@ -30,10 +28,7 @@ public class ClassifyController {
 		ModelAndView modelAndView = new ModelAndView("robot");
 		String string = ClassifyService.classify();
 		modelAndView.addObject("string",string);
-//		List<Personal3_EquipmentView> list = EquipmentService.personal3_EquipmentView();
-//		mv.addObject("personal3_list", list);
-//		String macAddress = request.getParameter("macAddress");
-//		System.out.println("macAddress:"+macAddress);
+
 		String urlPath = request.getServletPath();
 		session.setAttribute("urlPath", urlPath);
 		return modelAndView;

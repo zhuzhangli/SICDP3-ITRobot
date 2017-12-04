@@ -106,16 +106,21 @@
 	
 	
 	
-	function saveCommunityQuestion(){
+	$("#submit").click(function(){
 		var title = document.getElementById("title").value;
 		var description = UE.getEditor('editor').getContent();
 		var obj = document.getElementsByName("category_id");
 		check_val = [];
-	    for(k in obj){
-	        if(obj[k].checked)
-	            check_val.push(obj[k].value);
+	 
+	    
+	    for(var i = 1; i <= obj.length; i += 1){
+	        if(obj[i-1].checked){
+	            check_val.push(obj[i-1].value);
+	        }
 	    }
-			
+	    
+	    
+	    
 	    
 	    if(check_val[0]!=null){
 	    $.ajax({
@@ -160,7 +165,7 @@
 				
 		 
 		}
-	} 
+	} )
 	    
 	    
 	    

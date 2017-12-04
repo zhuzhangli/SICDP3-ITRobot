@@ -130,6 +130,12 @@
 					                                <div style="float:right;width:314px;height:50px;"><input type="text" name="UserName" class="form-control"  required="required" value="${userinfo.USERNAME}"></div>
 					                            </div>
 					                            <div class="form-group" style="width: 370px;height: 36px;">
+					                            	<div style="float:left;margin-top:10px;width:56px;"><span>邮箱：</span></div>
+					                                <div style="float:right;width:314px;height:50px;"><input type="text" name="UserEmail" class="form-control"  required="required" value="${userinfo.USEREMAIL}" ></div>
+					                            
+					                            </div>
+					                            
+					                            <div class="form-group" style="width: 370px;height: 36px;">
 					                            	<div style="float:left;margin-top:10px;width:56px;"><span>性别：</span></div>
 													<div class="rdo">
 												        <input type="radio" name="UserSex" class="rdolist" value="男"/ >
@@ -187,6 +193,10 @@
 					                            <div class="form-group" style="width: 370px;height: 36px;">
 					                            	<div style="float:left;margin-top:10px;width:56px;"><span>用户名：</span></div>
 					                                <div style="float:right;width:314px;height:50px;"><input type="text" name="UserName" class="form-control"  required="required" value="${userinfo.USERNAME}" readonly="readonly"></div>
+					                            </div>
+					                            <div class="form-group" style="width: 370px;height: 36px;">
+					                            	<div style="float:left;margin-top:10px;width:56px;"><span>邮箱：</span></div>
+					                                <div style="float:right;width:314px;height:50px;"><input type="text" name="email" class="form-control"  required="required" value="${userinfo.USEREMAIL}" readonly="readonly"></div>
 					                            </div>
 					                            <div class="form-group" style="width: 370px;height: 36px;">
 					                            	<div style="float:left;margin-top:10px;width:56px;"><span>性别：</span></div>

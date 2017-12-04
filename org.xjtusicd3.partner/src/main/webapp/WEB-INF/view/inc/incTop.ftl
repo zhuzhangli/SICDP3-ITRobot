@@ -5,7 +5,7 @@
 		                <li><a class="new_a" href="robot.html" data-pos="categorys_1_1">智能小朵</a></li>
 		                <li><a class="new_a" href="faq.html" data-pos="categorys_1_1">知识库</a></li>
 		                <li><a class="new_a" href="question.html?c=all&type=all" data-pos="categorys_1_1">问题中心</a></li>
-		                <li><a class="new_a" href="advise.html" data-pos="categorys_1_1">意见建议</a></li>
+		                <!-- <li><a class="new_a" href="advise.html" data-pos="categorys_1_1">意见建议</a></li> -->
 		                <li>
 		                    <a class="new_a" href="service.html">关于我们</a>
 		                </li>
@@ -22,9 +22,9 @@
 									<div class="top_icon"></div>
 									<ul class="ul_list">
 										<li><a href="personal.html">个人信息</a></li>
-										<li><a id="equipment" href="personal3.html">我的设备</a></li>
+										<li><a id="equipment" href="500.html">我的设备</a></li>
 										<li><a href="personal2.html">我的主页</a></li>
-										<li><a href="notice.html">消息通知</a></li>
+										<li><a href="500.html">消息通知</a></li>
 									</ul>
 								</div>
 							</li>

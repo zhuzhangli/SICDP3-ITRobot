@@ -122,7 +122,7 @@ public class UserService {
 		 * USERSTATE = 0表明用户待审核
 		 * USERSTATE = 1通过审核
 		 */
-		UserHelper.login_register(uuid.toString(),name,password,0,createTime,userimage);
+		UserHelper.login_register(uuid.toString(),name,password,1,createTime,userimage);
 	}
 	//随机产生一个length位的字母+数字
     public static List<String> genCodes(int length,long num){

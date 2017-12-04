@@ -33,7 +33,7 @@ public class LoginFilter implements Filter {
 			Object object = session.getAttribute("nameOrEmail");
 			
 			//没有登录就不允许访问页面的的链接
-			if (object==null&&(url.contains("index")||url.contains("incidentindex")||url.contains("problemindex")||url.contains("cfgindex")||url.contains("knowledgeindex")||url.contains("spiderindex")||url.contains("logindex")||url.contains("userindex")||url.contains("messageindex")||url.contains("rbacindex"))) {
+			if (object==null&&(url.contains("index")||url.contains("eventPage")||url.contains("problemPage")||url.contains("configureSoftPage")||url.contains("configureEquipmentPage")||url.contains("configureBasicPage")||url.contains("changePage")||url.contains("faqPage")||url.contains("userPage")||url.contains("permissionPage")||url.contains("permissionAssignPage"))) {
 				response.sendRedirect(request.getContextPath() + "/login.html");
 				return;
 			} 

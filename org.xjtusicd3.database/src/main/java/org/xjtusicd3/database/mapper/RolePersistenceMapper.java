@@ -14,10 +14,14 @@ public interface RolePersistenceMapper	extends IBaseDao<RolePersistence, String>
 	List<RolePersistence> getAllRoles();
 	
 	
+	//获取该员工本身角色外的其他角色
+	@Select("SELECT * FROM TBL_Role WHERE ROLEID NOT IN (SELECT ROLEID FROM tbl_user WHERE USERID =#{0} AND USERSTATE=2);")
+	List<RolePersistence> getUnGotRoleList(String userId);
 	
 	
-	
-	
+	//查询当前用户角色
+	@Select("SELECT * FROM tbl_user,TBL_Role WHERE tbl_user.ROLEID =  TBL_Role.ROLEID AND USERID = #{0}")
+	List<RolePersistence> getRoleInfoByUserId(String userId);
 	
 	
 	
@@ -32,6 +36,8 @@ public interface RolePersistenceMapper	extends IBaseDao<RolePersistence, String>
 		//zpz_get role name by RoleId
 		@Select("SELECT ROLENAME FROM TBL_Role WHERE ROLEID = #{0}")
 		String getRoleNameByRoleId(String Rid);
+
+		
 
 		
 }

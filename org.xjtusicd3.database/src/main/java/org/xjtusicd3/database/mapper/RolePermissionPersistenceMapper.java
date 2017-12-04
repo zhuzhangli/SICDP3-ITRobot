@@ -26,6 +26,19 @@ public interface RolePermissionPersistenceMapper extends IBaseDao<RolePermission
 	public void deletePermissionToRole(String roleId, String permissionId);
 
 	
+	//超级管理员拥有所有权限
+	@Select("SELECT * FROM TBL_Role_Permission ")
+	public List<PermissionPersistence> getAllPermission();
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/*
 	 * 多表联合查询获取到角色权限信息
@@ -50,6 +63,7 @@ public interface RolePermissionPersistenceMapper extends IBaseDao<RolePermission
 	@Select("SELECT  *  FROM TBL_Permission P WHERE P.PERMISSIONID IN (SELECT r.PERMISSIONID 	FROM TBL_Role_Permission r 	WHERE r.ROLEID = 'ad36e57d-fb18-4fb9-8ce0-a9e72bf3fa4e'")
 	public List<RolePermissionPersistence> getRolePermissionById2(String RId);
 
+	
 	
 
 

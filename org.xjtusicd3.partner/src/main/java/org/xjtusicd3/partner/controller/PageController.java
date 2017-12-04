@@ -53,6 +53,14 @@ public class PageController {
 		ModelAndView mv = new ModelAndView("404");
 		return mv;
 	}
+	
+	@RequestMapping(value="500",method=RequestMethod.GET)
+	public ModelAndView waiting(){
+		ModelAndView mv = new ModelAndView("500");
+		return mv;
+	}
+	
+	
 	@RequestMapping(value="advise",method=RequestMethod.GET)
 	public ModelAndView advise(){
 		ModelAndView mv = new ModelAndView("advise");

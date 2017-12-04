@@ -1,6 +1,7 @@
 package org.xjtusicd3.partner.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import org.xjtusicd3.database.helper.ITHelper;
 import org.xjtusicd3.database.helper.QuestionHelper;
 import org.xjtusicd3.database.helper.ScoreHelper;
 import org.xjtusicd3.database.helper.ShareHelper;
+import org.xjtusicd3.database.helper.TimeStampHelper;
 import org.xjtusicd3.database.helper.UserHelper;
 import org.xjtusicd3.database.model.ClassifyPersistence;
 import org.xjtusicd3.database.model.CollectionPersistence;
@@ -32,7 +34,6 @@ import org.xjtusicd3.partner.annotation.SystemControllerLog;
 import org.xjtusicd3.partner.lucene.LuceneIndex;
 import org.xjtusicd3.partner.service.ClassifyService;
 import org.xjtusicd3.partner.service.CommentService;
-import org.xjtusicd3.partner.service.LogService;
 import org.xjtusicd3.partner.service.QuestionService;
 import org.xjtusicd3.partner.service.RobotService;
 import org.xjtusicd3.partner.service.ScoreService;
@@ -51,8 +52,9 @@ public class FaqController {
 	@RequestMapping(value="faq",method=RequestMethod.GET)
 	@SystemControllerLog(description = "faq首页面")
 	public ModelAndView faq(HttpSession session,HttpServletRequest request,String q){
-		//String useremail = (String) session.getAttribute("UserEmail");
-		//zzl_获取登录用户
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
 		String username = (String) session.getAttribute("UserName");
 		ModelAndView mv = new ModelAndView("faq");
 		String urlPath="";
@@ -64,9 +66,7 @@ public class FaqController {
 		//查询所有用户发表知识的状态
 		List<Faq_UserDynamics> userDynamics = QuestionService.userDynamics();
 		System.out.println("userDynamics:"+userDynamics.size());
-		//List<UserPersistence> userInfo = UserHelper.getUserNameById(userDynamics.get(0).getUserId());
-		//String userImage = userInfo.get(0).getAVATAR();
-		//String userName = userInfo.get(0).getUSERNAME();
+
 		session.setAttribute("urlPath", urlPath);
 				
 		if(username==null){
@@ -78,7 +78,7 @@ public class FaqController {
 		}else{
 			//zzl_已登录用户获取推荐faq_2017年9月14日21:43:52
 			System.out.println("已登录用户");
-			//List<UserPersistence> userPersistences = UserHelper.getEmail(useremail);	
+		
 			List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
 			int startnum = 0;
 			List<Faq_CommendView> faqlists = QuestionService.user_recommend_Limit(userPersistences.get(0).getUSERID(),startnum);				
@@ -87,8 +87,12 @@ public class FaqController {
 		}
 		
 		mv.addObject("userDynamics", userDynamics);
-		//mv.addObject("userImage", userImage);
-		//mv.addObject("userName", userName);
+
+		
+		long executionTime = System.currentTimeMillis() - startTime;
+		
+		//记录运行时间
+		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 		return mv;
 		
 	}
@@ -101,6 +105,9 @@ public class FaqController {
 	@RequestMapping(value="faq1",method=RequestMethod.GET)
 	@SystemControllerLog(description = "faq、faq1_上侧的第二级分类")
 	public ModelAndView classifyName2(HttpSession session,HttpServletRequest request,String p){
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
 		ModelAndView modelAndView = new ModelAndView("faq1");		
 		//zzl_获取一级分类信息
 		List<ClassifyPersistence> classify1Info = ClassifyHelper.getInfoById(p);
@@ -110,6 +117,10 @@ public class FaqController {
 		List<Faq1_UserActive> faq1_UserActives = CommentService.faq1_userActive();
 		List<Faq1_UserActive> faq1_UserActives2 = CommentService.faq1_userActive_week();
 		if (list == null || list.size()==0) {
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return null;
 		}
 		
@@ -129,6 +140,12 @@ public class FaqController {
 			urlPath = request.getServletPath()+"?"+request.getQueryString().toString();
 		}
 		session.setAttribute("urlPath", urlPath);;
+		
+		long executionTime = System.currentTimeMillis() - startTime;
+		
+		//记录运行时间
+		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+		
 		return modelAndView;
 	}
 	/*
@@ -137,6 +154,10 @@ public class FaqController {
 	@RequestMapping(value="faq2",method=RequestMethod.GET)
 	@SystemControllerLog(description = "faq2_知识列表")
 	public ModelAndView faqList(HttpSession session,HttpServletRequest request,String c){
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();		
+
+		
 		ModelAndView modelAndView = new ModelAndView("faq2");
 		List<ClassifyPersistence> classify2 = ClassifyService.faq2_classify2(c);
 		List<ClassifyPersistence> classify = ClassifyService.faq2_classify(c);
@@ -155,6 +176,12 @@ public class FaqController {
 			urlPath = request.getServletPath()+"?"+request.getQueryString().toString();
 		}
 		session.setAttribute("urlPath", urlPath);
+		
+		long executionTime = System.currentTimeMillis() - startTime;
+		
+		//记录运行时间
+		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+		
 		return modelAndView;
 	}
 	/*
@@ -164,6 +191,9 @@ public class FaqController {
 	@RequestMapping(value={"/getMoreFaqList"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
 	@SystemControllerLog(description = "faq2_ajax请求更多知识列表")
 	public String faq2list(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
 		int pagenow = Integer.parseInt(request.getParameter("pagenow"));
 		int pageNow = pagenow+1;
 		String ClassifyId = request.getParameter("classifyId");
@@ -175,6 +205,12 @@ public class FaqController {
 		jsonObject.put("faqlist", faq2Views);
 		jsonObject.put("pageTotal",pageTotal);
 		String faq2_list = JsonUtil.toJsonString(jsonObject);
+		
+		long executionTime = System.currentTimeMillis() - startTime;
+		
+		//记录运行时间
+		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+		
 		return faq2_list;
 	 }
 	/*
@@ -183,7 +219,9 @@ public class FaqController {
 	@RequestMapping(value="faq3",method=RequestMethod.GET)
 	@SystemControllerLog(description = "faq3_知识内容")
 	public ModelAndView faqContent(HttpSession session,HttpServletRequest request,String q) throws Exception{
-		//String useremail = (String) session.getAttribute("UserEmail");
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
 		String username = (String) session.getAttribute("UserName");
 		//List<UserPersistence> userPersistences = UserHelper.getEmail(useremail);
 		List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
@@ -249,6 +287,12 @@ public class FaqController {
 			urlPath = request.getServletPath()+"?"+request.getQueryString().toString();
 		}
 		session.setAttribute("urlPath", urlPath);
+		
+		long executionTime = System.currentTimeMillis() - startTime;
+		
+		//记录运行时间
+		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+		
 		return modelAndView;
 	}
 	/*
@@ -258,7 +302,9 @@ public class FaqController {
 	@RequestMapping(value={"/saveFAQ"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/plain;charset=UTF-8")
 	@SystemControllerLog(description = "FAQ的增加")
 	public String saveFAQ(HttpServletRequest request,HttpServletResponse response,HttpSession session){
-		//String useremail = (String) session.getAttribute("UserEmail");
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
 		String username = (String) session.getAttribute("UserName");
 		String url = (String) session.getAttribute("urlPath");
 		if (username==null) {
@@ -281,11 +327,21 @@ public class FaqController {
 				jsonObject.put("value", "1");
 				jsonObject.put("url", url);
 				String result = JsonUtil.toJsonString(jsonObject);
+				long executionTime = System.currentTimeMillis() - startTime;
+				
+				//记录运行时间
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+				
 				return result;
 			}else {
 				jsonObject.put("value", "2");
 				jsonObject.put("url", url);
 				String result = JsonUtil.toJsonString(jsonObject);
+				
+				long executionTime = System.currentTimeMillis() - startTime;
+				
+				//记录运行时间
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 				return result;
 			}
 		}
@@ -296,9 +352,16 @@ public class FaqController {
 	@RequestMapping(value="faqadd",method=RequestMethod.GET)
 	@SystemControllerLog(description = "FAQ的增加页面")
 	public ModelAndView faqadd(HttpSession session,HttpServletRequest request){
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
 		ModelAndView mv = new ModelAndView("faqadd");
 		String urlPath = request.getHeader("REFERER");
 		session.setAttribute("urlPath", urlPath);
+		
+		long executionTime = System.currentTimeMillis() - startTime;
+		
+		//记录运行时间
+		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 		return mv;
 	}
 	/*

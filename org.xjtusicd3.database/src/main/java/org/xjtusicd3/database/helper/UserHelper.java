@@ -1,8 +1,5 @@
 package org.xjtusicd3.database.helper;
 
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
-import java.sql.Savepoint;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -237,12 +234,13 @@ public class UserHelper {
 	 * author:zzl
 	 * abstract:修改用户信息
 	 * data:2017年9月21日10:21:20
+	 * @param userbrief2 
 	 */
-	public static void updateUserInfo2(String userid, String username, String usersex, String userbirthday,
+	public static void updateUserInfo2(String userid, String username,  String useremail,String usersex, String userbirthday,
 			String address, String userbrief) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
-		mapper.updateUserInfo2(userid,username,usersex,userbirthday,address,userbrief);
+		mapper.updateUserInfo2(userid,username,useremail,usersex,userbirthday,address,userbrief);
 		session.close();	
 	}
 	
@@ -327,6 +325,15 @@ public class UserHelper {
 		List<UserPersistence> list = mapper.getUserInfoById(userId);
 		session.close();
 		return list;
+	}
+	
+	
+	//更新员工角色
+	public static void updateUserRole(String userId, String roleId) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
+		mapper.updateUserRole( userId,  roleId);
+		session.close();				
 	}
 	
 

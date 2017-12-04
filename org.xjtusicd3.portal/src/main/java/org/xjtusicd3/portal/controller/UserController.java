@@ -14,11 +14,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.xjtusicd3.common.util.JsonUtil;
+import org.xjtusicd3.database.helper.DataDictionaryHelper;
+import org.xjtusicd3.database.helper.RoleHelper;
 import org.xjtusicd3.database.helper.UserHelper;
+import org.xjtusicd3.database.model.DataDictionaryPersistence;
+import org.xjtusicd3.database.model.RolePersistence;
 import org.xjtusicd3.database.model.UserPersistence;
+import org.xjtusicd3.portal.service.ConfigureService;
 import org.xjtusicd3.portal.service.QuestionService;
 import org.xjtusicd3.portal.service.UserService;
 import org.xjtusicd3.portal.view.UserView;
+
+import com.alibaba.fastjson.JSONObject;
 /**
  * 
  * @author zzl
@@ -180,6 +188,80 @@ public class UserController
 	
 		return "1";
 	}
+	
+	
+	
+	//更换员工角色
+	@ResponseBody
+	@RequestMapping(value="/changeRole",method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
+	public String changeRole(HttpServletRequest request,HttpSession session){
+		//获取ajax传来数据
+		String userId = request.getParameter("userId");
+		
+		//获取该员工本身角色外的其他角色
+		List<RolePersistence> list = RoleHelper.getUnGotRoleList(userId);
+		
+		
+		System.out.println("长度"+list.size());
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		if (list.size() != 0) {			
+			jsonObject.put("value", "1");
+			jsonObject.put("list", list);
+			jsonObject.put("userId", userId);
+			String result = JsonUtil.toJsonString(jsonObject); 
+			return result;
+		}else {						
+			jsonObject.put("value", "2");
+			jsonObject.put("userId", userId);
+			String result = JsonUtil.toJsonString(jsonObject); 
+			return result;
+		}
+	}
+	
+	
+	//更新员工角色
+	@ResponseBody
+	@RequestMapping(value="/updateUserRole",method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
+	public String updateUserRole(HttpServletRequest request,HttpSession session){
+		//获取ajax传来数据
+		String userId = request.getParameter("userId");
+		String roleId = request.getParameter("roleId");
+		
+
+		JSONObject jsonObject = new JSONObject();
+		
+		if (userId!=null && roleId!=null) {
+			//更新员工角色
+			UserHelper.updateUserRole(userId,roleId);
+			jsonObject.put("value", "1");
+			String result = JsonUtil.toJsonString(jsonObject); 
+			return result;
+		}else {
+			jsonObject.put("value", "0");
+			String result = JsonUtil.toJsonString(jsonObject); 
+			return result;
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

@@ -86,7 +86,7 @@
  <!--  
 	<script src="zhao/login_register/login_emaiautocomplete/emailAutoComplete2.js"></script>-->
 	<script src="zhao/login_register/login_emaiautocomplete/emailAutoComplete.js"></script>
-	<script src="js/login_bg/cav.js"></script>
+	
 	<script src="js/login_bg/getStart.js"></script>
 	<script src="zhao/login_register/index.js"></script>
 

@@ -98,6 +98,9 @@ public class FaqManagerService {
 			faqEdit.setFAQKEYWORDS(faqQuserionList.get(0).getFAQKEYWORDS());
 			faqEdit.setFAQDESCRIPTION(faqQuserionList.get(0).getFAQDESCRIPTION());
 			faqEdit.setFAQCONTENT(faqAnswerList.get(0).getFAQCONTENT());
+			
+			List<UserPersistence> userlist = UserHelper.getUserInfoById(faqQuserionList.get(0).getUSERID());
+			faqEdit.setUSERNAME(userlist.get(0).getUSERNAME());
 		}
 		return faqEdit;
 	}

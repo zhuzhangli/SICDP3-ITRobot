@@ -49,17 +49,7 @@ function questionSkill(){
 }
 
 
-//满意
-function beHelpful(answerId, questionId){
-	beHelpful1(answerId, questionId);
-	setTimeout("scroll()",500);
-}
 
-//不满意
-function NoHelpful(answerId, questionId){
-	NoHelpful1(answerId, questionId);
-	setTimeout("scroll()",500);
-}
 
 
 
@@ -123,9 +113,8 @@ function chatWithRobot(){
 							//已登录用户执行
 							document.getElementById("chat01_content").innerHTML = html+'<li class="media">'
 							+'<div style="width:48px;float:right;margin-left: 7px;">'
-							+'<a><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="static/image/user.png"></div></a>'
-							+'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">我</div>'
-						+'</div>'
+							+'<a href="personal2.html?='+data.robotUser[0].uSERID+'" target="_blank"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotUser[0].aVATAR+'"></div></a>'
+							+'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotUser[0].uSERNAME+'</div></div>'
 						+'<div class="media-body chat-pop2">'
 						+'<span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p>'
 						+'<div style="float:left;">'
@@ -508,9 +497,9 @@ function chatWithRobot2(){
 						}else{
 							document.getElementById("chat01_content").innerHTML = html+'<li class="media">'
 							+'<div style="width:48px;float:right;margin-left: 7px;">'
-							+'<a><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="static/image/user.png"></div></a>'
-							+'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">我</div>'
-						+'</div>'
+							+'<a href="personal2.html?='+data.robotUser[0].uSERID+'" target="_blank"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotUser[0].aVATAR+'"></div></a>'
+							+'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotUser[0].uSERNAME+'</div></div>'
+						
 						+'<div class="media-body chat-pop2">'
 						+'<span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p>'
 						+'<div style="float:left;">'
@@ -867,7 +856,7 @@ function questionSkill1(){
 }
 
 //推荐内容有帮助
-function beHelpful1(answerId, questionId){
+function beHelpful(answerId, questionId){
 	var answerId = document.getElementById("answerId"+answerId).value;
 	var questionId = document.getElementById("questionId"+questionId).value;
 	var comment = document.getElementById("textarea").value;
@@ -907,26 +896,8 @@ function beHelpful1(answerId, questionId){
 				 
 				 
 			 }else if(data.value=="1"){
-				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:right;margin-left: 7px;"><a href="personal2.html?='+data.robotUser[0].uSERID+'" target="_blank"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotUser[0].aVATAR+'"></div></a><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotUser[0].uSERNAME+'</div></div><div class="media-body chat-pop2"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+"满意"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'
-				 +'<li class="media">'
-				 	+'<div style="width:48px;float:left;margin-left: 7px;">'
-			 		+'<div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div>'
-			 		+'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div>'
-			 	+'</div>'
-			 	+'<div class="media-body chat-pop">'
-			 		+'<span class="pull-right"><i class="fa fa-clock-o"></i> '
-			 			+'<abbr class="timeago">'+showTime()+'</abbr> '
-			 		+'</span><p></p>'
-			 		+'<div style="float:left;">'
-			 			+'<span style="">'
-			 				+'<div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none">'
-			 					+'<b>经过我的判断，方案如下：</b>'
-			 				+'</div>'
-			 				+'<div class="content_line">能够帮到您我很开心！如果有需要您可以继续提问哦^_^ </div>'
-			 			+'</span>'
-			 		+'</div>'
-			 	+'</div>'
-			 +'</li>';
+				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:right;margin-left: 7px;"><a href="personal2.html?='+data.robotUser[0].uSERID+'" target="_blank"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotUser[0].aVATAR+'"></div></a><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotUser[0].uSERNAME+'</div></div><div class="media-body chat-pop2"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+"满意"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'+'<li class="media"><div style="width:48px;float:left;margin-left: 7px;"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div></div><div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style=""><div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none"><b>经过我的判断，方案如下：</b></div><div class="head_msg">小朵为您推荐</div><div class="content_line">能够帮到您我很开心！如果有需要您可以继续提问哦^_^</div></span></div><p></p></div></li>';
+			
 			 }else {
 					alert("满意度重复提交");
 				}
@@ -937,7 +908,7 @@ function beHelpful1(answerId, questionId){
 
 
 //用户对问题答案不满意
-function NoHelpful1(answerId, questionId){
+function NoHelpful(answerId, questionId){
 	var answerId = document.getElementById("answerId"+answerId).value;
 	var questionId = document.getElementById("questionId"+questionId).value;
 	var comment = document.getElementById("textarea").value;
@@ -977,28 +948,10 @@ function NoHelpful1(answerId, questionId){
 				 	+'</div>'
 				 +'</li>';
 			 }else if(data.value=="1"){
-				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:right;margin-left: 7px;"><a href="personal2.html?='+data.robotUser[0].uSERID+'" target="_blank"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotUser[0].aVATAR+'"></div></a><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotUser[0].uSERNAME+'</div></div><div class="media-body chat-pop2"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+"不满意"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'
-				 +'<li class="media">'
-				 	+'<div style="width:48px;float:left;margin-left: 7px;">'
-			 		+'<div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div>'
-			 		+'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div>'
-			 	+'</div>'
-			 	+'<div class="media-body chat-pop">'
-			 	
-			 	+'<input type="hidden" id = "questionId" value = "'+data.questionId+'"/> '
-			 	
-			 		+'<span class="pull-right"><i class="fa fa-clock-o"></i> '
-			 			+'<abbr class="timeago">'+showTime()+'</abbr> '
-			 		+'</span><p></p>'
-			 		+'<div style="float:left;">'
-			 			+'<span style="">'
-			 				+'<div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none">'
-			 				+'</div>'
-			 				+'<div class="content_line">很抱歉没帮上您，小朵感到十分抱歉。可将您的问题<a href="question.html?c=all&type=all">添加到社区中心</a>，让大家帮您解答~' +'</div>'
-			 			+'</span>'
-			 		+'</div>'
-			 	+'</div>'
-			 +'</li>';
+				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:right;margin-left: 7px;"><a href="personal2.html?='+data.robotUser[0].uSERID+'" target="_blank"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotUser[0].aVATAR+'"></div></a><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotUser[0].uSERNAME+'</div></div><div class="media-body chat-pop2"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+"不满意"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'+'<li class="media"><div style="width:48px;float:left;margin-left: 7px;"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div></div><div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style=""><div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none"><b>经过我的判断，方案如下：</b></div><div class="head_msg">小朵为您推荐</div><div class="content_line">很抱歉没帮上您，小朵感到十分抱歉。可将您的问题<a href="question.html?c=all&type=all">添加到社区中心</a>，让大家帮您解答~</div></span></div><p></p></div></li>';
+					
+				 
+		
 			 }else {
 				alert("满意度重复提交");
 			}

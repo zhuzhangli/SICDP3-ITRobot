@@ -1,6 +1,7 @@
 package org.xjtusicd3.partner.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import org.xjtusicd3.database.helper.CommentHelper;
 import org.xjtusicd3.database.helper.CommunityAnswerHelper;
 import org.xjtusicd3.database.helper.CommunityQuestionHelper;
 import org.xjtusicd3.database.helper.QuestionHelper;
+import org.xjtusicd3.database.helper.TimeStampHelper;
 import org.xjtusicd3.database.helper.UserHelper;
 import org.xjtusicd3.database.model.AgreePersistence;
 import org.xjtusicd3.database.model.CollectionPersistence;
@@ -41,11 +43,20 @@ public class CommentController {
 	@RequestMapping(value={"/saveComment"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/html;charset=UTF-8")
 	@SystemControllerLog(description = "faq3添加评论")
 	public String saveComment(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();		
+		
 		String faqtitle = request.getParameter("faqtitle");
 		String comment = request.getParameter("comment");
 		String faqusername = request.getParameter("faqusername");
 		String username = (String) session.getAttribute("UserName");
 		if (username==null) {
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+			
 			return "0";
 		}else {
 			//查看评论是否重复提交
@@ -53,6 +64,12 @@ public class CommentController {
 			List<QuestionPersistence> faqlist = QuestionHelper.faq3_faqcontent_title(faqtitle);
 			List<UserPersistence> userPersistences = UserHelper.getEmail_name(faqusername);
 			CommentService.addComment(uList.get(0).getUSERID(),faqlist.get(0).getFAQQUESTIONID(),comment,userPersistences.get(0).getUSERID());
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+			
 			return "1";
 		}
 	 }
@@ -63,7 +80,9 @@ public class CommentController {
 	@RequestMapping(value={"/addComment"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/html;charset=UTF-8")
 	@SystemControllerLog(description = "社区问题添加评论")
 	public String addComment(HttpServletRequest request,HttpServletResponse response,HttpSession session){
-		//String useremail = (String) session.getAttribute("UserEmail"); 
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
 		String username = (String) session.getAttribute("UserName"); 
 		String url = (String) session.getAttribute("urlPath");
 		String questionId = request.getParameter("questionId");
@@ -72,6 +91,11 @@ public class CommentController {
 		if (username==null) {
 			jsonObject.put("value", "0");
 			String result = JsonUtil.toJsonString(jsonObject); 
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+			
 			return result;
 		}else {
 			//判断评论是否重复提交
@@ -82,12 +106,22 @@ public class CommentController {
 				jsonObject.put("value", "1");
 				jsonObject.put("url",url);
 				String result = JsonUtil.toJsonString(jsonObject); 
+				
+				long executionTime = System.currentTimeMillis() - startTime;
+				
+				//记录运行时间
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 				return result;
 				
 			}else{
 				jsonObject.put("value", "2");
 				jsonObject.put("url",url);
 				String result = JsonUtil.toJsonString(jsonObject); 
+				
+				long executionTime = System.currentTimeMillis() - startTime;
+				
+				//记录运行时间
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 				return result;
 			}
 		}
@@ -99,6 +133,9 @@ public class CommentController {
 	@RequestMapping(value={"/saveCommunityComment"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/html;charset=UTF-8")
 	@SystemControllerLog(description = "社区问题添加评论的回复")
 	public String saveCommunityComment(HttpServletRequest request,HttpSession session){
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
 		String username = (String) session.getAttribute("UserName");
 		String questionId = request.getParameter("questionId");
 		String answerId = request.getParameter("answerId");
@@ -112,6 +149,11 @@ public class CommentController {
 		if (username==null) {
 			jsonObject.put("value", "0");
 			String result = JsonUtil.toJsonString(jsonObject); 
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return result;
 		}else {
 			//获取登录用户信息
@@ -123,11 +165,21 @@ public class CommentController {
 				CommentService.saveCommunityComment(userPersistences.get(0).getUSERID(), questionId, content, answerId);
 				jsonObject.put("value", "1");
 				String result = JsonUtil.toJsonString(jsonObject); 
+				
+				long executionTime = System.currentTimeMillis() - startTime;
+				
+				//记录运行时间
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 				return result;
 				
 			}else{
 				jsonObject.put("value", "2");
 				String result = JsonUtil.toJsonString(jsonObject); 
+				
+				long executionTime = System.currentTimeMillis() - startTime;
+				
+				//记录运行时间
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 				return result;
 			}
 		}
@@ -139,7 +191,9 @@ public class CommentController {
 	@RequestMapping(value={"/saveCommunityReply"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/html;charset=UTF-8")
 	@SystemControllerLog(description = "社区问题添加评论的回复的回复")
 	public String saveCommunityReply(HttpServletRequest request,HttpSession session){
-		//String useremail = (String) session.getAttribute("UserEmail"); 
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
 		String username = (String) session.getAttribute("UserName"); 		
 		String questionId = request.getParameter("questionId");
 		String answerId = request.getParameter("answerId");
@@ -149,6 +203,12 @@ public class CommentController {
 		if (username==null) {
 			jsonObject.put("value", "0");
 			String result = JsonUtil.toJsonString(jsonObject); 
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+			
 			return result;
 		}else {
 			List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
@@ -159,11 +219,23 @@ public class CommentController {
 				CommentService.saveCommunityReply(userPersistences.get(0).getUSERID(), questionId, content, answerId,userPersistences2.get(0).getUSERID());
 				jsonObject.put("value", "1");
 				String result = JsonUtil.toJsonString(jsonObject); 
+				
+				long executionTime = System.currentTimeMillis() - startTime;
+				
+				//记录运行时间
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+				
 				return result;
 				
 			}else{
 				jsonObject.put("value", "2");
 				String result = JsonUtil.toJsonString(jsonObject); 
+				
+				long executionTime = System.currentTimeMillis() - startTime;
+				
+				//记录运行时间
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+				
 				return result;
 			}
 		}
@@ -175,6 +247,10 @@ public class CommentController {
 	@RequestMapping(value={"/saveFaqComment"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
 	@SystemControllerLog(description = "faq3添加知识库评论")
 	public String saveFaqComment(HttpServletRequest request,HttpSession session){
+		
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
 		String username = (String) session.getAttribute("UserName");  
 		String questionId = request.getParameter("questionId");
 		String commentId = request.getParameter("commentId");
@@ -184,6 +260,11 @@ public class CommentController {
 		if (username==null) {
 			jsonObject.put("value", "0");
 			String result = JsonUtil.toJsonString(jsonObject); 
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+			
 			return result;
 		}else {
 			List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
@@ -193,11 +274,21 @@ public class CommentController {
 				CommentService.saveFaqComment(userPersistences.get(0).getUSERID(), questionId, content, commentId,duo);
 				jsonObject.put("value", "1");
 				String result = JsonUtil.toJsonString(jsonObject); 
+				
+				long executionTime = System.currentTimeMillis() - startTime;
+				
+				//记录运行时间
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 				return result;
 				
 			}else{
 				jsonObject.put("value", "2");
 				String result = JsonUtil.toJsonString(jsonObject); 
+				
+				long executionTime = System.currentTimeMillis() - startTime;
+				
+				//记录运行时间
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 				return result;
 			}
 		}
@@ -424,6 +515,9 @@ public class CommentController {
 	@RequestMapping(value={"/saveBestAnswer"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
 	@SystemControllerLog(description = "社区问题设置最佳答案")
 	public String saveBestAnswer(HttpServletRequest request,HttpSession session){
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
 		String username = (String) session.getAttribute("UserName");
 		//String useremail = (String) session.getAttribute("UserEmail");
 		System.out.println("设置最佳答案用户："+username);
@@ -434,6 +528,11 @@ public class CommentController {
 		if (username==null) {
 			jsonObject.put("value", "0");
 			String result = JsonUtil.toJsonString(jsonObject); 
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return result;
 		}else {
 			System.out.println("设置最佳答案");
@@ -441,6 +540,12 @@ public class CommentController {
 			CommunityQuestionHelper.updateBestAnswer(questionId);
 			jsonObject.put("value", "1");
 			String result = JsonUtil.toJsonString(jsonObject); 
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+			
 			return result;
 		}
 	}

@@ -239,7 +239,7 @@
 		<ul id="customTag"></ul>					
 		<div></div>					
 		<button id="toStep1">返回</button>				
-		<button id="submit"  onclick="saveCommunityQuestion()">提交</button>				
+		<button id="submit"  >提交</button>				
 			</div>			
 		</div>		
 	</div>

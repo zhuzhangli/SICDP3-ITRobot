@@ -40,7 +40,15 @@ public class RolePermissionHelper
 	}
 	
 	
-	
+	//超级管理员拥有所有权限
+	public static List<PermissionPersistence> getAllPermission() {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		RolePermissionPersistenceMapper mapper = session.getMapper(RolePermissionPersistenceMapper.class);
+		List<PermissionPersistence> list = mapper.getAllPermission();
+		session.close();
+		return list;
+	}
+
 	
 	
 	
@@ -84,6 +92,7 @@ public class RolePermissionHelper
 		return roleId;
 	}
 
+	
 
 	
 

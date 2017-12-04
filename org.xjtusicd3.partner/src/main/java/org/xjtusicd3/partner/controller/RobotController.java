@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.xjtusicd3.common.util.JsonUtil;
 import org.xjtusicd3.database.helper.RobotHelper;
+import org.xjtusicd3.database.helper.TimeStampHelper;
 import org.xjtusicd3.database.helper.UserHelper;
 import org.xjtusicd3.database.helper.UserQuestionHelper;
 import org.xjtusicd3.database.model.RobotAnswerPersistence;
@@ -35,11 +36,20 @@ public class RobotController {
 	@ResponseBody
 	@RequestMapping(value={"/getRobotInfo"},method={org.springframework.web.bind.annotation.RequestMethod.GET},produces="text/plain;charset=UTF-8")
 	@SystemControllerLog(description = "获取机器人信息")
-	public String RobotInfo(HttpServletResponse response){
+	public String RobotInfo(HttpServletResponse response,HttpServletRequest request){
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();
+		
+		System.out.println("当前路径："+path);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
 		List<RobotPersistence> list = RobotService.robotinfo();
 		String result = JsonUtil.toJsonString(list);
+		
+		long executionTime = System.currentTimeMillis() - startTime;
+		
+		//记录运行时间
+		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 		return result;
 	 }
 	/*
@@ -49,6 +59,10 @@ public class RobotController {
 	@RequestMapping(value={"/chatWithRobot"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
 	@SystemControllerLog(description = "与机器人聊天")
 	public String ChatWithRobot(HttpServletRequest request, HttpSession session) throws Exception{
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
+		
 		//记录前台用户提问
 		String comment = request.getParameter("comment");
 		String username = (String) session.getAttribute("UserName");
@@ -89,6 +103,11 @@ public class RobotController {
 			jsonObject.put("robotUser", userPersistences);
 		}
 		String result = JsonUtil.toJsonString(jsonObject);
+		
+		long executionTime = System.currentTimeMillis() - startTime;
+		
+		//记录运行时间
+		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 		return result;
 	}
 	/**
@@ -160,7 +179,8 @@ public class RobotController {
 				UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),1,questionId,answerId,0);
 				jsonObject.put("value", "0");
 			}else {
-				
+				List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
+				jsonObject.put("robotUser", userPersistences);
 				//获取用户信息
 				UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),1,questionId,answerId,0);
 
@@ -212,6 +232,10 @@ public class RobotController {
 				UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),0,questionId,answerId,0);
 				jsonObject.put("value", "0");
 			}else {
+				//获取用户信息
+				List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
+				jsonObject.put("robotUser", userPersistences);
+				
 				
 				//获取用户信息
 				UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),0,questionId,answerId,0);
@@ -227,11 +251,11 @@ public class RobotController {
 	 }
 	
 	
-	/**
+/*	*//**
 	 * author:zzl
 	 * abstract:将未解决问题添加至问题中心
 	 * data:2017年10月31日02:13:43
-	 */
+	 *//*
 	@ResponseBody
 	@RequestMapping(value={"/addToCommunity"},method={org.springframework.web.bind.annotation.RequestMethod.GET},produces="application/json;charset=UTF-8")
 	@SystemControllerLog(description = "将未解决问题添加至问题中心")
@@ -253,10 +277,10 @@ public class RobotController {
 		//获取机器人信息
 		List<RobotPersistence> robotPersistences = RobotHelper.robotinfo();
 		jsonObject.put("robotInfo", robotPersistences);
-		/*
+		
 		 * 用户不满意SATICFACTION置为 0 
 		 * 用户名为空value返回 0，不空返回 1
-		 */
+		 
 		if (username==null) {
 			//UserQuestionHelper.addUserSaticfaction(UUID.randomUUID().toString(),0,questionId,answerId);
 			jsonObject.put("value", "0");
@@ -274,7 +298,7 @@ public class RobotController {
 		String result = JsonUtil.toJsonString(jsonObject);
 		return result;
 	 }
-	
+	*/
 	
 	
 	

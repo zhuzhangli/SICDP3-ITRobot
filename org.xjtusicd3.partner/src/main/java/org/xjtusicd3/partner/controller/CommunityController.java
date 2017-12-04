@@ -1,6 +1,7 @@
 package org.xjtusicd3.partner.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import org.xjtusicd3.database.helper.CommunityAnswerHelper;
 import org.xjtusicd3.database.helper.CommunityQuestionHelper;
 import org.xjtusicd3.database.helper.ITHelper;
 import org.xjtusicd3.database.helper.ShareHelper;
+import org.xjtusicd3.database.helper.TimeStampHelper;
 import org.xjtusicd3.database.helper.UserHelper;
 import org.xjtusicd3.database.model.AnswerPersistence;
 import org.xjtusicd3.database.model.ClassifyPersistence;
@@ -41,9 +43,9 @@ public class CommunityController {
 	@RequestMapping(value="question",method=RequestMethod.GET)
 	@SystemControllerLog(description = "社区主页显示")
 	public ModelAndView question(String c,String type,HttpServletRequest request,HttpSession session){
-		//String useremail = (String) session.getAttribute("UserEmail");
-		System.out.println("c:"+c);
-		System.out.println("type:"+type);
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+
 		String username = (String) session.getAttribute("UserName");
 		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.classifyName1();
 		List<Question_CommunityView> question_CommunityViews = CommunityService.Question_CommunityView(username,0,type,c);
@@ -68,6 +70,11 @@ public class CommunityController {
 			urlPath = request.getServletPath()+"?"+request.getQueryString().toString();
 		}
 		session.setAttribute("urlPath", urlPath);
+		
+		long executionTime = System.currentTimeMillis() - startTime;
+		
+		//记录运行时间
+		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 		return mv;
 	}
 	/*
@@ -80,7 +87,8 @@ public class CommunityController {
 	@SystemControllerLog(description = "社区主页显示更多")
 	public String getMoreCommunity(HttpServletRequest request,HttpSession session)
 	{	
-		System.out.println("获取更多问题");
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
 		/* 获得前台参数  */
 		// 用户名用于判断是否登录
 		String username = (String) session.getAttribute("UserName");
@@ -127,7 +135,10 @@ public class CommunityController {
 			jsonObject.put("endnumber", startnumber+question_CommunityViews.size());
 			jsonObject.put("communityViews", question_CommunityViews);
 			String result = JsonUtil.toJsonString(jsonObject); 
-			System.out.println(result);
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return result;
 		}
 	}
@@ -137,6 +148,9 @@ public class CommunityController {
 	@RequestMapping(value="question2",method=RequestMethod.GET)
 	@SystemControllerLog(description = "社区具体问题显示")
 	public ModelAndView question2(HttpServletRequest request,HttpServletResponse response,String q,HttpSession session){
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
 		String username = (String) session.getAttribute("UserName");
 		ModelAndView mv = new ModelAndView("question2");
 		//获取用户信息
@@ -194,6 +208,12 @@ public class CommunityController {
 		mv.addObject("userid", userPersistences.get(0).getUSERID());
 		mv.addObject("userName", userPersistences.get(0).getUSERNAME());
 		mv.addObject("_userid", communityQuestionPersistences.get(0).getUSERID());
+		
+		long executionTime = System.currentTimeMillis() - startTime;
+		
+		//记录运行时间
+		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+		
 		return mv;
 	}
 	
@@ -204,13 +224,21 @@ public class CommunityController {
 	@RequestMapping(value={"/saveCommunityQuestion"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/plain;charset=UTF-8")
 	@SystemControllerLog(description = "社区问题增加")
 	public String saveCommunityQuestion(HttpServletRequest request,HttpServletResponse response,HttpSession session){
-		//String useremail = (String) session.getAttribute("UserEmail");
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
 		String username = (String) session.getAttribute("UserName");
 		String url = (String) session.getAttribute("urlPath");
 		JSONObject jsonObject = new JSONObject();
 		if (username==null) {
 			jsonObject.put("value", "0");
 			String result = JsonUtil.toJsonString(jsonObject); 
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+			
 			return result;
 		}else {
 			String title = request.getParameter("title");
@@ -234,11 +262,23 @@ public class CommunityController {
 				jsonObject.put("value", "1");
 				jsonObject.put("url",url);
 				String result = JsonUtil.toJsonString(jsonObject); 
+				
+				
+				long executionTime = System.currentTimeMillis() - startTime;
+				
+				//记录运行时间
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 				return result;
 			}else {
 				jsonObject.put("value", "2");
 				jsonObject.put("url",url);
 				String result = JsonUtil.toJsonString(jsonObject); 
+				
+				long executionTime = System.currentTimeMillis() - startTime;
+				
+				//记录运行时间
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+				
 				return result;
 			}
 		}
@@ -250,6 +290,10 @@ public class CommunityController {
 	@RequestMapping(value={"/saveReplyQuestion"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/plain;charset=UTF-8")
 	@SystemControllerLog(description = "社区问题回复")
 	public String saveReplyQuestion(HttpServletRequest request,HttpSession session){
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
+		
 		String username = (String) session.getAttribute("UserName");
 		JSONObject jsonObject = new JSONObject();
 		String url = request.getParameter("url");
@@ -261,6 +305,12 @@ public class CommunityController {
 		if (username==null) {
 			jsonObject.put("value", "0");
 			String result = JsonUtil.toJsonString(jsonObject);
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+			
 			return result;
 		}else {
 			//获取问题评论及问题号
@@ -278,12 +328,22 @@ public class CommunityController {
 				jsonObject.put("value", "1");
 				jsonObject.put("url", url);
 				String result = JsonUtil.toJsonString(jsonObject);
+				long executionTime = System.currentTimeMillis() - startTime;
+				
+				//记录运行时间
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+				
 				return result;
 			}else {
 				//评论重复
 				jsonObject.put("value", "2");
 				jsonObject.put("url", url);
 				String result = JsonUtil.toJsonString(jsonObject);
+				long executionTime = System.currentTimeMillis() - startTime;
+				
+				//记录运行时间
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+				
 				return result;
 			}
 			

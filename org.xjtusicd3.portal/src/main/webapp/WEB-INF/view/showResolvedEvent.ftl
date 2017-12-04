@@ -143,7 +143,7 @@
                               <div class="col-sm-4 col-sm-offset-2" id="${a.USERQUESTIONID }">
                                   <button class="btn btn-primary" "><a href="/org.xjtusicd3.portal/eventPage.html#tab-32">返回</a></button>
                                   <!-- <button class="btn btn-primary" "><a href="javascript:void(0);" onclick="addToFaq()">完成</a></button> -->
-                                  <button class="btn btn-primary" "><a  class="blue"  id="sub" data-dialog="somedialog" >提交</a></button>
+                                 <!--  <button ><a  class="blue"  data-dialog="somedialog" >提交</a></button> -->
                               </div>
                           </div>
                       </form>
@@ -251,7 +251,7 @@
 	}*/
 	
 	
-	$("#sub").click(function(){
+	/* $("#sub").click(function(){
 		$(".spa2").text("");
 		$(".spa4").text("");
 		var na = /^\S{2,44}$/   
@@ -282,10 +282,10 @@
 							self.location='login.html';
 						}else if(data.value=="1"){
 							alert("添加成功");
-							window.location.reload();
+							self.location.href = "/org.xjtusicd3.portal/eventPage.html";
 						}else{
 							alert("重复提交");
-							window.location.reload();
+							self.location.href = "/org.xjtusicd3.portal/eventPage.html";
 						}
 					}
 				})
@@ -308,7 +308,7 @@
 			}
 			return false;
 		}
-	})
+	}) */
 
 	
 	

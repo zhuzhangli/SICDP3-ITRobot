@@ -117,8 +117,8 @@
 																				<td  style="width: 70%;">${eventUnresolved.userQuestionTitle}</td>
 																				<td  style="width: 8%;text-align: center;">${eventUnresolved.userName}</td>
 																				<td  style="width: 12%;text-align: center;">${eventUnresolved.userQuestionTime}</td>
-																				<td  style="width: 5%;text-align: center;">
-																					<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看事件详情" ><a class="eventinfo" href="/org.xjtusicd3.portal/showUnResolvedEvent.html?q=${eventUnresolved.userQuestionId}"><i class="fa fa-eye"></i></a></button>
+																				<td  style="width: 7%;text-align: center;">
+																					<a class="eventinfo" href="/org.xjtusicd3.portal/showUnResolvedEvent.html?q=${eventUnresolved.userQuestionId}">查看事件详情</a>
 																				</td>
 																				<td  style="width: 5%;text-align: center;" id = "${eventUnresolved.userQuestionId }">																				
 																					<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="忽略此问题" id="ignore" onclick="ignore(this.id)"><i class="fa fa-trash-o"></i>
@@ -150,7 +150,6 @@
 																			<tr>
 																				<th style="text-align: center;">序号</th>
 																				<th style="text-align: center;">问题名称</th>
-																				<th style="text-align: center;">推荐答案</th>
 																				<th style="text-align: center;">提问用户</th>
 																				<th style="text-align: center;">问题时间</th>																				
 																				<th style="text-align: center;">操作</th>
@@ -161,16 +160,12 @@
 																			<#list eventResolved as eventResolved>
 																			<tr class="" id = "${eventResolved.USERQUESTIONID}">
 																				<td style="width: 5%;text-align: center;">${eventResolved_index+1}</td>
-																				<td style="width: 35%;">${eventResolved.QUESTIONTITLE}</td>
-																				
-
-																				<td style="width: 35%;">${eventResolved.FAQANSWER }</td>
-																				
-																				
+																				<td style="width: 35%;">${eventResolved.QUESTIONTITLE}</td>																				
 																				<td style="width: 10%;text-align: center;">${eventResolved.USERNAME}</td>
 																				<td style="width: 10%;text-align: center;">${eventResolved.QUESTIONTIME}</td>
-																				<td style="width: 5%;text-align: center;">
-																				<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看用户详情" ><a class="questioninfo" href="/org.xjtusicd3.portal/showResolvedEvent.html?q=${eventResolved.USERQUESTIONID}"><i class="fa fa-eye"></i></a></button>
+																				<td style="width: 7%;text-align: center;">
+																				<a class="questioninfo" href="/org.xjtusicd3.portal/showResolvedEvent.html?q=${eventResolved.USERQUESTIONID}">查看详情</a>
+																				</td>
 																			</tr>
 																			</#list>
 																		</tbody>

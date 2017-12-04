@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.xjtusicd3.database.helper.RoleHelper;
 import org.xjtusicd3.database.helper.RolePermissionHelper;
 import org.xjtusicd3.database.model.PermissionPersistence;
+import org.xjtusicd3.database.model.RolePersistence;
 import org.xjtusicd3.database.model.UserPersistence;
 import org.xjtusicd3.portal.service.LogService;
 
@@ -40,23 +42,42 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
 			//System.out.println("asda:   "+req.getMethod() + " : "+ req.getServletPath());
 		
 			String path = req.getServletPath();
-			List<PermissionPersistence> rolePermissions = RolePermissionHelper.getRolePermission(user.getUSERID());
-			//System.out.println(rolePermissions.size());
 			
-			for(PermissionPersistence rp : rolePermissions){
-				 
-				if (rp.getPERMISSIONLOGICNAME().equals(path)){
-					System.out.println(rp.getPERMISSIONLOGICNAME());
-
-			//		String userId = user.getUSERID();
-				//	String logPermission = rp.getPERMISSIONLOGICNAME();
-					
-					//注释_2017年10月22日14:52:12
-					//LogService.saveLog(userId, logPermission);
-					return true;
-				}
-			}			
-			return false;
+			System.out.println("当前路径是："+path);
+			
+			//查询当前用户角色
+			List<RolePersistence> list = RoleHelper.getRoleInfoByUserId(user.getUSERID());
+			
+			System.out.println("当前用户角色是："+list.get(0).getRoleName());
+			
+		/*	if (list.get(0).getRoleName().equals("超级管理员")) {
+				//超级管理员拥有所有权限
+				List<PermissionPersistence> rolePermissions = RolePermissionHelper.getAllPermission();
+				System.out.println("超级管理员");
+				for(PermissionPersistence rp : rolePermissions){
+					 
+					if (rp.getPERMISSIONPHYSICALNAME().equals(path)){
+						System.out.println(rp.getPERMISSIONPHYSICALNAME());
+						return true;
+					}
+				}			
+				return false;
+			}else {*/
+				List<PermissionPersistence> rolePermissions = RolePermissionHelper.getRolePermission(user.getUSERID());
+				//System.out.println(rolePermissions.size());
+				
+				for(PermissionPersistence rp : rolePermissions){
+					 
+					if (rp.getPERMISSIONPHYSICALNAME().equals(path)){
+						System.out.println(rp.getPERMISSIONPHYSICALNAME());
+						return true;
+					}
+				}			
+				return false;
+			//}
+			
+			
+			
 		}
 	}
 	

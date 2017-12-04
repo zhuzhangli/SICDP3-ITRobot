@@ -174,7 +174,7 @@ public interface QuestionPersistenceMapper extends IBaseDao<QuestionPersistence,
 			int faqState);
 	
 	//获取已审核faq
-	@Select("SELECT * FROM TBL_FAQquestion WHERE FAQSTATE = 2 ORDER BY MODIFYTIME DESC LIMIT #{0},20")
+	@Select("SELECT * FROM TBL_FAQquestion WHERE FAQSTATE = 2 ORDER BY MODIFYTIME DESC LIMIT #{0},100")
 	public List<QuestionPersistence> faqAudited(int i);
 	
 	//删除待审核faq

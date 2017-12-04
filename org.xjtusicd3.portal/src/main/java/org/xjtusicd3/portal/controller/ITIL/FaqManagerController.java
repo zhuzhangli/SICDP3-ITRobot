@@ -14,10 +14,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.xjtusicd3.common.util.JsonUtil;
 
 import org.xjtusicd3.database.model.QuestionPersistence;
-
-
+import org.xjtusicd3.portal.service.ConfigureService;
 import org.xjtusicd3.portal.service.FaqManagerService;
 import org.xjtusicd3.portal.service.QuestionService;
+import org.xjtusicd3.portal.view.ConfigureDriverView;
 import org.xjtusicd3.portal.view.FaqView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -153,6 +153,34 @@ public class FaqManagerController {
 	}
 	
 	
+
+	//查看faq更多信息
+	@ResponseBody
+	@RequestMapping(value="/lookMoreFaqInfo",method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
+	public String lookMoreFaqInfo(HttpServletRequest request,HttpSession session){
+		//获取ajax传来数据
+		String faqQuestionId = request.getParameter("faqQuestionId"); 	
+		
+    	//获取ID对应faq信息
+		
+		FaqView list = FaqManagerService.getAllFaqInfo(faqQuestionId);
+		
+		
+		JSONObject jsonObject = new JSONObject();
+		
+		jsonObject.put("moreFaqInfo", list);
+				
+		String result = JsonUtil.toJsonString(jsonObject);
+		
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * 删除待审核信息
@@ -164,7 +192,11 @@ public class FaqManagerController {
 	@RequestMapping(value="/deleteFAQ",method=RequestMethod.POST)
 	public String deleteFAQ(HttpServletRequest request,HttpSession session){
 	
-		String questionId = request.getParameter("questionId");
+		String questionid = request.getParameter("faqQuestionId");
+		String[] str = questionid.split("_");
+		String questionId = str[1];
+		
+		
 		
 		//删除待审核信息 -- faqstate状态为0时，表明删除
 		FaqManagerService.deleteFAQ(questionId);

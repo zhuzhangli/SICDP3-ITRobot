@@ -24,12 +24,7 @@ public class PageController {
      }
 	
 	
-	//首页
-	@RequestMapping(value="homePage",method=RequestMethod.GET)
-    public ModelAndView  homePage(){
- 	   ModelAndView mv=new ModelAndView("homePage");
- 	   return mv;
-    }
+	
 		
 	
 		

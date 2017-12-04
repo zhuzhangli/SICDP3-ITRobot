@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import javax.jws.soap.SOAPBinding.Use;
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.xjtusicd3.common.util.JsonUtil;
 import org.xjtusicd3.database.helper.ITHelper;
 import org.xjtusicd3.database.helper.PayHelper;
+import org.xjtusicd3.database.helper.TimeStampHelper;
 import org.xjtusicd3.database.helper.UserHelper;
 import org.xjtusicd3.database.model.ITPersistence;
 import org.xjtusicd3.database.model.PayPersistence;
@@ -53,6 +55,8 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value={"/saveRegister"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/plain;charset=UTF-8")
 	public String registerlist(HttpServletRequest request,HttpServletResponse response) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+		long startTime = System.currentTimeMillis();//计算开始日期
+		
 		String name = request.getParameter("name");
 		String password = request.getParameter("password");
 		//判断用户名是否被注册
@@ -128,6 +132,10 @@ public class UserController {
 	@RequestMapping(value="/saveLogin",method=RequestMethod.POST)
 	@SystemControllerLog(description = "用户登录")
 	public String loginlist(UserView userView,HttpSession session,HttpServletRequest request) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+		String path = request.getServletPath();		
+		long startTime = System.currentTimeMillis();//计算开始日期
+		
+		
 		String urlPath = (String) session.getAttribute("urlPath");
 		if (urlPath==null) {
 			urlPath = "robot.html";
@@ -144,13 +152,30 @@ public class UserController {
 		 * 正确跳转至urlPath所指向页面
 		 */
 		if (loginList.size()==0) {
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+			
+			
+			
 			return "redirect:login.html";
+			
+			
 		}else {
 			//zzl_查找登录用户信息
 			List<UserPersistence> list = UserService.loginUserInfo(nameOrEmail);
 			session.setAttribute("UserId", list.get(0).getUSERID());
 			session.setAttribute("UserName", list.get(0).getUSERNAME());
+			
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return "redirect:"+urlPath;
+			
+			
 		}		
 	}
 	
@@ -160,8 +185,15 @@ public class UserController {
 	@RequestMapping(value="/loginout",method=RequestMethod.GET)
 	@SystemControllerLog(description = "用户推出")
 	public String loginout(HttpSession session,HttpServletRequest request){
+		String path = request.getServletPath();		
+		long startTime = System.currentTimeMillis();//计算开始日期
 		String urlPath = (String) session.getAttribute("urlPath");
 		session.invalidate();
+		
+		long executionTime = System.currentTimeMillis() - startTime;
+		
+		//记录运行时间
+		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 		return "redirect:"+urlPath;
 	}
 	
@@ -170,26 +202,35 @@ public class UserController {
 	 */
 	@RequestMapping(value="personal",method=RequestMethod.GET)
 	@SystemControllerLog(description = "个人基本信息")
-	public ModelAndView personal(UserView userView ,HttpSession session){
+	public ModelAndView personal(UserView userView ,HttpSession session,HttpServletRequest request){
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();		
+		
 		String username = (String) session.getAttribute("UserName");
-		//String useremail = (String) session.getAttribute("UserEmail");
-		System.out.println("进入个人中心"+username);
+
 		if (username==null) {
-			System.out.println("进入个人中心_用户名为空");
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+			
 			return new ModelAndView("login");			
 		}else {
 			ModelAndView mv = new ModelAndView("personal");
-			System.out.println("进入个人中心_用户名不空");
-			//List<UserPersistence> list = UserHelper.getEmail(useremail);
+			
 			List<UserPersistence> list = UserHelper.getUserInfo(username);
 			String address = list.get(0).getUSERADDRESS();
-			System.out.println("用户地址信息"+list.get(0).getUSERADDRESS());
+		
 			if(address==null){
 				
 			}else {
 				mv.addObject("address", RegexAddress.replaceAddress(address));
 			}
 			mv.addObject("personal_list", list);
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return mv;
 		}
 		
@@ -201,12 +242,19 @@ public class UserController {
 	@RequestMapping(value="/addUserInfo",method=RequestMethod.POST)
 	@SystemControllerLog(description = "个人信息添加")
 	public String addUserInfo(UserView userView,HttpServletRequest request,HttpSession session){
-		//String useremail = (String) session.getAttribute("UserEmail");
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
 		//zzl_获得前台用户名
 		String loginUser = (String) session.getAttribute("UserName");
 		String usersex = "";
 		String address = "";
 		if (loginUser==null) {
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return "redirect:login.html";
 		}else {
 			List<UserPersistence> list = UserHelper.getUserInfo(loginUser);
@@ -218,6 +266,9 @@ public class UserController {
 				usersex = userView.getUserSex2();
 			}
 			String username = userView.getUserName();
+			String useremail = userView.getUserEmail();
+			System.out.println("用户邮箱："+userView.getUserEmail());
+			
 			String userbirthday = userView.getUserBirthday();
 			String province = userView.getProvince();
 			String city = userView.getCity();
@@ -232,7 +283,13 @@ public class UserController {
 			//zzl_获取登录用户信息
 			List<UserPersistence> userlist = UserService.loginUserInfo(loginUser);	
 			System.out.println("用户生日："+userbirthday);
-			UserHelper.updateUserInfo2(userlist.get(0).getUSERID(), username, usersex, userbirthday, address, userbrief);
+			UserHelper.updateUserInfo2(userlist.get(0).getUSERID(), username,useremail, usersex, userbirthday, address, userbrief);
+			
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return "redirect:personal.html";
 		}
 	}
@@ -244,6 +301,10 @@ public class UserController {
 	@RequestMapping(value={"/updateUserPassword"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/html;charset=UTF-8")
 	@SystemControllerLog(description = "密码修改")
 	public String updateUserPassword(HttpServletRequest request,HttpServletResponse response,HttpSession session) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();		
+		
+		
 		String username = (String) session.getAttribute("UserName");
 		String password = request.getParameter("password");
 		System.out.println(password);
@@ -253,21 +314,41 @@ public class UserController {
 		System.out.println(repassword2);
 		//String useremail = (String) session.getAttribute("UserEmail");
 		if (username==null) {
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+			
 			return "redirect:login.html";
 		}else {
 			if (password.equals(password2)) {
 				System.out.println("返回0");
+				long executionTime = System.currentTimeMillis() - startTime;
+				
+				//记录运行时间
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+				
 				return "0";
 			}else {
 				boolean islogin = UserService.isLogin(username, password);
 				if (islogin==false) {
 					System.out.println("返回1");
+					
+					long executionTime = System.currentTimeMillis() - startTime;
+					
+					//记录运行时间
+					TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 					return "1";
 				}else {
 					//List<UserPersistence> list = UserService.loginUserInfo(userId);
 					password2 = MD5.EncoderByMd5(password2);
 					UserHelper.updateUserPassword2(username, password2);
 					System.out.println("返回2");
+					
+					long executionTime = System.currentTimeMillis() - startTime;
+					
+					//记录运行时间
+					TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 					return "2";
 				}
 			}
@@ -347,11 +428,18 @@ public class UserController {
 	@RequestMapping(value="personal2",method=RequestMethod.GET)
 	@SystemControllerLog(description = "个人主页")
 	public ModelAndView personal2(String u,HttpServletRequest request,HttpSession session){
-		//String useremail = (String) session.getAttribute("UserEmail");
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
 		String username = (String) session.getAttribute("UserName");
 		String userId = (String) session.getAttribute("UserId");
 		List<UserPersistence> list = new ArrayList<UserPersistence>();
 		if (username==null) {
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return new ModelAndView("login");
 		}else {
 			//主页页面
@@ -391,6 +479,11 @@ public class UserController {
 			mv.addObject("paynumber", payPersistences.size());//关注人数
 			mv.addObject("bepaynumber", payPersistences2.size());//粉丝数
 			mv.addObject("uid", userId);
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return mv;
 		
 		}
@@ -405,10 +498,20 @@ public class UserController {
 	@ResponseBody
 	@RequestMapping(value={"/getUserInfo"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/html;charset=UTF-8")
 	public String getUserInfo(HttpServletRequest request,HttpServletResponse response){
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
+		
 		String email = request.getParameter("useremail");
 		List<UserPersistence> userPersistences = UserHelper.getEmail(email);
 		String result = JsonUtil.toJsonString(userPersistences);
-		System.out.println(result);
+
+		
+		
+		long executionTime = System.currentTimeMillis() - startTime;
+		
+		//记录运行时间
+		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 		return result;
 	}
 	
@@ -524,19 +627,31 @@ public class UserController {
 	@RequestMapping(value={"/getpersonalFaq"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
 	@SystemControllerLog(description = "获取知识库列表")
 	public String getpersonalFaq(HttpServletRequest request,HttpSession session){
-		//String useremail = (String) session.getAttribute("UserEmail");
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();		
+		
 		String username = (String) session.getAttribute("UserName");
 		String userId = request.getParameter("userId");
 		JSONObject jsonObject = new JSONObject();
 		if (username==null) {
 			jsonObject.put("value", "0");
 			String result = JsonUtil.toJsonString(jsonObject); 
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return result;
 		}else{
 			List<Personal2_FaqView> personal2_FaqViews = UserService.getpersonalFaq(userId);
 			jsonObject.put("faqView", personal2_FaqViews);
 			jsonObject.put("value", "1");
 			String result = JsonUtil.toJsonString(jsonObject); 
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return result;
 		}
 	}
@@ -599,19 +714,32 @@ public class UserController {
 	@RequestMapping(value={"/getCollectFaq"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
 	@SystemControllerLog(description = "获取收藏FAQ")
 	public String getCollectFaq(HttpServletRequest request,HttpSession session){
-		//String useremail = (String) session.getAttribute("UserEmail");
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
+		
 		String username = (String) session.getAttribute("UserName");
 		List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
 		JSONObject jsonObject = new JSONObject();
 		if (username==null) {
 			jsonObject.put("value", "0");
 			String result = JsonUtil.toJsonString(jsonObject); 
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return result;
 		}else{
 			List<Personal2_FaqView> personal2_FaqViews = UserService.getCollectionFaq(userPersistences.get(0).getUSERID());
 			jsonObject.put("faqView", personal2_FaqViews);
 			jsonObject.put("value", "1");
 			String result = JsonUtil.toJsonString(jsonObject);
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return result;
 		}
 	}
@@ -645,6 +773,9 @@ public class UserController {
 	@RequestMapping(value={"/getCommentFaq"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
 	@SystemControllerLog(description = "获取FAQ的评论")
 	public String getCommentFaq(HttpServletRequest request,HttpSession session){		
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
 		String username = (String) session.getAttribute("UserName");
 		//List<UserPersistence> userPersistences = UserHelper.getEmail(username);
 		List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
@@ -652,12 +783,22 @@ public class UserController {
 		if (username==null) {
 			jsonObject.put("value", "0");
 			String result = JsonUtil.toJsonString(jsonObject); 
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return result;
 		}else{
 			List<Personal2_FaqView> personal2_FaqViews = UserService.getCommentFaq(userPersistences.get(0).getUSERID());
 			jsonObject.put("faqView", personal2_FaqViews);
 			jsonObject.put("value", "1");
 			String result = JsonUtil.toJsonString(jsonObject);
+			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return result;
 		}
 	}

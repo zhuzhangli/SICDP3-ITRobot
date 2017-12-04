@@ -137,7 +137,7 @@ public class UserService {
 		List<UserView> adminUsers = new ArrayList<UserView>();
 		
 		//获取所有管理员信息 -- 即USERSTATE = 2 且 角色名是管理员2
-		List<UserPersistence> userLists = UserHelper.getUserLists(2,"管理员2");
+		List<UserPersistence> userLists = UserHelper.getUserLists(2,"管理员");
 		
 		for(UserPersistence userList:userLists){
 			UserView adminUser = new UserView();

@@ -129,12 +129,19 @@
 																			<tr class="" id = "${a.problemId}">
 																				<td style="width: 6%;">${a_index+1}</td>
 																				<td style="width: 27%;">${a.problemTitle}</td>
-																				<td style="width: 27%;">${a.problemContent}</td>
+																				<td style="width: 27%;">
+																				<#if a.problemContent?length gt 100>
+																				${a.problemContent[0..100]}...<span class="readMore">
+																					<a class="questioninfo" href="/org.xjtusicd3.portal/showUnResolvedProblem.html?p=${a.problemId}">查看更多</a></span>
+																				<#else>
+																				${a.problemContent}
+																				</#if>
+																				</td>
 																				<td style="width: 10%;" class="center">${a.problemClassifyName}</td>
 																				<td style="width: 10%;" class="center">${a.problemUserName}</td>														
 																				<td style="width: 10%;">${a.problemTime}</td>
 																				<td  style="width: 5%;text-align: center;">
-																					<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看问题详情" ><a class="questioninfo" href="/org.xjtusicd3.portal/showUnResolvedProblem.html?p=${a.problemId}"><i class="fa fa-eye"></i></a></button>
+																					<a class="questioninfo" href="/org.xjtusicd3.portal/showUnResolvedProblem.html?p=${a.problemId}">查看详情</a>
 																				</td>
 																				<td  style="width: 5%;text-align: center;" >																				
 																					<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="忽略此问题" id = "${a.problemId }" onclick="ignore(this.id)"><i class="fa fa-trash-o"></i>
@@ -188,7 +195,7 @@
 																				<td style="width: 7%;text-align: center;" >${b.answerUserName}</td>
 																				<td style="width: 20%;">${b.answerContent }</td>
 																				<td style="width: 7%;text-align: center;">
-																					<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看问题详情" ><a class="questioninfo" href="/org.xjtusicd3.portal/showResolvedProblem.html?p=${b.problemId}"><i class="fa fa-eye"></i></a></button>
+																					<a class="questioninfo" href="/org.xjtusicd3.portal/showResolvedProblem.html?p=${b.problemId}">查看详情</a>
 																				</td>
 																			</tr>
 																			</#list>

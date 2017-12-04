@@ -98,12 +98,12 @@ public class EventManagerService {
 	 * data:2017年11月5日10:40:16
 	 */
 	public static Event_AnswerView getResolvedEventDetail(String userQuestionId) {
-
+		//已处理事件视图
+				Event_AnswerView event_AnswerView = new Event_AnswerView();
 		//获取查看的用户问题
 		List<UserQuestionPersistence> userQuestionPersistences = UserQuestionHelper.getUserQuestion(userQuestionId);
 		
-		//已处理事件视图
-		Event_AnswerView event_AnswerView = new Event_AnswerView();
+		
 		
 		event_AnswerView.setUSERQUESTIONID(userQuestionId);
 

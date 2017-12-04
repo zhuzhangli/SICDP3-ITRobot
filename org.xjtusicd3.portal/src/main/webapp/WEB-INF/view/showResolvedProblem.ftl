@@ -59,12 +59,7 @@
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
-                            
-                            <div class="form-group" style="display: none;">
-                                <div class="col-sm-10" >
-                                   <input id="classifyId" value="${a.problemClassifyId}"> 
-                                </div>
-                            </div>
+        
                             
                             <div class="form-group" style="display: none;">
                                 <div class="col-sm-10" >
@@ -72,14 +67,24 @@
                                 </div>
                             </div>
                             
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">问题类别</label>
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">问题类别</label>
 
-                                <div class="col-sm-10" id="classifyName">
-                                    ${a.problemClassifyName}
-                                </div>
-                            </div>
-                            <div class="hr-line-dashed"></div>
+                              <div class="col-sm-10">
+                                  <select class="select" id="specialCategoryId" onchange="selectSecondChild()" style="height: 35px;width: 180px"></select>
+                 			 	  <select class="select" id="subspecialCategoryId" name="classifyName" style="height: 35px;width: 180px"></select>
+                 			 	  <div class="validate_faqadd spa4"></div>
+                              </div>
+                          </div>
+                            
+                           <div class="hr-line-dashed"></div> 
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">提问用户</label>
 
@@ -126,7 +131,7 @@
                             
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-2">
-                                    <button class="btn btn-primary" ><a href="/org.xjtusicd3.portal/problemPage.html#tab-32">返回</a></button>
+                                    <button class="btn btn-primary" ><a href="/org.xjtusicd3.portal/problemPage.html">返回</a></button>
                                     <button class="btn btn-primary" "><a href="javascript:void(0);" onclick="addToFaq()">添加至知识库</a></button> 
                                 </div>
                             </div>
@@ -149,6 +154,38 @@
     <!-- iCheck -->
     <script src="js/plugins/iCheck/icheck.min.js"></script>
     <script>
+    
+    $(document).ready(
+			   function(){
+			         $.ajax({
+			             type: "GET",
+			             url: "/org.xjtusicd3.portal/getFirstLevel.html",            
+			             dataType: "json",
+			             success: function(data){            
+			     			 for(var i in data){ 
+			     			 	 document.getElementById("specialCategoryId").options.add(new Option(data[i].fAQCLASSIFYNAME, data[i].fAQCLASSIFYID));					        
+						      }                                                                      
+			             }
+			         });
+			    })
+			    
+			function selectSecondChild(){
+			var element = document.getElementById("specialCategoryId");
+			var classifyId = element.options[element.selectedIndex].value;
+			$.ajax({
+			     type: "GET",
+			     url: "/org.xjtusicd3.portal/getSecondLevel.html"+"?"+"classifyId="+classifyId,            
+			     dataType: "json",
+			     success: function(data){
+			     			 document.getElementById("subspecialCategoryId").options.length=0;              	
+			     			 for(var i in data){ 
+			     			 	 document.getElementById("subspecialCategoryId").options.add(new Option(data[i].fAQCLASSIFYNAME, data[i].fAQCLASSIFYID));					        
+							      }                                                                      
+			                  }
+			     });         
+			}
+    
+    
         $(document).ready(function () {
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
@@ -158,11 +195,13 @@
         
         
         function addToFaq(){
-        	
+        	if($("#subspecialCategoryId").val()){
         	var communityQuestionId = document.getElementById("communityQuestionId").value;    		
     		var title = document.getElementById("title").innerText;
     		var content = document.getElementById("content").innerText;
-    		var classifyId = document.getElementById("classifyId").value;
+    		//var classifyId = document.getElementById("classifyId").value;
+    		var classifyId = document.getElementById("subspecialCategoryId").value;
+    		
     		var problemUser = document.getElementById("problemUser").innerText;   		
     		var userId = document.getElementById("userId").value;
     		var problemTime = document.getElementById("problemTime").innerText;  		
@@ -197,7 +236,15 @@
     				} 
     				
     			}
-    		})  
+    		}) 
+        	
+        	}else{
+        		if($("#subspecialCategoryId").val()==null){
+    				$(".spa4").text('请您选择知识分类')
+    			} 
+    			
+    			return false;
+        	}
     	}
     </script>
 
