@@ -17,7 +17,6 @@ import net.sf.json.JSONObject;
 
 @ServerEndpoint("/websocketserver")
 public class Websocketserver {
-	private static SimpleDateFormat simpleDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static Map<String, Websocketserver> online = new HashMap<String, Websocketserver>();
 	private static int count = 0;
 	private Session session;

@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.xjtusicd3.database.logic.SqlSessionManager;
-import org.xjtusicd3.database.mapper.AdvisePersistenceMapper;
 import org.xjtusicd3.database.mapper.RolePermissionPersistenceMapper;
-import org.xjtusicd3.database.model.AdvisePersistence;
 import org.xjtusicd3.database.model.PermissionPersistence;
 import org.xjtusicd3.database.model.RolePermissionPersistence;
 

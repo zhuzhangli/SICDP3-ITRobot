@@ -23,10 +23,8 @@ import org.xjtusicd3.database.helper.TimeStampHelper;
 import org.xjtusicd3.database.helper.UserHelper;
 import org.xjtusicd3.database.model.AnswerPersistence;
 import org.xjtusicd3.database.model.ClassifyPersistence;
-import org.xjtusicd3.database.model.CommunityAnswerPersistence;
 import org.xjtusicd3.database.model.CommunityQuestionPersistence;
 import org.xjtusicd3.database.model.ITPersistence;
-import org.xjtusicd3.database.model.SharePersistence;
 import org.xjtusicd3.database.model.UserPersistence;
 import org.xjtusicd3.partner.annotation.SystemControllerLog;
 import org.xjtusicd3.partner.service.CommunityService;
@@ -38,21 +36,21 @@ import com.alibaba.fastjson.JSONObject;
 @Controller
 public class CommunityController {
 	/*
-	 * zyq_question_右侧类别
+	 * zyq_question页面展示
 	 */
 	@RequestMapping(value="question",method=RequestMethod.GET)
 	@SystemControllerLog(description = "社区主页显示")
-	public ModelAndView question(String c,String type,HttpServletRequest request,HttpSession session){
+	public ModelAndView question(String c,String type,HttpServletRequest request,HttpSession session){		
 		long startTime = System.currentTimeMillis();//计算开始日期
 		String path = request.getServletPath();	
-
-		String username = (String) session.getAttribute("UserName");
-		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.classifyName1();
-		List<Question_CommunityView> question_CommunityViews = CommunityService.Question_CommunityView(username,0,type,c);
-		System.out.println("CommunityController:" + question_CommunityViews.size());
+		String username = (String) session.getAttribute("UserName");		
+		//获取一级分类信息
+		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.classifyName();		
+		//社区问题展示
+		List<Question_CommunityView> question_CommunityViews = CommunityService.Question_CommunityView(username,0,type,c);		
 		ModelAndView mv = new ModelAndView("question");
 		mv.addObject("classifyList", classifyPersistences);
-		mv.addObject("communityViews", question_CommunityViews);
+		mv.addObject("communityViews", question_CommunityViews);	
 		String typename = "";
 		if (type.equals("all")) {
 			typename="全部";
@@ -62,7 +60,7 @@ public class CommunityController {
 			typename="待回答";
 		}
 		mv.addObject("typename", typename);
-		mv.addObject("userName", username);
+		mv.addObject("userName", username);		
 		String urlPath="";
 		if (request.getQueryString()==null) {
 			urlPath = request.getServletPath();
@@ -77,145 +75,7 @@ public class CommunityController {
 		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 		return mv;
 	}
-	/*
-	 * zyq_question_ajax_获取更多问题
-	 * 
-	 * 
-	 */
-	@ResponseBody
-	@RequestMapping(value={"/getMoreCommunity"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
-	@SystemControllerLog(description = "社区主页显示更多")
-	public String getMoreCommunity(HttpServletRequest request,HttpSession session)
-	{	
-		long startTime = System.currentTimeMillis();//计算开始日期
-		String path = request.getServletPath();	
-		/* 获得前台参数  */
-		// 用户名用于判断是否登录
-		String username = (String) session.getAttribute("UserName");
-		// 已经加载的数目
-		int startnumber = Integer.parseInt(request.getParameter("startnumber"));
-		// 全部 = all、 已解决 = 1、待解决 = 2
-		String type = request.getParameter("type");
-		// 具体问题分类
-		String c = request.getParameter("c");
-		
-		
-		JSONObject jsonObject = new JSONObject();
-		if (username==null) 
-		{
-			// 未登录  返回登录界面
-			jsonObject.put("value", "0");
-			String result = JsonUtil.toJsonString(jsonObject); 
-			return result;
-		}
-		else
-		{
-			// 获得新的 5 条
-			List<Question_CommunityView> question_CommunityViews = CommunityService.Question_CommunityView(username,startnumber,type,c);
-			// 返回对应的
-			List<ClassifyPersistence> classifyPersistences = ClassifyHelper.question_ClassifyListByName(c, "0");
-			List<CommunityQuestionPersistence> communityQuestionPersistences = null;
-			
-			if (type=="all")    //全部
-			{
-				communityQuestionPersistences = CommunityQuestionHelper.question_getCommunity(classifyPersistences.get(0).getFAQCLASSIFYID());
-				jsonObject.put("totalnumber", communityQuestionPersistences.size());
-			}
-			else if (type=="1") // 已解决
-			{
-				communityQuestionPersistences = CommunityQuestionHelper.question_getCommunity2(classifyPersistences.get(0).getFAQCLASSIFYID(), 1);
-				jsonObject.put("totalnumber", communityQuestionPersistences.size());
-			}
-			else if (type=="0") // 待回答  !!! 没有 type = 0 的情况
-			{
-				communityQuestionPersistences = CommunityQuestionHelper.question_getCommunity2(classifyPersistences.get(0).getFAQCLASSIFYID(), 0);
-				jsonObject.put("totalnumber", communityQuestionPersistences.size());
-			}
-			jsonObject.put("value", "1");
-			jsonObject.put("endnumber", startnumber+question_CommunityViews.size());
-			jsonObject.put("communityViews", question_CommunityViews);
-			String result = JsonUtil.toJsonString(jsonObject); 
-			long executionTime = System.currentTimeMillis() - startTime;
-			
-			//记录运行时间
-			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-			return result;
-		}
-	}
-	/*
-	 * zyq_question2_问题内容展示
-	 */
-	@RequestMapping(value="question2",method=RequestMethod.GET)
-	@SystemControllerLog(description = "社区具体问题显示")
-	public ModelAndView question2(HttpServletRequest request,HttpServletResponse response,String q,HttpSession session){
-		long startTime = System.currentTimeMillis();//计算开始日期
-		String path = request.getServletPath();	
-		
-		String username = (String) session.getAttribute("UserName");
-		ModelAndView mv = new ModelAndView("question2");
-		//获取用户信息
-		List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
-		
-		//获取questionId = q 的问题详情
-		List<CommunityQuestionPersistence> communityQuestionPersistences = CommunityQuestionHelper.question2_getCommunity(q);
-		
-		//获取具体问题的分类信息
-		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.faq2_classify(communityQuestionPersistences.get(0).getCLASSIFYID());
-		
-		//相关问题
-		List<CommunityQuestionPersistence> similarQuestion = CommunityQuestionHelper.selectQuestionByClassifyId(classifyPersistences.get(0).getFAQCLASSIFYID());
-		
-		
-		//判断有无最佳答案
-		List<Question2_CommunityView> question2_CommunityViews = CommunityService.question2_CommunityViews_best(username,communityQuestionPersistences.get(0).getCOMMUNITYQUESTIONID());
-		//System.out.println("有无最佳答案:"+question2_CommunityViews.size());
-		
-		int startNumber = 0;
-		List<Question2_CommunityView> question2_CommunityViews2 = CommunityService.question2_CommunityViews_other(username,communityQuestionPersistences.get(0).getCOMMUNITYQUESTIONID(),startNumber);
-		//System.out.println("非最佳答案个数:"+question2_CommunityViews2.size());
-		
-		List<CommunityAnswerPersistence> communityAnswerPersistences = CommunityAnswerHelper.question_CommunityAnswer(q);
-		//System.out.println("问题答案个数:"+communityAnswerPersistences.size());
-		//判断是否有分享内容的权利
-		List<ITPersistence> list = ITHelper.IT(userPersistences.get(0).getUSERID());
-		//System.out.println("用户是否为IT运维人员:"+list.size());
-		if (list.size()==0) {
-			mv.addObject("IsIT", "0");
-		}else{
-			System.out.println("IT运维人员：有权分享内容");
-			mv.addObject("IsIT", "1");
-			List<SharePersistence> sharePersistences = ShareHelper.getShareList_ID2(userPersistences.get(0).getUSERID(),q);
-			
-			List<CommunityAnswerPersistence> communityAnswerPersistences2 = CommunityAnswerHelper.question_iscurrentAnswer(q, 1);
-			System.out.println("判断问题是否有最佳答案："+communityAnswerPersistences2.size());
-			if (communityAnswerPersistences2.size()!=0) {
-				System.out.println("IT运维人员是否分享内容："+sharePersistences.size());
-				if (sharePersistences.size()==0) {
-					mv.addObject("IsShare", "0");
-				}else {
-					mv.addObject("IsShare", "1");
-				}
-			}
-		}
-		//相关问题的similarQuestion
-		mv.addObject("similarQuestion", similarQuestion);
-		mv.addObject("answerList_best", question2_CommunityViews);
-		mv.addObject("answerList_other", question2_CommunityViews2);
-		mv.addObject("userList", userPersistences);
-		mv.addObject("questionList", communityQuestionPersistences);
-		mv.addObject("classifyName", classifyPersistences.get(0).getFAQCLASSIFYNAME());
-		mv.addObject("communityNumber", communityAnswerPersistences.size());
-		mv.addObject("userid", userPersistences.get(0).getUSERID());
-		mv.addObject("userName", userPersistences.get(0).getUSERNAME());
-		mv.addObject("_userid", communityQuestionPersistences.get(0).getUSERID());
-		
-		long executionTime = System.currentTimeMillis() - startTime;
-		
-		//记录运行时间
-		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-		
-		return mv;
-	}
+	
 	
 	/*
 	 * zyq_ajax_question的增加
@@ -229,60 +89,177 @@ public class CommunityController {
 		
 		String username = (String) session.getAttribute("UserName");
 		String url = (String) session.getAttribute("urlPath");
-		JSONObject jsonObject = new JSONObject();
+		JSONObject jsonObject = new JSONObject();		
 		if (username==null) {
 			jsonObject.put("value", "0");
-			String result = JsonUtil.toJsonString(jsonObject); 
-			
-			long executionTime = System.currentTimeMillis() - startTime;
-			
+			String result = JsonUtil.toJsonString(jsonObject); 			
+			long executionTime = System.currentTimeMillis() - startTime;			
 			//记录运行时间
-			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-			
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);			
 			return result;
 		}else {
 			String title = request.getParameter("title");
 			String content = request.getParameter("description");
-			String classifyId = request.getParameter("check_val");
-			
-			List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
-			List<CommunityQuestionPersistence> communityQuestionPersistences = CommunityQuestionHelper.question_iscurrent(userPersistences.get(0).getUSERID(), title);
-			if (communityQuestionPersistences.size()==0) {
-				//CommunityService.savaCommunityQuestion(useremail, title, content, classifyId);
-//				if (classifyId == null) {
-//					//zzl_当用户添加问题的时候没有选类别
-//					jsonObject.put("value", "3");					
-//				}else {
-//					CommunityService.savaCommunityQuestion2(username, title, content, classifyId);
-//					jsonObject.put("value", "1");
-//					
-//				}
-				
-				CommunityService.savaCommunityQuestion2(username, title, content, classifyId);
+			String classifyId = request.getParameter("check_val");			
+			String userId = UserHelper.getUserIdByName(username);			
+			//查看新问题是否已存在
+			String questionId = CommunityQuestionHelper.question_iscurrent(userId, title);			
+			if (questionId == null) {
+				//数据库不存在，则添加至问题中心
+				CommunityService.savaCommunityQuestion(username, title, content, classifyId);
 				jsonObject.put("value", "1");
 				jsonObject.put("url",url);
-				String result = JsonUtil.toJsonString(jsonObject); 
-				
-				
-				long executionTime = System.currentTimeMillis() - startTime;
-				
+				String result = JsonUtil.toJsonString(jsonObject); 				
+				long executionTime = System.currentTimeMillis() - startTime;				
 				//记录运行时间
 				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 				return result;
 			}else {
 				jsonObject.put("value", "2");
 				jsonObject.put("url",url);
-				String result = JsonUtil.toJsonString(jsonObject); 
-				
-				long executionTime = System.currentTimeMillis() - startTime;
-				
+				String result = JsonUtil.toJsonString(jsonObject); 				
+				long executionTime = System.currentTimeMillis() - startTime;				
 				//记录运行时间
-				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-				
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);				
 				return result;
 			}
 		}
 	}
+	
+	
+	/*
+	 * zyq_question_ajax_获取更多问题
+	 */
+	@ResponseBody
+	@RequestMapping(value={"/getMoreCommunity"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
+	@SystemControllerLog(description = "社区主页显示更多")
+	public String getMoreCommunity(HttpServletRequest request,HttpSession session)
+	{	
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();			
+		// 用户名用于判断是否登录
+		String username = (String) session.getAttribute("UserName");
+		// 已经加载的数目
+		int startnumber = Integer.parseInt(request.getParameter("startnumber"));
+		// 全部 = all、 已解决 = 1、待解决 = 2
+		String type = request.getParameter("type");
+		// 具体问题分类
+		String c = request.getParameter("c");				
+		JSONObject jsonObject = new JSONObject();
+		if (username==null) {
+			// 未登录  返回登录界面
+			jsonObject.put("value", "0");
+			String result = JsonUtil.toJsonString(jsonObject); 
+			return result;
+		}
+		else{
+			// 获得新的 5 条社区问题
+			List<Question_CommunityView> question_CommunityViews = CommunityService.Question_CommunityView(username,startnumber,type,c);			
+			// 返回分类名是c，faq父id是'0'的所有一级分类
+			String faqClassifyId = ClassifyHelper.question_ClassifyListByName(c, "0");			
+			if (type=="all")    //全部
+			{
+				int communityQuestionSize = CommunityQuestionHelper.questionSizeByClassifyId(faqClassifyId);
+				jsonObject.put("totalnumber", communityQuestionSize);
+			}
+			else if (type=="1") // 已解决
+			{
+				int communityQuestionSize = CommunityQuestionHelper.questionSizeByClassifyIdLimit(faqClassifyId, 1);
+				jsonObject.put("totalnumber", communityQuestionSize);
+			}
+			else if (type=="2") // 待解决 
+			{
+				int communityQuestionSize = CommunityQuestionHelper.questionSizeByClassifyIdLimit(faqClassifyId, 0);
+				jsonObject.put("totalnumber", communityQuestionSize);
+			}
+			jsonObject.put("value", "1");
+			jsonObject.put("endnumber", startnumber+question_CommunityViews.size());
+			jsonObject.put("communityViews", question_CommunityViews);
+			String result = JsonUtil.toJsonString(jsonObject); 
+			
+			long executionTime = System.currentTimeMillis() - startTime;		
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+			return result;
+		}
+	}
+	
+	/*
+	 * zyq_question2_问题具体内容展示
+	 */
+	@RequestMapping(value="question2",method=RequestMethod.GET)
+	@SystemControllerLog(description = "社区具体问题显示")
+	public ModelAndView question2(HttpServletRequest request,HttpServletResponse response,String q,HttpSession session){
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();	
+		
+		String username = (String) session.getAttribute("UserName");
+		ModelAndView mv = new ModelAndView("question2");
+		//获取用户信息
+		List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
+		String userId = UserHelper.getUserIdByName(username);
+		
+		//获取questionId = q 的问题详情
+		List<CommunityQuestionPersistence> communityQuestionPersistences = CommunityQuestionHelper.question2_getCommunity(q);		
+		String classifyId = communityQuestionPersistences.get(0).getCLASSIFYID();
+				
+		//通过分类id查找分类名
+		String classifyName = ClassifyHelper.getClassifyNameById(classifyId);
+				
+		//相关问题
+		List<CommunityQuestionPersistence> similarQuestion = CommunityQuestionHelper.selectQuestionByClassifyId(classifyId);
+		
+		//判断该问题是否有最佳答案
+		String hasBestAnswer = CommunityAnswerHelper.findAnswerIdFromBestAnswer(q, 1);			
+		if (hasBestAnswer != null) {
+			//最佳答案的展示
+			Question2_CommunityView question2_CommunityViews = CommunityService.question2_CommunityViews_best(username,q);
+			mv.addObject("answerList_best", question2_CommunityViews);
+			
+			//判断是否有分享内容的权利
+			List<ITPersistence> list = ITHelper.IT(userId);
+
+			if (list.size()==0) {
+				mv.addObject("IsIT", "0");
+			}else{
+				mv.addObject("IsIT", "1");
+				String shareId = ShareHelper.getShareList_ID2(userId,q);
+		
+				if (shareId == null) {
+					mv.addObject("IsShare", "0");
+				}else {
+					mv.addObject("IsShare", "1");
+				}
+
+			}
+		}
+				
+		int startNumber = 0;
+		//非最佳答案的展示
+		List<Question2_CommunityView> question2_CommunityViews2 = CommunityService.question2_CommunityViews_other(username,q,startNumber);
+		
+		//该问题评论总个数
+		int communityAnswerSize = CommunityAnswerHelper.question_CommunityAnswerSize(q);
+
+		
+		mv.addObject("userList", userPersistences);
+		mv.addObject("userid", userId);
+		mv.addObject("userName", userPersistences.get(0).getUSERNAME());
+		mv.addObject("questionList", communityQuestionPersistences);
+		mv.addObject("classifyName", classifyName);
+				
+		//相关问题的similarQuestion
+		mv.addObject("similarQuestion", similarQuestion);
+		mv.addObject("hasBestAnswer", hasBestAnswer);		
+		mv.addObject("answerList_other", question2_CommunityViews2);		
+		mv.addObject("communityNumber", communityAnswerSize);
+		mv.addObject("_userid", communityQuestionPersistences.get(0).getUSERID());		
+		long executionTime = System.currentTimeMillis() - startTime;		
+		//记录运行时间
+		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);		
+		return mv;
+	}
+	
 	/*
 	 * zyq_ajax_question2回复的增加
 	 */
@@ -292,8 +269,7 @@ public class CommunityController {
 	public String saveReplyQuestion(HttpServletRequest request,HttpSession session){
 		long startTime = System.currentTimeMillis();//计算开始日期
 		String path = request.getServletPath();	
-		
-		
+			
 		String username = (String) session.getAttribute("UserName");
 		JSONObject jsonObject = new JSONObject();
 		String url = request.getParameter("url");
@@ -304,52 +280,44 @@ public class CommunityController {
 		 */
 		if (username==null) {
 			jsonObject.put("value", "0");
-			String result = JsonUtil.toJsonString(jsonObject);
-			
+			String result = JsonUtil.toJsonString(jsonObject);			
 			long executionTime = System.currentTimeMillis() - startTime;
 			
 			//记录运行时间
-			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-			
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);			
 			return result;
 		}else {
 			//获取问题评论及问题号
 			String content = request.getParameter("content");
-			String questionId = request.getParameter("questionId");
-			
+			String questionId = request.getParameter("questionId");			
 			//获取登录用户信息
-			List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
-			
+			String userId = UserHelper.getUserIdByName(username);			
 			//判断评论是否重复提交
-			List<CommunityAnswerPersistence> communityAnswerPersistences = CommunityAnswerHelper.question_IsCommunityAnswer(userPersistences.get(0).getUSERID(), content, questionId);
-			if (communityAnswerPersistences.size()==0) {
+			String commentIsExist = CommunityAnswerHelper.question_IsCommunityAnswer(userId, content, questionId);			
+			if (commentIsExist == null) {
 				//评论未重复
-				CommunityService.saveReplyQuestion(username, content, questionId);
+				CommunityService.saveReplyQuestion(userId, content, questionId);
 				jsonObject.put("value", "1");
 				jsonObject.put("url", url);
 				String result = JsonUtil.toJsonString(jsonObject);
 				long executionTime = System.currentTimeMillis() - startTime;
 				
 				//记录运行时间
-				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-				
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);				
 				return result;
 			}else {
 				//评论重复
 				jsonObject.put("value", "2");
 				jsonObject.put("url", url);
 				String result = JsonUtil.toJsonString(jsonObject);
-				long executionTime = System.currentTimeMillis() - startTime;
-				
+				long executionTime = System.currentTimeMillis() - startTime;				
 				//记录运行时间
-				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-				
+				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);				
 				return result;
-			}
-			
+			}			
 		}
-		
 	}
+	
 	/*
 	 * zyq_question2_ajax_获得更多评论
 	 */
@@ -358,7 +326,6 @@ public class CommunityController {
 	@SystemControllerLog(description = "获得更多社区问题评论")
 	public String queryMoreComment2(HttpServletRequest request,HttpSession session){
 		String username = (String) session.getAttribute("UserName");
-		//String useremail = (String) session.getAttribute("UserEmail");
 		String questionId = request.getParameter("questionId");
 		int startnumber = Integer.parseInt(request.getParameter("startnumber"));
 		JSONObject jsonObject = new JSONObject();

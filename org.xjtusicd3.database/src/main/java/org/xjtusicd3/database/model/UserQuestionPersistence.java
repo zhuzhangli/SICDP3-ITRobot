@@ -1,9 +1,11 @@
 package org.xjtusicd3.database.model;
 
+import org.xjtusicd3.database.ann.Table;
 import org.xjtusicd3.database.ann.TableField;
 import org.xjtusicd3.database.ann.TableKey;
 import org.xjtusicd3.database.ann.TableKey.Strategy;
 
+@Table(tablename="tbl_userquestion")
 public class UserQuestionPersistence
 {
 	@TableKey(strategy=Strategy.NORMAL)
@@ -14,7 +16,7 @@ public class UserQuestionPersistence
 	@TableField(columnName="QUESTIONTIME")
 	private String QUESTIONTIME;
 	@TableField(columnName="ISFAQ")
-	private String ISFAQ;
+	private int ISFAQ;
 	@TableField(columnName="USERID")
 	private String USERID;
 	public String getUSERQUESTIONID()
@@ -41,12 +43,11 @@ public class UserQuestionPersistence
 	{
 		QUESTIONTIME = qUESTIONTIME;
 	}
-	public String getISFAQ()
-	{
+	
+	public int getISFAQ() {
 		return ISFAQ;
 	}
-	public void setISFAQ(String iSFAQ)
-	{
+	public void setISFAQ(int iSFAQ) {
 		ISFAQ = iSFAQ;
 	}
 	public String getUSERID()

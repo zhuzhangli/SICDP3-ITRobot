@@ -28,7 +28,6 @@ public class EquipmentController {
 	@RequestMapping(value="personal3",method=RequestMethod.GET)
 	@SystemControllerLog(description = "展示personal3当前设备信息")
 	public ModelAndView personal3(HttpSession session,HttpServletRequest request,String e) throws UnknownHostException, SocketException, SigarException {
-		//String useremail = (String) session.getAttribute("UserEmail");
 		String username = (String) session.getAttribute("UserName");
 		ModelAndView mv = new ModelAndView("personal3");
 		System.out.println("eeeeee:"+e);

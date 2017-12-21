@@ -38,10 +38,10 @@ public class ProblemManagerService {
 			problemUnresolved.setProblemTitle(problemUnresolvedList.getTITLE()); 
 			problemUnresolved.setProblemContent(problemUnresolvedList.getCONTENT());
 			
-			List<ClassifyPersistence> classifyPersistences = ClassifyHelper.faq2_classify(problemUnresolvedList.getCLASSIFYID());
+			List<ClassifyPersistence> classifyPersistences = ClassifyHelper.getInfoById(problemUnresolvedList.getCLASSIFYID());
 			problemUnresolved.setProblemClassifyName(classifyPersistences.get(0).getFAQCLASSIFYNAME());
 			
-			List<UserPersistence> userPersistences = UserHelper.getUserNameById(problemUnresolvedList.getUSERID());
+			List<UserPersistence> userPersistences = UserHelper.getUserInfoById(problemUnresolvedList.getUSERID());
 			problemUnresolved.setProblemUserName(userPersistences.get(0).getUSERNAME());
 			problemUnresolved.setProblemTime(problemUnresolvedList.getTIME());
 						
@@ -69,16 +69,16 @@ public class ProblemManagerService {
 			problem_AnswerView.setProblemTitle(problemResolvedList.getTITLE()); 
 			problem_AnswerView.setProblemContent(problemResolvedList.getCONTENT());
 			
-			List<ClassifyPersistence> classifyPersistences = ClassifyHelper.faq2_classify(problemResolvedList.getCLASSIFYID());
+			List<ClassifyPersistence> classifyPersistences = ClassifyHelper.getInfoById(problemResolvedList.getCLASSIFYID());
 			problem_AnswerView.setProblemClassifyName(classifyPersistences.get(0).getFAQCLASSIFYNAME());
 			
-			List<UserPersistence> userPersistences = UserHelper.getUserNameById(problemResolvedList.getUSERID());
+			List<UserPersistence> userPersistences = UserHelper.getUserInfoById(problemResolvedList.getUSERID());
 			problem_AnswerView.setProblemUserName(userPersistences.get(0).getUSERNAME());
 			problem_AnswerView.setProblemTime(problemResolvedList.getTIME());
 				
 			//查询社区回复者信息
 			List<CommunityAnswerPersistence> communityAnswerPersistences = CommunityAnswerHelper.getBestAnswer(problemResolvedList.getCOMMUNITYQUESTIONID());
-			List<UserPersistence> ulist = UserHelper.getUserNameById(communityAnswerPersistences.get(0).getUSERID());
+			List<UserPersistence> ulist = UserHelper.getUserInfoById(communityAnswerPersistences.get(0).getUSERID());
 			problem_AnswerView.setAnswerUserName(ulist.get(0).getUSERNAME());
 			problem_AnswerView.setAnswerTime(communityAnswerPersistences.get(0).getTIME());
 			problem_AnswerView.setAnswerContent(communityAnswerPersistences.get(0).getCONTENT());
@@ -103,10 +103,10 @@ public class ProblemManagerService {
 		problemView.setProblemTitle(communityQuestionPersistence.get(0).getTITLE()); 
 		problemView.setProblemContent(communityQuestionPersistence.get(0).getCONTENT());
 		
-		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.faq2_classify(communityQuestionPersistence.get(0).getCLASSIFYID());
+		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.getInfoById(communityQuestionPersistence.get(0).getCLASSIFYID());
 		problemView.setProblemClassifyName(classifyPersistences.get(0).getFAQCLASSIFYNAME());
 		
-		List<UserPersistence> userPersistences = UserHelper.getUserNameById(communityQuestionPersistence.get(0).getUSERID());
+		List<UserPersistence> userPersistences = UserHelper.getUserInfoById(communityQuestionPersistence.get(0).getUSERID());
 		problemView.setProblemUserName(userPersistences.get(0).getUSERNAME());
 		 
 		problemView.setProblemTime(communityQuestionPersistence.get(0).getTIME());
@@ -129,13 +129,13 @@ public class ProblemManagerService {
 		problem_AnswerView.setProblemTitle(communityQuestionPersistence.get(0).getTITLE()); 
 		problem_AnswerView.setProblemContent(communityQuestionPersistence.get(0).getCONTENT());
 		
-		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.faq2_classify(communityQuestionPersistence.get(0).getCLASSIFYID());
+		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.getInfoById(communityQuestionPersistence.get(0).getCLASSIFYID());
 		System.out.println("分类ID号："+communityQuestionPersistence.get(0).getCLASSIFYID());
 		
 		problem_AnswerView.setProblemClassifyId(communityQuestionPersistence.get(0).getCLASSIFYID());
 		problem_AnswerView.setProblemClassifyName(classifyPersistences.get(0).getFAQCLASSIFYNAME());
 		
-		List<UserPersistence> userPersistences = UserHelper.getUserNameById(communityQuestionPersistence.get(0).getUSERID());
+		List<UserPersistence> userPersistences = UserHelper.getUserInfoById(communityQuestionPersistence.get(0).getUSERID());
 		problem_AnswerView.setProblemUserId(communityQuestionPersistence.get(0).getUSERID());
 		problem_AnswerView.setProblemUserName(userPersistences.get(0).getUSERNAME());
 		 
@@ -145,7 +145,7 @@ public class ProblemManagerService {
 		List<CommunityAnswerPersistence> communityAnswerPersistences = CommunityAnswerHelper.getBestAnswer(communityProblemId);
 
 		problem_AnswerView.setAnswerContent(communityAnswerPersistences.get(0).getCONTENT());
-		List<UserPersistence> ulist = UserHelper.getUserNameById(communityAnswerPersistences.get(0).getUSERID());
+		List<UserPersistence> ulist = UserHelper.getUserInfoById(communityAnswerPersistences.get(0).getUSERID());
 		problem_AnswerView.setAnswerUserName(ulist.get(0).getUSERNAME());		
 		problem_AnswerView.setAnswerTime(communityAnswerPersistences.get(0).getTIME());
 			

@@ -25,7 +25,7 @@ public class ClassifyController {
 	public  String search(HttpServletResponse response){
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
-		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.classifyName1();
+		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.classifyName();
 		if (classifyPersistences == null || classifyPersistences.size()==0) {
 			return null;
 		}			

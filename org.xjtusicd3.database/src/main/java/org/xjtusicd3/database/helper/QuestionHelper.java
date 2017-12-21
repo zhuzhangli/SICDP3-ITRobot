@@ -7,19 +7,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.xjtusicd3.database.logic.SqlSessionManager;
 import org.xjtusicd3.database.mapper.QuestionPersistenceMapper;
 import org.xjtusicd3.database.model.QuestionPersistence;
-import org.xjtusicd3.database.model.UserPersistence;
 
 public class QuestionHelper {
-	/*
-	 * spider_知识库问题的添加
-	 */
-	public static void save(QuestionPersistence questionPersistence){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-		mapper.save(questionPersistence);
-		session.close();
-	}
-	/*
+	/**
 	 * robot-分类
 	 */
 	public static List<QuestionPersistence> SecondClassify_robot(String ClassifyId){
@@ -29,10 +19,120 @@ public class QuestionHelper {
 		session.close();
 		return list;
 	}
-	/*
-	 * faq2_知识列表
-	 */
 	
+	/**
+	 * author:zzl
+	 * abstract:记录用户提问记录_查看用户提问是否为faq中的内容
+	 * data:2017年10月22日11:42:29
+	 */
+	public static boolean getFaqQuestion(String comment) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
+		boolean list = mapper.getFaqQuestion(comment);
+		session.close();
+		return list;
+	}
+	
+	/*
+	 * zyq_faq_查看用户动态
+	 */
+	public static List<QuestionPersistence> faq_userDynamics(){
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
+		List<QuestionPersistence> list = mapper.faq_userDynamics();
+		session.close();
+		return list;
+	}
+		
+	//查看自己的知识库_每次查看5条
+	public static List<QuestionPersistence> personal2_faq_Limit(String userId,int startNumber,int number){
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
+		List<QuestionPersistence> list = mapper.personal2_faq_Limit(userId,startNumber,number);
+		session.close();
+		return list;
+	}
+	
+	//判断是创建知识还是修改知识
+	public static boolean personal2_Ismodify(String faqquestionid, String modifynumber) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
+		boolean list = mapper.personal2_Ismodify(faqquestionid,modifynumber);
+		session.close();
+		return list;
+	}
+
+	//faq_按时间推荐
+	public static List<QuestionPersistence> faq_recommend_Limit(int startnum) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
+		List<QuestionPersistence> list = mapper.faq_recommend_Limit(startnum);
+		session.close();
+		return list;
+	}	
+		
+	/**
+	 * faq3_根据知识ID找类型classify
+	 */
+	public static String faqclassify(String QuestionId){
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
+		String ClassifyId = mapper.faq3_faqclassifyId(QuestionId);
+		session.close();
+		return ClassifyId;
+	}	
+		
+	/**
+	 * author:zzl
+	 * abstract:获取分类下faq具体信息
+	 * data:2017年9月15日10:27:38
+	 */
+	public static List<QuestionPersistence> questionView(String parentId, int startnum) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
+		List<QuestionPersistence> list = mapper.questionView(parentId,startnum);
+		session.close();
+		return list;
+	}	
+		
+	/**
+	 * author:zzl
+	 * abstract:推荐知识_根据收藏量推荐前4个
+	 * data:2017年9月17日19:53:14
+	 */
+	public static List<QuestionPersistence> faqInfo_limit(String faqParentId) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
+		List<QuestionPersistence> list = mapper.faqInfo_limit(faqParentId);
+		session.close();
+		return list;
+	}
+	
+	/**
+	 * 根据分类id及浏览量获取一条数据
+	 */
+	public static QuestionPersistence faq1_faqPersistences(String faqClassify){
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
+		QuestionPersistence list = mapper.faq1_faqPersistences(faqClassify);
+		session.close();
+		return list;
+	}
+	
+	/**
+	 * 根据分类id及浏览量获取5条数据
+	 */
+	public static List<QuestionPersistence> faq1_faqPersistences2(String faqClassify){
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
+		List<QuestionPersistence> list = mapper.faq1_faqPersistences2(faqClassify);
+		session.close();
+		return list;
+	}
+	
+	/**
+	 * faq2_知识列表
+	 */	
 	public static List<QuestionPersistence> faq2_faqlist(String ClassifyId,int pageNow){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
@@ -41,13 +141,21 @@ public class QuestionHelper {
 		session.close();
 		return list;
 	}
-	public static List<UserPersistence> faq2_userlist(String UserId){
+	
+	/**
+	 * 根据faq问题id获取用户id
+	 */
+	public static String findUserIdByQuestionId(String QuestionId){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-		List<UserPersistence> list = mapper.faq2_userlist(UserId);
+		String UserId = mapper.findUserIdByQuestionId(QuestionId);
 		session.close();
-		return list;
+		return UserId;
 	}
+	
+	/**
+	 * 获取该分类下faq信息的总数
+	 */
 	public static int pageTotal(String ClassifyId){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
@@ -55,14 +163,8 @@ public class QuestionHelper {
 		session.close();
 		return pageTotal;
 	}
-	public static String faq2_userId(String QuestionId){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-		String UserId = mapper.faq2_UserId(QuestionId);
-		session.close();
-		return UserId;
-	}
-	/*
+	
+	/**
 	 * faq3_知识内容
 	 */
 	public static List<QuestionPersistence> faq3_faqcontent(String faqId){
@@ -72,6 +174,91 @@ public class QuestionHelper {
 		session.close();
 		return list;
 	}
+	
+	/**
+	 * author:zhaoyanqing
+	 * abstract:对访问FAQ页面的浏览量进行增加
+	 * data:2017年9月18日 16:12:59
+	 * @param faqScan 
+	 */
+	public static void updateFAQScan(String faqquestionid, String faqScan){
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
+		mapper.updateFAQScan(faqquestionid,faqScan);
+		session.close();
+	}
+	
+	/**
+	 *	获取faq浏览量
+	 */
+	public static String getFaqScan(String questionId) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
+		String scan = mapper.getFaqScan(questionId);
+		session.close();
+		return scan;
+	}
+	
+	/**
+	 * abstract:faqadd_校验知识是否重复增添
+	 */
+	public static String faqadd_iscurrent2(String faqtitle,String userId){
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
+		String faqQuestionId = mapper.faqadd_iscurrent(faqtitle,userId);
+		session.close();
+		return faqQuestionId;
+	}
+	
+	/**
+	 * spider_知识库问题的添加
+	 */
+	public static void save(QuestionPersistence questionPersistence){
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
+		mapper.save(questionPersistence);
+		session.close();
+	}
+	
+	/**
+	 * 查看自己的知识库
+	 */
+	public static List<QuestionPersistence> personal2_faq_Limit_Time(String userId,int startNumber,int number,String time){
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
+		List<QuestionPersistence> list = mapper.personal2_faq_Limit_Time(userId,startNumber,number,time);
+		session.close();
+		return list;
+	}
+	
+	
+	
+	
+	
+	
+		
+		
+		
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+
+
+
 	public static List<QuestionPersistence> faq3_faqcontent_title(String faqtitle){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
@@ -81,7 +268,7 @@ public class QuestionHelper {
 	}
 	/*
 	 * faqadd_校验知识是否重复增添
-	 */
+	 
 	public static List<QuestionPersistence> faqadd_iscurrent(String faqtitle,String useremail){
 		List<UserPersistence> userPersistences = UserHelper.getEmail(useremail);
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -89,34 +276,13 @@ public class QuestionHelper {
 		List<QuestionPersistence> list = mapper.faqadd_iscurrent(faqtitle,userPersistences.get(0).getUSERID());
 		session.close();
 		return list;
-	}
-	
-	/**
-	 * author:zzl
-	 * abstract:faqadd_校验知识是否重复增添
-	 * data:2017年9月22日11:54:01
-	 */
-	public static List<QuestionPersistence> faqadd_iscurrent2(String faqtitle,String username){
-		List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-		List<QuestionPersistence> list = mapper.faqadd_iscurrent(faqtitle,userPersistences.get(0).getUSERID());
-		session.close();
-		return list;
-	}
+	}*/
 	
 	
 	
-	/*
-	 * faq3_根据知识ID找类型classify
-	 */
-	public static String faqclassify(String QuestionId){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-		String ClassifyId = mapper.faq3_faqclassifyId(QuestionId);
-		session.close();
-		return ClassifyId;
-	}
+	
+	
+	
 	/*
 	 * zpz_get faq information
 	 */
@@ -147,29 +313,9 @@ public class QuestionHelper {
 		session.close();
 		return list;
 	}
-	public static List<QuestionPersistence> personal2_faq_Limit(String userId,int startNumber,int number){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-		List<QuestionPersistence> list = mapper.personal2_faq_Limit(userId,startNumber,number);
-		session.close();
-		return list;
-	}
-	public static List<QuestionPersistence> personal2_faq_Limit_Time(String userId,int startNumber,int number,String time){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-		List<QuestionPersistence> list = mapper.personal2_faq_Limit_Time(userId,startNumber,number,time);
-		session.close();
-		return list;
-	}
-	//判断是创建知识还是修改知识
-	public static List<QuestionPersistence> personal2_Ismodify(String faqquestionid, String modifynumber) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-		List<QuestionPersistence> list = mapper.personal2_Ismodify(faqquestionid,modifynumber);
-		session.close();
-		return list;
-	}
 
+	
+	
 	
 	/*
 	 * zpz_get faq count
@@ -195,105 +341,16 @@ public class QuestionHelper {
 	}
 
 	
-	/*
-	 * zyq_faq_查看用户动态
-	 */
-	public static List<QuestionPersistence> faq_userDynamics(){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-		List<QuestionPersistence> list = mapper.faq_userDynamics();
-		session.close();
-		return list;
-	}
-	/*
-	 * faq_按时间推荐
-	 */
-	public static List<QuestionPersistence> faq_recommend_Limit(int startnum) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-		List<QuestionPersistence> list = mapper.faq_recommend_Limit(startnum);
-		session.close();
-		return list;
-	}
 	
-	/**
-	 * author:zzl
-	 * abstract:获取分类下faq具体信息
-	 * data:2017年9月15日10:27:38
-	 */
-	public static List<QuestionPersistence> questionView(String parentId, int startnum) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-		List<QuestionPersistence> list = mapper.questionView(parentId,startnum);
-		session.close();
-		return list;
-	}
-
-	/**
-	 * author:zzl
-	 * abstract:通过一个问题分类获取其父分类下的所有子分类
-	 * data:2017年9月15日10:07:11
-	 */
-//	public static String faqclassifies(String faq_classifyId) {
-//		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-//		ClassifyPersistenceMapper mapper = session.getMapper(ClassifyPersistenceMapper.class);
-//		List<ClassifyPersistence> list = mapper.faq_classifyIds(parentId);
-//		session.close();
-//		return list;
-//	}
 
 	
-//	/*
-//	 * 2017年9月14日23:00:08
-//	 */
-//	public static List<QuestionPersistence> user_recommend_Limit(String userid, int startnum) {
-//		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-//		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-//		List<QuestionPersistence> list = mapper.user_recommend_Limit(userid,startnum);
-//		session.close();
-//		return list;
-//	}
+
+
+
 	
-	/**
-	 * author:zzl
-	 * abstract:推荐知识_根据收藏量推荐前4个
-	 * data:2017年9月17日19:53:14
-	 */
-	public static List<QuestionPersistence> faqInfo_limit(String faqParentId) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-		List<QuestionPersistence> list = mapper.faqInfo_limit(faqParentId);
-		session.close();
-		return list;
-	}
-	/**
-	 * author:zhaoyanqing
-	 * abstract:对访问FAQ页面的浏览量进行增加
-	 * data:2017年9月18日 16:12:59
-	 */
-	public static void updateFAQScan(String faqquestionid){
-		List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(faqquestionid);
-		int faqScan = Integer.parseInt(questionPersistences.get(0).getSCAN());
-		faqScan++;
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-		mapper.updateFAQScan(faqquestionid,Integer.toString(faqScan));
-		session.close();
-	}
-	/**
-	 * author:zzl
-	 * abstract:对访问FAQ页面的收藏进行增加
-	 * data:2017年9月27日10:04:40
-	 * @param faqcollection 
-	 */
-	public static void updateFAQCollection(String questionId, String faqcollection) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-		System.out.println("faq3问题收藏数："+faqcollection);
-		mapper.updateFAQCollection(questionId,faqcollection);
-		session.close();
-		
-	}
+
+
+
 	
 	/**
 	 * author:zzl
@@ -308,18 +365,7 @@ public class QuestionHelper {
 		session.close();
 		return list;
 	}
-	/**
-	 * author:zzl
-	 * abstract:记录用户提问记录_查看用户提问是否为faq中的内容
-	 * data:2017年10月22日11:42:29
-	 */
-	public static List<QuestionPersistence> getFaqQuestion(String comment) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		QuestionPersistenceMapper mapper = session.getMapper(QuestionPersistenceMapper.class);
-		List<QuestionPersistence> list = mapper.getFaqQuestion(comment);
-		session.close();
-		return list;
-	}
+	
 	
 	/**
 	 * 添加到知识库
@@ -407,6 +453,8 @@ public class QuestionHelper {
 		session.close();
 		return list;
 	}
+
+	
 	
 	
 	

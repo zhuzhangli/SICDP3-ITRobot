@@ -15,14 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.xjtusicd3.common.util.JsonUtil;
-import org.xjtusicd3.database.helper.DataDictionaryHelper;
 import org.xjtusicd3.database.helper.RoleHelper;
 import org.xjtusicd3.database.helper.UserHelper;
-import org.xjtusicd3.database.model.DataDictionaryPersistence;
 import org.xjtusicd3.database.model.RolePersistence;
 import org.xjtusicd3.database.model.UserPersistence;
-import org.xjtusicd3.portal.service.ConfigureService;
-import org.xjtusicd3.portal.service.QuestionService;
 import org.xjtusicd3.portal.service.UserService;
 import org.xjtusicd3.portal.view.UserView;
 
@@ -35,6 +31,35 @@ import com.alibaba.fastjson.JSONObject;
 @Controller
 public class UserController 
 {
+	//login admin
+	@RequestMapping(value="adminLogin",method=RequestMethod.POST)
+	public String adminLogin(HttpSession session,UserView userView,HttpServletRequest request,HttpServletResponse response){
+		String username = request.getParameter("nameOrEmail");
+		String psw = request.getParameter("userPassword");
+		String password = StringToMd5(psw);
+		System.out.println(password);
+		Boolean isExist = UserHelper.isLogin(username, password);
+		if (isExist == false) 
+		{
+			return "redirect:login.html";
+		}else 
+		{	
+			//zzl_查找登录用户信息
+			List<UserPersistence> list = UserHelper.getUserInfo(username);
+			
+			session.setAttribute("nameOrEmail", username);
+			session.setAttribute("UserName", list.get(0).getUSERNAME());
+			request.getSession().setAttribute("user", list.get(0));
+			
+			return "redirect:index.html" ;
+		}	
+	}
+	
+	
+	
+	
+	
+	
 	/**
 	 * @author zzl
 	 * @abstract:用户管理_userPage.ftl
@@ -285,25 +310,7 @@ public class UserController
 	
 	
 	
-	//login admin
-	@RequestMapping(value="adminLogin",method=RequestMethod.POST)
-	public String adminLogin(HttpSession session,UserView userView,HttpServletRequest request,HttpServletResponse response){
-		String nameOrEmail = request.getParameter("nameOrEmail");
-		String psw = request.getParameter("userPassword");
-		String password = StringToMd5(psw);
-		System.out.println(password);
-		List<UserPersistence> list = UserHelper.loginUser(nameOrEmail, password);
-		if (list.size()==0) 
-		{
-			return "redirect:login.html";
-		}else 
-		{
-			session.setAttribute("nameOrEmail", nameOrEmail);
-			session.setAttribute("UserName", list.get(0).getUSERNAME());
-			request.getSession().setAttribute("user", list.get(0));
-			return "redirect:index.html" ;
-		}	
-	}
+	
 	/*
 	 * ZPZ_deleteUser
 	 */
@@ -332,7 +339,7 @@ public class UserController
 	 */
 	@RequestMapping(value="editUserInformation",method=RequestMethod.GET)
 	public ModelAndView editUserInformation(String u){
-		List<UserPersistence> userPersistences = UserHelper.getEmail_id(u);
+		List<UserPersistence> userPersistences = UserHelper.getUserInfoById(u);
 		ModelAndView modelAndView = new ModelAndView("editUserInformation");
 		modelAndView.addObject("userInfoList", userPersistences);
 		return modelAndView;
@@ -346,7 +353,6 @@ public class UserController
 		System.out.println("asdasdasda");
 		String username = request.getParameter("username");
 		String userid = request.getParameter("userid");
-		String useremail = request.getParameter("useremail");
 		UserHelper.updateUser(userid, username);
 		ModelAndView modelAndView = new ModelAndView("userindex");
 		List<UserPersistence> userlist = UserService.getAllUserList();

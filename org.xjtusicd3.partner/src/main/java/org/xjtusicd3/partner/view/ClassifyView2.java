@@ -1,4 +1,4 @@
-package org.xjtusicd3.partner.view;
+/*package org.xjtusicd3.partner.view;
 
 
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import org.xjtusicd3.database.model.ClassifyPersistence;
 
 public class ClassifyView2 {
-	/*
+	
 	 * robot-第二类
-	 */
+	 
 	private String title;
 	private List<FaqTitleView> content;
 	public String getTitle() {
@@ -30,3 +30,4 @@ public class ClassifyView2 {
 	public ClassifyView2(){
 	}
 }
+*/

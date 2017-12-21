@@ -7,7 +7,7 @@ import org.xjtusicd3.database.model.ClassifyPersistence;
 public class Faq1_ClassifyView {
 	private String ClassifyId;
 	private String ClassifyName;
-	private List<Faq1_faqContentView> content;
+	private Faq1_faqContentView content;
 	private List<Faq1_faqContentView> content2;
 	public String getClassifyId() {
 		return ClassifyId;
@@ -21,11 +21,11 @@ public class Faq1_ClassifyView {
 	public void setClassifyName(String classifyName) {
 		ClassifyName = classifyName;
 	}
-	public List<Faq1_faqContentView> getContent() {
+	public Faq1_faqContentView getContent() {
 		return content;
 	}
-	public void setContent(List<Faq1_faqContentView> content) {
-		this.content = content;
+	public void setContent(Faq1_faqContentView faq1View) {
+		this.content = faq1View;
 	}
 	public List<Faq1_faqContentView> getContent2() {
 		return content2;

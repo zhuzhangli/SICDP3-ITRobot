@@ -1,3 +1,4 @@
+//未使用
 function queryMoreTop(){ 
 	var startnum = document.getElementById("tplWrapper").childElementCount;	
 	$.ajax({
@@ -28,7 +29,7 @@ function queryMoreTop(){
 }
 
 
-
+//未使用
 $('#querymorelink').click(function() {
 				var startnumber = document.getElementById("tplWrapper").childElementCount;
 

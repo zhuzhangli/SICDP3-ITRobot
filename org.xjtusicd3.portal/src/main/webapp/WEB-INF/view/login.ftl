@@ -16,10 +16,11 @@
 
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <!--  
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
-    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+   <script>if(window.top !== window.self){ window.top.location = window.location;}</script> 
 </head>
 
 <body class="gray-bg">
@@ -42,18 +43,13 @@
                     <input type="password" class="form-control" placeholder="密码" name="userPassword" required="">
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
-
-<!-- 
-                <p class="text-muted text-center"> <a href="login.html#"><small>忘记密码了？</small></a> | <a href="register.html">注册一个新账号</a>
-                </p> -->
-
             </form>
         </div>
     </div>
 
     <!-- 全局js -->
-    <script src="js/jquery.min.js?v=2.1.4"></script>
-    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+  <!--   <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script> -->
 
     
     

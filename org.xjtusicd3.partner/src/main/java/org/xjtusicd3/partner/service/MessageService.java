@@ -57,7 +57,7 @@ public class MessageService {
 			message_MessageView.setLastContent(messagePersistences.get(messagePersistences.size()-1).getMESSAGECONTENT());
 			message_MessageView.setNumber(Integer.toString(messagePersistences.size()));
 			message_MessageView.setTime(messagePersistence.getMESSAGETIME());
-			List<UserPersistence> uList = UserHelper.getEmail_id(messagePersistence.getPOSTUSERID());
+			List<UserPersistence> uList = UserHelper.getUserInfoById(messagePersistence.getPOSTUSERID());
 			message_MessageView.setUserId(messagePersistence.getPOSTUSERID());
 			message_MessageView.setUserImage(uList.get(0).getAVATAR());
 			message_MessageView.setUserName(uList.get(0).getUSERNAME());
@@ -75,7 +75,7 @@ public class MessageService {
 		if (messagePersistences.size()!=0) {
 			for(MessagePersistence messagePersistence:messagePersistences){
 				Message_MessageView message_MessageView = new Message_MessageView();
-				List<UserPersistence> userPersistences = UserHelper.getEmail_id(messagePersistence.getPOSTUSERID());
+				List<UserPersistence> userPersistences = UserHelper.getUserInfoById(messagePersistence.getPOSTUSERID());
 				//判断是否存在新的私信
 				List<MessagePersistence> messagePersistences2 = MessageHelper.getMessageContent(userPersistences.get(0).getUSERID(), userId, 1);
 				if (messagePersistences2.size()!=0) {
@@ -143,7 +143,7 @@ public class MessageService {
 			for(MessagePersistence messagePersistence:messagePersistences){
 				Message_MessageView message_MessageView = new Message_MessageView();
 				message_MessageView.setContent(messagePersistence.getMESSAGECONTENT());
-				List<UserPersistence> uList = UserHelper.getEmail_id(messagePersistence.getPOSTUSERID());
+				List<UserPersistence> uList = UserHelper.getUserInfoById(messagePersistence.getPOSTUSERID());
 				message_MessageView.setUserImage(uList.get(0).getAVATAR());
 				message_MessageView.setUserId(messagePersistence.getPOSTUSERID());
 				message_MessageView.setTime(messagePersistence.getMESSAGETIME());
@@ -168,7 +168,7 @@ public class MessageService {
 						Message_MessageView message_MessageView = new Message_MessageView();
 						message_MessageView.setContent(messagePersistence1.getMESSAGECONTENT());
 						message_MessageView.setLastContent(messagePersistences1.get(0).getMESSAGECONTENT());
-						List<UserPersistence> uList = UserHelper.getEmail_id(messagePersistence1.getPOSTUSERID());
+						List<UserPersistence> uList = UserHelper.getUserInfoById(messagePersistence1.getPOSTUSERID());
 						message_MessageView.setUserImage(uList.get(0).getAVATAR());
 						message_MessageView.setUserId(messagePersistence1.getPOSTUSERID());
 						message_MessageView.setTime(messagePersistence1.getMESSAGETIME());
@@ -190,7 +190,7 @@ public class MessageService {
 			for(MessagePersistence messagePersistence:messagePersistences){
 				Message_MessageView message_MessageView = new Message_MessageView();
 				message_MessageView.setContent(messagePersistence.getMESSAGECONTENT());
-				List<UserPersistence> uList = UserHelper.getEmail_id(messagePersistence.getPOSTUSERID());
+				List<UserPersistence> uList = UserHelper.getUserInfoById(messagePersistence.getPOSTUSERID());
 				message_MessageView.setUserImage(uList.get(0).getAVATAR());
 				message_MessageView.setUserId(messagePersistence.getPOSTUSERID());
 				message_MessageView.setTime(messagePersistence.getMESSAGETIME());
@@ -209,7 +209,7 @@ public class MessageService {
 			for(MessagePersistence messagePersistence:messagePersistences){
 				Message_MessageView message_MessageView = new Message_MessageView();
 				message_MessageView.setContent(messagePersistence.getMESSAGECONTENT());
-				List<UserPersistence> uList = UserHelper.getEmail_id(messagePersistence.getPOSTUSERID());
+				List<UserPersistence> uList = UserHelper.getUserInfoById(messagePersistence.getPOSTUSERID());
 				message_MessageView.setUserImage(uList.get(0).getAVATAR());
 				message_MessageView.setUserId(messagePersistence.getPOSTUSERID());
 				message_MessageView.setTime(messagePersistence.getMESSAGETIME());
@@ -227,7 +227,7 @@ public class MessageService {
 			for(MessagePersistence messagePersistence:messagePersistences){
 				Message_MessageView message_MessageView = new Message_MessageView();
 				message_MessageView.setContent(messagePersistence.getMESSAGECONTENT());
-				List<UserPersistence> uList = UserHelper.getEmail_id(messagePersistence.getPOSTUSERID());
+				List<UserPersistence> uList = UserHelper.getUserInfoById(messagePersistence.getPOSTUSERID());
 				message_MessageView.setUserImage(uList.get(0).getAVATAR());
 				message_MessageView.setUserId(messagePersistence.getPOSTUSERID());
 				message_MessageView.setTime(messagePersistence.getMESSAGETIME());

@@ -16,23 +16,19 @@ import org.xjtusicd3.partner.NLP.Segmentation_ansj;
 import org.xjtusicd3.partner.view.robot_Chat;
 
 public class RobotService {
-	/*
+	/**
 	 * robot_ajax获取机器人信息
 	 */
 	public static List<RobotPersistence> robotinfo(){
 		List<RobotPersistence> list = RobotHelper.robotinfo();
 		return list;
 	}
-	public static void main(String[] args) throws Exception {
-		getRobotAnswer("西安交通大学");
-	}
-	/*
+	
+	/**
 	 * robot_ajax_和机器人聊天
 	 */
 	public static List<robot_Chat> getRobotAnswer(String comment) throws Exception {
-		//Segmentation_ansj segmentation_ansj = new Segmentation_ansj();
-		List<robot_Chat> robot_Chats = Segmentation_ansj.robot_Chats(comment);
-		
+		List<robot_Chat> robot_Chats = Segmentation_ansj.robot_Chats(comment);	
 		System.out.println("robot_Chats的大小："+robot_Chats.size());
 		List<robot_Chat> list = new ArrayList<robot_Chat>();
 		if (robot_Chats.size()==0) {
@@ -86,6 +82,7 @@ public class RobotService {
 		}
 		return list;
 	}
+	
 	//对按余弦相似度进行排序
 	private static List<robot_Chat> ListSort(List<robot_Chat> list){
 		Collections.sort(list,new Comparator<robot_Chat>() {
@@ -104,4 +101,5 @@ public class RobotService {
 		});
 		return list;
 	}
+	
 }

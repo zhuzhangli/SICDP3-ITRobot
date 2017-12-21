@@ -8,7 +8,7 @@ import org.xjtusicd3.database.mapper.RobotPersistenceMapper;
 import org.xjtusicd3.database.model.RobotPersistence;
 
 public class RobotHelper {
-	/*
+	/**
 	 * robot_ajax获取机器人信息
 	 */
 	public static List<RobotPersistence> robotinfo(){

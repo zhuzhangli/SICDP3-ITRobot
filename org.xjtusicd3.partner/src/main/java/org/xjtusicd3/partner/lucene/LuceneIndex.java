@@ -16,8 +16,8 @@ import org.xjtusicd3.common.util.JsonUtil;
 import org.xjtusicd3.database.helper.CollectionHelper;
 import org.xjtusicd3.database.helper.CommentHelper;
 import org.xjtusicd3.database.helper.QuestionHelper;
+import org.xjtusicd3.database.helper.UserHelper;
 import org.xjtusicd3.database.model.CollectionPersistence;
-import org.xjtusicd3.database.model.CommentPersistence;
 import org.xjtusicd3.database.model.QuestionPersistence;
 import org.xjtusicd3.database.model.UserPersistence;
 import org.xjtusicd3.partner.view.Faq2_faqContentView;
@@ -173,6 +173,20 @@ public class LuceneIndex {
 
         return qList;
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * 封装List，展示在faq2页面
      */
@@ -184,19 +198,18 @@ public class LuceneIndex {
     	List<Faq2_faqContentView> faq2_faqContentViews = new ArrayList<Faq2_faqContentView>();
         for(int i = starNum;i<endNum;i++){
         	List<Faq2_faqUserView> userViews = new ArrayList<Faq2_faqUserView>();
-        	String userId = QuestionHelper.faq2_userId(questionPersistence.get(i).getFAQQUESTIONID());
-        	List<UserPersistence> userPersistences = QuestionHelper.faq2_userlist(userId);
+        	String userId = QuestionHelper.findUserIdByQuestionId(questionPersistence.get(i).getFAQQUESTIONID());
+        	List<UserPersistence> userPersistences = UserHelper.getUserInfoById(userId);
         	for(UserPersistence userPersistence:userPersistences){
         		Faq2_faqUserView faq2_faqUserView = new Faq2_faqUserView(userPersistence);
         		userViews.add(faq2_faqUserView);
         	}
         	Faq2_faqContentView faq2View = new Faq2_faqContentView(questionPersistence.get(i));
         	faq2View.setuList(userViews);
-			List<CommentPersistence> commentPersistences = CommentHelper.getComment(questionPersistence.get(i).getFAQQUESTIONID());
+			int commentCount = CommentHelper.commentInfo(questionPersistence.get(i).getFAQQUESTIONID());
 			List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(questionPersistence.get(i).getFAQQUESTIONID());
 			List<CollectionPersistence> collectionPersistences = CollectionHelper.getCollectionFaqList(questionPersistence.get(i).getFAQQUESTIONID());
-			int number = commentPersistences.size();
-			faq2View.setCommentNumber(number);
+			faq2View.setCommentNumber(commentCount);
 			faq2View.setFaqScan(questionPersistences.get(0).getSCAN());
 			faq2View.setFaqModifytime(questionPersistences.get(0).getMODIFYTIME());
 			faq2View.setFaqCollection(Integer.toString(collectionPersistences.size()));

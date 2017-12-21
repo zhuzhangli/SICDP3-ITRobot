@@ -125,17 +125,7 @@
 									<div class="col-sm-6" style="float:right;display:none" id="updateinfo" >
 					                    <div class="project-name overflow">
 										    <form id="main-contact-form" name="contact-form" method="post" action="addUserInfo.html">
-					                            <div class="form-group" style="width: 370px;height: 36px;">
-					                            	<div style="float:left;margin-top:10px;width:56px;"><span>用户名：</span></div>
-					                                <div style="float:right;width:314px;height:50px;"><input type="text" name="UserName" class="form-control"  required="required" value="${userinfo.USERNAME}"></div>
-					                            </div>
-					                            <div class="form-group" style="width: 370px;height: 36px;">
-					                            	<div style="float:left;margin-top:10px;width:56px;"><span>邮箱：</span></div>
-					                                <div style="float:right;width:314px;height:50px;"><input type="text" name="UserEmail" class="form-control"  required="required" value="${userinfo.USEREMAIL}" ></div>
-					                            
-					                            </div>
-					                            
-					                            <div class="form-group" style="width: 370px;height: 36px;">
+						                            <div class="form-group" style="width: 370px;height: 36px;">
 					                            	<div style="float:left;margin-top:10px;width:56px;"><span>性别：</span></div>
 													<div class="rdo">
 												        <input type="radio" name="UserSex" class="rdolist" value="男"/ >
@@ -143,7 +133,7 @@
 												            <span class="check-image"></span>
 												            <span class="radiobox-content">男</span>
 												        </label>
-												        <input type="radio" name="UserSex2" class="rdolist" value="女" />
+												        <input type="radio" name="UserSex" class="rdolist" value="女" />
 												        <label class="rdobox">
 												            <span class="check-image"></span>
 												            <span class="radiobox-content">女</span>
@@ -194,10 +184,7 @@
 					                            	<div style="float:left;margin-top:10px;width:56px;"><span>用户名：</span></div>
 					                                <div style="float:right;width:314px;height:50px;"><input type="text" name="UserName" class="form-control"  required="required" value="${userinfo.USERNAME}" readonly="readonly"></div>
 					                            </div>
-					                            <div class="form-group" style="width: 370px;height: 36px;">
-					                            	<div style="float:left;margin-top:10px;width:56px;"><span>邮箱：</span></div>
-					                                <div style="float:right;width:314px;height:50px;"><input type="text" name="email" class="form-control"  required="required" value="${userinfo.USEREMAIL}" readonly="readonly"></div>
-					                            </div>
+					                          
 					                            <div class="form-group" style="width: 370px;height: 36px;">
 					                            	<div style="float:left;margin-top:10px;width:56px;"><span>性别：</span></div>
 													<div style="float:right;width:314px;height:50px;"><input type="text" name="UserSex" class="form-control"  required="required" value="${userinfo.GENDER}" readonly="readonly"></div>

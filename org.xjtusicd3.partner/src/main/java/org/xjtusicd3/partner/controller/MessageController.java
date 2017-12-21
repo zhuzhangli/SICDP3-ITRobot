@@ -164,7 +164,7 @@ public class MessageController {
 				List<Message_MessageView> message_MessageViews = MessageService.message_userList(userid);
 				mv.addObject("messageList", message_MessageViews);
 			}else{
-				List<UserPersistence> userPersistences = UserHelper.getEmail_id(u);
+				List<UserPersistence> userPersistences = UserHelper.getUserInfoById(u);
 				List<Message_MessageView> message_MessageViews = MessageService.message_userList(userid);
 				if (message_MessageViews.size()==0) {
 					mv.addObject("touserList", userPersistences);

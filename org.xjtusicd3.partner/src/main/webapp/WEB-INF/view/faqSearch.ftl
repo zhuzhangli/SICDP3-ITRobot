@@ -42,14 +42,16 @@
 		<div class="contentWra clearfix">
 		   <!-- 左侧开始 -->
 		   <div class="leftMainWrapper">
-            <div class="searchResult wenba">
-      			求助网友，找到更多你想要的答案
-                <button class="width:50px" onclick="javascript:window.open('question.html?c=all&type=all')">立即提问</button>
-            </div>
+	           	<div class="searchResult wenba">
+	      			求助网友，找到更多你想要的答案
+	                <button class="width:50px" onclick="javascript:window.open('question.html?c=all&type=all')">立即提问</button>
+	            </div>
+              
                 <div class="searchResult clearfix">
-                    <span class="fr">共搜索到 <label id="searchCount">${titleNumber}</label> 篇文章</span>
                     <span class="fl">关键字: <label id="searchKeyWord">${queryStr}</label></span>
+                    <span class="fr">共搜索到 <label id="searchCount">${titleNumber}</label> 篇文章</span>                   
                 </div>
+              
                 <div class="searchListWrapper" id="searchTplWrapper" style="min-height: 0px;">
                 <#list faq2List as faq2List>
                     <ul class="knowledgeList">
@@ -68,14 +70,15 @@
                             <span class="line">|</span>
                             <span class="showCount">${faq2List.faqScan}</span>
                             <span class="message">${faq2List.commentNumber}</span>
-                            <span class="collection">${faq2List.faqCollection}</span>
-                        
+                            <span class="collection">${faq2List.faqCollection}</span>                        
                         </li>
                         <li class="content">${faq2List.faqDescription}</li>
                     </ul>
                 </#list>    
                 </div>
+                
                 <input type="hidden" id="searchId" name="search_id" value="1687592">
+                
                 <div class="topMoreTop" id="querymorelink" style="height: 54px;margin: 0 auto;padding-top: 14px;">
                     <a href="javascript:void(0);" onclick="queryMoreTop()">加载更多</a>
                 </div>
@@ -97,6 +100,7 @@
      
     <!-- Slider -->
 	<script type="text/javascript" src="new/front/js/util.js"></script>
+	<!-- 加载更多 -->
 	<script>
 		function queryMoreTop(){
 			var queryStr = document.getElementById("searchKeyWord").innerHTML;

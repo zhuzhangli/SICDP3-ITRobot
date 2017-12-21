@@ -49,6 +49,7 @@
         <div class="contentWra ">
 			<div class="writerWrapper">
             <h3>创建知识</h3>
+            <div class="loginLinkLi" id="lasturl" style="display: none;"></div>
             <div class="writerContent">
                 <ul class="formul">
                 	<li class="clearfix">
@@ -80,13 +81,6 @@
                             <div class="validate_faqadd spa5"></div> 
                         </div>
                         
-                    </li>
-                    <li class="clearfix">
-                        <label>风险提示：</label>
-                        <div class="details">
-                            <textarea class="text" id="risk_prompt"></textarea>
-                            <div class="validate_faqadd spa6"></div> 
-                        </div>
                     </li>
                     <li class="clearfix">
                         <label><em>*</em>知识正文：</label>

@@ -63,6 +63,7 @@ public class ReadExcel {
 	
 	public static List<List<String>> readXls(String path) throws Exception{
 		FileInputStream is = new FileInputStream(path);
+		@SuppressWarnings("resource")
 		HSSFWorkbook hssfWorkbook = new HSSFWorkbook(is);
 		List<List<String>> result = new ArrayList<List<String>>();
 		//循环每一页，读取每一页

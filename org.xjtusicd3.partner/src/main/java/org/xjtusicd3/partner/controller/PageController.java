@@ -43,11 +43,7 @@ public class PageController {
 		ModelAndView mv = new ModelAndView("login");
 		return mv;
 	}
-//	@RequestMapping(value="robot",method=RequestMethod.GET)
-//	public ModelAndView robot(){
-//		ModelAndView mv = new ModelAndView("robot");
-//		return mv;
-//	}
+
 	@RequestMapping(value="404",method=RequestMethod.GET)
 	public ModelAndView notfound(){
 		ModelAndView mv = new ModelAndView("404");
@@ -60,12 +56,6 @@ public class PageController {
 		return mv;
 	}
 	
-	
-	@RequestMapping(value="advise",method=RequestMethod.GET)
-	public ModelAndView advise(){
-		ModelAndView mv = new ModelAndView("advise");
-		return mv;
-	}
 	@RequestMapping(value="service",method=RequestMethod.GET)
 	public ModelAndView service(){
 		ModelAndView mv = new ModelAndView("service");

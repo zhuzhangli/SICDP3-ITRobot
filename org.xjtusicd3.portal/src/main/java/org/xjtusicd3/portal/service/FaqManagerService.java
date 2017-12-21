@@ -39,12 +39,12 @@ public class FaqManagerService {
 			faqPendingAudit.setFAQTITLE(faqList.getFAQTITLE());
 			faqPendingAudit.setFAQDESCRIPTION(faqList.getFAQDESCRIPTION());
 			
-			List<ClassifyPersistence> classifyPersistences = ClassifyHelper.faq2_classify(faqList.getFAQCLASSIFYID());
+			List<ClassifyPersistence> classifyPersistences = ClassifyHelper.getInfoById(faqList.getFAQCLASSIFYID());
 			faqPendingAudit.setFAQCLASSIFYNAME(classifyPersistences.get(0).getFAQCLASSIFYNAME());
 			faqPendingAudit.setFAQKEYWORDS(faqList.getFAQKEYWORDS());
 			faqPendingAudit.setMODIFYTIME(faqList.getMODIFYTIME());
 			
-			List<UserPersistence> list = UserHelper.getUserNameById(faqList.getUSERID());
+			List<UserPersistence> list = UserHelper.getUserInfoById(faqList.getUSERID());
 			faqPendingAudit.setUSERID(faqList.getUSERID());
 			faqPendingAudit.setUSERNAME(list.get(0).getUSERNAME());
 			
@@ -91,7 +91,7 @@ public class FaqManagerService {
 			faqEdit.setFAQQUESTIONID(faqQuestionId);
 			faqEdit.setFAQTITLE(faqQuserionList.get(0).getFAQTITLE());
 			
-			List<ClassifyPersistence> classifyPersistences = ClassifyHelper.faq2_classify(faqQuserionList.get(0).getFAQCLASSIFYID());
+			List<ClassifyPersistence> classifyPersistences = ClassifyHelper.getInfoById(faqQuserionList.get(0).getFAQCLASSIFYID());
 			faqEdit.setFAQCLASSIFYID(faqQuserionList.get(0).getFAQCLASSIFYID());
 			faqEdit.setFAQCLASSIFYNAME(classifyPersistences.get(0).getFAQCLASSIFYNAME());
 		
@@ -120,12 +120,12 @@ public class FaqManagerService {
 					faqPendingAudit.setFAQTITLE(faqList.getFAQTITLE());
 					faqPendingAudit.setFAQDESCRIPTION(faqList.getFAQDESCRIPTION());
 					
-					List<ClassifyPersistence> classifyPersistences = ClassifyHelper.faq2_classify(faqList.getFAQCLASSIFYID());
+					List<ClassifyPersistence> classifyPersistences = ClassifyHelper.getInfoById(faqList.getFAQCLASSIFYID());
 					faqPendingAudit.setFAQCLASSIFYNAME(classifyPersistences.get(0).getFAQCLASSIFYNAME());
 					faqPendingAudit.setFAQKEYWORDS(faqList.getFAQKEYWORDS());
 					faqPendingAudit.setMODIFYTIME(faqList.getMODIFYTIME());
 					
-					List<UserPersistence> list = UserHelper.getUserNameById(faqList.getUSERID());
+					List<UserPersistence> list = UserHelper.getUserInfoById(faqList.getUSERID());
 					faqPendingAudit.setUSERID(faqList.getUSERID());
 					faqPendingAudit.setUSERNAME(list.get(0).getUSERNAME());
 					

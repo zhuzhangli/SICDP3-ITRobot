@@ -9,11 +9,44 @@ import org.xjtusicd3.database.logic.IBaseDao;
 import org.xjtusicd3.database.model.AnswerPersistence;
 
 public interface AnswerPersistenceMapper extends IBaseDao<AnswerPersistence, String>{
-	/*
-	 * zyq_faq3_知识内容
-	 */
+	//zyq_faq3_知识内容
 	@Select("SELECT * FROM TBL_FAQanswer WHERE FAQQUESTIONID=#{0}")
 	public List<AnswerPersistence> faq3_faqContent(String QuestionId);
+	
+	//根据faq问题id查找用户id
+	@Select("SELECT USERID FROM TBL_FAQanswer WHERE FAQQUESTIONID=#{0}")
+	public String findUserIdByFAQQuestionId(String faqquestionid);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/*
 	 * zyq_notice_ajax_查询FAQ评论通知
 	 */
@@ -36,5 +69,38 @@ public interface AnswerPersistenceMapper extends IBaseDao<AnswerPersistence, Str
 	//更新faq信息
 	@Update("UPDATE TBL_FAQanswer SET FAQCONTENT=#{1}  WHERE FAQQUESTIONID=#{0}")
 	public void updateFaqAnswerInfo(String questionId, String faqcontent);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 	
 }

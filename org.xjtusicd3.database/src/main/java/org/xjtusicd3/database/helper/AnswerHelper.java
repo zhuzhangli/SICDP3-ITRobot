@@ -8,16 +8,7 @@ import org.xjtusicd3.database.mapper.AnswerPersistenceMapper;
 import org.xjtusicd3.database.model.AnswerPersistence;
 
 public class AnswerHelper {
-	/*
-	 * zyq_spider_知识库答案的添加
-	 */
-	public static void save(AnswerPersistence answerPersistence){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		AnswerPersistenceMapper mapper = session.getMapper(AnswerPersistenceMapper.class);
-		mapper.save(answerPersistence);
-		session.close();
-	}
-	/*
+	/**
 	 * zyq_faq3_知识内容
 	 */
 	public static List<AnswerPersistence> faq3_faqContent(String QuestionId){
@@ -27,6 +18,53 @@ public class AnswerHelper {
 		session.close();
 		return list;
 	}
+	
+	/**
+	 * 根据faq问题id查找用户id
+	 * @param faqquestionid
+	 * @return
+	 */
+	public static String findUserIdByFAQQuestionId(String faqquestionid) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		AnswerPersistenceMapper mapper  = session.getMapper(AnswerPersistenceMapper.class);
+		String userId = mapper.findUserIdByFAQQuestionId(faqquestionid);
+		session.close();
+		return userId;
+	}
+	
+	/**
+	 * zyq_spider_知识库答案的添加
+	 */
+	public static void save(AnswerPersistence answerPersistence){
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		AnswerPersistenceMapper mapper = session.getMapper(AnswerPersistenceMapper.class);
+		mapper.save(answerPersistence);
+		session.close();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/*
 	 * zyq_notice_ajax_查询FAQ评论通知
@@ -75,6 +113,32 @@ public class AnswerHelper {
 
 		
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 	
 
 }

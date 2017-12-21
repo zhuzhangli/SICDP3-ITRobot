@@ -28,7 +28,7 @@ public class EventManagerService {
 		for(UserQuestionPersistence userQuestionPersistence:userQuestionPersistences){
 			EventView eventView = new EventView();			
 			eventView.setUserQuestionTitle(userQuestionPersistence.getQUESTIONTITLE());
-			List<UserPersistence> list = UserHelper.getUserNameById(userQuestionPersistence.getUSERID());				
+			List<UserPersistence> list = UserHelper.getUserInfoById(userQuestionPersistence.getUSERID());				
 			eventView.setUserName(list.get(0).getUSERNAME());
 			eventView.setUserQuestionTime(userQuestionPersistence.getQUESTIONTIME());
 			eventView.setUserQuestionId(userQuestionPersistence.getUSERQUESTIONID());
@@ -54,7 +54,7 @@ public class EventManagerService {
 			Event_AnswerView eventView = new Event_AnswerView();
 			
 			eventView.setQUESTIONTITLE(userQuestionPersistence.getQUESTIONTITLE());
-			List<UserPersistence> list = UserHelper.getUserNameById(userQuestionPersistence.getUSERID());				
+			List<UserPersistence> list = UserHelper.getUserInfoById(userQuestionPersistence.getUSERID());				
 			eventView.setUSERNAME(list.get(0).getUSERNAME());
 			eventView.setQUESTIONTIME(userQuestionPersistence.getQUESTIONTIME());
 			eventView.setUSERQUESTIONID(userQuestionPersistence.getUSERQUESTIONID());
@@ -86,7 +86,7 @@ public class EventManagerService {
 		eventView.setUserQuestionTime(userQuestionPersistences.get(0).getQUESTIONTIME());
 		
 		eventView.setUserQuestionTitle(userQuestionPersistences.get(0).getQUESTIONTITLE());
-		List<UserPersistence> userPersistences =UserHelper.getUserNameById(userQuestionPersistences.get(0).getUSERID());
+		List<UserPersistence> userPersistences =UserHelper.getUserInfoById(userQuestionPersistences.get(0).getUSERID());
 		eventView.setUserName(userPersistences.get(0).getUSERNAME());	
 	
 		return eventView;
@@ -117,7 +117,7 @@ public class EventManagerService {
 		event_AnswerView.setFAQANSWER(faqContent);
 		
 		
-		List<UserPersistence> userPersistences =UserHelper.getUserNameById(userQuestionPersistences.get(0).getUSERID());
+		List<UserPersistence> userPersistences =UserHelper.getUserInfoById(userQuestionPersistences.get(0).getUSERID());
 		event_AnswerView.setUSERNAME(userPersistences.get(0).getUSERNAME());
 		event_AnswerView.setQUESTIONTIME(userQuestionPersistences.get(0).getQUESTIONTIME());
 

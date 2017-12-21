@@ -24,7 +24,7 @@ public class ClassifyController {
 	 */
 	@RequestMapping(value="robot",method=RequestMethod.GET)
 	@SystemControllerLog(description = "robot_分类")
-	public ModelAndView classifyName(HttpSession session,HttpServletRequest request,String e,String r){
+	public ModelAndView classifyName(HttpSession session,HttpServletRequest request){
 		ModelAndView modelAndView = new ModelAndView("robot");
 		String string = ClassifyService.classify();
 		modelAndView.addObject("string",string);
@@ -33,6 +33,7 @@ public class ClassifyController {
 		session.setAttribute("urlPath", urlPath);
 		return modelAndView;
 	}
+	
 	/*
 	 * faq、faq1_右侧的第一级分类
 	 */
@@ -42,13 +43,14 @@ public class ClassifyController {
 	public  String search(HttpServletResponse response){
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
-		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.classifyName1();
+		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.classifyName();
 		if (classifyPersistences == null || classifyPersistences.size()==0) {
 			return null;
 		}			
 		String result = JsonUtil.toJsonString(classifyPersistences);
 		return result;
 	 }
+	
 	/*
 	 * ajax获取第二级分类
 	 */
@@ -58,6 +60,7 @@ public class ClassifyController {
 	public  String faq1_ClassifyName(String classifyId,HttpServletResponse response){
 		response.setContentType("application/json");
 		response.setCharacterEncoding("utf-8");
+		//获取分类信息
 		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.faq1_ClassifyName(classifyId);
 		if (classifyPersistences == null || classifyPersistences.size()==0) {
 			return null;
@@ -65,5 +68,4 @@ public class ClassifyController {
 		String result = JsonUtil.toJsonString(classifyPersistences);
 		return result;
 	 }
-	
 }

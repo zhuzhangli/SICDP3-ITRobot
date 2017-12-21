@@ -1,4 +1,25 @@
+//获取robot信息
 setTimeout("robot_welcome()",1000);
+
+function robot_welcome(){
+	 $.ajax({
+		 type: "GET",
+		 url: "/org.xjtusicd3.partner/getRobotInfo.html",            
+		 dataType: "json",
+		 success: function(data){
+			 	document.getElementById("chat01_content").innerHTML = '<li class="media">'
+			 		+'<div style="width:48px;float:left;margin-left: 7px;">'
+			 		+'<div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data[0].rOBOTIMAGE+'"></div>'
+			 		+'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data[0].rOBOTNAME+'</div>'
+			 		+'</div>'			 		
+			 		+'<div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p>'
+			 		+'<div style="float:left;"><span style="">'+data[0].rOBOTWELCOME+'<img src="images/bq.png" class="mCS_img_loaded"><br>➢<span style="color:blue;display:inline">'
+			 		+'<a href="javascript:void(0);" onclick="questionSkill()">提问技巧</a></span></span></div><p></p></div></li>';
+		      }
+		 });
+}
+
+//显示时间
 function showTime(){
     var myDate = new Date();  
     var year = myDate.getFullYear();    //获取完整的年份(4位,1970-????)  
@@ -19,28 +40,22 @@ function showTime(){
     var time = year+"年"+month+"月"+date+"日"+"   "+hours+":"+minutes+":"+seconds;
 	return time;
 }
-function robot_welcome(){
-	 $.ajax({
-		 type: "GET",
-		 url: "/org.xjtusicd3.partner/getRobotInfo.html",            
-		 dataType: "json",
-		 success: function(data){
-			 	document.getElementById("chat01_content").innerHTML = '<li class="media"><div style="width:48px;float:left;margin-left: 7px;"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data[0].rOBOTIMAGE+'"></div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data[0].rOBOTNAME+'</div></div><div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+data[0].rOBOTWELCOME+'<img src="images/bq.png" class="mCS_img_loaded"><br>➢<span style="color:blue;display:inline"><a href="javascript:void(0);" onclick="questionSkill()">提问技巧</a></span></span></div><p></p></div></li>';
-		      }
-		 });
-}
-//输入框中直接聊天
-function chat(){
-	chatWithRobot();
-	setTimeout("scroll()",500);
-}
-//点击列表
-function chat2(){
-	chatWithRobot2();
-	setTimeout("scroll()",500);
+
+//滚动
+function scroll(){
+	var number = document.getElementById("chat01_content").children.length-2;
+	scrollToLocation(number);
 }
 
-
+//滚动到指定位置
+function scrollToLocation(number) {
+	var mainContainer = $('#chat01_content');
+    var scrollToContainer = $('#chat01_content').find('.media:eq('+number+')');//滚动到<div id="thisMainPanel">中类名为son-panel的第六个处
+    //动画效果
+    $('.chat01_content').animate({
+    	scrollTop: scrollToContainer.offset().top - mainContainer.offset().top + mainContainer.scrollTop()
+    }, 1500);//1.5秒滑动到指定位置
+}
 
 //提问技巧
 function questionSkill(){
@@ -48,15 +63,63 @@ function questionSkill(){
 	setTimeout("scroll()",500);
 }
 
+//提问技巧
+function questionSkill1(){
+	var html = document.getElementById("chat01_content").innerHTML;
+	 $.ajax({
+		 type: "GET",
+		 url: "/org.xjtusicd3.partner/questionSkill.html",            
+		 dataType: "json",
+		 success: function(data){
+			 if(data.value=="0"){
+				 document.getElementById("chat01_content").innerHTML = html+'<li class="media">'
+				 +'<div style="width:48px;float:right;margin-left: 7px;">'
+				 +'<a><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="static/image/user.png"></div></a>'
+				 +'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">我</div>'
+				 +'</div>'
+				 +'<div class="media-body chat-pop2">'
+				 +'<span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p>'
+				 +'<div style="float:left;"><span style="">'+"查看提问技巧"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'
+				 +'<li class="media"><div style="width:48px;float:left;margin-left: 7px;">'
+				 +'<div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div>'
+				 +'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div></div>'
+				 +'<div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p>'
+				 +'<div style="float:left;"><span style="">'
+				 +'<div class="head_msg">小朵为您推荐</div>'
+				 +'<div class="content_line">为了更快的帮您解决问题，您可以试着简短描述，如输入:"<b>如何下载驱动、"CPU占用率高"</b>。您也可以直接点击右侧热点区域。<br>现在，让我们愉快的交流吧^_^ </div></span></div><p></p></div></li>';
+			 }else{
+				 document.getElementById("chat01_content").innerHTML = html+'<li class="media">'
+				 +'<div style="width:48px;float:right;margin-left: 7px;">'
+				 +'<a href="personal2.html?='+data.robotUser[0].uSERID+'" target="_blank">'
+				 +'<div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotUser[0].aVATAR+'"></div>'
+				 +'</a>'
+				 +'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotUser[0].uSERNAME+'</div></div>'
+				 +'<div class="media-body chat-pop2"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p>'
+				 +'<div style="float:left;"><span style="">'+"查看提问技巧"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'
+				 +'<li class="media"><div style="width:48px;float:left;margin-left: 7px;">'
+				 +'<div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div>'
+				 +'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div></div>'
+				 +'<div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p>'
+				 +'<div style="float:left;"><span style="">'
+				 +'<div class="head_msg">小朵为您推荐</div>'
+				 +'<div class="content_line">为了更快的帮您解决问题，您可以试着简短描述，如输入:"<b>如何下载驱动、"CPU占用率高"</b>。您也可以直接点击右侧热点区域。<br>现在，让我们愉快的交流吧^_^ </div></span></div><p></p></div></li>';
+			 }
+		 }
+	 });	
+}
 
 
-
-
+//输入框中直接聊天
+function chat(){
+	chatWithRobot();
+	setTimeout("scroll()",500);
+}
 
 function chatWithRobot(){
 	var comment = document.getElementById("textarea").value;
 	var comments = comment.replace(/\s+/g,"");
 	var html = document.getElementById("chat01_content").innerHTML;
+	var from = "fromChat";
 	if(comment.length == 0 || comment.match(/^\s+$/g)){
 		document.getElementById("textarea").value="";
 	}else{
@@ -65,6 +128,7 @@ function chatWithRobot(){
 			url:"/org.xjtusicd3.partner/chatWithRobot.html",
 			data:{
 				"comment":comments,
+				"from":from
 			},
 			dataType:"json",
 			success:function(data){
@@ -456,12 +520,20 @@ function chatWithRobot(){
 		})
 	}
 }
+
+//点击热点问题分类
+function chat2(){
+	chatWithRobot2();
+	setTimeout("scroll()",500);
+}
+
 //robot——FAQ问题
 function chatWithRobot2(){
 	var _event= browserEvent();
 	var comment = _event.innerHTML;
 	var comments = comment.replace(/\s+/g,"");
 	var html = document.getElementById("chat01_content").innerHTML;
+	var from = "fromFaq";
 	if(comment.length == 0 || comment.match(/^\s+$/g)){
 		document.getElementById("textarea").value="";
 	}else{
@@ -470,6 +542,7 @@ function chatWithRobot2(){
 			url:"/org.xjtusicd3.partner/chatWithRobot.html",
 			data:{
 				"comment":comments,
+				"from":from
 			},
 			dataType:"json",
 			success:function(data){
@@ -818,42 +891,6 @@ function chatWithRobot2(){
 		})
 	}
 }
-//滚动
-function scroll(){
-	var number = document.getElementById("chat01_content").children.length-2;
-	scrollToLocation(number);
-}
-function scrollToLocation(number) {
-	var mainContainer = $('#chat01_content');
-    //var scrollToContainer = $('#chat01_content').find('.media:last');//滚动到<div id="thisMainPanel">中类名为son-panel的最后一个div处
-    var scrollToContainer = $('#chat01_content').find('.media:eq('+number+')');//滚动到<div id="thisMainPanel">中类名为son-panel的第六个处
-    //动画效果
-    $('.chat01_content').animate({
-    	scrollTop: scrollToContainer.offset().top - mainContainer.offset().top + mainContainer.scrollTop()
-    }, 1500);//1.5秒滑动到指定位置
-}
-
-
-
-
-
-//提问技巧
-function questionSkill1(){
-	var html = document.getElementById("chat01_content").innerHTML;
-	 $.ajax({
-		 type: "GET",
-		 url: "/org.xjtusicd3.partner/questionSkill.html",            
-		 dataType: "json",
-		 success: function(data){
-			 if(data.value=="0"){
-				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:right;margin-left: 7px;"><a><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="static/image/user.png"></div></a><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">我</div></div><div class="media-body chat-pop2"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+"查看提问技巧"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'+'<li class="media"><div style="width:48px;float:left;margin-left: 7px;"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div></div><div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style=""><div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none"><b>经过我的判断，方案如下：</b></div><div class="head_msg">小朵为您推荐</div><div class="content_line">为了更快的帮您解决问题，您可以试着简短描述，如输入:"<b>如何下载驱动、"CPU占用率高"</b>。您也可以直接点击右侧热点区域。<br>现在，让我们愉快的交流吧^_^ </div></span></div><p></p></div></li>';
-			 }else{
-				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:right;margin-left: 7px;"><a href="personal2.html?='+data.robotUser[0].uSERID+'" target="_blank"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotUser[0].aVATAR+'"></div></a><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotUser[0].uSERNAME+'</div></div><div class="media-body chat-pop2"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+"查看提问技巧"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'+'<li class="media"><div style="width:48px;float:left;margin-left: 7px;"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div></div><div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style=""><div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none"><b>经过我的判断，方案如下：</b></div><div class="head_msg">小朵为您推荐</div><div class="content_line">为了更快的帮您解决问题，您可以试着简短描述，如输入:"<b>如何下载驱动、"CPU占用率高"</b>。您也可以直接点击右侧热点区域。<br>现在，让我们愉快的交流吧^_^ </div></span></div><p></p></div></li>';
-			 }
-		 }
-	 });
-	
-}
 
 //推荐内容有帮助
 function beHelpful(answerId, questionId){
@@ -900,12 +937,11 @@ function beHelpful(answerId, questionId){
 			
 			 }else {
 					alert("满意度重复提交");
-				}
+			}
 			 
 		 }
 	 });	
 }
-
 
 //用户对问题答案不满意
 function NoHelpful(answerId, questionId){
@@ -948,71 +984,10 @@ function NoHelpful(answerId, questionId){
 				 	+'</div>'
 				 +'</li>';
 			 }else if(data.value=="1"){
-				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:right;margin-left: 7px;"><a href="personal2.html?='+data.robotUser[0].uSERID+'" target="_blank"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotUser[0].aVATAR+'"></div></a><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotUser[0].uSERNAME+'</div></div><div class="media-body chat-pop2"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+"不满意"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'+'<li class="media"><div style="width:48px;float:left;margin-left: 7px;"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div></div><div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style=""><div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none"><b>经过我的判断，方案如下：</b></div><div class="head_msg">小朵为您推荐</div><div class="content_line">很抱歉没帮上您，小朵感到十分抱歉。可将您的问题<a href="question.html?c=all&type=all">添加到社区中心</a>，让大家帮您解答~</div></span></div><p></p></div></li>';
-					
-				 
-		
+				 document.getElementById("chat01_content").innerHTML = html+'<li class="media"><div style="width:48px;float:right;margin-left: 7px;"><a href="personal2.html?='+data.robotUser[0].uSERID+'" target="_blank"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotUser[0].aVATAR+'"></div></a><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotUser[0].uSERNAME+'</div></div><div class="media-body chat-pop2"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style="">'+"不满意"+'<span style="color:blue"><a href="javascript:void(0);" onclick=""></a></span></span></div><p></p></div></li>'+'<li class="media"><div style="width:48px;float:left;margin-left: 7px;"><div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div><div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div></div><div class="media-body chat-pop"><span class="pull-right"><i class="fa fa-clock-o"></i> <abbr class="timeago">'+showTime()+'</abbr> </span><p></p><div style="float:left;"><span style=""><div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none"><b>经过我的判断，方案如下：</b></div><div class="head_msg">小朵为您推荐</div><div class="content_line">很抱歉没帮上您，小朵感到十分抱歉。可将您的问题<a href="question.html?c=all&type=all">添加到社区中心</a>，让大家帮您解答~</div></span></div><p></p></div></li>';		
 			 }else {
 				alert("满意度重复提交");
 			}
 		 }
 	 });	
 }
-
-
-//将未解决问题添加至问题中心
-function addToCommunity(){
-
-	var questionId = document.getElementById("questionId").value;
-
-	var html = document.getElementById("chat01_content").innerHTML;
-	 $.ajax({
-		 type: "GET",
-		 url: "/org.xjtusicd3.partner/addToCommunity.html",            
-		 data:{
-				"questionId":questionId,
-			},
-		 dataType: "json",
-		 success: function(data){
-			 if(data.value=="0"){
-				 document.getElementById("chat01_content").innerHTML = html+'<li class="media">'
-				 	+'<div style="width:48px;float:left;margin-left: 7px;">'
-				 		+'<div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div>'
-				 		+'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div>'
-				 	+'</div>'
-				 	+'<div class="media-body chat-pop">'
-				 		+'<span class="pull-right"><i class="fa fa-clock-o"></i> '
-				 			+'<abbr class="timeago">'+showTime()+'</abbr> '
-				 		+'</span><p></p>'
-				 		+'<div style="float:left;">'
-				 			+'<span style="">'
-				 				+'<div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none">'
-				 				+'</div>'
-				 				+'<div class="content_line">抱歉，目前只有已登录用户才可将未解决问题添加到社区中心，<a href="login.html">登录</a>' +'</div>'
-				 			+'</span>'
-				 		+'</div>'
-				 	+'</div>'
-				 +'</li>';
-			 }else{
-				 document.getElementById("chat01_content").innerHTML = html+'<li class="media">'
-				 	+'<div style="width:48px;float:left;margin-left: 7px;">'
-			 		+'<div class="lhead"><img class="media-object" alt="Generic placeholder image" src="'+data.robotInfo[0].rOBOTIMAGE+'"></div>'
-			 		+'<div style="margin-top: 5px;text-align: center;color:#3FA1F3;font-size:12px;font-weight: bold;">'+data.robotInfo[0].rOBOTNAME+'</div>'
-			 	+'</div>'
-			 	+'<div class="media-body chat-pop">'
-			 		+'<span class="pull-right"><i class="fa fa-clock-o"></i> '
-			 			+'<abbr class="timeago">'+showTime()+'</abbr> '
-			 		+'</span><p></p>'
-			 		+'<div style="float:left;">'
-			 			+'<span style="">'
-			 				+'<div style="margin-bottom: 6px;color:#000000;font-size:13px;display:none">'
-			 				+'</div>'
-			 				+'<div class="content_line">添加成功。多谢您宝贵的问题，快去<a href="question.html?c=all&type=all"">社区中心</a>逛逛吧~' +'</div>'
-			 			+'</span>'
-			 		+'</div>'
-			 	+'</div>'
-			 +'</li>';}
-		 }
-	 });	
-}
-

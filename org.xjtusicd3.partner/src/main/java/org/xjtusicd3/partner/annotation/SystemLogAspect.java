@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -34,9 +33,6 @@ public class SystemLogAspect {
 
 	 @Autowired   
 	private LogService logService;
-    
-    private final static int LOG_NORMAL = 1;  
-    private final static int LOG_UNNORMAL = 0;  
     
     public SystemLogAspect(){  
         System.out.println("SystemLogAspect is initing!!!!");  
@@ -87,8 +83,7 @@ public class SystemLogAspect {
             System.out.println("请求IP:" + ip);   
  
             
-            String params = ""; 
-          /* 
+            /* 
             if (joinPoint.getArgs() !=  null && joinPoint.getArgs().length > 0) {    
                 for ( int i = 0; i < joinPoint.getArgs().length; i++) {    
                    params += JSON.toJSONString(joinPoint.getArgs()[i]) + ";";    

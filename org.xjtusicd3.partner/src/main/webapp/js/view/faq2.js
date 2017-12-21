@@ -1,3 +1,4 @@
+//加载更多
 var pagenow = 1;
 function queryMoreTop(){ 
 	var classifyId = $("#secondNavStep").attr("value");

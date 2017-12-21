@@ -1,3 +1,4 @@
+//faq知识专区
 $(document).ready(
 function(){
 	 $.ajax({
@@ -16,6 +17,25 @@ function(){
 	      }
 	 });
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function getData(a){
 	var str =a;
 	str = str.replace(/-/g,"/");

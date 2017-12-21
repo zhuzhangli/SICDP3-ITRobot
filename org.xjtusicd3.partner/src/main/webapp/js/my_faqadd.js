@@ -1,3 +1,4 @@
+//获取一级标题
 $(document).ready(
    function(){
          $.ajax({
@@ -11,7 +12,8 @@ $(document).ready(
              }
          });
     })
-    
+
+//获取二级标题
 function selectSecondChild(){
 var element = document.getElementById("specialCategoryId");
 var classifyId = element.options[element.selectedIndex].value;
@@ -20,18 +22,19 @@ $.ajax({
      url: "/org.xjtusicd3.partner/getSecondLevel.html"+"?"+"classifyId="+classifyId,            
      dataType: "json",
      success: function(data){
-     			 document.getElementById("subspecialCategoryId").options.length=0;              	
-     			 for(var i in data){ 
-     			 	 document.getElementById("subspecialCategoryId").options.add(new Option(data[i].fAQCLASSIFYNAME, data[i].fAQCLASSIFYID));					        
-				      }                                                                      
-                  }
+ 			 document.getElementById("subspecialCategoryId").options.length=0;              	
+ 			 for(var i in data){ 
+ 			 	 document.getElementById("subspecialCategoryId").options.add(new Option(data[i].fAQCLASSIFYNAME, data[i].fAQCLASSIFYID));					        
+			      }                                                                      
+              }
      });         
 }
-
 
 window.onload=function(){
 	$("#title").focus()
 }
+
+//input输入框判断
 $("input").blur(function(){
 	$(".validate_faqadd").css("color","#BD362F")
 	if($(this).is("#title")){				//faq标题判断
@@ -66,6 +69,18 @@ $("input").blur(function(){
 	}
 })
 
+$("input").focus(function(){
+	if($(this).is("#title")){
+		$(".spa1").text("不超过44个字符").css("color","#aaa")
+		$(this).css("border","1px solid #aaa")
+	}
+	if($(this).is("#keywords")){
+		$(".spa3").text("输入关键词用逗号隔开").css("color","#aaa")
+		$(this).css("border","1px solid #aaa")
+	}
+})
+
+//摘要说明判断
 $("textarea").blur(function(){
 	$(".validate_faqadd").css("color","#BD362F")
 	if($(this).is("#description")){				//简介的判断
@@ -100,17 +115,6 @@ $("textarea").blur(function(){
 	}
 })
 
-$("input").focus(function(){
-	if($(this).is("#title")){
-		$(".spa1").text("不超过44个字符").css("color","#aaa")
-		$(this).css("border","1px solid #aaa")
-	}
-	if($(this).is("#keywords")){
-		$(".spa3").text("输入关键词用逗号隔开").css("color","#aaa")
-		$(this).css("border","1px solid #aaa")
-	}
-})
-
 $("textarea").focus(function(){
 	if($(this).is("#description")){
 		$(".spa5").text("不超过100个字符").css("color","#aaa")
@@ -122,6 +126,7 @@ $("textarea").focus(function(){
 	}
 })
 
+//提交
 $("#sub").click(function(){
 	$(".spa2").text("");
 	$(".spa4").text("");
@@ -133,7 +138,7 @@ $("#sub").click(function(){
 			var keywords = document.getElementById("keywords").value;
 			var subspecialCategoryId = document.getElementById("subspecialCategoryId").value;
 			var description = document.getElementById("description").value;
-			var risk_prompt = document.getElementById("risk_prompt").value;
+			//var risk_prompt = document.getElementById("risk_prompt").value;
 			var faqcontent = UE.getEditor('editor').getContent();
 			$.ajax({
 				type:"POST",
@@ -143,7 +148,7 @@ $("#sub").click(function(){
 					"keywords":keywords,
 					"subspecialCategoryId":subspecialCategoryId,
 					"description":description,
-					"risk_prompt":risk_prompt,
+					//"risk_prompt":risk_prompt,
 					"faqcontent":faqcontent
 				},
 				dataType:"json",
@@ -157,7 +162,7 @@ $("#sub").click(function(){
 								dlg = new DialogFx( somedialog );
 							dlgtrigger.addEventListener( 'click', dlg.toggle.bind(dlg) );
 						})();
-						document.getElementById('lasturl').innerHTML=data.url;
+						document.getElementById('lasturl').innerHTML=data.urlpath;
 					}else{
 						(function() {
 							var dlgtrigger = document.querySelector( '[data-dialog]' ),
@@ -165,11 +170,11 @@ $("#sub").click(function(){
 								dlg = new DialogFx( somedialog2 );
 							dlgtrigger.addEventListener( 'click', dlg.toggle.bind(dlg) );
 						})();
-						document.getElementById('lasturl').innerHTML=data.url;
+						document.getElementById('lasturl').innerHTML=data.urlpath;
 					}
 				}
 			})
-		return true;
+			return true;
 	}else{
 		if($("#title").val()==""){
 			$(".spa1").text('请您填写标题')

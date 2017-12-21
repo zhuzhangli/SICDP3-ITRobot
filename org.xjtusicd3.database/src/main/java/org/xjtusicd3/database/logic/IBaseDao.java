@@ -12,7 +12,6 @@ import org.xjtusicd3.database.model.Page;
 
 public interface IBaseDao<T, PK> {
 	// 这里的方法都将被BasePlugin所拦截，进行sql转换
-
 	@Insert(SqlHelper.BASE_INSERT)
 	public void save(T object);
 

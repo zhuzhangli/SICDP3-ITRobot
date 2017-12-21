@@ -22,6 +22,8 @@
     <script type="text/javascript" charset="utf-8" src="ueditor/ueditor.all.min.js"> </script>
     <script type="text/javascript" charset="utf-8" src="ueditor/lang/zh-cn/zh-cn.js"></script>
     <script type="text/javascript" src="js/modernizr.custom.79639.js"></script>
+    <script type="text/javascript" src="js/view/ueditor.js"></script>
+	<script type="text/javascript" src="js/browserEvent.js"></script>
     <script type="text/javascript" src="js/view/question2.js"></script>
     <script type="text/javascript">
     $(function(){
@@ -240,7 +242,7 @@
 							</div>
 						</#list>
 						
-						<input type="text" placeholder="添加您的答案" id="input_answer" onclick="showeditor()" style="display:block">
+						<input type="text" placeholder="添加您的答案" id="input_answer" onclick="javascript:showeditor();" style="display:block">
 						
 						<div id="answer-ueditor" class="edui-default" style="width:645px;font-size:14px;display:none">
 							<script id="editor" type="text/plain" style="width:650px;height:300px;margin-left:34px;margin-top:20px;"></script>
@@ -252,7 +254,7 @@
 					<!-- 不同用户对问题答案的不同操作 begin -->
 					<ul id="searchResult">
 					<!-- 判断有无最佳答案 begin -->
-					<#if answerList_best?size gt 0>
+					<#if hasBestAnswer??>
 						<!-- 有最佳答案_获取最佳答案信息 begin -->
 						<#list answerList_best as answerList_best>
 						<li id="${answerList_best.answerId}">
@@ -355,15 +357,6 @@
 						<#list answerList_other as answerList_other>
 						<li id="${answerList_other.answerId}">
 							<article class="answerArticle">
-								<!-- 
-								<#if answerList_other.isBestAnswer=="1">
-								<div class="hd line ">
-									<div id="act-link-banner-wp" class="grid-r">
-										<span class="iknow-qb_home_icons answer-type answer-best grid "><img src="images/best.png"/></span>
-										<span class="answer-title h2 grid">最佳答案</span>
-									</div>
-								</div>
-								</#if> -->
 								<!-- 非最佳答案具体信息显示 begin -->
 								<div class="description">
 									<div class="answerer">
@@ -393,7 +386,7 @@
 										</li>
 										<li><a onclick="getCommentList()"><span>评论 </span><span class="number">${answerList_other.communityNumber}</span></a></li>
 										<li>
-											<#if answerList_best.isCollection=="0">
+											<#if answerList_other.isCollection=="0">
 											<a data-fun="toSave"><span class="shoucang" onclick="getCollectionAnswer()">收藏</span></a>
 											<#else>
 											<a data-fun="toSave"><span class="shoucang" onclick="getCollectionAnswer()">已收藏</span></a>
@@ -451,15 +444,6 @@
 							<#list answerList_other as answerList_other>
 							<li id="${answerList_other.answerId}">
 								<article class="answerArticle">
-									<!--  
-									<#if answerList_other.isBestAnswer=="1">
-									<div class="hd line ">
-										<div id="act-link-banner-wp" class="grid-r">
-											<span class="iknow-qb_home_icons answer-type answer-best grid "><img src="images/best.png"></span>
-											<span class="answer-title h2 grid">最佳答案</span>
-										</div>
-									</div>
-									</#if>-->
 									<div class="description">
 										<div class="answerer">
 											<img class="answerImg" src="${answerList_other.userImage}">
@@ -489,15 +473,6 @@
 												</#if>
 											</li>
 											<li><a onclick="getCommentList()"><span>评论 </span><span class="number">${answerList_other.communityNumber}</span></a></li>
-											<!--
-											<li>
-											
-											<#if answerList_other.isCollection=="0">
-												<a data-fun="toSave"><span class="shoucang" onclick="getCollectionAnswer()">收藏</span></a>
-											<#else>
-												<a data-fun="toSave"><span class="shoucang" onclick="getCollectionAnswer()">已收藏</span></a>
-											</#if>
-											</li> -->
 										</ul>
 									</div>
 									
@@ -542,15 +517,6 @@
 							<#list answerList_other as answerList_other>
 							<li id="${answerList_other.answerId}">
 								<article class="answerArticle">
-									<!-- 
-									<#if answerList_other.isBestAnswer=="1">
-									<div class="hd line ">
-										<div id="act-link-banner-wp" class="grid-r">
-											<span class="iknow-qb_home_icons answer-type answer-best grid "><img src="images/best.png"></span>
-											<span class="answer-title h2 grid">最佳答案</span>
-										</div>
-									</div>
-									</#if> -->
 									<div class="description">
 										<div class="answerer">
 											<img class="answerImg" src="${answerList_other.userImage}">
@@ -576,14 +542,6 @@
 												</#if>
 											</li>
 											<li><a onclick="getCommentList()"><span>评论 </span><span class="number">${answerList_other.communityNumber}</span></a></li>
-											<!-- 
-											<li>
-												<#if answerList_other.isCollection=="0">
-													<a data-fun="toSave"><span class="shoucang" onclick="getCollectionAnswer()">收藏</span></a>
-												<#else>
-													<a data-fun="toSave"><span class="shoucang" onclick="getCollectionAnswer()">已收藏</span></a>
-												</#if>
-											</li>-->
 										</ul>
 									</div>
 								   
@@ -635,12 +593,18 @@
 			<!-- 点击查看更多 begin -->
 			<div id="loadStatus">
 				<div id="loading" class="">
-					<span>点击查看更多</span>
+					<span onclick="getMoreIndex()">点击查看更多</span>
 					<div class="spinner">
-						<div class="bounce1"></div>
-						<div class="bounce2"></div>
-						<div class="bounce3"></div>
+ 							<div class="bounce1"></div>
+ 							<div class="bounce2"></div>
+ 							<div class="bounce3"></div>
 					</div>
+				</div>
+				<div id="loadMore" class="hidden">
+					<button>加载更多</button>
+				</div>
+				<div id="noMore" class="hidden">
+					<span>没有更多</span>
 				</div>
 			</div>
 			<!-- 点击查看更多 end -->
@@ -660,7 +624,7 @@
 				</div>
 				
 				<div class="QRCode-tip">
-					<img class="QRCode-bulb" src="img/bulb.png">
+					<img class="QRCode-bulb" >
 					<div class="QRCode-word">
 						<p>扫微信二维码获取</p>
 						<p>[问题被回答]提醒</p>
@@ -712,8 +676,7 @@
     <div id="foot" class="footer">
     	<p style="color: #ffffff;text-align: center;">© 西安交通大学社会智能与复杂数据处理实验室  2017.</p>
     </div>
-	<script type="text/javascript" src="js/view/ueditor.js"></script>
-	<script type="text/javascript" src="js/browserEvent.js"></script>
+	
 		<div class="success" id="success" style="z-index:1001;position:fixed;top:40%;left:45%;width:220px;background: #f3f3f3;text-align: center;border:1px solid black;border-radius:3px;display:none"><div style="margin-top:30px; margin-bottom:30px;"><img src="images/true.png" style="width:20px;height:20px;margin-right:10px;"><h2 style="font-size:16px;display:inline-block;line-height:22px;vertical-align:top">评论成功</h2></div></div>
 		<div class="success" id="chongfu" style="z-index:1001;position:fixed;top:40%;left:45%;width:220px;background: #f3f3f3;text-align: center;border:1px solid black;border-radius:3px;display:none"><div style="margin-top:30px; margin-bottom:30px;"><img src="images/cuo.png" style="width:20px;height:20px;margin-right:10px;"><h2 style="font-size:16px;display:inline-block;line-height:22px;vertical-align:top">切勿重复提交</h2></div></div>
 		<div class="success" id="null" style="z-index:1001;position:fixed;top:40%;left:45%;width:220px;background: #f3f3f3;text-align: center;border:1px solid black;border-radius:3px;display:none"><div style="margin-top:30px; margin-bottom:30px;"><img src="images/cuo.png" style="width:20px;height:20px;margin-right:10px;"><h2 style="font-size:16px;display:inline-block;line-height:22px;vertical-align:top">内容不能为空</h2></div></div>

@@ -8,7 +8,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
-import org.xjtusicd3.database.mapper.AdvisePersistenceMapper;
 import org.xjtusicd3.database.mapper.AgreePersistenceMapper;
 import org.xjtusicd3.database.mapper.AnswerPersistenceMapper;
 import org.xjtusicd3.database.mapper.BasicConfigurePersistenceMapper;
@@ -82,7 +81,6 @@ public class SqlSessionManager {
 			configuration.addMapper(AnswerPersistenceMapper.class);
 			configuration.addMapper(ClassifyPersistenceMapper.class);
 			configuration.addMapper(RobotPersistenceMapper.class);
-			configuration.addMapper(AdvisePersistenceMapper.class);
 			configuration.addMapper(LogPersistenceMapper.class);
 			configuration.addMapper(PermissionPersistenceMapper.class);
 			configuration.addMapper(CommunityQuestionPersistenceMapper.class);

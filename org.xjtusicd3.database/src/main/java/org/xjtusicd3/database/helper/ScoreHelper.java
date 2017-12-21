@@ -8,7 +8,7 @@ import org.xjtusicd3.database.mapper.ScorePersistenceMapper;
 import org.xjtusicd3.database.model.ScorePersistence;
 
 public class ScoreHelper {
-	/*
+	/**
 	 * zyq_faq3_ajax_评分
 	 */
 	public static void saveFAQscore(ScorePersistence scorePersistence) {
@@ -17,7 +17,8 @@ public class ScoreHelper {
 		mapper.save(scorePersistence);
 		session.close();
 	}
-	/*
+		
+	/**
 	 * zyq_faq3_ajax_查看评论列表
 	 */
 	public static List<ScorePersistence> getScoreList(String questionId) {
@@ -27,7 +28,8 @@ public class ScoreHelper {
 		session.close();
 		return list;
 	}
-	/*
+	
+	/**
 	 * zyq_faq3_获取FAQ得分
 	 */
 	public static float getScore(String questionId){
@@ -43,6 +45,40 @@ public class ScoreHelper {
 		session.close();
 		return score;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	
 	public static void saveFAQscore(String scoreId, String userId, String fAQquestionId, float score, String time) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);

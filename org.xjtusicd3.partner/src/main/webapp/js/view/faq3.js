@@ -1,7 +1,14 @@
+//编辑器
+function showeditor(){
+	document.getElementById('content').style.display="none";
+	document.getElementById('answer-ueditor').style.display="block";
+	document.getElementsByClassName('clearfix commentScoreBtn')[0].style.display="block";
+}
 
+//发表评论
 function comment(){
-	var faqusername = document.getElementsByClassName("username")[0].innerHTML;
-	var faqtitle = document.getElementById("detailTplWrapper").getElementsByClassName("title")[0].innerHTML;
+	var faquserId = document.getElementsByClassName("faqUserId")[0].innerHTML;
+	var faqQuestionId = document.getElementById("detailTplWrapper").getElementsByClassName("faqId")[0].innerHTML;
 	var comment = UE.getEditor('editor').getContent();
 	if(comment==""){
 		document.getElementById('null').style.display='block';
@@ -11,9 +18,9 @@ function comment(){
 			type:"POST",
 			url:"/org.xjtusicd3.partner/saveComment.html",
 			data:{
-				"faqtitle":faqtitle,
+				"faqQuestionId":faqQuestionId,
 				"comment":comment,
-				"faqusername":faqusername
+				"faquserId":faquserId
 			},
 			dataType:"json",
 			success:function(data){
@@ -26,11 +33,8 @@ function comment(){
 		})
 	}
 }
-function showeditor(){
-	document.getElementById('content').style.display="none";
-	document.getElementById('answer-ueditor').style.display="block";
-	document.getElementsByClassName('clearfix commentScoreBtn')[0].style.display="block";
-}
+
+//显示回复框
 function openreply(){
 	var _event= browserEvent();
 	if(_event.parentNode.parentNode.getElementsByClassName('subCommentList')[0].style.display=="none"){
@@ -50,6 +54,8 @@ function openreply(){
 		document.getElementById(commentid).getElementsByClassName('commentReplayUser')[0].style.display="none";
 	}
 }
+
+//发表回复
 function replycomment(){
 	var _event= browserEvent();
 	var questionId = document.URL.split("q=")[1].split("#")[0];
@@ -92,18 +98,41 @@ function replycomment(){
 		})
 	}
 }
+
+//评论成功
 function codefans(){
 	var box=document.getElementById("success");
 	box.style.display="none"; 
 }
+
+//切勿重复提交
 function codefans2(){
 	var box=document.getElementById("chongfu");
 	box.style.display="none"; 
 }
+
+//内容不能为空
 function codefans3(){
 	var box=document.getElementById("null");
 	box.style.display="none"; 
 }
+
+//显示删除按钮
+function showdelete(e, obj){
+	var _event= browserEvent();
+    if(checkHover(e,obj)){
+	_event.parentNode.getElementsByClassName("commentReplay")[0].style.display="block";
+  }
+}
+
+//隐藏删除按钮
+function hiddendelete(e, obj){
+	var _event= browserEvent();
+	if(checkHover(e,obj)){
+	_event.parentNode.getElementsByClassName("commentReplay")[0].style.display="none";
+  }
+}
+
 //防止mouseover多次触发
 function contains(parentNode, childNode) 
 {
@@ -113,6 +142,9 @@ function contains(parentNode, childNode)
         return !!(parentNode.compareDocumentPosition(childNode) & 16);
     }
 }
+
+//判断事件相关元素与目标元素之间的关系，只有当触发事件的相关元素不是目标元素的后继节点，checkHover()函数才返回true.
+//checkHover函数中之所以添加一个if判断是因为IE下mouseover和mouseout的相关元素分别对应的是fromElement,toElement,因此分别处理,当是其他事件时，这两个属性在IE下为null。而FF和chrome浏览器中的相关元素都是relatedTarget,mouseover中relatedTarget是鼠标移到目标元素时所离开的那个元素，mouseout中relatedTarget是鼠标离开目标元素时要进入的元素，对于其他事件该属性无用。
 function checkHover(e,target)
 {
     if (getEvent(e).type=="mouseover")  {
@@ -121,22 +153,12 @@ function checkHover(e,target)
         return !contains(target,getEvent(e).relatedTarget||getEvent(e).toElement) && !((getEvent(e).relatedTarget||getEvent(e).toElement)===target);
     }
 }
+
+//getEvent是为了兼容IE浏览器
 function getEvent(e){
     return e||window.event;
 }
 
-function showdelete(e, obj){
-	var _event= browserEvent();
-    if(checkHover(e,obj)){
-	_event.parentNode.getElementsByClassName("commentReplay")[0].style.display="block";
-  }
-}
-function hiddendelete(e, obj){
-	var _event= browserEvent();
-	if(checkHover(e,obj)){
-	_event.parentNode.getElementsByClassName("commentReplay")[0].style.display="none";
-  }
-}
 //删除自己的回复
 function deleteComment(){
 	var _event= browserEvent();
@@ -176,6 +198,7 @@ function replyOther(){
 		_event.parentNode.parentNode.parentNode.parentNode.getElementsByClassName("commentReplayUser")[0].id=commentId+"_";
 	}
 }
+
 //获取更多评论
 function querymorecomment(){
 	startnumber = document.getElementsByClassName("comment")[0].getElementsByClassName("commentList").length;
@@ -211,6 +234,7 @@ function querymorecomment(){
 		}
 	})
 }
+
 //获取更多回复
 function querymorereply(){
 	var _event= browserEvent();
@@ -249,27 +273,7 @@ function querymorereply(){
 		}
 	})
 }
-//收藏
-function favorite(){
-	var questionId = document.URL.split("q=")[1].split("#")[0];
-	$.ajax({
-		type:"POST",
-		url:"/org.xjtusicd3.partner/saveCollectionFAQ.html",
-		data:{
-			"questionId":questionId
-		},
-		dataType:"json",
-		success:function(data){
-			if(data.value=="0"){
-				self.location='login.html';
-			}else if(data.value=="1"){
-				document.getElementById("favoriteHeart").setAttribute("class","share redheart");
-			}else if(data.value=="2"){
-				document.getElementById("favoriteHeart").setAttribute("class","share heart");
-			}
-		}
-	})
-}
+
 //评分
 function score(){
 	var _event= browserEvent();
@@ -292,6 +296,29 @@ function score(){
 		}
 	})
 }
+
+//收藏
+function favorite(){
+	var questionId = document.URL.split("q=")[1].split("#")[0];
+	$.ajax({
+		type:"POST",
+		url:"/org.xjtusicd3.partner/saveCollectionFAQ.html",
+		data:{
+			"questionId":questionId
+		},
+		dataType:"json",
+		success:function(data){
+			if(data.value=="0"){
+				self.location='login.html';
+			}else if(data.value=="1"){
+				document.getElementById("favoriteHeart").setAttribute("class","share redheart");
+			}else if(data.value=="2"){
+				document.getElementById("favoriteHeart").setAttribute("class","share heart");
+			}
+		}
+	})
+}
+
 //分享
 function saveShare(){
 	var state;
@@ -300,13 +327,15 @@ function saveShare(){
 	}else{
 		state=2;
 	}
+	var from = "faqQuestion";
 	var questionId = document.URL.split("q=")[1];
 	$.ajax({
 		type:"POST",
 		url:"/org.xjtusicd3.partner/saveShare.html",
 		data:{
 			"questionId":questionId,
-			"state":state
+			"state":state,
+			"from":from
 		},
 		dataType:"json",
 		success:function(data){

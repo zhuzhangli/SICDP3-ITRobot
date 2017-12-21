@@ -37,7 +37,7 @@ public class LogService {
 			logindexView logindexView = new logindexView();
 			logindexView.setLogMethod(logPersistence.getLogMethod());
 			logindexView.setLogTime(logPersistence.getLogTime());
-			List<UserPersistence> userPersistences = UserHelper.getUserNameById(logPersistence.getUserId());
+			List<UserPersistence> userPersistences = UserHelper.getUserInfoById(logPersistence.getUserId());
 			logindexView.setLogUser(userPersistences.get(0).getUSERNAME()); 
 			logindexViews.add(logindexView);
 		}

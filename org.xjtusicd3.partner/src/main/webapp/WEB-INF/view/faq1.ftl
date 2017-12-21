@@ -44,7 +44,7 @@
                     	<a href="/org.xjtusicd3.partner/faq.html">
                     		<span class="type">所有分类</span>
                     	</a>
-                    	<span> &gt; </span>
+                    	<span> ></span>
                     	
                     	<#list classifyInfo as classify1>
                     	<a href="/topic/c_1.html" id="oneNavStep">

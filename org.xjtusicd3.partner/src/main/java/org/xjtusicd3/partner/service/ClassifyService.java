@@ -10,12 +10,13 @@ import org.xjtusicd3.database.model.QuestionPersistence;
 import org.xjtusicd3.partner.view.Faq1_ClassifyView;
 import org.xjtusicd3.partner.view.Faq1_faqContentView;
 public class ClassifyService {
-	/*
+	/**
 	 * robot-分类
 	 */
 	public static String classify(){
 		int num  = 1;
-		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.classifyName1();
+		//获取所有一级分类
+		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.classifyName();
 		int length = classifyPersistences.size()+1;
 		String string = "";
 		for(ClassifyPersistence classifyPersistence:classifyPersistences){
@@ -25,10 +26,12 @@ public class ClassifyService {
 			String faqTitle = "";
 			String content_string = "{\"title\":\"";
 			String firstTitle_string = "{\"title\":\"";
+			//获取所有二级分类
 			List<ClassifyPersistence> classifyPersistences2 = ClassifyHelper.classifyName2(classifyPersistence.getFAQCLASSIFYID());
 			int length2 = classifyPersistences2.size()+1;
 			for(ClassifyPersistence classifyPersistence2:classifyPersistences2){
 				String content2 = "";
+				//获取该二级分类下faq问题中收藏量前三的faq
 				List<QuestionPersistence> faqPersistences = QuestionHelper.SecondClassify_robot(classifyPersistence2.getFAQCLASSIFYID());
 				int length3 = faqPersistences.size()+1;
 				for(QuestionPersistence faqPersistence:faqPersistences){
@@ -62,57 +65,58 @@ public class ClassifyService {
 			}
 		return string;
 		}
-    public static String zhuanyi(String string){
-    	string = string.replace("\"", "'");
-    	return string;
-    }
-
-	/*
+	
+	/**
+	 * 标题转义
+	 */
+	public static String zhuanyi(String string){
+		string = string.replace("\"", "'");
+		return string;
+	}
+	
+	/**
 	 * faq1_下面4栏推荐_按照浏览量
 	 */
 	public static List<Faq1_ClassifyView> faq1_ClassifyView(String parentId){
 		List<Faq1_ClassifyView> faq1_ClassifyViews = new ArrayList<Faq1_ClassifyView>();
 		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.faq1_SecondClassify(parentId);
 		for(ClassifyPersistence classifyPersistence:classifyPersistences){
-			List<Faq1_faqContentView> faq1Views = new ArrayList<Faq1_faqContentView>();
-			List<QuestionPersistence> questionPersistences = ClassifyHelper.faq1_faqPersistences(classifyPersistence.getFAQCLASSIFYID());
+			//查找推荐的第一条数据
+			QuestionPersistence questionPersistences = QuestionHelper.faq1_faqPersistences(classifyPersistence.getFAQCLASSIFYID());
+			Faq1_faqContentView faq1View = new Faq1_faqContentView(questionPersistences);
+			//查找推荐的剩余5条
 			List<Faq1_faqContentView> faq1Views2 = new ArrayList<Faq1_faqContentView>();
-			List<QuestionPersistence> questionPersistences2 = ClassifyHelper.faq1_faqPersistences2(classifyPersistence.getFAQCLASSIFYID());
-			for(QuestionPersistence questionPersistence:questionPersistences){
-				Faq1_faqContentView faq1View = new Faq1_faqContentView(questionPersistence);
-				faq1Views.add(faq1View);
-			}
+			List<QuestionPersistence> questionPersistences2 = QuestionHelper.faq1_faqPersistences2(classifyPersistence.getFAQCLASSIFYID());
 			for(QuestionPersistence questionPersistence:questionPersistences2){
-				Faq1_faqContentView faq1View = new Faq1_faqContentView(questionPersistence);
-				faq1Views2.add(faq1View);
+				Faq1_faqContentView faq2View = new Faq1_faqContentView(questionPersistence);
+				faq1Views2.add(faq2View);
 			}
 			Faq1_ClassifyView view = new Faq1_ClassifyView(classifyPersistence);
-			view.setContent(faq1Views);
+			view.setContent(faq1View);
 			view.setContent2(faq1Views2);
 			faq1_ClassifyViews.add(view);
 		}
 		return faq1_ClassifyViews;
 	}
-	/*
-	 * faq2_获取第二类分类的名称、第一类分类的名称
+	
+	
+	/**
+	 * 获取该分类的父分类信息
 	 */
-	public static List<ClassifyPersistence> faq2_classify2(String ClassifyId){
-		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.faq2_classify(ClassifyId);
-		return classifyPersistences;
-	}
 	public static List<ClassifyPersistence> faq2_classify(String ClassifyId){
+		//根据分类号查找父id
 		String classifyParentId = ClassifyHelper.faq2_classifyParentId(ClassifyId);
-		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.faq2_classify(classifyParentId);
+		//查找父分类信息
+		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.getInfoById(classifyParentId);
 		return classifyPersistences;
 	}
 	
 	/**
-	 * author:zzl
-	 * abstract:获取该父分类下的所有子分类
-	 * data:2017年9月15日10:05:50
+	 * 获取该分类的信息
 	 */
-	public static List<ClassifyPersistence> faq_classifyIds(String parentId) {
-		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.faq_classifyIds(parentId);
+	public static List<ClassifyPersistence> faq2_classify2(String ClassifyId){
+		//获取该分类信息
+		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.getInfoById(ClassifyId);
 		return classifyPersistences;
 	}
 

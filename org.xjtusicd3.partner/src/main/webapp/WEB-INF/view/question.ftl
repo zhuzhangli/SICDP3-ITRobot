@@ -119,7 +119,7 @@
 							<div class="options">
 								<ul>
 									<li class="special">
-										<#if userEmail ??>
+										<#if userName ??>
 											<#if communityViews.isLike="1">
 											<a data-fun="toVote" class="unVoted" onclick="getAgreeAnswer()"><span class="status">已点赞</span>  |  <span class="number">${communityViews.likesNumber}</span></a>
 											<#else>
@@ -187,7 +187,7 @@
             <div class="rightBarWrapper">
             	<div id="mainR">
             	<div style="height:85px;">
-            		<button class="fm_ele" id="ask" fm-type="button" fm-name="button_ask" fm-operation="click" fm-zoon="header_area" onclick="questionForm();">提新问题</button>
+            		<button class="fm_ele" id="ask" fm-type="button" fm-name="button_ask" fm-operation="click" fm-zoon="header_area" onclick="questionForm();" style="font-size: 20px;color: red">提新问题</button>
             	</div>
 				<div><a href="http://iknow.lenovo.com/"><img id="wenba" src="images/iknow.png"></a></div>
 				<div id="topic">
@@ -225,8 +225,7 @@
 			<div id="tag-s" class="hidden">					
 				<a href="javascript:" id="close"></a>					
 				<h1 id="tagH">添加标签</h1>					
-				<h2>可选</h2>					
-				<p id="titP">“asfdsdafa”</p>					
+				<h2>可选</h2>										
 				<ul id="systemTag">
 					<#list classifyList as classifyList>
 					<li>

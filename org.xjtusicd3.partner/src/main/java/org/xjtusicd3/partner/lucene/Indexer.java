@@ -10,8 +10,6 @@ import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.nlpcn.commons.lang.tire.domain.Forest;
-import org.nlpcn.commons.lang.tire.library.Library;
 import org.xjtusicd3.database.helper.QuestionHelper;
 import org.xjtusicd3.database.model.QuestionPersistence;
 

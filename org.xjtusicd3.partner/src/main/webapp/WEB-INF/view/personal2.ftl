@@ -65,170 +65,177 @@
         			<div class="user-pic" data-is-fans="" data-is-follows="">
             			<div class="user-pic-bg"></div><!--user-pic-big end-->
             			<img class="img" src="${picture.AVATAR}" alt="">
-            		<#if IsMy=="0">
-                    <div class="friend mail js-already-follow  " id="yiguanzhu0" onmouseover="showGuanzhu();" onmouseout="hideGuanzhu();" style="display:none;" >
-                         <a href="message.html" target="_blank"><i class="fa fa-envelope"></i></a>
-							<div class="u-info-tips u-info-alreadyfollow-tip" data-type="2" id="yiguanzhu" style="display:none" >    
-    							<span class="title">已成功关注Ta</span>
-    							<p class="content">关注后可及时了解Ta的动态，并可向Ta发送即时消息。</p>
-        						<a onclick="quguanzhu()" class="cancel-follow" >取消关注</a>    
-							</div>
-                    </div>
-                    <div class="friend group_add js-add-follow" id="weiguanzhu0" onmouseover="showAddGuanzhu();" onmouseout="hideAddGuanzhu();" style="display:block;" onclick="guanzhu()">
-                        <i class="fa fa-plus"></i>
-							<div class="u-info-tips u-info-follow-tip" data-type="1" id="weiguanzhu" style="display:none" >    
-    							<span class="title">关注Ta</span>
-    							<p class="content">关注后可及时了解Ta的动态信息，并可向Ta发送即时消息</p>
-							</div>
-                    </div>
-                    </#if>
-		        <ul>
-		        <li>
-		            <a onclick="c_index()" class="active" id="c_index">
-		            <i class="fa fa-home"></i><span>主&nbsp;&nbsp;&nbsp;&nbsp;页</span><b class="fa fa-angle-right"></b>
-		            </a>
-		        </li>
-		        <li>
-		        	<#if IsMy=="1">
-		            <a onclick="c_know()" id="c_know">
-		            <i class="fa fa-lightbulb-o"></i><span>知识库</span><b class="fa fa-angle-right"></b>
-		            </a>
-		            </#if>
-		        </li>
-		        <li>
-		        	<#if IsMy=="1">
-		            <a onclick="c_question()" id="c_question">
-		            <i class="fa fa-question"></i><span>问&nbsp;&nbsp;&nbsp;&nbsp;吧</span><b class="fa fa-angle-right"></b>
-		            </a>
-		            </#if>
-		        </li>
-		        </ul>
-		</div><!-- .slider end -->
-		</#list>
-	</div>	
+	            		<!-- 查看他人主页 -->
+	            		<#if IsMy=="0">
+	            		<div id="lookOther" style="display:none">${IsMy}</div>
+	            		<div id="lookOtherPayList" style="display:none">${payList}</div>
+	                    <div class="friend mail js-already-follow  " id="yiguanzhu0" onmouseover="showGuanzhu();" onmouseout="hideGuanzhu();" style="display:none;" >
+	                         <a href="message.html" target="_blank"><i class="fa fa-envelope"></i></a>
+								<div class="u-info-tips u-info-alreadyfollow-tip" data-type="2" id="yiguanzhu" style="display:none" >    
+	    							<span class="title">已成功关注Ta</span>
+	    							<p class="content">关注后可及时了解Ta的动态，并可向Ta发送即时消息。</p>
+	        						<a onclick="quguanzhu()" class="cancel-follow" >取消关注</a>    
+								</div>
+	                    </div>
+	                    <div class="friend group_add js-add-follow" id="weiguanzhu0" onmouseover="showAddGuanzhu();" onmouseout="hideAddGuanzhu();" style="display:block;" onclick="guanzhu()">
+	                        <i class="fa fa-plus"></i>
+								<div class="u-info-tips u-info-follow-tip" data-type="1" id="weiguanzhu" style="display:none" >    
+	    							<span class="title">关注Ta</span>
+	    							<p class="content">关注后可及时了解Ta的动态信息，并可向Ta发送即时消息</p>
+								</div>
+	                    </div>
+				        </#if>
+				        <ul>
+					        <li>
+					            <a onclick="c_index()" class="active" id="c_index">
+					            <i class="fa fa-home"></i><span>主&nbsp;&nbsp;&nbsp;&nbsp;页</span><b class="fa fa-angle-right"></b>
+					            </a>
+					        </li>
+					        <li>
+					        	<#if IsMy=="1">
+					            <a onclick="c_know()" id="c_know">
+					            <i class="fa fa-lightbulb-o"></i><span>知识库</span><b class="fa fa-angle-right"></b>
+					            </a>
+					            </#if>
+					        </li>
+					        <li>
+					        	<#if IsMy=="1">
+					            <a onclick="c_question()" id="c_question">
+					            <i class="fa fa-question"></i><span>问&nbsp;&nbsp;&nbsp;&nbsp;吧</span><b class="fa fa-angle-right"></b>
+					            </a>
+					            </#if>
+					        </li>
+				        </ul>
+					</div><!-- .slider end -->
+					</#list>
+				</div>	
 
-		<!-- 显示区域 -->
-		<!-- 主页显示区域 -->
-		<div class="u-container" id="zhao1" style="display:block;">
-		<div class=" page-home js-usercard-box" id="notices">
-			<div class="dyanmic-title-wrap">
-	    		<p class="dynamic-title">Ta的动态 </p>
-			</div>
-			<#assign n = indexList?size />
-			<#if n gt 5>
-			<#assign n =5 />
-			</#if>
-			<#if n!=0>
-			<#list 0..(n-1) as i>
-			<#assign ls = indexList[i] />
-			<#assign isNew = indexListIstrue[i] />
-			<#if ls.how=="在问吧提问"||ls.how=="推荐了问题">
-           	<div class="item newanswer">
-                <a class="fl" href="personal2.html?u=${ls.userId}" target="_blank">
-                   	<img src="${ls.userImage}" class="userHead  js-usercard-dialog " width="40" height="40">
-               	</a>
-                <div class="content fr">    
-                    <div class="head">
-                        <div class="name"> 
-                            <a class=" js-usercard-dialog " href="personal2.html?u=${ls.userId}"  target="_blank">${ls.userName}</a>
-                        </div>
-                        <div class="time">${ls.time?substring(0,16)}</div> 
-                        <div class="title">${ls.how}</div>
-                    </div>
-                    <div class="body pr">
-                    	<a class="fl" href="question.html?c=${ls.from}&type=all" target="_blank">
-                            <img src="${ls.fromImage}" width="150" height="110">
-                        </a>
-                        <div class="content">
-                            <div class="tag">   
-                            	<span>来自</span> 
-                                	<a href="question.html?c=${ls.from}&type=all" target="_blank">
-                                    	<span class="ml10">${ls.from}</span> 
-                                    </a>
-                            </div>
-                            <div class="subtitle">
-                            	<a href="question2.html?q=${ls.questionId}" target="_blank">${ls.content}</a>
-                            </div> 
-                        </div>
-                    </div>
-               	</div>
-                <div class="cb"></div>
-            </div>
-			<#elseif ls.how=="创建了知识"||ls.how=="修改了知识"||ls.how=="推荐了知识">
-            <div class="item newarticlescrap">
-                    <span class=" pa share js-share"></span>
-                    <a class="fl" href="personal2.html?u=${ls.userId}" target="_blank">
-                   		<img src="${ls.userImage}" class="userHead  js-usercard-dialog " width="40" height="40">
-               		</a>
-                    <div class="content fr">   
-                        <div class="head">
-                            <div class="name"> 
-                                <a class=" js-usercard-dialog " href="personal2.html?u=${ls.userId}"  target="_blank">${ls.userName}</a>
-                            </div>
-                            <div class="time">${ls.time?substring(0,16)}</div> 
-                            <div class="title">${ls.how}</div>
-                        </div>
-                        <a href="faq3.html?q=${ls.questionId}" target="_blank">
-                            <div class="body pr">
-                                 <div class="content">
-                                        <div class="subtitle">${ls.title}</div> 
-                                        <div class="detail ">${ls.content}</div>
-                                        <div class="cb"></div>
-                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="cb"></div>
-        	</div>
-        	<#elseif ls.how=="关注了用户">
-        	<div class="item newuser">
-                    <a class="fl" href="personal2.html?u=${ls.userId}" target="_blank">
-                   		<img src="${ls.userImage}" class="userHead  js-usercard-dialog " width="40" height="40">
-               		</a>
-                    <div class="content fr">   
-                        <div class="head">
-                            <div class="name"> 
-                                <a class=" js-usercard-dialog " href="personal2.html?u=${ls.userId}" target="_blank">${ls.userName}</a>
-                            </div>
-                            <div class="time">${ls.time?substring(0,16)}</div> 
-                            <div class="title">${ls.how}</div>
-                        </div> 
-                        <div class="body pr">
-                            <a class="fl" href="personal2.html?u=${ls.touserId}" target="_blank">
-                                <img class=" js-usercard-dialog   mr10" src="${ls.touserImage}" width="40" height="40">
-                            </a>
-                            <div class="content">
-                                <div class="subtitle">
-                                    <a class=" js-usercard-dialog " href="personal2.html?u=${ls.touserId}"  target="_blank">${ls.touserName}</a>
-                                </div> 
-                                <div class="tag ">
-                                	 <#if ls.touserSex=="男">
-                                	 	<span class="gender mr10"></span>
-                                	 <#elseif ls.touserSex=="女">
-                                	 	<span class="gender girl mr10"></span>
-                                	 <#else>
-                                	 	<span class="sexSecret mr10"></span>
-                                	 </#if>	
-                                     <span class="mr10">${ls.touserAddress?split("0")[1]?split("1")[0]}</span> 
-                                     <span class="mr10">${ls.touserAddress?split("1")[1]?split("2")[0]}</span>
-                                     <span class="mr10">${ls.touserAddress?split("2")[1]?split("3")[0]}</span>
-                                     <span class="mr10">${ls.touserJob}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="cb"></div>
-                </div>
-        	</#if>
-        	</#list>
-        </#if>
-	</div>
-	<#if indexListSize gt 5>
-     <p class="js-noreload dynamicLoad js-dynamicLoadwrap" id="getMoreIndex">
-          <span class="js-dynamicLoad " onclick="getMoreIndex()">下拉显示更多</span>
-     </p>
-    </#if>
-</div><!-- .container end -->
+				<!-- 显示区域 -->
+				<!-- 主页显示区域 -->
+				<div class="u-container" id="zhao1" style="display:block;">
+					<div class=" page-home js-usercard-box" id="notices">
+						<div class="dyanmic-title-wrap">
+				    		<p class="dynamic-title">Ta的动态 </p>
+						</div>
+					
+						<#assign n = indexList?size />
+						<#if n gt 5>
+						<#assign n =5 />
+						</#if>
+						<#if n!=0>
+						<#list 0..(n-1) as i>
+						<#assign ls = indexList[i] />
+						<#assign isNew = indexListIstrue[i] />
+						<#if ls.how=="在问吧提问"||ls.how=="推荐了问题">
+			           	<div class="item newanswer">
+			                <a class="fl" href="personal2.html?u=${ls.userId}" target="_blank">
+			                   	<img src="${ls.userImage}" class="userHead  js-usercard-dialog " width="40" height="40">
+			               	</a>
+			                <div class="content fr">    
+			                    <div class="head">
+			                        <div class="name"> 
+			                            <a class=" js-usercard-dialog " href="personal2.html?u=${ls.userId}"  target="_blank">${ls.userName}</a>
+			                        </div>
+			                        <div class="time">${ls.time?substring(0,16)}</div> 
+			                        <div class="title">${ls.how}</div>
+			                    </div>
+			                    <div class="body pr">
+			                    	<a class="fl" href="question.html?c=${ls.from}&type=all" target="_blank">
+			                            <img src="${ls.fromImage}" width="150" height="110">
+			                        </a>
+			                        <div class="content">
+			                            <div class="tag">   
+			                            	<span>来自</span> 
+			                                	<a href="question.html?c=${ls.from}&type=all" target="_blank">
+			                                    	<span class="ml10">${ls.from}</span> 
+			                                    </a>
+			                            </div>
+			                            <div class="subtitle">
+			                            	<a href="question2.html?q=${ls.questionId}" target="_blank">${ls.content}</a>
+			                            </div> 
+			                        </div>
+			                    </div>
+			               	</div>
+			                <div class="cb"></div>
+			            </div>
+					
+						<#elseif ls.how=="创建了知识"||ls.how=="修改了知识"||ls.how=="推荐了知识">
+			            <div class="item newarticlescrap">
+			                    <span class=" pa share js-share"></span>
+			                    <a class="fl" href="personal2.html?u=${ls.userId}" target="_blank">
+			                   		<img src="${ls.userImage}" class="userHead  js-usercard-dialog " width="40" height="40">
+			               		</a>
+			                    <div class="content fr">   
+			                        <div class="head">
+			                            <div class="name"> 
+			                                <a class=" js-usercard-dialog " href="personal2.html?u=${ls.userId}"  target="_blank">${ls.userName}</a>
+			                            </div>
+			                            <div class="time">${ls.time?substring(0,16)}</div> 
+			                            <div class="title">${ls.how}</div>
+			                        </div>
+			                        <a href="faq3.html?q=${ls.questionId}" target="_blank">
+			                            <div class="body pr">
+			                                 <div class="content">
+			                                        <div class="subtitle">${ls.title}</div> 
+			                                        <div class="detail ">${ls.content}</div>
+			                                        <div class="cb"></div>
+			                                 </div>
+			                            </div>
+			                        </a>
+			                    </div>
+			                    <div class="cb"></div>
+			        	</div>
+			        	
+			        	<#elseif ls.how=="关注了用户">
+			        	<div class="item newuser">
+			                    <a class="fl" href="personal2.html?u=${ls.userId}" target="_blank">
+			                   		<img src="${ls.userImage}" class="userHead  js-usercard-dialog " width="40" height="40">
+			               		</a>
+			                    <div class="content fr">   
+			                        <div class="head">
+			                            <div class="name"> 
+			                                <a class=" js-usercard-dialog " href="personal2.html?u=${ls.userId}" target="_blank">${ls.userName}</a>
+			                            </div>
+			                            <div class="time">${ls.time?substring(0,16)}</div> 
+			                            <div class="title">${ls.how}</div>
+			                        </div> 
+			                        <div class="body pr">
+			                            <a class="fl" href="personal2.html?u=${ls.touserId}" target="_blank">
+			                                <img class=" js-usercard-dialog   mr10" src="${ls.touserImage}" width="40" height="40">
+			                            </a>
+			                            <div class="content">
+			                                <div class="subtitle">
+			                                    <a class=" js-usercard-dialog " href="personal2.html?u=${ls.touserId}"  target="_blank">${ls.touserName}</a>
+			                                </div> 
+			                                <div class="tag ">
+			                                	 <#if ls.touserSex=="男">
+			                                	 	<span class="gender mr10"></span>
+			                                	 <#elseif ls.touserSex=="女">
+			                                	 	<span class="gender girl mr10"></span>
+			                                	 <#else>
+			                                	 	<span class="sexSecret mr10"></span>
+			                                	 </#if>	
+			                                     <span class="mr10">${ls.touserAddress?split("0")[1]?split("1")[0]}</span> 
+			                                     <span class="mr10">${ls.touserAddress?split("1")[1]?split("2")[0]}</span>
+			                                     <span class="mr10">${ls.touserAddress?split("2")[1]?split("3")[0]}</span>
+			                                     <span class="mr10">${ls.touserJob}</span>
+			                                </div>
+			                            </div>
+			                        </div>
+			                    </div>
+			                    <div class="cb"></div>
+			                </div>
+				        	</#if>
+				        	</#list>
+				        </#if>
+					</div>
+					
+					<#if indexListSize gt 4>
+				     <p class="js-noreload dynamicLoad js-dynamicLoadwrap" id="getMoreIndex">
+				          <span class="js-dynamicLoad " onclick="getMoreIndex()">下拉显示更多</span>
+				     </p>
+				    </#if>
+				</div><!-- .container end -->
 
 				<!-- 知识库显示区域 -->
 				<div class="u-container" id="zhao2" style="display:none">
@@ -293,19 +300,20 @@
 						    </div>
 			  			</div>
 					</div>
-</div><!-- .container end -->
+				</div><!-- .container end -->
 
-</div><!-- .wrap end-->
+			</div><!-- .wrap end-->
 
-</div>
+		</div>
     </section>    
 		
     <div id="foot" class="footer" >
     	<p style="color: #ffffff;text-align: center;">© 西安交通大学社会智能与复杂数据处理实验室  2017.</p>
     </div>
-    	<script type="text/javascript" src="new/front/js/util.js"></script>
-		<script type="text/javascript" src="js/my.js"></script>
-		<script type="text/javascript" src="js/view/personal2.js"></script>
-	    <div id="duoduo" style="display:none">${uid}</div>
+    
+   	<script type="text/javascript" src="new/front/js/util.js"></script>
+	<script type="text/javascript" src="js/my.js"></script>
+	<script type="text/javascript" src="js/view/personal2.js"></script>
+    <div id="duoduo" style="display:none">${uid}</div>
 </body>
 </html>

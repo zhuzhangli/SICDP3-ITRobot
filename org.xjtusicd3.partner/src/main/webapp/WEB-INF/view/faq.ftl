@@ -122,7 +122,7 @@
 						<li class="dynamicItem">
 							<p class="dynamicTime">${userDynamics.time}</p>
 							<p class="dynamicDesc">
-								<a href="personal2.html?p=${userDynamics.userId}">${userDynamics.userName}</a>: ${userDynamics.how}“<a href="faq3.html?q=${userDynamics.faqId}">${userDynamics.faqTitle}</a>”</p>
+								<a href="personal2.html?u=${userDynamics.userId}">${userDynamics.userName}</a>: ${userDynamics.how}“<a href="faq3.html?q=${userDynamics.faqId}">${userDynamics.faqTitle}</a>”</p>
 						</li>
 						</#list>
 					</ul>

@@ -179,11 +179,13 @@
                 <!-- 知识详情开始 -->
 				<div class="knowledgeDetail">
                     <div id="detailTplWrapper">
+                     	<span class="faqId" style="display: none;">${faq3Views.questionId}</span>
                         <span class="title">${faq3Views.faqTitle}</span>
                         <span class=""></span>
                         <p class="createInfo clearfix">
                         <#list faq3Views.uList as ulist>
                             <img src="${ulist.userImage}">
+                            <span class="faqUserId" style="display: none;">${ulist.userId}</span>
                             <span class="username">${ulist.userName}</span>
                         </#list>
                         </p>
@@ -206,7 +208,7 @@
 						</#if>
 						<div class="shareBox">
 							<span class="share">收藏：</span>
-							<#if collection gt 0>
+							<#if collection??>
 							<a href="javascript:void(0);" id="favoriteHeart" class="share redheart" onclick="favorite()"></a>
 	                        <#else>
 							<a href="javascript:void(0);" id="favoriteHeart" class="share heart" onclick="favorite()"></a>

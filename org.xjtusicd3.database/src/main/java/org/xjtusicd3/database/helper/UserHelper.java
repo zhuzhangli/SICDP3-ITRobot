@@ -10,23 +10,143 @@ import org.xjtusicd3.database.model.GeneraluserPersistence;
 import org.xjtusicd3.database.model.UserPersistence;
 
 public class UserHelper {
-	/*
-	 * zyq_login_ajax_注册
-	 */
+	//判断用户名是否已存在
+	public static Boolean getUserInfoByName(String name) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
+		Boolean isExist = mapper.getUserInfoByName(name);
+		session.close();
+		return isExist;
+	}
+		
+	//zyq_login_ajax_注册
 	public static void login_register(String userid,String name,String password,int userstate,String createTime,String userimage){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
 		mapper.login_register(userid, name, password, userstate, createTime,userimage);
 		session.close();
 	}
-	//zyq_校验邮箱是否被注册
-	public static List<UserPersistence> getEmail(String useremail){
+	
+	//判断用户是否登录	 
+	public static boolean isLogin(String username, String password) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
-		List<UserPersistence> list = mapper.getEmail(useremail);
+		boolean list = mapper.isLogin(username, password);
 		session.close();
 		return list;
 	}
+	
+	//判断用户是否登录成功	 
+	/*public static List<UserPersistence> isLogin(String username, String password) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
+		List<UserPersistence> list = mapper.isLogin(username, password);
+		session.close();
+		return list;
+	}*/
+	
+	
+	//获取登录用户名	 
+	/*public static List<UserPersistence> getUserListByName(String username) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
+		List<UserPersistence> list = mapper.getUserListByName(username);
+		session.close();
+		return list;
+	}*/
+	
+
+	//zyq_message_ajax_获得用户基本信息
+	public static List<UserPersistence> getUserInfo(String username){
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
+		List<UserPersistence> list = mapper.getUserInfo(username);
+		session.close();
+		return list;
+	}
+	
+	
+	//修改用户信息	 
+	public static void updateUserInfo2(String userid, String usersex, String userbirthday,String address, String userbrief) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
+		mapper.updateUserInfo2(userid,usersex,userbirthday,address,userbrief);
+		session.close();	
+	}
+	
+	
+	//修改密码	 
+	public static void updateUserPassword(String username, String password) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
+		mapper.updateUserPassword(username,password);
+		session.close();	
+	}
+	
+	//通过username找userID
+	public static String getUserIdByName(String username) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
+		String userId = mapper.getUserIdByName(username);
+		session.close();
+		return userId;
+	}
+	
+	//通过用户ID获取到用户信息
+/*	public static List<UserPersistence> getUserInfoById(String UserId){
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
+		List<UserPersistence> list = mapper.getUserInfoById(UserId);
+		session.close();
+		return list;
+	}*/
+	
+	//zzl_通过用户ID获取到用户信息_2017年11月10日11:46:39
+	public static List<UserPersistence> getUserInfoById(String userId) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
+		List<UserPersistence> list = mapper.getUserInfoById(userId);
+		session.close();
+		return list;
+	}
+	
+	//通过用户Id获取用户名
+	public static String getUserNameById(String userId) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
+		String username = mapper.getUserNameById(userId);
+		session.close();
+		return username;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * author:zzl
@@ -50,13 +170,13 @@ public class UserHelper {
 		session.close();
 		return list;
 	}
-	public static List<UserPersistence> getEmail_id(String userid){
+	/*public static List<UserPersistence> getEmail_id(String userid){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
 		List<UserPersistence> list = mapper.getEmail_id(userid);
 		session.close();
 		return list;
-	}
+	}*/
 	public static List<UserPersistence> getEmail2(String useremail,String password){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
@@ -114,22 +234,13 @@ public class UserHelper {
 	
 
 	//zyq_个人密码修改
-	public static void updateUserPassword(String email,String password){
+	/*public static void updateUserPassword(String email,String password){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
 		mapper.updateUserPassword(email,password);
 		session.close();
-	}
-	/*
-	 * zyq_message_ajax_获得用户基本信息
-	 */
-	public static List<UserPersistence> getUserInfo(String username){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
-		List<UserPersistence> list = mapper.getUserInfo(username);
-		session.close();
-		return list;
-	}
+	}*/
+	
 	
 	//zpz_获取用户所有信息
 	public static List<UserPersistence> getAllUserInfo()
@@ -149,16 +260,7 @@ public class UserHelper {
 		mapper.updateUser(userid, username);
 		session.close();
 	}
-	/*
-	 *	通过用户ID获取到用户名 
-	 */
-	public static List<UserPersistence> getUserNameById(String UserId){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
-		List<UserPersistence> list = mapper.getUserNameById(UserId);
-		session.close();
-		return list;
-	}
+	
 	/**
 	 * author:zhaoyanqing
 	 * abstract:注册的用户信息同时添加到普通用户表
@@ -191,18 +293,7 @@ public class UserHelper {
 		session.close();
 	}
 	
-	/**
-	 * author:zzl
-	 * abstract:判断用户是否登录成功
-	 * data:2017年9月21日09:37:13
-	 */
-	public static List<UserPersistence> isLogin(String username, String password) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
-		List<UserPersistence> list = mapper.isLogin(username, password);
-		session.close();
-		return list;
-	}
+
 	
 	/**
 	 * author:zzl
@@ -217,71 +308,15 @@ public class UserHelper {
 		return userId;
 	}
 	
-	/**
-	 * author:zzl
-	 * abstract:获取登录用户名
-	 * data:2017年9月21日10:21:20
-	 */
-	public static List<UserPersistence> getUserNameById2(String nameOrEmail) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
-		List<UserPersistence> list = mapper.getUserNameById2(nameOrEmail);
-		session.close();
-		return list;
-	}
+
 	
-	/**
-	 * author:zzl
-	 * abstract:修改用户信息
-	 * data:2017年9月21日10:21:20
-	 * @param userbrief2 
-	 */
-	public static void updateUserInfo2(String userid, String username,  String useremail,String usersex, String userbirthday,
-			String address, String userbrief) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
-		mapper.updateUserInfo2(userid,username,useremail,usersex,userbirthday,address,userbrief);
-		session.close();	
-	}
+
 	
-	/**
-	 * author:zzl
-	 * abstract:修改密码
-	 * data:2017年9月21日17:45:18
-	 */
-	public static void updateUserPassword2(String username, String password) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
-		mapper.updateUserPassword2(username,password);
-		session.close();
-		
-	}
 	
-	/**
-	 * author:zzl
-	 * abstract:获取登录用户信息
-	 * data:2017年9月26日16:46:27
-	 */
-	public static List<UserPersistence> loginUser(String nameOrEmail, String password) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
-		List<UserPersistence> list = mapper.loginUser(nameOrEmail,password);
-		session.close();
-		return list;
-	}
 	
-	/**
-	 * 
-	 * @param username
-	 * @return
-	 */
-	public static String getUserIdByName(String username) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
-		String userId = mapper.getUserIdByName(username);
-		session.close();
-		return userId;
-	}
+	
+	
+	
 	
 	//获取用户角色名
 	public static String getRoleNameByUserId(String userId) {
@@ -318,14 +353,7 @@ public class UserHelper {
 		session.close();		
 	}
 	
-	//zzl_获取指定用户信息_2017年11月10日11:46:39
-	public static List<UserPersistence> getUserInfoById(String userId) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		UserPersistenceMapper mapper = session.getMapper(UserPersistenceMapper.class);
-		List<UserPersistence> list = mapper.getUserInfoById(userId);
-		session.close();
-		return list;
-	}
+
 	
 	
 	//更新员工角色
@@ -335,6 +363,11 @@ public class UserHelper {
 		mapper.updateUserRole( userId,  roleId);
 		session.close();				
 	}
+
+	
+	
+	
+	
 	
 
 

@@ -80,7 +80,7 @@ public class EventManagerController{
 		Event_AnswerView resolvedEventDetail = EventManagerService.getResolvedEventDetail(q);
 		
 		//获取一级分类名
-		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.classifyName1();
+		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.classifyName();
 		if (classifyPersistences == null || classifyPersistences.size()==0) {
 			return null;
 		}

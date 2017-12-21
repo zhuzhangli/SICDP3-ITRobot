@@ -30,6 +30,17 @@ public class TextSimilarity {
         	double score = scoreImpl(words1, words2);
 		return score;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static double scoreImpl(List<NLP_Word> words1,List<NLP_Word> words2){
 		//用词频来标注词的权重
 		Weight(words1, words2);

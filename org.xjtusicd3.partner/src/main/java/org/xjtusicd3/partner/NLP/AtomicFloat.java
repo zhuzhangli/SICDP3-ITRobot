@@ -9,7 +9,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class AtomicFloat extends Number {
 
-    private AtomicInteger bits;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private AtomicInteger bits;
 
     public AtomicFloat() {
         this(0f);
