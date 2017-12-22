@@ -1,7 +1,6 @@
 package org.xjtusicd3.portal.controller.ITIL;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -10,27 +9,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.xjtusicd3.common.util.JsonUtil;
 import org.xjtusicd3.database.helper.ClassifyHelper;
+import org.xjtusicd3.database.helper.UserHelper;
+import org.xjtusicd3.database.helper.UserQuestionHelper;
 import org.xjtusicd3.database.model.ClassifyPersistence;
 import org.xjtusicd3.portal.service.EventManagerService;
-import org.xjtusicd3.portal.service.UserService;
 import org.xjtusicd3.portal.view.EventView;
 import org.xjtusicd3.portal.view.Event_AnswerView;
+
+import com.alibaba.fastjson.JSONObject;
 
 @Controller
 /**
  * @author zzl
  * @abstract:事件管理_eventPage.ftl
  */
-public class EventManagerController{
-	
+public class EventManagerController{	
 	/*
 	 * 事件管理begin
 	 */
 	/**
-	 * @author zzl
 	 * @abstract:事件管理_eventPage.ftl
-	 * @data:2017年11月4日18:28:03
 	 */
 	@RequestMapping(value="eventPage",method=RequestMethod.GET)
 	public ModelAndView eventPage()
@@ -40,16 +40,55 @@ public class EventManagerController{
 		//待处理事件_只显示满意度表中满意度为0的记录
 		List<EventView> eventUnresolved = EventManagerService.eventUnresolved();
 			
-		// 已处理事件_只显示满意度表中满意度为1的记录
-		List<Event_AnswerView> eventResolved = EventManagerService.eventResolved();		
+				
+		//获取已处理事件总数
+		int eventResolvedCount = UserQuestionHelper.getResolvedCount();
 		
 		mv.addObject("eventUnresolved",eventUnresolved);
-		mv.addObject("eventResolved",eventResolved);
+		//mv.addObject("eventResolved",eventResolved);
 		mv.addObject("UnresolvedCounts", eventUnresolved.size());
-		mv.addObject("ResolvedCounts", eventResolved.size());
+		mv.addObject("ResolvedCounts",eventResolvedCount);
 		
 		return mv;		
 	}
+	
+	
+	
+	
+	@ResponseBody
+	@RequestMapping(value={"/getResolvedEvent"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
+	public String getResolvedEvent(HttpServletRequest request,HttpSession session){			
+		String username = (String) session.getAttribute("UserName");
+		JSONObject jsonObject = new JSONObject();
+		if (username==null) {
+			jsonObject.put("value", "0");
+			String result = JsonUtil.toJsonString(jsonObject); 			
+			return result;
+		}else{
+			// 已处理事件_只显示满意度表中满意度为1的记录
+			List<Event_AnswerView> eventResolved = EventManagerService.eventResolved();			
+			jsonObject.put("eventResolvedView", eventResolved);
+			jsonObject.put("value", "1");
+			String result = JsonUtil.toJsonString(jsonObject);
+			return result;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * @author:zzl

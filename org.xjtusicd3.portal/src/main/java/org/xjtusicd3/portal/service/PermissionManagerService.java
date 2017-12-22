@@ -40,17 +40,35 @@ public class PermissionManagerService
 		return permissionViews;
 	}
 	
-	
 	//增加权限
 	public static void addPermission(String logicName, String physicalName) {
-		String permissionId = UUID.randomUUID().toString();
+		PermissionPersistence permissionPersistence = new PermissionPersistence();
+		permissionPersistence.setPERMISSIONID(UUID.randomUUID().toString());
+		permissionPersistence.setPERMISSIONPHYSICALNAME(physicalName);
+		permissionPersistence.setPERMISSIONLOGICNAME(logicName);
 		
 		Date date=new Date();
     	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     	String time = format.format(date);
-		
-    	PermissionHelper.addPermission(permissionId,physicalName,logicName,time);
+		permissionPersistence.setTIME(time);
+    	PermissionHelper.save(permissionPersistence);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	
 	//更改权限

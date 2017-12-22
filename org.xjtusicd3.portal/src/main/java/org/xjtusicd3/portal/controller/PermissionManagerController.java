@@ -1,7 +1,6 @@
 package org.xjtusicd3.portal.controller;
 
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -39,20 +38,53 @@ public class PermissionManagerController
 		return mv;	 
 	}
 
-	
 	//增加权限
 	@ResponseBody
 	@RequestMapping(value="/addPermission",method=RequestMethod.POST)
-	public String addPermission(HttpServletRequest request,HttpSession session){
-	
-		String logicName = request.getParameter("logicName");
-		String physicalName = request.getParameter("physicalName");
-	
-		//新增权限
-		PermissionManagerService.addPermission(logicName,physicalName);
-		
-		return "1";
+	public String addPermission(HttpServletRequest request,HttpSession session){	
+		String username = (String) session.getAttribute("UserName");	
+		JSONObject jsonObject = new JSONObject();		
+		if (username==null) {
+			jsonObject.put("value", "0");
+			String result = JsonUtil.toJsonString(jsonObject); 			
+			return result;
+		}else{
+			String logicName = request.getParameter("logicName");
+			String physicalName = request.getParameter("physicalName");			
+			//新增权限
+			PermissionManagerService.addPermission(logicName,physicalName);
+			
+			jsonObject.put("value", "1");
+			String result = JsonUtil.toJsonString(jsonObject); 
+			return result;
+		}		
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 		
 	//更改权限信息		

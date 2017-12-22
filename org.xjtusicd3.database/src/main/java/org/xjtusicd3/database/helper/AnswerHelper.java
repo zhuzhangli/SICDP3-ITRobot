@@ -42,8 +42,15 @@ public class AnswerHelper {
 		session.close();
 	}
 	
-	
-	
+	/*********************************************        后台                    ***************************************************************/
+	//获取faqanswerId相对应的内容
+		public static String getContentById(String faqAnswerId) {
+			SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+			AnswerPersistenceMapper mapper  = session.getMapper(AnswerPersistenceMapper.class);
+			String content = mapper.getContentById(faqAnswerId);
+			session.close();
+			return content;
+		}
 	
 	
 	
@@ -77,14 +84,7 @@ public class AnswerHelper {
 		return list;
 	}
 	
-	//获取faqanswerId相对应的内容
-	public static String getContentById(String faqAnswerId) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		AnswerPersistenceMapper mapper  = session.getMapper(AnswerPersistenceMapper.class);
-		String content = mapper.getContentById(faqAnswerId);
-		session.close();
-		return content;
-	}
+	
 	
 	//添加至知识库答案列表
 	public static void insertIntoFaqAnswer(String faqAnswerId, String faqcontent, String questionid, String userid) {

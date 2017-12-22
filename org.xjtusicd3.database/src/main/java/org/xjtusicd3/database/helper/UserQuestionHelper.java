@@ -37,17 +37,6 @@ public class UserQuestionHelper
 	}
 	
 	/**
-	 * 用户满意度问答表
-	 *//*
-	public static void addUserSaticfaction(String robotAnswerId,  String questionId, String answerId,int saticfaction, int questionState) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		RobotAnswerPersistenceMapper mapper = session.getMapper(RobotAnswerPersistenceMapper.class);
-		mapper.addUserSaticfaction(robotAnswerId,saticfaction,questionId,answerId,questionState);
-		session.close();
-		
-	}*/
-	
-	/**
 	 * 用户满意度
 	 */
 	public static void saveSaticfaction(RobotAnswerPersistence robotAnswerPersistence) {
@@ -61,20 +50,7 @@ public class UserQuestionHelper
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/*************************************************	        后台		**************************************************************/
 	/**
 	 * author:zzl
 	 * abstract:获取满意度为0的前台问题
@@ -102,6 +78,18 @@ public class UserQuestionHelper
 	}
 	
 	/**
+	 * 获取已处理事件总数
+	 * @return
+	 */
+	public static int getResolvedCount() {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		UserQuestionPersistenceMapper mapper = session.getMapper(UserQuestionPersistenceMapper.class);
+		int resolvedCount = mapper.getResolvedCount();
+		session.close();
+		return resolvedCount;
+	}
+	
+	/**
 	 * author:zzl
 	 * abstract:获取应答表中问题对应的知识库答案id
 	 * data:2017年11月4日20:54:35
@@ -113,6 +101,24 @@ public class UserQuestionHelper
 		session.close();
 		return faqAnswerId;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	
 	/**
 	 * author:zzl
@@ -209,6 +215,8 @@ public class UserQuestionHelper
 			session.close();
 			return title;
 		}
+
+		
 
 		
 

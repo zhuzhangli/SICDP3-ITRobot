@@ -5,9 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.xjtusicd3.database.logic.SqlSessionManager;
 import org.xjtusicd3.database.mapper.PermissionPersistenceMapper;
-import org.xjtusicd3.database.mapper.RolePermissionPersistenceMapper;
 import org.xjtusicd3.database.model.PermissionPersistence;
-import org.xjtusicd3.database.model.RolePermissionPersistence;
 
 
 public class PermissionHelper
@@ -21,14 +19,36 @@ public class PermissionHelper
 		return list;
 	}
 
-
 	//增加权限
-	public static void addPermission(String permissionId, String physicalName, String logicName, String time) {
+	public static void save(PermissionPersistence permissionPersistence) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		PermissionPersistenceMapper mapper = session.getMapper(PermissionPersistenceMapper.class);
+		mapper.save(permissionPersistence);
+		session.close();		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//增加权限
+/*	public static void addPermission(String permissionId, String physicalName, String logicName, String time) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		PermissionPersistenceMapper mapper = session.getMapper(PermissionPersistenceMapper.class);
 		mapper.addPermission(permissionId, physicalName, logicName, time);
 		session.close();	
-	}
+	}*/
 
 	
 	//更改权限
@@ -68,6 +88,25 @@ public class PermissionHelper
 		session.close();
 		return list;
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 
 
 	

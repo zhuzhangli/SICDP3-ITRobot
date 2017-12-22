@@ -9,26 +9,7 @@ import org.xjtusicd3.database.model.UserQuestionPersistence;
 
 public interface UserQuestionPersistenceMapper extends IBaseDao<UserQuestionPersistence, String>
 {
-	//zzl_记录用户提问记录_2017年10月22日18:43:47
-		/*@Insert("INSERT INTO TBL_UserQuestion(TBL_UserQuestion.USERQUESTIONID,TBL_UserQuestion.QUESTIONTITLE,TBL_UserQuestion.QUESTIONTIME,TBL_UserQuestion.ISFAQ,TBL_UserQuestion.USERID)"
-				+ " VALUES (#{0},#{1},#{2},#{3},#{4})")
-		void addUserQuestion(String userquestionid, String questiontitle, String questiontime, int isFaq,
-				String userid);*/
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//zzl_获取有满意度且满意度为0的前台问题_2017年11月4日20:01:36
+	//zzl_获取有满意度且满意度为0的前台问题_2017年11月4日20:01:36    满意度为0，状态为0
 	@Select("SELECT * FROM TBL_UserQuestion,TBL_RobotAnswer WHERE TBL_UserQuestion.USERQUESTIONID = TBL_RobotAnswer.USERQUESTIONID AND TBL_RobotAnswer.SATICFACTION = 0 AND TBL_RobotAnswer.QUESTIONSTATE = 0 ORDER BY TBL_UserQuestion.QUESTIONTIME DESC")
 	List<UserQuestionPersistence> unResolvedEvent();
 	
@@ -36,9 +17,28 @@ public interface UserQuestionPersistenceMapper extends IBaseDao<UserQuestionPers
 	@Select("SELECT * FROM TBL_UserQuestion,TBL_RobotAnswer WHERE TBL_UserQuestion.USERQUESTIONID = TBL_RobotAnswer.USERQUESTIONID AND TBL_RobotAnswer.SATICFACTION = 1 AND TBL_RobotAnswer.QUESTIONSTATE = 0 ORDER BY TBL_UserQuestion.QUESTIONTIME DESC")
 	List<UserQuestionPersistence> resolvedEvent();
 	
+	//获取已处理事件总数
+	@Select("SELECT COUNT(1) FROM TBL_UserQuestion,TBL_RobotAnswer WHERE TBL_UserQuestion.USERQUESTIONID = TBL_RobotAnswer.USERQUESTIONID AND TBL_RobotAnswer.SATICFACTION = 1 AND TBL_RobotAnswer.QUESTIONSTATE = 0")
+	int getResolvedCount();
+	
 	//zzl_获取应答表中问题对应的知识库答案id_2017年11月4日21:31:49
 	@Select("SELECT FAQANSWERID FROM TBL_RobotAnswer WHERE USERQUESTIONID=#{0} ")
 	String getFaqAnswerIdByQuestionId(String userQuestionId);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//zzl _获取用户问题信息_2017年11月4日21:32:11
 	@Select("SELECT * FROM TBL_UserQuestion WHERE USERQUESTIONID=#{0}")
@@ -90,6 +90,22 @@ public interface UserQuestionPersistenceMapper extends IBaseDao<UserQuestionPers
 		//查看用户提问问题标题
 		@Select("SELECT QUESTIONTITLE FROM TBL_UserQuestion WHERE USERQUESTIONID=#{0} ")
 		String getNameById(String questionId);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
 		
 		
 

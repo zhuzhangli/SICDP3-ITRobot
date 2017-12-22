@@ -18,8 +18,10 @@ public interface AnswerPersistenceMapper extends IBaseDao<AnswerPersistence, Str
 	public String findUserIdByFAQQuestionId(String faqquestionid);
 	
 	
-	
-	
+	/*********************************************        后台                    ***************************************************************/
+	//获取faqanswerId相对应的内容
+	@Select("SELECT FAQCONTENT FROM TBL_FAQanswer WHERE FAQANSWERID=#{0}")
+	public String getContentById(String faqAnswerId);
 	
 	
 	
@@ -53,9 +55,7 @@ public interface AnswerPersistenceMapper extends IBaseDao<AnswerPersistence, Str
 	@Select("SELECT * FROM TBL_FAQanswer WHERE USERID=#{0}")
 	public List<AnswerPersistence> notice_faqanswerList(String userId);
 	
-	//获取faqanswerId相对应的内容
-	@Select("SELECT FAQCONTENT FROM TBL_FAQanswer WHERE FAQANSWERID=#{0}")
-	public String getContentById(String faqAnswerId);
+	
 	
 	
 	//添加至知识库答案列表

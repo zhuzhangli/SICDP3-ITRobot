@@ -3,21 +3,36 @@ package org.xjtusicd3.database.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.xjtusicd3.database.logic.IBaseDao;
 import org.xjtusicd3.database.model.PermissionPersistence;
 
-public interface PermissionPersistenceMapper
+public interface PermissionPersistenceMapper extends IBaseDao<PermissionPersistence, String>
 {
 	//获取所有权限
 	@Select("SELECT * FROM TBL_Permission ORDER BY TIME DESC")
 	public List<PermissionPersistence> getAllPermission();
 	
-		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	//增加权限
-	@Insert("INSERT INTO TBL_Permission  VALUES (#{0},#{1},#{2},#{3})")
-	public void addPermission(String permissionId, String physicalName, String logicName, String time);
+	/*@Insert("INSERT INTO TBL_Permission  VALUES (#{0},#{1},#{2},#{3})")
+	public void addPermission(String permissionId, String physicalName, String logicName, String time);*/
 
 
 	//更改权限

@@ -30,7 +30,7 @@
        <table class="table table-striped table-bordered table-hover dataTables-example"> 
         <thead> 
          <tr> 
-          <th style="text-align: center;">权限编号</th> 
+          <th style="text-align: center;">编号</th> 
           <th style="text-align: center;">权限逻辑名：汉字</th> 
           <th style="text-align: center;">权限物理名</th> 
           <th style="text-align: center;">最新修改时间</th> 
@@ -41,9 +41,9 @@
         <tbody>
          <#list permissionList as a>
          <tr class="gradeX" id=""> 
-          <td style="text-align: center;width: 6%">${a_index+1 }</td> 
-          <td style="text-align: center;width: 38%" id="editLogicName${a.permissionId }">${a.permissionLogicName }</td> 
-          <td style="text-align: center;width: 38%" id="editPhysicalName${a.permissionId }">${a.permissionPhysicalName }</td>
+          <td style="text-align: center;width: 4%">${a_index+1 }</td> 
+          <td style="text-align: center;width: 39%" id="editLogicName${a.permissionId }">${a.permissionLogicName }</td> 
+          <td style="text-align: center;width: 39%" id="editPhysicalName${a.permissionId }">${a.permissionPhysicalName }</td>
           <td style="text-align: center;width: 10%">${a.time }</td> 
           <td style="text-align: center;width: 8%" id=""> 
           	<button class="btn btn-white btn-sm" type="button" id="${a.permissionId }" onclick="editPermission(this.id)" title="编辑" data-toggle="modal" data-target="#myModalEdit" physicalName=""><i class="glyphicon glyphicon-pencil"></i></button> 
@@ -149,6 +149,9 @@
   <!-- 自定义js --> 
   <script src="js/content.js?v=1.0.0"></script> 
   <!-- Page-Level Scripts --> 
+ 
+  <script src="js/view/permissionPage.js"></script> 
+  
   <script>
         $(document).ready(function () {
             $('.dataTables-example').dataTable();
@@ -181,101 +184,6 @@
                 "New row",
                 "New row"]);
         }
-    </script> 
-    <script>
-	
-		/* 增加权限 */      
-	    function addPermission() {  
-	        //获取模态框数据  
-	        var logicName = $('#addLogicName').val();  
-	        //alert(logicName);
-	        var physicalName = $('#addPhysicalName').val();  
-	       // alert(physicalName);
-	        $.ajax({
-	            type: "POST",
-	            url: "/org.xjtusicd3.portal/addPermission.html",
-	            data: {
-	                "logicName":logicName,
-	                "physicalName":physicalName
-	            },
-	            dataType: "json",
-	            success: function(data) {
-	            	alert("添加成功");
-	            	window.location.reload();
-	            }
-	           
-	        }) 
-	    }   
-    
-		
-		
-		/* 获取要编辑的权限信息 */
-	    function editPermission(id) {
-	    	//获取权限ID
-	    	var permissionId = document.getElementById(id).id;
-	    	//alert(permissionId);
-	    	
-	    	//获取权限逻辑名
-	    	var editLogicName = document.getElementById("editLogicName"+permissionId).innerText;
-	    	//alert(editLogicName)
-	    	
-	    	//获取权限物理名
-	    	var editPhysicalName = document.getElementById("editPhysicalName"+permissionId).innerText;
-	    	//alert(editPhysicalName)
-	    	
-	    	$("#editPermissionId").val(permissionId); 
-	    	$("#editLogicName").val(editLogicName);
-	    	$("#editPhysicalName").val(editPhysicalName);
-	     }
-		
-
-		
-		/* 提交更改  */ 
-	    function update() {  
-	        //获取模态框数据  
-	        var permissionId = $('#editPermissionId').val();  
-	        //alert(permissionId);
-	        var logicName = $('#editLogicName').val(); 
-	        //alert(logicName);
-	        var physicalName = $('#editPhysicalName').val();
-	        //alert(physicalName);
-
-	        $.ajax({
-	            type: "POST",
-	            url: "/org.xjtusicd3.portal/updatePermission.html",
-	            data: {
-	                "permissionId":permissionId,
-	                "logicName":logicName,
-	                "physicalName":physicalName
-	            },
-	            dataType: "json",
-	            success: function(data) {
-	            	alert("更改成功");
-	            	window.location.reload();
-	            }
-	           
-	        }) 	        
-	    }  
-		
-		/* 删除权限 */
-		function deletePermission(id){  
-	        //获取模态框数据  
-	        var permissionId = document.getElementById(id).id; 	       
-
-	        $.ajax({
-	            type: "POST",
-	            url: "/org.xjtusicd3.portal/deletePermission.html",
-	            data: {
-	                "permissionId":permissionId
-	            },
-	            dataType: "json",
-	            success: function(data) {
-	            	alert("删除成功");
-	            	window.location.reload();
-	            }
-	           
-	        }) 	        
-	    }  
-	</script>  
+    </script>  
  </body>
 </html>

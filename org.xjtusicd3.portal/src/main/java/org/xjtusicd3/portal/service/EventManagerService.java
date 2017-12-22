@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.xjtusicd3.database.helper.AnswerHelper;
-import org.xjtusicd3.database.helper.RobotHelper;
 import org.xjtusicd3.database.helper.UserHelper;
 import org.xjtusicd3.database.helper.UserQuestionHelper;
 import org.xjtusicd3.database.model.UserPersistence;
@@ -28,15 +27,14 @@ public class EventManagerService {
 		for(UserQuestionPersistence userQuestionPersistence:userQuestionPersistences){
 			EventView eventView = new EventView();			
 			eventView.setUserQuestionTitle(userQuestionPersistence.getQUESTIONTITLE());
-			List<UserPersistence> list = UserHelper.getUserInfoById(userQuestionPersistence.getUSERID());				
-			eventView.setUserName(list.get(0).getUSERNAME());
+			String username = UserHelper.getUserNameById(userQuestionPersistence.getUSERID());			
+			eventView.setUserName(username);
 			eventView.setUserQuestionTime(userQuestionPersistence.getQUESTIONTIME());
 			eventView.setUserQuestionId(userQuestionPersistence.getUSERQUESTIONID());
 			eventUnresolved.add(eventView);
 		}
 		return eventUnresolved;
 	}
-	
 	
 	/**
 	 * author:zzl
@@ -51,25 +49,54 @@ public class EventManagerService {
 		List<UserQuestionPersistence> userQuestionPersistences = UserQuestionHelper.resolvedEvent();
 		
 		for(UserQuestionPersistence userQuestionPersistence:userQuestionPersistences){
-			Event_AnswerView eventView = new Event_AnswerView();
-			
+			Event_AnswerView eventView = new Event_AnswerView();			
 			eventView.setQUESTIONTITLE(userQuestionPersistence.getQUESTIONTITLE());
-			List<UserPersistence> list = UserHelper.getUserInfoById(userQuestionPersistence.getUSERID());				
-			eventView.setUSERNAME(list.get(0).getUSERNAME());
+			String username = UserHelper.getUserNameById(userQuestionPersistence.getUSERID());			
+			eventView.setUSERNAME(username);
 			eventView.setQUESTIONTIME(userQuestionPersistence.getQUESTIONTIME());
-			eventView.setUSERQUESTIONID(userQuestionPersistence.getUSERQUESTIONID());
-						
+			eventView.setUSERQUESTIONID(userQuestionPersistence.getUSERQUESTIONID());			
 			//获取应答表中问题对应的知识库答案id
-			String faqAnswerId = UserQuestionHelper.getFaqAnswerIdByQuestionId(userQuestionPersistence.getUSERQUESTIONID());
-			
+			String faqAnswerId = UserQuestionHelper.getFaqAnswerIdByQuestionId(userQuestionPersistence.getUSERQUESTIONID());			
 			//获取faqanswerId相对应的内容
 			String faqContent = AnswerHelper.getContentById(faqAnswerId);
+			eventView.setFAQANSWERID(faqAnswerId);
 			eventView.setFAQANSWER(faqContent);			
 			eventResolved.add(eventView);								
 		}
 		return eventResolved;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * author:zzl
 	 * abstract:事件待处理_查看事件详情
@@ -134,6 +161,9 @@ public class EventManagerService {
 		UserQuestionHelper.updateRobotAnswerState(userQuestionId, questionState);
 		
 	}
+
+
+	
 	
 	
 	

@@ -10,9 +10,15 @@ public class Event_AnswerView {
 	private String USERNAME;
 	
 	//答案
+	private String FAQANSWERID;
 	private String FAQANSWER;
-	
 		
+	public String getFAQANSWERID() {
+		return FAQANSWERID;
+	}
+	public void setFAQANSWERID(String fAQANSWERID) {
+		FAQANSWERID = fAQANSWERID;
+	}
 	public String getFAQANSWER() {
 		return FAQANSWER;
 	}
