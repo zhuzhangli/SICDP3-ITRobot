@@ -18,7 +18,6 @@ public class ComputerHelper {
 		
 	}
 	
-	
 	//插入信息
 	public static void addUserEquipment(String equipmentId, String graphicCard, String audioCard,
 			String networkCard, String motherboard, String oSName, String oSID) {
@@ -27,7 +26,6 @@ public class ComputerHelper {
 		mapper.addUserEquipment( equipmentId,  graphicCard,  audioCard,networkCard,  motherboard,  oSName,  oSID);
 		session.close();		
 	}
-	
 	
 	//更新计算机信息
 	public static void updateComputerInfo(String equipmentId, String graphicCard, String audioCard,
@@ -38,38 +36,4 @@ public class ComputerHelper {
 		session.close();		
 	}
 
-	
-	
-	
-	
-	
-	
-	//zpz_get computer information
-		public static List<ComputerPersistence> getComputer()
-		{
-			SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-			ComputerPersistenceMapper mapper = session.getMapper(ComputerPersistenceMapper.class);
-			List<ComputerPersistence> computerlist = mapper.getComputer();
-			session.close();
-			return computerlist;
-			
-
-		}
-
-		
-		
-
-
-
-
-
-
-
-
-
-
-
-		
-		
-	
 }

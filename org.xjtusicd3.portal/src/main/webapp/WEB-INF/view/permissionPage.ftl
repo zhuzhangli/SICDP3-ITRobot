@@ -57,7 +57,7 @@
       </div> 
       
       <!-- 新增_模态框（Modal） --> 
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> 
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;"> 
        <div class="modal-dialog"> 
         <div class="modal-content" style="vertical-align: middle;margin-top: 100px"> 
          <div class="modal-header"> 
@@ -139,6 +139,9 @@
     </div> 
    </div> 
   </div> 
+  
+  <div id="lasturl" style="display:none"></div>
+  
   <!-- 全局js --> 
   <script src="js/jquery.min.js?v=2.1.4"></script> 
   <script src="js/bootstrap.min.js?v=3.3.6"></script> 
@@ -185,5 +188,9 @@
                 "New row"]);
         }
     </script>  
+    <div class="success" id="success" style="z-index:1001;position:fixed;top:40%;left:45%;width:220px;background: #f3f3f3;text-align: center;border:1px solid black;border-radius:3px;display:none"><div style="margin-top:30px; margin-bottom:30px;"><img src="images/true.png" style="width:20px;height:20px;margin-right:10px;"><h2 style="font-size:16px;display:inline-block;line-height:22px;vertical-align:top">提交成功</h2></div></div>
+	<div class="success" id="chongfu" style="z-index:1001;position:fixed;top:40%;left:45%;width:220px;background: #f3f3f3;text-align: center;border:1px solid black;border-radius:3px;display:none"><div style="margin-top:30px; margin-bottom:30px;"><img src="images/cuo.png" style="width:20px;height:20px;margin-right:10px;"><h2 style="font-size:16px;display:inline-block;line-height:22px;vertical-align:top">物理名重复提交</h2></div></div>
+	<div class="success" id="chongfu2" style="z-index:1001;position:fixed;top:40%;left:45%;width:220px;background: #f3f3f3;text-align: center;border:1px solid black;border-radius:3px;display:none"><div style="margin-top:30px; margin-bottom:30px;"><img src="images/cuo.png" style="width:20px;height:20px;margin-right:10px;"><h2 style="font-size:16px;display:inline-block;line-height:22px;vertical-align:top">逻辑名重复提交</h2></div></div>
+    <div class="success" id="chongfu3" style="z-index:1001;position:fixed;top:40%;left:45%;width:220px;background: #f3f3f3;text-align: center;border:1px solid black;border-radius:3px;display:none"><div style="margin-top:30px; margin-bottom:30px;"><img src="images/cuo.png" style="width:20px;height:20px;margin-right:10px;"><h2 style="font-size:16px;display:inline-block;line-height:22px;vertical-align:top">请勿重复提交</h2></div></div>
  </body>
 </html>

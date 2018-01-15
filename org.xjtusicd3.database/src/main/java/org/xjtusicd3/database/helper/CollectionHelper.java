@@ -7,15 +7,11 @@ import java.util.UUID;
 import org.apache.ibatis.session.SqlSession;
 import org.xjtusicd3.database.logic.SqlSessionManager;
 import org.xjtusicd3.database.mapper.CollectionPersistenceMapper;
-import org.xjtusicd3.database.model.AnswerPersistence;
 import org.xjtusicd3.database.model.CollectionPersistence;
-import org.xjtusicd3.database.model.UserPersistence;
 
 public class CollectionHelper {
 	/**
-	 * author:zzl
 	 * abstract:question2_收藏
-	 * data:2017年9月22日15:06:43
 	 */
 	public static String getCollection(String username,String answerId){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -50,7 +46,7 @@ public class CollectionHelper {
 	    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    String time = format.format(date);
 	    //判断是否为自己收藏
-	    String communityAnswerUserId = CommunityAnswerHelper.findUserIdByCommunityQuestionId(communityanswerId);
+	    String communityAnswerUserId = CommunityAnswerHelper.getUserIdByAnswerId(communityanswerId);
 	    int isnotice = 0;
 	    if(userId.equals(communityAnswerUserId)){
 	    	isnotice = 0;
@@ -125,61 +121,5 @@ public class CollectionHelper {
 		List<CollectionPersistence> list = mapper.personal2_PayCommunity_Limit(userId,startNumber,number);
 		session.close();
 		return list;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	 * zyq_personal2_ajax_获取收藏根据Id
-	 */
-	public static List<CollectionPersistence> getCollectionFaqList(String faqId) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		CollectionPersistenceMapper mapper = session.getMapper(CollectionPersistenceMapper.class);
-		List<CollectionPersistence> list = mapper.getCollectionFaqList(faqId);
-		session.close();
-		return list;
-	}
-
-	
-	/**
-	 * author:zzl
-	 * abstract:获取faq收藏数
-	 * data:2017年9月15日19:53:58
-	 */
-	public static List<CollectionPersistence> agreeInfo(String faqquestionid) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		CollectionPersistenceMapper mapper = session.getMapper(CollectionPersistenceMapper.class);
-		List<CollectionPersistence> list = mapper.agreeInfo(faqquestionid);
-		session.close();
-		return list;
-	}
-
-
-	
-	
-	
+	}	
 }

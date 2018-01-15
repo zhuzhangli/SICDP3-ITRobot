@@ -21,9 +21,8 @@ import us.codecraft.webmagic.selector.JsonPathSelector;
 
 public class FAQSpider implements PageProcessor {
 
-    private Site site = Site.me().setRetryTimes(3).setSleepTime(1000);
-    
-    private static final String ARITICALE_URL = "http://iknow.lenovo\\.com/doc/topicData/\\w+";
+    private Site site = Site.me().setRetryTimes(3).setSleepTime(1000);   
+   // private static final String ARITICALE_URL = "http://iknow.lenovo\\.com/doc/topicData/\\w+";
     private static final String LIST_URL = "http://iknow.lenovo\\.com/doc/topicData.*";
     @Override
     public void process(Page page) {
@@ -71,11 +70,6 @@ public class FAQSpider implements PageProcessor {
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-//        			System.out.println("title:"+title.get(i));
-//        			System.out.println("description:"+description.get(i));
-//        			System.out.println("classify:"+new JsonPathSelector("$.Category[*].subName").select(page.getRawText()));
-//        			System.out.println("keywords:"+keywords.get(i));
-//        			System.out.println("content:"+content.get(i));
 				}
 			}
         }

@@ -1,7 +1,6 @@
 package org.xjtusicd3.partner.filter;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +17,6 @@ import net.sf.json.JSONObject;
 @ServerEndpoint("/websocketserver")
 public class Websocketserver {
 	private static Map<String, Websocketserver> online = new HashMap<String, Websocketserver>();
-	private static int count = 0;
 	private Session session;
 	private String useremail;
 
@@ -100,28 +98,6 @@ public class Websocketserver {
 	public void sendMessage(String message, Session session) throws IOException {
 		System.out.println("发送消息");
 		session.getBasicRemote().sendText(message);
-	}
-
-	/**
-	 * @return 获取当前在线人数
-	 */
-	private int getcount() {
-		// TODO Auto-generated method stub
-		return this.count;
-	}
-
-	/**
-	 * 当前在线人数加一
-	 */
-	private void addcount() {
-		this.count += 1;
-	}
-
-	/**
-	 * 当前在线人数减一
-	 */
-	private void subcount() {
-		this.count -= 1;
 	}
 
 	public Session getSession() {

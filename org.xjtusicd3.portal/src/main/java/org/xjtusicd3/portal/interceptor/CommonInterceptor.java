@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.xjtusicd3.database.helper.RoleHelper;
@@ -16,7 +15,6 @@ import org.xjtusicd3.database.helper.RolePermissionHelper;
 import org.xjtusicd3.database.model.PermissionPersistence;
 import org.xjtusicd3.database.model.RolePersistence;
 import org.xjtusicd3.database.model.UserPersistence;
-import org.xjtusicd3.portal.service.LogService;
 
 /**
  * 

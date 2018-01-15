@@ -11,12 +11,8 @@ import java.net.URL;
 public class DownLoadFromUrl {
     /** 
      * 从网络Url中下载文件 
-     * @param urlStr 
-     * @param fileName 
-     * @param savePath 
-     * @throws IOException 
      */  
-    public static void  downLoadFromUrl(String urlStr,String fileName,String savePath) throws IOException{  
+    public void  downLoadFromUrl(String urlStr,String fileName,String savePath) throws IOException{  
         URL url = new URL(urlStr);    
         HttpURLConnection conn = (HttpURLConnection)url.openConnection();    
         //设置超时间为3秒  

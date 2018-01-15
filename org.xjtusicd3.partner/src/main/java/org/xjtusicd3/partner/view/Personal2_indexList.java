@@ -20,8 +20,6 @@ public class Personal2_indexList {
 	private String from;
 	private String fromImage;
 	
-	
-	
 	public String getFromImage() {
 		return fromImage;
 	}

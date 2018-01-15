@@ -56,10 +56,6 @@ public class ShareHelper {
 	
 	/**
 	 * 查看用户分享的FAQ信息
-	 * @param userId
-	 * @param startNumber
-	 * @param number
-	 * @return
 	 */
 	public static List<SharePersistence> getShareList_FAQ_Limit(String userId,int startNumber,int number){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -82,10 +78,6 @@ public class ShareHelper {
 	
 	/**
 	 * 查看用户分享的Community信息
-	 * @param userId
-	 * @param startNumber
-	 * @param number
-	 * @return
 	 */
 	public static List<SharePersistence> getShareList_community_Limit(String userId,int startNumber,int number){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -105,53 +97,5 @@ public class ShareHelper {
 		session.close();
 		return list;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	 * zyq_personal2_个人信息页面_查看分享的List
-	 */
-	public static List<SharePersistence> getShareList(String userId){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		SharePersistenceMapper mapper = session.getMapper(SharePersistenceMapper.class);
-		List<SharePersistence> list = mapper.getShareList(userId);
-		session.close();
-		return list;
-	}
-	
-	/*
-	 * zyq_personal2_个人信息_查看关注人推荐的FAQ
-	 */
-	public static List<SharePersistence> getShareList_FAQ(String userId){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		SharePersistenceMapper mapper = session.getMapper(SharePersistenceMapper.class);
-		List<SharePersistence> list = mapper.getShareList_FAQ(userId);
-		session.close();
-		return list;
-	}
-	
-	
-	/*
-	 * zyq_personal2_个人信息_查看关注人推荐的communityQuestion
-	 */
-	public static List<SharePersistence> getShareList_community(String userId){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		SharePersistenceMapper mapper = session.getMapper(SharePersistenceMapper.class);
-		List<SharePersistence> list = mapper.getShareList_community(userId);
-		session.close();
-		return list;
-	}
 
-	
 }

@@ -239,7 +239,7 @@ public class CommunityController {
 		List<Question2_CommunityView> question2_CommunityViews2 = CommunityService.question2_CommunityViews_other(username,q,startNumber);
 		
 		//该问题评论总个数
-		int communityAnswerSize = CommunityAnswerHelper.question_CommunityAnswerSize(q);
+		int communityAnswerSize = CommunityAnswerHelper.question_CommunityAnswerCount(q);
 
 		
 		mv.addObject("userList", userPersistences);
@@ -334,7 +334,7 @@ public class CommunityController {
 			String result = JsonUtil.toJsonString(jsonObject); 
 			return result;
 		}else{
-			List<AnswerPersistence> answerPersistences = AnswerHelper.faq3_faqContent(questionId);
+			List<AnswerPersistence> answerPersistences = AnswerHelper.getAnswerByQuestionId(questionId);
 			List<Question2_CommunityView> question2_CommunityViews = CommunityService.question2_CommunityViews_other(username, questionId, startnumber);
 			jsonObject.put("value", "1");
 			jsonObject.put("endnumber", startnumber+question2_CommunityViews.size());

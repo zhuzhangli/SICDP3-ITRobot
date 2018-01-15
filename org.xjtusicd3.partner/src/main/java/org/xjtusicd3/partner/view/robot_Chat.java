@@ -8,8 +8,6 @@ public class robot_Chat {
 	private double value;
 	
 	private String answerId;
-	
-	
 	public String getAnswerId() {
 		return answerId;
 	}

@@ -70,12 +70,17 @@
                       <span class="nav-label">变更管理</span>
                   </a>
               </li>
-             
+              
               <li>
-                  <a class="J_menuItem" href="faqPage.html">
-                      <i class="fa fa-table"></i>
-                      <span class="nav-label">知识管理</span>
+                  <a  href="">
+                  	<i class="fa fa-edit"></i>&nbsp;知识管理<span class="fa arrow"></span>
                   </a>
+				  <ul class="nav nav-third-level">
+                      <li><a class="J_menuItem" href="faqPage.html">知识库</a></li>
+
+                      <li><a class="J_menuItem" href="faqCommendPage.html">faq推荐栏</a></li>
+                      
+                  </ul>
               </li>
           </ul>
 
@@ -107,12 +112,35 @@
              <span class="ng-scope"></span>
          </li>
 
-         <li>
+		<li>
+		 <a href="">
+            <i class="fa fa-rebel"></i>
+            <span class="nav-label">用户管理</span>
+            <span class="fa arrow"></span>
+         </a>
+         <ul class="nav nav-second-level">
+            <li>
+                <a class="J_menuItem" href="userPage.html">
+                    <i class="fa fa-table"></i>
+                    <span class="nav-label">用户管理</span>
+                </a>
+            </li>
+
+            <li>
+                <a class="J_menuItem" href="resetPassPage.html">
+                    <i class="fa fa-warning"></i>
+                    <span class="nav-label">密码重置</span>
+                </a>
+            </li>
+	    </ul>
+		</li>
+
+        <!--  <li>
              <a class="J_menuItem" href="userPage.html">
                  <i class="fa fa-user-plus"></i>
                  <span class="nav-label">用户管理</span>
              </a>
-         </li>
+         </li> -->
         
          <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
              <span class="ng-scope"></span>

@@ -5,16 +5,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.springframework.web.servlet.mvc.multiaction.InternalPathMethodNameResolver;
-import org.springframework.web.servlet.mvc.multiaction.MethodNameResolver;
 
 public class AuthorityInterceptor extends HandlerInterceptorAdapter
 {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception
 	{
-		String user = (String)request.getSession().getAttribute("user");
-//		 MethodNameResolver methodNameResolver = new InternalPathMethodNameResolver();
+		//		 MethodNameResolver methodNameResolver = new InternalPathMethodNameResolver();
 //	     String    method = methodNameResolver.getHandlerMethodName(request);
 		System.out.println("进入拦截器了o adf，当前用户是：" + request.getSession().getAttribute("user") + " ，当前uri是：" );
 		 
@@ -26,9 +23,6 @@ public class AuthorityInterceptor extends HandlerInterceptorAdapter
 //            return false;
 //        }
 
-        // 3. 得到用户想访问的资源
-        String uri = request.getRequestURI();
-       
         System.out.println("当前uri是：" + request.getRequestURI());
         System.out.println("当前uri是：" + request.getContextPath());
         return super.preHandle(request, response, handler);

@@ -55,8 +55,7 @@ public class CommentController {
 			}else {
 				AgreeHelper.deleteAgree(agreeId);
 				jsonObject.put("value", "2");
-				String result = JsonUtil.toJsonString(jsonObject); 
-				return result;
+				return JsonUtil.toJsonString(jsonObject);
 			}
 		}
 	}
@@ -424,117 +423,4 @@ public class CommentController {
 			return result;
 		}
 	}
-
-	/*
-	 * zyq_question_ajax_添加评论
-	 */
-	/*@ResponseBody
-	@RequestMapping(value={"/addComment"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/html;charset=UTF-8")
-	@SystemControllerLog(description = "社区问题添加评论")
-	public String addComment(HttpServletRequest request,HttpServletResponse response,HttpSession session){
-		long startTime = System.currentTimeMillis();//计算开始日期
-		String path = request.getServletPath();	
-		
-		String username = (String) session.getAttribute("UserName"); 
-		String url = (String) session.getAttribute("urlPath");
-		String questionId = request.getParameter("questionId");
-		String commentContent = request.getParameter("commentContent");
-		JSONObject jsonObject = new JSONObject();
-		if (username==null) {
-			jsonObject.put("value", "0");
-			String result = JsonUtil.toJsonString(jsonObject); 
-			long executionTime = System.currentTimeMillis() - startTime;
-			
-			//记录运行时间
-			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-			
-			return result;
-		}else {
-			//判断评论是否重复提交
-			List<UserPersistence> userPersistences = UserHelper.getUserInfo(username); 
-			String commentIsExist = CommunityAnswerHelper.question_IsCommunityAnswer(userPersistences.get(0).getUSERID(), commentContent,questionId);
-			if (commentIsExist==null) {
-				CommunityService.addComment(userPersistences.get(0).getUSERID(), commentContent, questionId);
-				jsonObject.put("value", "1");
-				jsonObject.put("url",url);
-				String result = JsonUtil.toJsonString(jsonObject); 
-				
-				long executionTime = System.currentTimeMillis() - startTime;
-				
-				//记录运行时间
-				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-				return result;
-				
-			}else{
-				jsonObject.put("value", "2");
-				jsonObject.put("url",url);
-				String result = JsonUtil.toJsonString(jsonObject); 
-				
-				long executionTime = System.currentTimeMillis() - startTime;
-				
-				//记录运行时间
-				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-				return result;
-			}
-		}
-	}
-*/
-	/*
-	 * zyq_question2_ajax_添加评论的回复的回复
-	 */
-	/*@ResponseBody
-	@RequestMapping(value={"/saveCommunityReply"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/html;charset=UTF-8")
-	@SystemControllerLog(description = "社区问题添加评论的回复的回复")
-	public String saveCommunityReply(HttpServletRequest request,HttpSession session){
-		long startTime = System.currentTimeMillis();//计算开始日期
-		String path = request.getServletPath();	
-		
-		String username = (String) session.getAttribute("UserName"); 		
-		String questionId = request.getParameter("questionId");
-		String answerId = request.getParameter("answerId");
-		String content = request.getParameter("content");
-		String toUserName = request.getParameter("tousername");
-		JSONObject jsonObject = new JSONObject();
-		if (username==null) {
-			jsonObject.put("value", "0");
-			String result = JsonUtil.toJsonString(jsonObject); 
-			
-			long executionTime = System.currentTimeMillis() - startTime;
-			
-			//记录运行时间
-			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-			
-			return result;
-		}else {
-			List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
-			//判断回复的回复是否重复提交
-			List<UserPersistence> userPersistences2 = UserHelper.getEmail_name(toUserName);
-			List<CommentPersistence> commentPersistences = CommentHelper.question2_getComment3(answerId, userPersistences.get(0).getUSERID(), content,questionId,userPersistences2.get(0).getUSERID());
-			if (commentPersistences.size()==0) {
-				CommentService.saveCommunityReply(userPersistences.get(0).getUSERID(), questionId, content, answerId,userPersistences2.get(0).getUSERID());
-				jsonObject.put("value", "1");
-				String result = JsonUtil.toJsonString(jsonObject); 
-				
-				long executionTime = System.currentTimeMillis() - startTime;
-				
-				//记录运行时间
-				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-				
-				return result;
-				
-			}else{
-				jsonObject.put("value", "2");
-				String result = JsonUtil.toJsonString(jsonObject); 
-				
-				long executionTime = System.currentTimeMillis() - startTime;
-				
-				//记录运行时间
-				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-				
-				return result;
-			}
-		}
-	}
-	*/
-
 }

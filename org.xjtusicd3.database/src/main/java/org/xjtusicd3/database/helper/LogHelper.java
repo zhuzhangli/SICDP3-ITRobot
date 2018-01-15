@@ -12,7 +12,6 @@ public class LogHelper
 {
 	/**
 	 * 保存日志
-	 * @param myLog
 	 */
 	public static void insertLog(LogPersistence myLog) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -23,10 +22,7 @@ public class LogHelper
 	}
 	
 	/**
-	 * author:zzl
 	 * abstract:获取用户日志
-	 * data:2017年9月15日09:16:32
-	 * @param userid 
 	 */
 	public static List<LogPersistence> getLogs(String userid) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -36,29 +32,7 @@ public class LogHelper
 		return log;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
+	/**
 	 * zpz_get information of advise
 	 */
 	public static List<LogPersistence> getLog()
@@ -70,5 +44,4 @@ public class LogHelper
 		return log;
 		
 	}
-
 }

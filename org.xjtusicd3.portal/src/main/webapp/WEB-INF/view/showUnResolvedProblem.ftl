@@ -32,7 +32,7 @@
                         <h5>问题信息</h5>
                          
                     </div>
-                    <div class="ibox-content">
+                    <div class="ibox-content" style="padding-bottom: 50px">
                         <form method="get" class="form-horizontal">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">问题标题</label>
@@ -79,12 +79,13 @@
                             </div>
                             <div class="hr-line-dashed"></div>
                         
-                            <div class="form-group">
-                                <div class="col-sm-4 col-sm-offset-2">
-                                    <button class="btn btn-primary" ><a href="/org.xjtusicd3.portal/problemPage.html">返回</a></button>                                    
-                                </div>
-                            </div>
                         </form>
+                        
+
+                         <div class="col-sm-4 col-sm-offset-2">
+                             <button class="btn btn-primary" onclick="window.history.back(-1)">返回</button>                                   
+                         </div>
+
                     </div>
 					
                 </div>

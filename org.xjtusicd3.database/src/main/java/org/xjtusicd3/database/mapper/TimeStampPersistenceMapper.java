@@ -8,5 +8,4 @@ public interface TimeStampPersistenceMapper extends IBaseDao<TimeStampPersistenc
 	//记录运行时间
 	@Insert("INSERT INTO TBL_TIMESTAMP VALUES(#{0},#{1},#{2},#{3})")
 	void addTimeStamp(String timeId, String path, long executionTime, long startTime);
-
 }

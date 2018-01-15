@@ -2,19 +2,15 @@ package org.xjtusicd3.database.helper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 import org.apache.ibatis.session.SqlSession;
 import org.xjtusicd3.database.logic.SqlSessionManager;
 import org.xjtusicd3.database.mapper.AgreePersistenceMapper;
-import org.xjtusicd3.database.model.AgreePersistence;
 
 public class AgreeHelper {
 	/**
-	 * author:zzl
 	 * abstract:question2_查看username是否对communityanswerId点赞
-	 * data:2017年9月22日14:47:45
 	 */
 	public static String getAgree(String username,String communityanswerId){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -25,7 +21,7 @@ public class AgreeHelper {
 		return agreeId;
 	}
 	
-	/*
+	/**
 	 * zyq_question2_对答案点赞
 	 */
 	public static void saveAgree(String username,String communityanswerId){
@@ -49,7 +45,7 @@ public class AgreeHelper {
 		session.close();
 	}
 	
-	/*
+	/**
 	 * zyq_question2_取消点赞
 	 */
 	public static void deleteAgree(String agreeid) {
@@ -59,6 +55,9 @@ public class AgreeHelper {
 		session.close();
 	}
 	
+	/**
+	 * zyq_获取社区答案点赞个数
+	 */
 	public static int getAgreeSizeByAnswerId(String communityanswerId){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		AgreePersistenceMapper mapper = session.getMapper(AgreePersistenceMapper.class);
@@ -67,45 +66,14 @@ public class AgreeHelper {
 		return agreeSize;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
-
-	
-	
-	/*
+	/**
 	 * zyq_question_查看用户点赞
 	 */
-	public static List<AgreePersistence> getAgreebyUserId(String userid){
+	public static int getAgreebyUserId(String userid){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		AgreePersistenceMapper mapper = session.getMapper(AgreePersistenceMapper.class);
-		List<AgreePersistence> list = mapper.getAgreebyUserId(userid);
+		int count = mapper.getAgreebyUserId(userid);
 		session.close();
-		return list;
-	}
+		return count;
+	}	
 }	

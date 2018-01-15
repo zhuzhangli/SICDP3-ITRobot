@@ -30,7 +30,7 @@
                     </div>
                     
                     
-					<div class="ibox-content" style="display:block" id="subinfo">
+					<div class="ibox-content" style="display:block;padding-bottom: 50px" id="subinfo" >
                       <form method="post" class="form-horizontal" >
                        <div class="form-group">
                            <label class="col-sm-2 control-label">问题标题</label>
@@ -66,22 +66,16 @@
                            </div>
                        </div>
                        <div class="hr-line-dashed"></div>
-                       
-                       <div class="form-group"  >
-                           <div class="col-sm-4 col-sm-offset-2">
-                               <button class="btn btn-primary" "><a href="/org.xjtusicd3.portal/eventPage.html#tab-32">返回</a></button>
-                               <input   class="btn btn-submit" value="添加至知识库" id="update_">
-                           </div>
-                       </div>
+
                        </form>
+                   		<div class="col-sm-4 col-sm-offset-2">
+                       	   <button class="btn btn-primary" onclick="window.history.back(-1)">返回</button>
+                           <input class="btn btn-primary" value="添加至知识库" id="update_" type="submit">
+                       </div>
                    </div>
-                    
-                     
-                     
-                     
-                     
+                                       
                    <!-- 添加至知识库编辑页 -->                  
-                   <div class="ibox-content"  style="display:none" id="updateinfo">
+                   <div class="ibox-content"  style="display:none;padding-bottom: 50px" id="updateinfo">
                       <form method="" class="form-horizontal"  action="">
                           <div class="form-group" style="display: none;">
                               <div class="col-sm-10">
@@ -137,16 +131,13 @@
                                   ${a.FAQANSWER}
                               </div>
                           </div>
-                          <div class="hr-line-dashed"></div>
-                         
-                          <div class="form-group"  >
-                              <div class="col-sm-4 col-sm-offset-2" id="${a.USERQUESTIONID }">
-                                  <button class="btn btn-primary" "><a href="/org.xjtusicd3.portal/eventPage.html#tab-32">返回</a></button>
-                                  <!-- <button class="btn btn-primary" "><a href="javascript:void(0);" onclick="addToFaq()">完成</a></button> -->
-                                 <!--  <button ><a  class="blue"  data-dialog="somedialog" >提交</a></button> -->
-                              </div>
-                          </div>
+                          <div class="hr-line-dashed"></div>    
                       </form>
+                      
+                      <div class="col-sm-4 col-sm-offset-2" id="${a.USERQUESTIONID }">
+                           <button class="btn btn-primary" onclick="window.history.back(-1)">返回</button>
+                           <input  class="btn btn-primary" value="完成" id="sub" type="submit">
+                       </div>
                   </div>               
                </div>
             </div>
@@ -166,8 +157,8 @@
 
 
     <!-- iCheck -->
-    <script src="js/plugins/iCheck/icheck.min.js"></script>
-    
+    <script src="js/plugins/iCheck/icheck.min.js"></script>   
+    <script src="js/view/showResolvedEvent.js"></script>
     <script src="js/validation.js"></script>
     <script>
         $(document).ready(function () {
@@ -179,174 +170,8 @@
         
         
     </script>
-	<script>
-	$(document).ready(
-			   function(){
-			         $.ajax({
-			             type: "GET",
-			             url: "/org.xjtusicd3.portal/getFirstLevel.html",            
-			             dataType: "json",
-			             success: function(data){            
-			     			 for(var i in data){ 
-			     			 	 document.getElementById("specialCategoryId").options.add(new Option(data[i].fAQCLASSIFYNAME, data[i].fAQCLASSIFYID));					        
-						      }                                                                      
-			             }
-			         });
-			    })
-			    
-			function selectSecondChild(){
-			var element = document.getElementById("specialCategoryId");
-			var classifyId = element.options[element.selectedIndex].value;
-			$.ajax({
-			     type: "GET",
-			     url: "/org.xjtusicd3.portal/getSecondLevel.html"+"?"+"classifyId="+classifyId,            
-			     dataType: "json",
-			     success: function(data){
-			     			 document.getElementById("subspecialCategoryId").options.length=0;              	
-			     			 for(var i in data){ 
-			     			 	 document.getElementById("subspecialCategoryId").options.add(new Option(data[i].fAQCLASSIFYNAME, data[i].fAQCLASSIFYID));					        
-							      }                                                                      
-			                  }
-			     });         
-			}
-			
-			
-			
-	/* function addToFaq(){
-		var questionId = document.getElementById("questionId").value;
-
-		var title = document.getElementById("title").value;
-		console.log(title);
-		var keywords = document.getElementById("keywords").value;
-		console.log(keywords);
-		var subspecialCategoryId = document.getElementById("subspecialCategoryId").value;
-		console.log(subspecialCategoryId);
-		var description = document.getElementById("description").value;
-		console.log(description);
-		var faqcontent = document.getElementById("faqcontent").innerText;
-		console.log(faqcontent);
-	 	 $.ajax({
-			type:"POST",
-			url:"/org.xjtusicd3.portal/saveFAQ.html",
-			data:{
-				"questionId":questionId,
-				"title":title,
-				"keywords":keywords,
-				"subspecialCategoryId":subspecialCategoryId,
-				"description":description,
-				"faqcontent":faqcontent
-			},
-			dataType:"json",
-			success:function(data){
-				if(data.value=="0"){
-					self.location='login.html';
-				}else if(data.value=="1"){
-					self.location='eventPage.html#tab-32';
-				}else{
-					
-					self.location='index.html';
-				}
-			}
-		})  
-	}*/
-	
-	
-	/* $("#sub").click(function(){
-		$(".spa2").text("");
-		$(".spa4").text("");
-		var na = /^\S{2,44}$/   
-		var kw = /^\S{2,30}$/  
-		var dp = /^\S{2,100}$/
-		var ss = /^\S*$/
-		if(na.test($("#title").val())&&kw.test($("#keywords").val())&&$("#subspecialCategoryId").val()&&$("#questionId").val()&&dp.test($("#description").val())){
-				var title = document.getElementById("title").value;
-				var keywords = document.getElementById("keywords").value;
-				var subspecialCategoryId = document.getElementById("subspecialCategoryId").value;
-				var description = document.getElementById("description").value;
-				var faqcontent = document.getElementById("faqcontent").innerText;
-				var questionId = document.getElementById("questionId").value;
-				$.ajax({
-					type:"POST",
-					url:"/org.xjtusicd3.portal/saveFAQ.html",
-					data:{
-						"questionId":questionId,
-						"title":title,
-						"keywords":keywords,
-						"subspecialCategoryId":subspecialCategoryId,
-						"description":description,
-						"faqcontent":faqcontent
-					},
-					dataType:"json",
-					success:function(data){
-						if(data.value=="0"){
-							self.location='login.html';
-						}else if(data.value=="1"){
-							alert("添加成功");
-							self.location.href = "/org.xjtusicd3.portal/eventPage.html";
-						}else{
-							alert("重复提交");
-							self.location.href = "/org.xjtusicd3.portal/eventPage.html";
-						}
-					}
-				})
-			return true;
-		}else{
-			if($("#title").val()==""){
-				$(".spa1").text('请您填写标题')
-			}
-			if($('input:radio[name="resource"]:checked').val()==null){
-				$(".spa2").text('请您选择类型')
-			}
-			if($("#keywords").val()==""){
-				$(".spa3").text('请您填写关键词')
-			}
-			if($("#subspecialCategoryId").val()==null){
-				$(".spa4").text('请您选择知识分类')
-			} 
-			if($("#description").val()==""){
-				$(".spa5").text('请您填写简单描述')
-			}
-			return false;
-		}
-	}) */
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	function windowclose(){
-		var url = document.getElementById('lasturl').innerHTML;
-		self.location=url;
-	}
-	
-	$("#update_").click(function(){
-		$("#subinfo").css('display','none');
-		$("#updateinfo").css('display','block');	
-	});
-	
-	
-	//$("#submit_").click(function(){
-		//$("#subinfo").css('display','block');
-	//	$("#updateinfo").css('display','none');
-	//});
-	</script>  
-
+	<div class="success" id="success" style="z-index:1001;position:fixed;top:40%;left:45%;width:220px;background: #f3f3f3;text-align: center;border:1px solid black;border-radius:3px;display:none"><div style="margin-top:30px; margin-bottom:30px;"><img src="images/true.png" style="width:20px;height:20px;margin-right:10px;"><h2 style="font-size:16px;display:inline-block;line-height:22px;vertical-align:top">操作成功</h2></div></div>
+  <div class="success" id="chongfu" style="z-index:1001;position:fixed;top:40%;left:45%;width:220px;background: #f3f3f3;text-align: center;border:1px solid black;border-radius:3px;display:none"><div style="margin-top:30px; margin-bottom:30px;"><img src="images/cuo.png" style="width:20px;height:20px;margin-right:10px;"><h2 style="font-size:16px;display:inline-block;line-height:22px;vertical-align:top">重复提交</h2></div></div> 
 </body>
 
 </html>

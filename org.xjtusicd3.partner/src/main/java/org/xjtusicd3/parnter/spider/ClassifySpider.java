@@ -1,10 +1,8 @@
 package org.xjtusicd3.parnter.spider;
-
-
+                 
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.functors.ForClosure;
 import org.xjtusicd3.database.helper.ClassifyHelper;
 import org.xjtusicd3.database.model.ClassifyPersistence;
 

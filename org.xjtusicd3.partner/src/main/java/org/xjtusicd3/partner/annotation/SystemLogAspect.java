@@ -127,7 +127,8 @@ public class SystemLogAspect {
         }  
     }  
     
-    public  static String getControllerMethodDescription(JoinPoint joinPoint)  throws Exception {      
+    @SuppressWarnings("rawtypes")
+	public  static String getControllerMethodDescription(JoinPoint joinPoint)  throws Exception {      
         String targetName = joinPoint.getTarget().getClass().getName();    //获得执行方法的类名    
         String methodName = joinPoint.getSignature().getName();            //获得执行方法的方法名  
         Object[] arguments = joinPoint.getArgs();                          //获取切点方法的所有参数类型  
@@ -167,8 +168,7 @@ public class SystemLogAspect {
         return true;  
     }  
     
-    
-    
+   
     /**  
      * 异常通知 用于拦截service层记录异常日志  
      */  
@@ -188,9 +188,7 @@ public class SystemLogAspect {
                params += JSON.toJSONString(joinPoint.getArgs()[i]) + ";";    
            }    
        }    
-        
-     
-        
+             
          try {    
               
             System.out.println("=====异常通知开始=====");    
@@ -261,10 +259,5 @@ public class SystemLogAspect {
     }    
     
     */
-  
-     
-     
-     
-     
-     
+   
 }

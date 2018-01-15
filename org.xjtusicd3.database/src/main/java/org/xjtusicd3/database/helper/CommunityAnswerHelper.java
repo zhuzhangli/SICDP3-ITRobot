@@ -17,7 +17,7 @@ public class CommunityAnswerHelper{
 		return list;
 	}
 	
-	//获取社区问题回复数
+	//获取社区问题评论总数
 	public static int question_CommunityAnswerCount(String communityquestionid) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		CommunityAnswerPersistenceMapper mapper = session.getMapper(CommunityAnswerPersistenceMapper.class);
@@ -25,8 +25,8 @@ public class CommunityAnswerHelper{
 		session.close();
 		return count;
 	}
-	
-	//zyq_question_判断问题是否有最佳答案	 
+
+	//zyq_question_根据是否是最佳答案及问题id获取信息	 
 	public static List<CommunityAnswerPersistence> question_iscurrentAnswer(String questionid,int isbest){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		CommunityAnswerPersistenceMapper mapper = session.getMapper(CommunityAnswerPersistenceMapper.class);
@@ -51,15 +51,6 @@ public class CommunityAnswerHelper{
 		String toUserId = mapper.getUserIdByAnswerId(communityanswerId);
 		session.close();
 		return toUserId;
-	}
-	
-	//zyq_question_问题展示_最佳答案
-	public static List<CommunityAnswerPersistence> question_CommunityAnswer_best(String communityquestionId){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		CommunityAnswerPersistenceMapper mapper = session.getMapper(CommunityAnswerPersistenceMapper.class);
-		List<CommunityAnswerPersistence> list = mapper.question_CommunityAnswer_best(communityquestionId);
-		session.close();
-		return list;
 	}
 	
 	//zyq_question_问题展示_other		 
@@ -88,16 +79,7 @@ public class CommunityAnswerHelper{
 		session.close();
 		return totalLikes;
 	}
-	
-	//查看评论总数
-	public static int question_CommunityAnswerSize(String communityquestionId) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		CommunityAnswerPersistenceMapper mapper = session.getMapper(CommunityAnswerPersistenceMapper.class);
-		int answerSize = mapper.question_CommunityAnswerSize(communityquestionId);
-		session.close();
-		return answerSize;
-	}
-	
+		
 	// zyq_question_判断评论是否重复提交
 	public static String question_IsCommunityAnswer(String userid,String content,String questionId){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -114,21 +96,12 @@ public class CommunityAnswerHelper{
 		mapper.save(communityAnswerPersistence);
 		session.close();
 	}
-	
-	//根据社区答案id查询答案贡献者
-	public static String findUserIdByCommunityQuestionId(String communityanswerId) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		CommunityAnswerPersistenceMapper mapper = session.getMapper(CommunityAnswerPersistenceMapper.class);
-		String userId = mapper.question_CommunityAnswerUserId(communityanswerId);
-		session.close();
-		return userId;
-	}
-	
+
 	// zyq_question2_ajax_设置为最佳答案
-	public static void saveBestAnswer(String answerId){
+	public static void saveBestAnswer(String answerId, int isbest){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		CommunityAnswerPersistenceMapper mapper = session.getMapper(CommunityAnswerPersistenceMapper.class);
-		mapper.saveBestAnswer(answerId);
+		mapper.saveBestAnswer(answerId,isbest);
 		session.close();
 	}
 	
@@ -149,28 +122,9 @@ public class CommunityAnswerHelper{
 		session.close();
 		return list;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
 
 	/*
-	 * zyq_question_获取用户点评论数
+	 * zyq_question_获取用户点评论详情		!!!未使用
 	 */
 	public static List<CommunityAnswerPersistence> question_CommunityAnswer_userId(String userid){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -180,12 +134,8 @@ public class CommunityAnswerHelper{
 		return list;
 	}
 	
-	
-	
-
-	
 	/*
-	 * zyq_notice_查看评论是否通知
+	 * zyq_notice_查看评论是否通知			!!!未使用
 	 */
 	public static List<CommunityAnswerPersistence> notice_CommunityAnswer(String communityquestionid,int isnotice){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -194,31 +144,5 @@ public class CommunityAnswerHelper{
 		session.close();
 		return list;
 	}
-	
-	
-	//查询社区回复者信息
-	public static List<CommunityAnswerPersistence> getBestAnswer(String communityquestionid) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		CommunityAnswerPersistenceMapper mapper = session.getMapper(CommunityAnswerPersistenceMapper.class);
-		List<CommunityAnswerPersistence> list = mapper.getBestAnswer(communityquestionid);
-		session.close();
-		return list;
-	}
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-	
-	
 
 }

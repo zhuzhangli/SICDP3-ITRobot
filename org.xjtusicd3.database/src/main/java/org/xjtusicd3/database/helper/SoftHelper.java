@@ -1,6 +1,5 @@
 package org.xjtusicd3.database.helper;
 
-
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -28,9 +27,7 @@ public class SoftHelper {
 		session.close();
 		return list;
 	}
-	
-	
-	
+		
 	//查找软件信息
 	public static List<SoftPersistence> getSoftInfo(String configureid) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);

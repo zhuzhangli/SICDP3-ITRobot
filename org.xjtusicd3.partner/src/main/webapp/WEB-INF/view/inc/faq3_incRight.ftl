@@ -5,12 +5,15 @@
 			<li><label>浏览次数：</label><span>${faq3Views.faqScan}次</span></li>
 			<li><label>最近更新：</label><span>${faq3Views.faqModifytime}</span></li>
 			<#list faq3Views.uList as ulist>
-			<li><label>创建者：</label><a href="personal2.html?u=${ulist.userId}"
-				class="creatUser">${ulist.userName}</a><a href="javascript:void(0);"
-				class="attention" id="attentionLink"
-				onclick="attention('10068673852')">+关注</a><a
-				href="javascript:void(0);" class="attention overAttention hidden"
-				id="overAttentionLink">+已关注</a></li> </#list>
+			<li><label>创建者：</label>
+				<a href="personal2.html?u=${ulist.userId}" class="creatUser">${ulist.userName}</a>
+				<#if payList=="0">
+				<a href="javascript:void(0);" class="attention" id="attentionLink" onclick="attention('${ulist.userId}')">+关注</a>
+				<#elseif payList=="1">
+				<a href="javascript:void(0);" class="attention overAttention " id="overAttentionLink">+已关注</a>
+				</#if>
+			</li> 
+			</#list>
 			<li><label>编辑次数：</label><span>${faq3Views.faqWritetime}次</span></li>
 			<li><label>评分：</label>
 				<div class="atar_Show">

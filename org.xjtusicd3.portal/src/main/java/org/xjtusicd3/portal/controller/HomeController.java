@@ -14,10 +14,8 @@ import org.xjtusicd3.portal.view.EventView;
 import org.xjtusicd3.portal.view.FaqView;
 import org.xjtusicd3.portal.view.ProblemView;
 import org.xjtusicd3.portal.view.UserView;
-/**
- * 
+/** 
  * @author zzl
- *
  */
 @Controller
 public class HomeController {

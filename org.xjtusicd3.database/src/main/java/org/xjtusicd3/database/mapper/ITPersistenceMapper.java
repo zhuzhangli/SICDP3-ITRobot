@@ -7,10 +7,7 @@ import org.xjtusicd3.database.logic.IBaseDao;
 import org.xjtusicd3.database.model.ITPersistence;
 
 public interface ITPersistenceMapper extends IBaseDao<ITPersistence, String>{
-	/*
-	 * zyq_personal2_查看运维人员
-	 */
+	//zyq_personal2_查看运维人员
 	@Select("SELECT * FROM TBL_IT WHERE USERID=#{0}")
-	List<ITPersistence> IT(String userid);
-	
+	List<ITPersistence> IT(String userid);	
 }

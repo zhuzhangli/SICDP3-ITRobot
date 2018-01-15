@@ -12,10 +12,7 @@ import org.xjtusicd3.database.model.UserQuestionPersistence;
 
 public class UserQuestionService {
 	/**
-	 * author:zzl	
 	 * abstract:记录用户提问记录
-	 * data:2017年10月22日11:29:15
-	 * @param from 
 	 */
 	public static void addUserQuestion(String questionId,String username, String comment, String from) {
 		UserQuestionPersistence userQuestionPersistence = new UserQuestionPersistence();
@@ -51,9 +48,6 @@ public class UserQuestionService {
 
 	/**
 	 * 用户满意度
-	 * @param questionId
-	 * @param answerId
-	 * @param i
 	 */
 	public static void addUserSaticfaction(String questionId, String answerId, int saticfaction) {
 		RobotAnswerPersistence robotAnswerPersistence = new RobotAnswerPersistence();

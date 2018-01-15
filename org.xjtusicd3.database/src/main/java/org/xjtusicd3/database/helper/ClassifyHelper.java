@@ -45,8 +45,6 @@ public class ClassifyHelper {
 	
 	/**
 	 * 通过分类id查找分类名
-	 * @param classifyId
-	 * @return
 	 */
 	public static String getClassifyNameById(String classifyId) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -57,9 +55,7 @@ public class ClassifyHelper {
 	}
 	
 	/**
-	 * author:zzl
 	 * abstract:获取当前问题分类的上一级分类
-	 * data:2017年9月15日09:58:36
 	 */
 	public static String faq_parentId(String faq_classifyId) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -70,9 +66,7 @@ public class ClassifyHelper {
 	}
 	
 	/**
-	 * author:zzl
 	 * abstract:获取分类信息
-	 * data:2017年9月17日19:33:19
 	 */
 	public static List<ClassifyPersistence> getInfoById(String classifyId) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -106,46 +100,6 @@ public class ClassifyHelper {
 	}
 	
 	/**
-	 * 根据分类号查找父id
-	 */
-	public static String faq2_classifyParentId(String ClassifyId){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		ClassifyPersistenceMapper mapper = session.getMapper(ClassifyPersistenceMapper.class);
-		String classifyParentId = mapper.faq2_classifyParentId(ClassifyId);
-		session.close();
-		return classifyParentId;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
 	 * spider_分类的添加
 	 */
 	public static void save(ClassifyPersistence classifyPersistence) throws Exception{
@@ -154,7 +108,8 @@ public class ClassifyHelper {
 		mapper.save(classifyPersistence);
 		session.close();
 	}
-	/*
+	
+	/**
 	 * spider_按照分类名称查找
 	 */
 	public static List<ClassifyPersistence> spider_ClassifyListByName(String ClassifyName,String parentId){

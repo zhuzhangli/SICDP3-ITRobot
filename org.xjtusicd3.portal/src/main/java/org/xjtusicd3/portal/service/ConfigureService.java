@@ -6,15 +6,12 @@ import java.util.UUID;
 
 import org.xjtusicd3.database.helper.BasicConfigureHelper;
 import org.xjtusicd3.database.helper.ConfigureHelper;
-import org.xjtusicd3.database.helper.DepartmentHelper;
 import org.xjtusicd3.database.helper.DriversHelper;
 import org.xjtusicd3.database.helper.PatchHelper;
-import org.xjtusicd3.database.helper.PermissionHelper;
 import org.xjtusicd3.database.helper.SoftHelper;
 import org.xjtusicd3.database.model.BasicConfigurePersistence;
 import org.xjtusicd3.database.model.ConfigureHistoryPersistence;
 import org.xjtusicd3.database.model.ConfigurePersistence;
-import org.xjtusicd3.database.model.DepartmentPersistence;
 import org.xjtusicd3.database.model.DriverPersistence;
 import org.xjtusicd3.database.model.PatchPersistence;
 import org.xjtusicd3.database.model.SoftPersistence;
@@ -49,56 +46,41 @@ public class ConfigureService
 			List<SoftPersistence> sList = SoftHelper.getSoftInfo(softList.getCONFIGUREID());			
 			configureSoftView.setLOGO(sList.get(0).getLOGO());
 			configureSoftView.setSCORE(sList.get(0).getSCORE());
-			configureSoftView.setDESCRIPTION(sList.get(0).getDESCRIPTION());
-			
-			configureSoftViews.add(configureSoftView);
-			
-		}
-		
+			configureSoftView.setDESCRIPTION(sList.get(0).getDESCRIPTION());			
+			configureSoftViews.add(configureSoftView);			
+		}		
 		return configureSoftViews;
 	}
-	
-	
+		
 	//获取ID对应软件信息
 	public static ConfigureSoftView getSoftInfoById(String configureId) {
 		ConfigureSoftView softView = new ConfigureSoftView();
 		
-		List<SoftPersistence> softInfo = SoftHelper.getSoftInfo(configureId);
-		
+		List<SoftPersistence> softInfo = SoftHelper.getSoftInfo(configureId);		
 		softView.setCONFIGUREID(configureId);
 		softView.setINTRODUCTION(softInfo.get(0).getINTRODUCTION());
 		softView.setVERSIONTYPE(softInfo.get(0).getVERSIONTYPE());
 		softView.setVERSION(softInfo.get(0).getVERSION());
 		softView.setSOFTTYPE(softInfo.get(0).getSOFTTYPE());
-		softView.setWEBSITE(softInfo.get(0).getWEBSITE());
-		
-		
+		softView.setWEBSITE(softInfo.get(0).getWEBSITE());		
 		return softView;
 	}
-	
-	
-	//添加至标准配置库
-	public static void addToBasicCfg(String configureId) {
 		
+	//添加至标准配置库
+	public static void addToBasicCfg(String configureId) {		
 		BasicConfigureHelper.addToBasicCfg(UUID.randomUUID().toString(),configureId,null);
 	}
-	
-	
-	//将软件从标准配置库移除
-	public static void deleteFromBasicCfg(String configureId) {
 		
+	//将软件从标准配置库移除
+	public static void deleteFromBasicCfg(String configureId) {		
 		BasicConfigureHelper.deleteFromBasicCfg(configureId);		
 	}
-	
-	
-	//更新tbl_configure表中ISCONFIGURE字段信息    1-已加至标准库  0-未加入
-	public static void updateCfgStatus(String configureId, int isConfigure) {
 		
+	//更新tbl_configure表中ISCONFIGURE字段信息    1-已加至标准库  0-未加入
+	public static void updateCfgStatus(String configureId, int isConfigure) {		
 		ConfigureHelper.updateCfgStatus(configureId, isConfigure);
 	}
-	
-	
-	
+		
 	//获取所有驱动信息
 	public static List<ConfigureDriverView> getAllDrivers() {
 		List<ConfigureDriverView> configureDriverViews = new ArrayList<ConfigureDriverView>();
@@ -126,29 +108,22 @@ public class ConfigureService
 			configureDriverView.setFITNESS(dList.get(0).getFITNESS());
 			configureDriverView.setDRIVERINTRODUCTION(dList.get(0).getDRIVERINTRODUCTION());
 			
-			configureDriverViews.add(configureDriverView);
-			
-		}
-		
+			configureDriverViews.add(configureDriverView);			
+		}		
 		return configureDriverViews;
 	}
-
 	
 	//获取ID对应驱动信息
 	public static ConfigureDriverView getDriverInfoById(String configureId) {
 		ConfigureDriverView driverView = new ConfigureDriverView();
 		
-		List<DriverPersistence> driverInfo = DriversHelper.getDriverInfo(configureId);
-		
+		List<DriverPersistence> driverInfo = DriversHelper.getDriverInfo(configureId);		
 		driverView.setCONFIGUREID(configureId);
-		
-		System.out.println("驱动的应用："+driverInfo.get(0).getFITNESS());
 		driverView.setFITNESS(driverInfo.get(0).getFITNESS());
 				
 		return driverView;
 	}
-	
-	
+		
 	//获取所有补丁信息 
 	public static List<ConfigurePatchView> getAllPatchs() {
 		List<ConfigurePatchView> configurePatchViews = new ArrayList<ConfigurePatchView>();
@@ -180,8 +155,7 @@ public class ConfigureService
 		
 		return configurePatchViews;
 	}
-	
-	
+		
 	//获取ID对应补丁信息
 	public static ConfigurePatchView getPatchInfoById(String configureId) {
 		ConfigurePatchView patchView = new ConfigurePatchView();
@@ -195,46 +169,7 @@ public class ConfigureService
 		
 		return patchView;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	public static String getPartConfig() 
-//	{
-//		String result = "";
-//		List<ConfigurePersistence> list = ConfigureHelper.getPartConfig();
-//		for (int i = 0; i < list.size(); i++) 
-//		{
-//			result += "{\"id\":\""+(i+1)+"\",\"configureProducer\":\""+list.get(i).getPRODUCER()+"\",\"configureName\":\""+list.get(i).getCONFIGURENAME()+"\",\"configureType\":\""+list.get(i).getCONFIGURETYPE()+"\"}";
-//			if(i < list.size()-1)
-//			{
-//				result += ",";
-//			}else
-//			{
-//				result += "";
-//			}
-//		}
-//		System.out.println(result);
-//		return result;
-//	}
-//	public static void main(String[] args) 
-//	{
-//		getPartConfig();
-//	}
+
 	public static List<ConfigurePersistence> getConfigure() 
 	{
 		List<ConfigurePersistence> configurelist = ConfigureHelper.getAllConfig();
@@ -243,41 +178,35 @@ public class ConfigureService
 	}
 
 	/**
-	 * author:
 	 * abstract:变更列表
-	 * data:2017年10月12日17:50:36
-	 * @param startNumber 
 	 */
 	public static List<ChangeIndexView> getConfigureHistory(int startNumber) {
 		// TODO Auto-generated method stub
-				List<ChangeIndexView> changeIndexViews = new ArrayList<ChangeIndexView>();
-				List<ConfigureHistoryPersistence> configureHistoryPersistences = ConfigureHelper.getUpdateCfgs(startNumber);
-				for(ConfigureHistoryPersistence configureHistoryPersistence:configureHistoryPersistences){
-					ChangeIndexView changeIndexView = new ChangeIndexView();
-					List<ConfigurePersistence> configurePersistences =ConfigureHelper.getCfgs(startNumber);
-					changeIndexView.setCONFIGURENAME(configurePersistences.get(0).getCONFIGURENAME());
-					changeIndexView.setVERSION(configureHistoryPersistence.getVERSION());
-					changeIndexView.setURL(configureHistoryPersistence.getURL());
-					changeIndexView.setUPDATETIME(configureHistoryPersistence.getUPDATETIME());
-					changeIndexView.setREMARKS(configureHistoryPersistence.getREMARKS());
-					changeIndexViews.add(changeIndexView);
-				}
-				
-				return changeIndexViews;
-			}
-
+		List<ChangeIndexView> changeIndexViews = new ArrayList<ChangeIndexView>();
+		List<ConfigureHistoryPersistence> configureHistoryPersistences = ConfigureHelper.getUpdateCfgs(startNumber);
+		for(ConfigureHistoryPersistence configureHistoryPersistence:configureHistoryPersistences){
+			ChangeIndexView changeIndexView = new ChangeIndexView();
+			List<ConfigurePersistence> configurePersistences =ConfigureHelper.getCfgs(startNumber);
+			changeIndexView.setCONFIGURENAME(configurePersistences.get(0).getCONFIGURENAME());
+			changeIndexView.setVERSION(configureHistoryPersistence.getVERSION());
+			changeIndexView.setURL(configureHistoryPersistence.getURL());
+			changeIndexView.setUPDATETIME(configureHistoryPersistence.getUPDATETIME());
+			changeIndexView.setREMARKS(configureHistoryPersistence.getREMARKS());
+			changeIndexViews.add(changeIndexView);
+		}
+		
+		return changeIndexViews;
+	}
 	
 	//将软件按选定的部门添加至标准配置表中
 	public static void addSoftToDepartment(String configureId, String departmentId) {	
 		//判断标准配置表中是否已存在此部门该配置记录
 		List<BasicConfigurePersistence> list = BasicConfigureHelper.isExist(configureId,departmentId);
 		if(list.size()==0){
-			String basicConfigureId = UUID.randomUUID().toString();
-			
+			String basicConfigureId = UUID.randomUUID().toString();			
 			BasicConfigureHelper.addToBasicCfg(basicConfigureId, configureId, departmentId);
 		}
 	}
-
 
 	//通过部门ID查看标准配置信息
 	public static List<DepConfigureView> getCfgByDepID(String departmentId) {
@@ -299,11 +228,9 @@ public class ConfigureService
 			configureView.setDEPARTMENTID(cfgList.getDEPARTMENTID());
 			
 			configureViews.add(configureView);
-		}
-				
+		}				
 		return configureViews;
 	}
-
 
 	//分类查找
 	public static List<DepConfigureView> getCfgByType(String configureType) {
@@ -335,29 +262,23 @@ public class ConfigureService
 		String configureType = "软件";
 		
 		//查找特定部门软件配置信息
-		List<ConfigurePersistence> cfgLists = ConfigureHelper.getCfgById(departmentId,configureType);
-		
+		List<ConfigurePersistence> cfgLists = ConfigureHelper.getCfgById(departmentId,configureType);		
 		for(ConfigurePersistence cfgList:cfgLists){
-			DepConfigureView configureView = new DepConfigureView();
-			
+			DepConfigureView configureView = new DepConfigureView();			
 			configureView.setCONFIGUREID(cfgList.getCONFIGUREID());
 			
 			//通过configureId获得对应配置信息
 			List<ConfigurePersistence> cList = ConfigureHelper.getInfoByCfgId(cfgList.getCONFIGUREID());
-			configureView.setCONFIGURENAME(cList.get(0).getCONFIGURENAME());
-			
+			configureView.setCONFIGURENAME(cList.get(0).getCONFIGURENAME());			
 			configureViews.add(configureView);
-		}
-				
+		}				
 		return configureViews;
 	}
 
 	//查找特定部门驱动配置信息
 	public static List<DepConfigureView> getDriverCfgById(String departmentId) {
-		List<DepConfigureView> configureViews = new ArrayList<DepConfigureView>();
-		
-		String configureType = "驱动";
-		
+		List<DepConfigureView> configureViews = new ArrayList<DepConfigureView>();		
+		String configureType = "驱动";		
 		//查找特定部门软件配置信息
 		List<ConfigurePersistence> cfgLists = ConfigureHelper.getCfgById(departmentId,configureType);
 		
@@ -379,7 +300,7 @@ public class ConfigureService
 
 	//查找特定部门补丁配置信息
 	public static List<DepConfigureView> getPatchCfgById(String departmentId) {
-List<DepConfigureView> configureViews = new ArrayList<DepConfigureView>();
+		List<DepConfigureView> configureViews = new ArrayList<DepConfigureView>();
 		
 		String configureType = "补丁";
 		
@@ -408,28 +329,4 @@ List<DepConfigureView> configureViews = new ArrayList<DepConfigureView>();
 		BasicConfigureHelper.removeConfigure(configureId,departmentId);
 	}
 
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-
-	
-	
-
-	
-
-	
-
-
-	
 }

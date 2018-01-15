@@ -24,8 +24,7 @@ public class Question2_CommunityView {
 	private String isBestAnswer;//判断是否最佳答案
 	
 	private List<Question2_CommunityReplayView> replay;
-	
-		
+			
 	public String getUserId() {
 		return userId;
 	}

@@ -11,18 +11,16 @@ public class AnswerHelper {
 	/**
 	 * zyq_faq3_知识内容
 	 */
-	public static List<AnswerPersistence> faq3_faqContent(String QuestionId){
+	public static List<AnswerPersistence> getAnswerByQuestionId(String QuestionId){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		AnswerPersistenceMapper mapper  = session.getMapper(AnswerPersistenceMapper.class);
-		List<AnswerPersistence> list = mapper.faq3_faqContent(QuestionId);
+		List<AnswerPersistence> list = mapper.getAnswerByQuestionId(QuestionId);
 		session.close();
 		return list;
 	}
 	
 	/**
 	 * 根据faq问题id查找用户id
-	 * @param faqquestionid
-	 * @return
 	 */
 	public static String findUserIdByFAQQuestionId(String faqquestionid) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -44,37 +42,35 @@ public class AnswerHelper {
 	
 	/*********************************************        后台                    ***************************************************************/
 	//获取faqanswerId相对应的内容
-		public static String getContentById(String faqAnswerId) {
-			SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-			AnswerPersistenceMapper mapper  = session.getMapper(AnswerPersistenceMapper.class);
-			String content = mapper.getContentById(faqAnswerId);
-			session.close();
-			return content;
-		}
+	public static String getContentById(String faqAnswerId) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		AnswerPersistenceMapper mapper  = session.getMapper(AnswerPersistenceMapper.class);
+		String content = mapper.getContentById(faqAnswerId);
+		session.close();
+		return content;
+	}
 	
+	//根据问题id获取问题答案内容
+	public static String getAnswerContentByQuestionId(String faqquestionid) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		AnswerPersistenceMapper mapper  = session.getMapper(AnswerPersistenceMapper.class);
+		String content = mapper.getContentByQuestionId(faqquestionid);
+		session.close();
+		return content;
+	}
 	
+	//更新faq信息
+	public static void updateFaqAnswerInfo(String questionId, String faqcontent) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		AnswerPersistenceMapper mapper  = session.getMapper(AnswerPersistenceMapper.class);
+		mapper.updateFaqAnswerInfo(questionId, faqcontent);
+		session.close();		
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	/*
-	 * zyq_notice_ajax_查询FAQ评论通知
+	 * zyq_notice_ajax_查询FAQ评论通知	
+	 * !!!未使用
 	 */
 	public static List<AnswerPersistence> notice_faqanswerList(String userId){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -83,62 +79,4 @@ public class AnswerHelper {
 		session.close();
 		return list;
 	}
-	
-	
-	
-	//添加至知识库答案列表
-	public static void insertIntoFaqAnswer(String faqAnswerId, String faqcontent, String questionid, String userid) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		AnswerPersistenceMapper mapper  = session.getMapper(AnswerPersistenceMapper.class);
-		 mapper.insertIntoFaqAnswer(faqAnswerId,  faqcontent, questionid, userid);
-		session.close();
-		
-	}
-	
-	//zzl_根据问题号得到faq答案内容
-	public static List<AnswerPersistence> getAnswerByQuestionId(String faqquestionid) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		AnswerPersistenceMapper mapper  = session.getMapper(AnswerPersistenceMapper.class);
-		List<AnswerPersistence> list = mapper.getAnswerByQuestionId(faqquestionid);
-		session.close();
-		return list;
-	}
-	
-	//更新faq信息
-	public static void updateFaqAnswerInfo(String questionId, String faqcontent) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		AnswerPersistenceMapper mapper  = session.getMapper(AnswerPersistenceMapper.class);
-		mapper.updateFaqAnswerInfo(questionId, faqcontent);
-		session.close();
-
-		
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-	
-
 }

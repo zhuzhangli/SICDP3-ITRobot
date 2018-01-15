@@ -14,9 +14,7 @@ import org.xjtusicd3.portal.view.PermissionView;
 import org.xjtusicd3.portal.view.Permission_RoleView;
 
 /**
- * 
  * @author zzl
- *
  */
 public class PermissionManagerService
 {
@@ -54,33 +52,18 @@ public class PermissionManagerService
     	PermissionHelper.save(permissionPersistence);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
 	//更改权限
 	public static void updatePermission(String permissionId, String physicalName, String logicName) {
+		PermissionPersistence permissionPersistence = new PermissionPersistence();
+		permissionPersistence.setPERMISSIONID(permissionId);
+		permissionPersistence.setPERMISSIONPHYSICALNAME(physicalName);
+		permissionPersistence.setPERMISSIONLOGICNAME(logicName);		
 		Date date=new Date();
     	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    	String time = format.format(date);
-    	
-    	PermissionHelper.updatePermission(permissionId,physicalName,logicName,time);
-		
+    	String time = format.format(date);   
+    	permissionPersistence.setTIME(time);
+    	PermissionHelper.update(permissionPersistence);
 	}
-
 	
 	//删除权限
 	public static void deletePermission(String permissionId) {
@@ -88,8 +71,7 @@ public class PermissionManagerService
 		PermissionHelper.deletePermission(permissionId);
 		
 	}
-
-
+	
 	//获取角色还未得到的权限
 	public static List<Permission_RoleView> notObtainRolePermission(String roleId) {
 		List<Permission_RoleView> permission_RoleViews = new ArrayList<Permission_RoleView>();
@@ -111,16 +93,13 @@ public class PermissionManagerService
 		return permission_RoleViews;
 		
 	}
-
 	
 	//获取角色已得到的权限
 	public static List<Permission_RoleView> obtainRolePermission(String roleId) {
 		List<Permission_RoleView> permission_RoleViews = new ArrayList<Permission_RoleView>();
 		
-		List<PermissionPersistence> lists = PermissionHelper.obtainRolePermission(roleId);
-		
-		System.out.println("未获得权限条数："+lists.size());
-		
+		List<PermissionPersistence> lists = PermissionHelper.obtainRolePermission(roleId);		
+		System.out.println("已获得权限条数："+lists.size());		
 		for(PermissionPersistence list:lists){
 			Permission_RoleView permission_RoleView = new Permission_RoleView();
 			
@@ -129,12 +108,10 @@ public class PermissionManagerService
 			permission_RoleView.setPERMISSIONLOGICNAME(list.getPERMISSIONLOGICNAME());
 
 			permission_RoleViews.add(permission_RoleView);
-		}
-		
+		}	
 		return permission_RoleViews;
 	}
-
-
+	
 	// 将选中权限插入到角色-权限表中  -- 逐条插入
 	public static void addPermissionToRole(String roleId, String permissionId) {
 		
@@ -145,7 +122,6 @@ public class PermissionManagerService
 			RolePermissionHelper.addPermissionToRole(UUID.randomUUID().toString(),roleId,permissionId);
 		}
 	}
-
 	
 	// 将选中权限从角色-权限表中移除
 	public static void deletePermissionToRole(String roleId, String permissionId) {
@@ -155,52 +131,5 @@ public class PermissionManagerService
 			//移除角色已获取的权限
 			RolePermissionHelper.deletePermissionToRole(roleId,permissionId);
 		}		
-	}
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-//	//获取该permissionId对应的权限信息
-//	public static PermissionView getPermissionById(String permissionId) {
-//		PermissionView permissionView = new PermissionView();
-//		
-//		PermissionPersistence permissionPersistence = PermissionHelper.getPermissionById(permissionId);
-//		
-//		permissionView.setPermissionId(permissionId);
-//		permissionView.setPermissionPhysicalName(permissionPersistence.getPERMISSIONPHYSICALNAME());
-//		permissionView.setPermissionLogicName(permissionPersistence.getPERMISSIONLOGICNAME());
-//		
-//		return permissionView;
-//	}
-
-	
-	/*
-	 * zpz_rbacindex展示
-	 */
-//	public static List<PermissionView> getRolePer(){
-//		List<PermissionView> rolePerViews = new ArrayList<PermissionView>();
-//		List<String> roleId = RolePermissionHelper.getAllRoleId(); 
-//		for(String roleIds:roleId){
-//			PermissionView rolePerView = new PermissionView();
-//			//List<PermissionPersistence> permissionPersistences = new ArrayList<PermissionPersistence>();
-//			List<PermissionPersistence> list = RolePermissionHelper.getRolePermissionByRId(roleIds);
-//			String string = "";
-//			for (PermissionPersistence permissionPersistence:list){
-//				string = string+permissionPersistence.getPERMISSIONPHYSICALNAME()+" ";
-//			}
-//			rolePerView.setPermission(string);
-//			rolePerView.setRoleName(RoleHelper.getRoleName(roleIds));
-//			rolePerViews.add(rolePerView);
-//		}
-//		return rolePerViews;
-//	}
-
-	
+	}	
 }

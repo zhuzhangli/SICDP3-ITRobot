@@ -11,8 +11,6 @@ public class TimeStampHelper {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		TimeStampPersistenceMapper mapper = session.getMapper(TimeStampPersistenceMapper.class);
 		mapper.addTimeStamp(timeId,  path,  executionTime,  startTime);
-		session.close();
-		
+		session.close();		
 	}
-
 }

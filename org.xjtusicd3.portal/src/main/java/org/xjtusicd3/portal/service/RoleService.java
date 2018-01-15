@@ -16,15 +16,11 @@ public class RoleService {
 		List<RolePersistence> rolePersistences = RoleHelper.getAllRoles();
 		
 		for(RolePersistence rolePersistence:rolePersistences){
-			Permission_RoleView roleView = new Permission_RoleView();
-			
+			Permission_RoleView roleView = new Permission_RoleView();			
 			roleView.setROLEID(rolePersistence.getRoleId());
-			roleView.setROLENAME(rolePersistence.getRoleName());
-			
+			roleView.setROLENAME(rolePersistence.getRoleName());			
 			roleViews.add(roleView);
 		}
-		return roleViews;
-		
+		return roleViews;		
 	}
-
 }

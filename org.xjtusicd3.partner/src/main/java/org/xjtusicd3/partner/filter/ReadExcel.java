@@ -24,7 +24,7 @@ public class ReadExcel {
 		for(int i=0;i<sEs.size();i++){
 			for(int j=0;j<sEs.get(i).size();j++){
 				if (sEs.get(i).size()==3) {
-					List<UserPersistence> userPersistences = UserHelper.getEmail_name(sEs.get(i).get(1).toString());
+					List<UserPersistence> userPersistences = UserHelper.getUserInfo(sEs.get(i).get(1).toString());
 					if (userPersistences.size()==0) {
 						String uuid = UUID.randomUUID().toString();
 						String password = "670b14728ad9902aecba32e22fa4f6bd";
@@ -40,7 +40,7 @@ public class ReadExcel {
 						UserHelper.addGeneralUser(generaluserPersistence);
 					}
 				}else if (sEs.get(i).size()==4) {
-					List<UserPersistence> userPersistences = UserHelper.getEmail_name(sEs.get(i).get(2).toString());
+					List<UserPersistence> userPersistences = UserHelper.getUserInfo(sEs.get(i).get(2).toString());
 					if (userPersistences.size()==0) {
 						String uuid = UUID.randomUUID().toString();
 						String password = "670b14728ad9902aecba32e22fa4f6bd";

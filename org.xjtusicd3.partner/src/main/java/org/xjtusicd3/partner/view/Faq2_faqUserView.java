@@ -7,7 +7,6 @@ public class Faq2_faqUserView {
 	private String userName;
 	private String userImage;
 	
-	
 	public String getUserId() {
 		return userId;
 	}

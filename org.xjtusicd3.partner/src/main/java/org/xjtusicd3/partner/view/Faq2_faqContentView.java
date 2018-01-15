@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.xjtusicd3.database.model.QuestionPersistence;
 
-
 public class Faq2_faqContentView {
 	private String QuestionId;
 	private String FaqTitle;
@@ -14,8 +13,6 @@ public class Faq2_faqContentView {
 	private String FaqCollection;
 	private List<Faq2_faqUserView> uList;
 	private int  CommentNumber;
-	
-	
 	
 	public int getCommentNumber() {
 		return CommentNumber;

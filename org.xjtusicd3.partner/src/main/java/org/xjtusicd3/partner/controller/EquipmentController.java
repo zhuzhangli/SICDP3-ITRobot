@@ -21,8 +21,6 @@ import org.xjtusicd3.partner.view.Personal3_EquipmentView;
 @Controller
 public class EquipmentController {
 	/**
-	 * author:zhaoyanqing
-	 * date:2017年9月12日 10:35:22
 	 * abstract:展示personal3当前设备信息
 	 */
 	@RequestMapping(value="personal3",method=RequestMethod.GET)
@@ -35,9 +33,8 @@ public class EquipmentController {
 		mv.addObject("personal3_list", list);
 		return mv;
 	}
+	
 	/**
-	 * author:zhaoyanqing
-	 * date:2017年9月6日 17:22:51
 	 * abstract:获取客户端的信息
 	 */
 	@ResponseBody

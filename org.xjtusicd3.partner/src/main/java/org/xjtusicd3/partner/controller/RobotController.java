@@ -48,9 +48,7 @@ public class RobotController {
 	 }
 	
 	/**
-	 * author:zhaoyanqing
 	 * abstract:robot页面 点击“提问技巧”
-	 * data:2017年9月17日 23:09:59
 	 */
 	@ResponseBody
 	@RequestMapping(value={"/questionSkill"},method={org.springframework.web.bind.annotation.RequestMethod.GET},produces="application/json;charset=UTF-8")
@@ -133,9 +131,7 @@ public class RobotController {
 	}
 	
 	/**
-	 * author:zzl
 	 * abstract:robot页面 回复对用户有帮助
-	 * data:2017年10月30日16:47:27
 	 */
 	@ResponseBody
 	@RequestMapping(value={"/beHelpful"},method={org.springframework.web.bind.annotation.RequestMethod.GET},produces="application/json;charset=UTF-8")
@@ -180,9 +176,7 @@ public class RobotController {
 	 }
 	
 	/**
-	 * author:zzl
 	 * abstract:用户不满意回复
-	 * data:2017年10月30日20:14:36
 	 */
 	@ResponseBody
 	@RequestMapping(value={"/NoHelpful"},method={org.springframework.web.bind.annotation.RequestMethod.GET},produces="application/json;charset=UTF-8")
@@ -225,11 +219,8 @@ public class RobotController {
 			}
 		}else {
 			jsonObject.put("value", "2");
-		}
-		
+		}		
 		String result = JsonUtil.toJsonString(jsonObject);
 		return result;
-	 }
-	
-	
+	 }	
 }

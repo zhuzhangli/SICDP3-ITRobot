@@ -46,7 +46,7 @@
                         </div>
                     </div>
       
-                    <div class="ibox-content">
+                    <div class="ibox-content" style="padding-bottom: 50px">
           
 			       <form method="get" class="form-horizontal" action=""> 
 			         <#list faqList as a>
@@ -105,15 +105,15 @@
 			        </div> 
 			        <div class="hr-line-dashed"></div> 
 			       </#list>
-			        <div class="form-group"> 
-			         <div class="col-sm-4 col-sm-offset-2"> 
-			          <button class="btn btn-primary"  id="sub" data-dialog="somedialog">审核通过</button> 
-			          <button class="btn btn-white" type="submit"><a href="faqPage.html" >取消</a></button> 
-			         </div> 
-			        </div> 
+			        
 			       
 			       </form> 
-  
+	  					<div class="form-group"> 
+				         <div class="col-sm-4 col-sm-offset-2"> 
+				          <button class="btn btn-primary"  id="sub" data-dialog="somedialog">审核通过</button> 
+				          <button class="btn btn-primary" type="submit" onclick="window.history.back(-1)">取消</button> 
+				         </div> 
+				        </div> 
                     </div>
                 </div>
             </div>
@@ -134,9 +134,10 @@
 	  <script type="text/javascript" src="js/plugins/markdown/bootstrap-markdown.js"></script> 
 	  <script type="text/javascript" src="js/plugins/markdown/bootstrap-markdown.zh.js"></script> 
 
-
     <!-- iCheck -->
     <script src="js/plugins/iCheck/icheck.min.js"></script>
+     <script src="js/view/faqEdit.js"></script>
+    
     <script>
         $(document).ready(function () {
             $('.i-checks').iCheck({
@@ -145,114 +146,11 @@
             });
         });
         
-        
-        $("input").blur(function(){
-    		$(".validate_faqadd").css("color","#BD362F")
-
-    		if($(this).is("#keywords")){            //关键词判断
-    			var kw= /^\S{2,30}$/
-    			if($("#userkwone").val()!=""){
-    			if(!(kw.test($("#keywords").val()))){
-    				$(".spa3").text("请输入2-30个字符");
-    				$(this).css("border","1px solid #BD362F")
-    				return false;
-    			}else if(kw){
-    				$(".spa3").text("");
-    				return true;
-    			}
-    			}else{
-    				$(".spa3").text("");
-    			}
-    		}
-    	})
-
-    	$("textarea").blur(function(){
-    		$(".validate_faqadd").css("color","#BD362F")
-    		if($(this).is("#description")){				//简介的判断
-    			var dp = /^\S{2,100}$/
-    			if($("#description").val()!=""){
-    				if(!(dp.test($("#description").val()))){
-    					$(".spa5").text("请输入2-100个字符");
-    					$(this).css("border","1px solid #BD362F")
-    					return false;
-    				}else if(dp){
-    					$(".spa5").text("");
-    					return true;
-    				}
-    			}else{
-    				$(".spa5").text("");
-    			}
-    		}
- 
-    	})
-
-    	$("input").focus(function(){
-  
-    		if($(this).is("#keywords")){
-    			$(".spa3").text("输入关键词用逗号隔开").css("color","#aaa")
-    			$(this).css("border","1px solid #aaa")
-    		}
-    	})
-
-    	$("textarea").focus(function(){
-    		if($(this).is("#description")){
-    			$(".spa5").text("不超过100个字符").css("color","#aaa")
-    			$(this).css("border","1px solid #aaa")
-    		}
-    		
-    	})
-
-    	$("#sub").click(function(){
-    		$(".spa2").text("");
-    		$(".spa4").text(""); 
-    		var kw = /^\S{2,30}$/  
-    		var dp = /^\S{2,100}$/
-    		if(kw.test($("#keywords").val())&&dp.test($("#description").val())){
-    			var questionId = document.getElementById("questionId").value;
-            	// alert(questionId);
-                var keywords = document.getElementById("keywords").value;
-                // alert(keywords);
-                var description = document.getElementById("description").value;
-                // alert(description);
-                var faqcontent = document.getElementById("editor").value;          
-                // alert(faqcontent);
-                $.ajax({
-                    type: "POST",
-                    url: "/org.xjtusicd3.portal/updateFaq.html",
-                    data: {
-                        "questionId":questionId,
-                        "keywords": keywords,
-                        "description": description,
-                        "faqcontent": faqcontent
-                    },
-                    dataType: "json",
-                    success: function(data) {
-                    	alert("审核通过成功");
-                    	self.location.href = "/org.xjtusicd3.portal/faqPage.html";
-                    }
-                   
-                }) 
-                return true;
-    		}else{
-    			if($("#keywords").val()==""){
-    				$(".spa3").text('请您填写关键词')
-    			}
- 
-    			if($("#description").val()==""){
-    				$(".spa5").text('请您填写简单描述')
-    			}
-
-    			return false;
-    		}
-    	})
-
-   
-         
     </script>
 
     
     
-
+<div class="success" id="success" style="z-index:1001;position:fixed;top:40%;left:45%;width:220px;background: #f3f3f3;text-align: center;border:1px solid black;border-radius:3px;display:none"><div style="margin-top:30px; margin-bottom:30px;"><img src="images/true.png" style="width:20px;height:20px;margin-right:10px;"><h2 style="font-size:16px;display:inline-block;line-height:22px;vertical-align:top">操作成功</h2></div></div>
 </body>
 
 </html>

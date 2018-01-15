@@ -10,15 +10,15 @@ import org.xjtusicd3.database.logic.IBaseDao;
 import org.xjtusicd3.database.model.CommentPersistence;
 
 public interface CommentPersistenceMapper extends IBaseDao<CommentPersistence, String>{
-	/*
-	 * zyq_question2_查看回复_前五条
-	 */
+	// zyq_question2_查看回复_前五条
 	@Select("SELECT * FROM TBL_Comment WHERE COMMUNITYQUESTIONID=#{0} AND COMMENTPARENTID=#{1} ORDER BY COMMENTTIME ASC LIMIT 5")
 	List<CommentPersistence> question2_getComment_Limit(String questionid, String parentId);
+		
+	//zyq_faq3_查看评论的数量
+	@Select("SELECT COUNT(1) FROM TBL_Comment WHERE FAQQUESTIONID=#{0} AND COMMENTPARENTID=#{1}")
+	int getComment2(String faqquestionid,String parentId);
 	
-	/*
-	 * zyq_question2_查看回复总数
-	 */
+	// zyq_question2_查看回复总数
 	@Select("SELECT COUNT(1) FROM TBL_Comment WHERE COMMUNITYQUESTIONID=#{0} AND COMMENTPARENTID=#{1}")
 	int question2_getComment(String questionid, String parentId);
 	
@@ -62,17 +62,9 @@ public interface CommentPersistenceMapper extends IBaseDao<CommentPersistence, S
 	@Select("SELECT * FROM TBL_Comment WHERE COMMENTID=#{0}")
 	List<CommentPersistence> faq3_getCommentInfoById(String commentId);
 	
-	/*//zyq_faq3_根据评论ID获取用户信息
-	@Select("SELECT USERID FROM TBL_Comment WHERE COMMENTID=#{0}")
-	String faq3_getCommentUserIdById(String commentId);*/
-	
 	//zyq_faq3_ajax_删除自己的回复
 	@Delete("DELETE FROM TBL_Comment WHERE COMMENTID=#{0}")
 	void deleteReply(String commentId);
-	
-	//zyq_faq3_查看评论的数量
-	@Select("SELECT COUNT(1) FROM TBL_Comment WHERE FAQQUESTIONID=#{0} AND COMMENTPARENTID=#{1}")
-	int getComment2(String faqquestionid,String parentId);
 	
 	// zyq_faq3_查看子评论下的回复_更多回复
 	@Select("SELECT * FROM TBL_Comment WHERE COMMENTPARENTID=#{0} ORDER BY COMMENTTIME ASC LIMIT #{1},5")
@@ -89,83 +81,42 @@ public interface CommentPersistenceMapper extends IBaseDao<CommentPersistence, S
 	// zyq_personal2_查看评论的FAQ
 	@Select("SELECT * FROM TBL_Comment WHERE USERID=#{0} AND COMMENTPARENTID=#{1} ORDER BY COMMENTTIME DESC LIMIT #{2},#{3}")
 	List<CommentPersistence> personal2_getFaqComment_Limit(String userId,String parentId,int startNumber,int number);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	/*
-	 * zyq_question2_查看回复的回复
-	 */
-	@Select("SELECT * FROM TBL_Comment WHERE COMMENTPARENTID=#{0} AND USERID=#{1} AND COMMENTCONTENT=#{2} AND COMMUNITYQUESTIONID=#{3} AND TOUSERID=#{4} ORDER BY COMMENTTIME ASC")
-	List<CommentPersistence> question2_getComment3(String answerId, String userId, String content ,String questionId,String touserId);
-	
-	
-	
-	
-	
-	
-	/*
-	 * zyq_notice_pushlet_查看评论的回复
-	 */
+		
+	// zyq_notice_pushlet_查看评论的回复		 !!!未使用
 	@Select("SELECT * FROM TBL_Comment WHERE COMMUNITYQUESTIONID=#{0} AND COMMENTPARENTID=#{1} AND TOUSERID IS NULL AND ISNOTICE=#{2}")
 	List<CommentPersistence> notice_getComment(String communityquestionId, String commentId,int isnotice);
-	/*
-	 * zyq_notice_查看FAQ的评论
-	 */
+	
+	// zyq_notice_查看FAQ的评论		 !!!未使用
 	@Select("SELECT * FROM TBL_Comment WHERE FAQQUESTIONID=#{0} AND COMMENTPARENTID=#{1} AND ISNOTICE=#{2}")
 	List<CommentPersistence> notice_getFaqComment(String faqquestionId,String parentId,int isnotice);
+	
+	//!!!未使用
 	@Select("SELECT * FROM TBL_Comment WHERE USERID=#{0} AND COMMENTPARENTID=#{1}")
 	List<CommentPersistence> notice_getFaqComment2(String userId,String parentId);
-	/*
-	 * zyq_notice_pushlet_查看评论的回复的回复
-	 */
+	
+	// zyq_notice_pushlet_查看评论的回复的回复 		!!!未使用
 	@Select("SELECT * FROM TBL_Comment WHERE COMMUNITYQUESTIONID=#{0} AND COMMENTPARENTID=#{1} AND TOUSERID IS NOT NULL AND ISNOTICE=#{2}")
 	List<CommentPersistence> notice_getReply(String communityquestionId, String commentId,int isnotice);
-	/*
-	 * zyq_notice_查看FAQ评论的回复
-	 */
+	
+	//zyq_notice_查看FAQ评论的回复			!!!未使用
 	@Select("SELECT * FROM TBL_Comment WHERE COMMENTPARENTID=#{0} AND TOUSERID IS NULL AND ISNOTICE=#{1}")
 	List<CommentPersistence> notice_getFaqReply(String parentId,int isnotice);
+	
 	@Select("SELECT * FROM TBL_Comment WHERE COMMENTPARENTID=#{0} AND TOUSERID IS NOT NULL AND ISNOTICE=#{1}")
 	List<CommentPersistence> notice_getFaqReply2(String parentId,int isnotice);
-	/*
-	 * zyq_ajax_更改消息通知的被查阅后的状态
-	 */
+	
 	//更改知识库的评论、回复、回复的回复以及问吧的回复、回复的回复
 	@Update("UPDATE TBL_Comment SET TBL_Comment.ISNOTICE=#{0} WHERE COMMENTID=#{1}")
 	void updateNotice(int isnotice,String id);
+
 	//更改问吧的评论
 	@Update("UPDATE TBL_CommunityAnswer SET TBL_CommunityAnswer.ISNOTICE=#{0} WHERE COMMUNITYANSWERID=#{1}")
 	void updateNotice2(int isnotice,String id);
+
 	//删除消息通知
 	@Update("UPDATE TBL_Comment SET TBL_Comment.ISNOTICE=#{0} WHERE COMMENTID=#{1}")
 	void deleteNotice(int i, String id);
+	
 	@Update("UPDATE TBL_CommunityAnswer SET TBL_CommunityAnswer.ISNOTICE=#{0} WHERE COMMUNITYANSWERID=#{1}")
 	void deleteNotice2(int i, String id);
-
-	
-	
-
-	
-	
-	
-	
-	
-
-	/*
-	 * zzl_查找问题答案ID为answerId的用户信息_2017年10月29日16:36:06
-	 */
-	
 }

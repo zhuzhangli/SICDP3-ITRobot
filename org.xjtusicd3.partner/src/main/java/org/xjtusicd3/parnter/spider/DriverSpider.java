@@ -25,7 +25,6 @@ public class DriverSpider implements PageProcessor {
 
     @Override
     public void process(Page page) {
-    	String type = "";
     	if (page.getHtml().xpath("//div[@class='cjpp']").match()) {
         	page.addTargetRequests(page.getHtml().links().regex(URL_LIST).all());
 		}
@@ -56,11 +55,7 @@ public class DriverSpider implements PageProcessor {
 	    	configurePersistence.setFILESIZE(page.getHtml().xpath("//div[@class='down_lb']/ul/li[4]/text()").toString());
 	    	configurePersistence.setDOWNLOADTIMES("0");
 	    	configurePersistence.setCONFIGURETIME(page.getHtml().xpath("//div[@class='down_lb']/ul/li[3]/text()").toString());
-	    	
-//	    	configureHistoryPersistence.setCONFIGUREHISTORYID(uuid2.toString());
-//	    	configureHistoryPersistence.setCONFIGUREID(uuid.toString());
-//	    	configureHistoryPersistence.setUPDATETIME(page.getHtml().xpath("//div[@class='down_lb']/ul/li[3]/text()").toString());
-	    	
+   	
 	    	driversPersistence.setCONFIGUREID(uuid.toString());
 	    	driversPersistence.setOS(page.getHtml().xpath("//div[@class='down_lb']/ul/li[1]/text()").toString());
 	    	driversPersistence.setDRIVERTYPE(page.getHtml().xpath("//div[@class='down_lb']/ul/li[5]/a/text()").toString());

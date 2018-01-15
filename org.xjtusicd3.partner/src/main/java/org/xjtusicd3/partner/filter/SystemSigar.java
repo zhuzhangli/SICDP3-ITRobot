@@ -2,9 +2,6 @@ package org.xjtusicd3.partner.filter;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Map;
-import java.util.Properties;
-
 import org.hyperic.sigar.FileSystem;
 import org.hyperic.sigar.FileSystemUsage;
 import org.hyperic.sigar.Mem;
@@ -47,12 +44,9 @@ public class SystemSigar {
     
     //
     public static String property() throws UnknownHostException {
-        Runtime r = Runtime.getRuntime();
-        Properties props = System.getProperties();
         InetAddress addr;
         addr = InetAddress.getLocalHost();
         String ip = addr.getHostAddress();
-        Map<String, String> map = System.getenv();
         return ip;
     }
     

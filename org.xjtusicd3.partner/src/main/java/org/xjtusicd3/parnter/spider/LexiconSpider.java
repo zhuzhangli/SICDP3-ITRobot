@@ -1,14 +1,6 @@
 package org.xjtusicd3.parnter.spider;
 
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.List;
 
 import org.xjtusicd3.partner.filter.DownLoadFromUrl;

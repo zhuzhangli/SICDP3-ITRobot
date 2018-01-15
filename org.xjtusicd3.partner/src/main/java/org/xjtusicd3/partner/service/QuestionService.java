@@ -30,7 +30,7 @@ public class QuestionService {
 	public static List<Faq_UserDynamics> userDynamics(){
 		List<Faq_UserDynamics> userDynamics = new ArrayList<Faq_UserDynamics>();
 		
-		List<QuestionPersistence> questionPersistences = QuestionHelper.faq_userDynamics();		
+		List<QuestionPersistence> questionPersistences = QuestionHelper.faq_userDynamics(2,5);		
 		
 		for(QuestionPersistence questionPersistence:questionPersistences){
 			Faq_UserDynamics faq_UserDynamics = new Faq_UserDynamics();
@@ -65,16 +65,15 @@ public class QuestionService {
 	
 	
 	/**
-	 * author:zzl
 	 * abstract:获取未登录用户推荐列表
-	 * data:2017年9月15日19:46:03
 	 */
-	public static List<Faq_CommendView> faq_recommend_Limit(int startnum) {
+	public static List<Faq_CommendView> faq_recommend_Limit(int faqstate,int startnum,int number) {
 		//Faq_CommendView中信息不全、后续可补充        !!!分类图片
 		List<Faq_CommendView> faq_CommendViews = new ArrayList<Faq_CommendView>();
-		List<QuestionPersistence> questionPersistences = QuestionHelper.faq_recommend_Limit(startnum);
+		List<QuestionPersistence> questionPersistences = QuestionHelper.faq_recommend_Limit(faqstate,startnum,number);
 		for (QuestionPersistence questionPersistence:questionPersistences) {
 			Faq_CommendView faq_CommendView = new Faq_CommendView();
+			faq_CommendView.setUserId(questionPersistence.getUSERID());
 			faq_CommendView.setFAQQUESTIONID(questionPersistence.getFAQQUESTIONID());			
 			faq_CommendView.setFAQTITLE(questionPersistence.getFAQTITLE());
 			faq_CommendView.setMODIFYTIME(questionPersistence.getMODIFYTIME());
@@ -94,11 +93,11 @@ public class QuestionService {
 	}
 	
 	/**
-	 * author:zzl
 	 * abstract:获取已登录用户推荐列表
-	 * data:2017年9月15日09:19:48
+	 * @param j 
+	 * @param startnumber 
 	 */
-	public static List<Faq_CommendView> user_recommend_Limit(String userid, int startnum) {
+	public static List<Faq_CommendView> user_recommend_Limit(String userid, int state,int startnum,  int num) {
 		//Faq_CommendView中信息不全、后续可补充
 		List<Faq_CommendView> faq_CommendViews = new ArrayList<Faq_CommendView>();
 		List<LogPersistence> logPersistences = LogService.getLogs(userid);
@@ -110,7 +109,7 @@ public class QuestionService {
 				String questionId = a[a.length-1];
 				String faq_classifyId = QuestionHelper.faqclassify(questionId);						
 				String parentId = ClassifyHelper.faq_parentId(faq_classifyId);
-				List<QuestionPersistence> questionPersistences = QuestionHelper.questionView(parentId,startnum);
+				List<QuestionPersistence> questionPersistences = QuestionHelper.questionView(parentId,state,startnum,num);
 				for (QuestionPersistence questionPersistence:questionPersistences) {
 					Faq_CommendView faq_CommendView = new Faq_CommendView();
 					faq_CommendView.setFAQQUESTIONID(questionPersistence.getFAQQUESTIONID());			
@@ -131,7 +130,7 @@ public class QuestionService {
 		}
 		if (i == logPersistences.size()) {
 			//zzl_用户首次登录时还没有log记录_依旧用faq_recommend_Limit推荐
-			List<QuestionPersistence> questionPersistences = QuestionHelper.faq_recommend_Limit(startnum);
+			List<QuestionPersistence> questionPersistences = QuestionHelper.faq_recommend_Limit(2,startnum,5);
 			for (QuestionPersistence questionPersistence:questionPersistences) {
 				Faq_CommendView faq_CommendView = new Faq_CommendView();
 				faq_CommendView.setFAQQUESTIONID(questionPersistence.getFAQQUESTIONID());			
@@ -152,9 +151,7 @@ public class QuestionService {
 	}
 	
 	/**
-	 * author:zzl
 	 * abstract:FAQ的增加
-	 * data:2017年9月22日12:00:25
 	 */
 	public static void saveFAQ2(String userId, String title, String keywords, String subspecialCategoryId,String description, String faqcontent) {
 		//保存faq问题
@@ -186,9 +183,7 @@ public class QuestionService {
 	}
 		
 	/**
-	 * author:zzl
 	 * abstract:推荐知识_根据收藏量推荐前4个
-	 * data:2017年9月17日19:47:28
 	 */
 	public static List<Faq_CommendView> faqInfo(String faqParentId) {
 		List<Faq_CommendView> faq_CommendViews = new ArrayList<Faq_CommendView>();
@@ -209,7 +204,7 @@ public class QuestionService {
 	public static List<Faq2_faqContentView> faqlist_faq2(String ClassifyId,int pageNow){
 		List<Faq2_faqContentView> faq2Views = new ArrayList<Faq2_faqContentView>();
 		//每次获取一页5条信息
-		List<QuestionPersistence> questionPersistences = QuestionHelper.faq2_faqlist(ClassifyId,pageNow);
+		List<QuestionPersistence> questionPersistences = QuestionHelper.faq2_faqlist(ClassifyId,2,pageNow,5);
 		for(QuestionPersistence questionPersistence:questionPersistences){
 			List<Faq2_faqUserView> user_faq2Views = new ArrayList<Faq2_faqUserView>();
 			String userId = QuestionHelper.findUserIdByQuestionId(questionPersistence.getFAQQUESTIONID());
@@ -232,13 +227,13 @@ public class QuestionService {
 	 */
 	public static List<Faq3_faqContentView> faq3_faqcontent(String QuestionId){
 		List<Faq3_faqContentView> faq3Views = new ArrayList<Faq3_faqContentView>();
-		List<QuestionPersistence> faqPersistences = QuestionHelper.faq3_faqcontent(QuestionId);
+		List<QuestionPersistence> faqPersistences = QuestionHelper.faq3_faqcontent(QuestionId,2);
 		for(QuestionPersistence faqPersistence:faqPersistences){
 			List<Faq2_faqUserView> user_faq2Views = new ArrayList<Faq2_faqUserView>();
 			List<Faq3_faqAnswer> faq3_faqAnswers = new ArrayList<Faq3_faqAnswer>();
 			String userId = QuestionHelper.findUserIdByQuestionId(faqPersistence.getFAQQUESTIONID());
 			List<UserPersistence> userPersistences = UserHelper.getUserInfoById(userId);
-			List<AnswerPersistence> answerPersistences = AnswerHelper.faq3_faqContent(QuestionId);
+			List<AnswerPersistence> answerPersistences = AnswerHelper.getAnswerByQuestionId(QuestionId);
 			for(UserPersistence userPersistence:userPersistences){
 				Faq2_faqUserView user_faq2View = new Faq2_faqUserView(userPersistence);
 				user_faq2Views.add(user_faq2View);

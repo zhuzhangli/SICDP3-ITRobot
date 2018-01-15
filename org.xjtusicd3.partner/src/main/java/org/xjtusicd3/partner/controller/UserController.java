@@ -69,9 +69,7 @@ public class UserController {
 	
 	
 	/**
-	 * author:zzl
 	 * abstract:用户登录
-	 * data:2017年9月21日10:07:37
 	 */
 	@RequestMapping(value="/saveLogin",method=RequestMethod.POST)
 	@SystemControllerLog(description = "用户登录")
@@ -94,7 +92,10 @@ public class UserController {
 		
 		/*用户名 或密码错误，返回登录页面重新登录;正确跳转至urlPath所指向页面*/		 
 		if (isExist == false) {			
-			long executionTime = System.currentTimeMillis() - startTime;			
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			/*SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String dateStr = dateformat.format(startTime);*/
 			//记录运行时间
 			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);			
 			
@@ -108,11 +109,12 @@ public class UserController {
 						
 			long executionTime = System.currentTimeMillis() - startTime;
 			//记录运行时间
+			/*SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String dateStr = dateformat.format(startTime);*/
 			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 			return "redirect:"+urlPath;			
 		}		
 	}
-	
 	
 	/*
 	 * 用户退出
@@ -129,7 +131,6 @@ public class UserController {
 		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 		return "redirect:"+urlPath;
 	}
-	
 	
 	/*
 	 * personal_个人信息
@@ -168,7 +169,6 @@ public class UserController {
 		
 	}
 	
-	
 	/*
 	 * personal_个人信息添加
 	 */
@@ -186,18 +186,14 @@ public class UserController {
 			long executionTime = System.currentTimeMillis() - startTime;			
 			//记录运行时间
 			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-
 			return "redirect:login.html";
-		}else {
-			
-			List<UserPersistence> list = UserHelper.getUserInfo(loginUsername);
-			
+		}else {			
+			List<UserPersistence> list = UserHelper.getUserInfo(loginUsername);			
 			if(userView.getUserSex()==null){
 				usersex = list.get(0).getGENDER();
 			}else if (userView.getUserSex()!=null) {
 				usersex = userView.getUserSex();
-			}
-			
+			}			
 			String userbirthday = userView.getUserBirthday();
 			String province = userView.getProvince();
 			String city = userView.getCity();
@@ -212,9 +208,7 @@ public class UserController {
 			//zzl_获取登录用户信息
 			List<UserPersistence> userlist = UserService.loginUserInfo(loginUsername);	
 		
-			UserHelper.updateUserInfo2(userlist.get(0).getUSERID(), usersex, userbirthday, address, userbrief);
-			
-			
+			UserHelper.updateUserInfo2(userlist.get(0).getUSERID(), usersex, userbirthday, address, userbrief);					
 			long executionTime = System.currentTimeMillis() - startTime;
 			
 			//记录运行时间
@@ -222,8 +216,7 @@ public class UserController {
 			return "redirect:personal.html";
 		}
 	}
-	
-	
+		
 	/*
 	 * personal_个人密码修改
 	 */
@@ -235,20 +228,17 @@ public class UserController {
 		String path = request.getServletPath();		
 			
 		String username = (String) session.getAttribute("UserName");
-		String password = request.getParameter("password");
-		
+		String password = request.getParameter("password");		
 		String password2 = request.getParameter("password2");
 
 		if (username==null) {
 			long executionTime = System.currentTimeMillis() - startTime;			
 			//记录运行时间
-			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-			
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);			
 			return "redirect:login.html";
 		}else {
 			if (password.equals(password2)) {
-				//新密码和旧密码重复
-				
+				//新密码和旧密码重复				
 				long executionTime = System.currentTimeMillis() - startTime;				
 				//记录运行时间
 				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);				
@@ -256,29 +246,23 @@ public class UserController {
 			}else {
 				boolean islogin = UserService.isLogin(username, password);
 				if (islogin==false) {
-					//密码错误				
-					
+					//密码错误									
 					long executionTime = System.currentTimeMillis() - startTime;					
 					//记录运行时间
 					TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 					return "1";
 				}else {
-					//登录成功
-					
-					password2 = MD5.EncoderByMd5(password2);
-					
+					//登录成功					
+					password2 = MD5.EncoderByMd5(password2);					
 					//修改密码
-					UserHelper.updateUserPassword(username, password2);
-					
-					System.out.println("返回2");
-					
+					UserHelper.updateUserPassword(username, password2);					
+					System.out.println("返回2");				
 					long executionTime = System.currentTimeMillis() - startTime;					
 					//记录运行时间
 					TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 					return "2";
 				}
 			}
-
 		}
 	}
 	
@@ -290,8 +274,7 @@ public class UserController {
 	@RequestMapping(value = "/uploadUserImage",method=RequestMethod.POST)
 	@SystemControllerLog(description = "头像上传")
     public String uploadUserImage(HttpServletRequest request,HttpSession session) throws IOException {
-		String username = (String) session.getAttribute("UserName");
-		
+		String username = (String) session.getAttribute("UserName");		
 		if (username==null) {
 			return "redirect:login.html";
 		}else {
@@ -304,8 +287,7 @@ public class UserController {
 	        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 	        String dir = "static/image/"+username +"/"+ sdf.format(new Date()) + "/";
 	        String realPath = request.getSession().getServletContext().getRealPath("/");
-	       
-	        
+	       	        
 	        while(iterator.hasNext()){
 	            MultipartFile multipartFile = mRequest.getFile(iterator.next());
 	            if(multipartFile != null){
@@ -323,14 +305,9 @@ public class UserController {
 	            }
 	        }
 	        
-	        System.out.println("path:"+path);
-	        
-	        
 	        CopyFile copyFile = new CopyFile();
 	        String newPath = copyFile.copyFile(path, username, sdf.format(new Date()));
-	        
-	        System.out.println("newPath:"+newPath);
-	        
+
 	        newPath = newPath.replace("\\", "/");
 	        newPath = newPath.replace("E:/eclipse/workspace/robot-master/org.xjtusicd3.partner/src/main/webapp", "/org.xjtusicd3.partner");
 	        UserHelper.updateUserImage(username, newPath);
@@ -343,8 +320,7 @@ public class UserController {
 			return aString;
 		}
     }
-	
-	
+		
 	/*
 	 * zyq_personal2_个人信息
 	 */
@@ -405,10 +381,8 @@ public class UserController {
 			long executionTime = System.currentTimeMillis() - startTime;			
 			//记录运行时间
 			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-			return mv;
-		
-		}
-			
+			return mv;		
+		}			
 	}
 	
 	/*
@@ -841,33 +815,12 @@ public class UserController {
 			if (payPersistences.size()!=0) {
 				PayHelper.deletePay(userId,touserId);
 			}
+			List<Personal2_PayView> personal2_PayViews = UserService.getPay(userId);
+			jsonObject.put("payView", personal2_PayViews);
 			jsonObject.put("value", "1");
 			String result = JsonUtil.toJsonString(jsonObject); 
 			return result;
 		}
 	}
-/*
-	 * zyq_question_ajax获取用户的信息
-	 */
-	/*@ResponseBody
-	@RequestMapping(value={"/getUserInfo"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/html;charset=UTF-8")
-	public String getUserInfo(HttpServletRequest request,HttpServletResponse response){
-		long startTime = System.currentTimeMillis();//计算开始日期
-		String path = request.getServletPath();	
-		
-		
-		String email = request.getParameter("useremail");
-		List<UserPersistence> userPersistences = UserHelper.getEmail(email);
-		String result = JsonUtil.toJsonString(userPersistences);
-
-		
-		
-		long executionTime = System.currentTimeMillis() - startTime;
-		
-		//记录运行时间
-		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
-		return result;
-	}*/
-	
 
 }

@@ -37,7 +37,7 @@ public class RobotService {
 			robot_Chat robot_Chat = new robot_Chat();
 			System.out.println("机器人提问问题号："+robot_Chats.get(0).getQuestionId());
 			robot_Chat.setQuestionId(robot_Chats.get(0).getQuestionId());
-			List<AnswerPersistence> answerPersistences = AnswerHelper.faq3_faqContent(robot_Chats.get(0).getQuestionId());
+			List<AnswerPersistence> answerPersistences = AnswerHelper.getAnswerByQuestionId(robot_Chats.get(0).getQuestionId());
 			robot_Chat.setAnswerId(answerPersistences.get(0).getFAQANSWERID());
 			robot_Chat.setAnswer(answerPersistences.get(0).getFAQCONTENT());
 			list.add(robot_Chat);
@@ -47,7 +47,7 @@ public class RobotService {
 				if (i==0) {
 					robot_Chat robot_Chat = new robot_Chat();
 					robot_Chat.setQuestionId(robot_Chats.get(0).getQuestionId());
-					List<AnswerPersistence> answerPersistences = AnswerHelper.faq3_faqContent(robot_Chats.get(0).getQuestionId());
+					List<AnswerPersistence> answerPersistences = AnswerHelper.getAnswerByQuestionId(robot_Chats.get(0).getQuestionId());
 					robot_Chat.setAnswerId(answerPersistences.get(0).getFAQANSWERID());
 					robot_Chat.setAnswer(answerPersistences.get(0).getFAQCONTENT());
 					list.add(robot_Chat);
@@ -56,7 +56,7 @@ public class RobotService {
 					robot_Chat robot_Chat = new robot_Chat();
 					robot_Chat.setQuestionId(robot_Chats.get(i).getQuestionId());
 					System.out.println("robot_Chats.get(i).getQuestionId():"+robot_Chats.get(i).getQuestionId());
-					List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(robot_Chats.get(i).getQuestionId());
+					List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(robot_Chats.get(i).getQuestionId(),2);
 					robot_Chat.setQuestion(questionPersistences.get(0).getFAQTITLE());
 					list.add(robot_Chat);
 				}
@@ -68,13 +68,13 @@ public class RobotService {
 				if (i==0) {
 					robot_Chat robot_Chat = new robot_Chat();
 					robot_Chat.setQuestionId(robot_Chats.get(0).getQuestionId());
-					List<AnswerPersistence> answerPersistences = AnswerHelper.faq3_faqContent(robot_Chats.get(0).getQuestionId());
+					List<AnswerPersistence> answerPersistences = AnswerHelper.getAnswerByQuestionId(robot_Chats.get(0).getQuestionId());
 					robot_Chat.setAnswer(answerPersistences.get(0).getFAQCONTENT());
 					list.add(robot_Chat);
 				}else {
 					robot_Chat robot_Chat = new robot_Chat();
 					robot_Chat.setQuestionId(robot_Chats.get(i).getQuestionId());
-					List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(robot_Chats.get(i).getQuestionId());
+					List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(robot_Chats.get(i).getQuestionId(),2);
 					robot_Chat.setQuestion(questionPersistences.get(0).getFAQTITLE());
 					list.add(robot_Chat);
 				}

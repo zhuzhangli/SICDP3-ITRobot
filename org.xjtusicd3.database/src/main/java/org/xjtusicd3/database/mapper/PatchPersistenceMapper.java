@@ -10,5 +10,4 @@ public interface PatchPersistenceMapper extends IBaseDao<PatchPersistence, Strin
 	//查找补丁信息
 	@Select("SELECT * FROM TBL_Patch WHERE CONFIGUREID=#{0}")
 	List<PatchPersistence> getPatchInfo(String configureid);
-
 }

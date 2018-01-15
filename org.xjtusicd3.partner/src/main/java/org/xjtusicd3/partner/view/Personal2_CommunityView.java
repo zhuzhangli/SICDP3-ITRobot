@@ -10,14 +10,12 @@ public class Personal2_CommunityView {
 	private String answerNumber;
 	private String isMore;
 	
-	
 	private String isreply;
 	private String replyId;
 	private String content;
 	private String replyNumber;
 	private String replyTime;
-	
-	
+		
 	public String getIsMore() {
 		return isMore;
 	}

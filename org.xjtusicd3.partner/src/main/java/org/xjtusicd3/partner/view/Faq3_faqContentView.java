@@ -14,11 +14,9 @@ public class Faq3_faqContentView {
 	private String FaqCollection;
 	private String FaqWritetime;
 	private float FaqScore;
-	private List<Faq3_faqAnswer> faqAnswers;
-	private List<Faq2_faqUserView> uList;
+	private List<Faq3_faqAnswer> faqAnswers;//答案信息
+	private List<Faq2_faqUserView> uList;//yonghuxinxi
 	
-	
-
 	public String getQuestionId() {
 		return QuestionId;
 	}

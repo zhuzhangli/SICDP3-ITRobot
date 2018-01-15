@@ -38,20 +38,20 @@ public class EquipmentHelper {
 	
 	
 	//获取所有计算机信息 
-	public static List<EquipmentPersistence> getAllComupters() {
+	public static List<EquipmentPersistence> getAllComupters(int state) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		EquipmentPersistenceMapper mapper = session.getMapper(EquipmentPersistenceMapper.class);
-		List<EquipmentPersistence> list = mapper.getAllComupters();
+		List<EquipmentPersistence> list = mapper.getAllComupters(state);
 		session.close();
 		return list;
 	}
 	
 	
 	//获取计算机总数
-	public static int getAllComputerCounts() {
+	public static int getAllComputerCounts(int state) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		EquipmentPersistenceMapper mapper = session.getMapper(EquipmentPersistenceMapper.class);
-		int count = mapper.getAllComputerCounts();
+		int count = mapper.getAllComputerCounts(state);
 		session.close();
 		return count;
 	}
@@ -97,20 +97,20 @@ public class EquipmentHelper {
 	
 	
 	//获取服务器信息
-	public static List<EquipmentPersistence> getAllServers() {
+	public static List<EquipmentPersistence> getAllServers(int state) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		EquipmentPersistenceMapper mapper = session.getMapper(EquipmentPersistenceMapper.class);
-		List<EquipmentPersistence> list = mapper.getAllServers();
+		List<EquipmentPersistence> list = mapper.getAllServers(state);
 		session.close();
 		return list;
 	}
 	
 	
 	//获取服务器总数
-	public static int getAllServerCounts() {
+	public static int getAllServerCounts(int state) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		EquipmentPersistenceMapper mapper = session.getMapper(EquipmentPersistenceMapper.class);
-		int count = mapper.getAllServerCounts();
+		int count = mapper.getAllServerCounts(state);
 		session.close();
 		return count;
 	}

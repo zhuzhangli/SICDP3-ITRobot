@@ -6,12 +6,11 @@ import org.apache.ibatis.session.SqlSession;
 import org.xjtusicd3.database.logic.SqlSessionManager;
 import org.xjtusicd3.database.mapper.ConfigureHistoryPersistenceMapper;
 import org.xjtusicd3.database.mapper.ConfigurePersistenceMapper;
-import org.xjtusicd3.database.model.BasicConfigurePersistence;
 import org.xjtusicd3.database.model.ConfigureHistoryPersistence;
 import org.xjtusicd3.database.model.ConfigurePersistence;
 
 public class ConfigureHelper {
-	/*
+	/**
 	 * zyq_spider_补丁的增加
 	 */
 	public static void save_Patch(ConfigurePersistence ConfigurePersistence) throws Exception{
@@ -20,7 +19,7 @@ public class ConfigureHelper {
 		mapper.save(ConfigurePersistence);
 		session.close();
 	}
-	/*
+	/**
 	 * zyq_spider_软件的增加
 	 */
 	public static void save_Soft(ConfigurePersistence configurePersistence) throws Exception{
@@ -29,7 +28,7 @@ public class ConfigureHelper {
 		mapper.save(configurePersistence);
 		session.close();
 	}
-	/*
+	/**
 	 *zyq_spider_驱动的增加
 	 */
 	public static void save_Driver(ConfigurePersistence configurePersistence) throws Exception{
@@ -58,7 +57,7 @@ public class ConfigureHelper {
 		session.close();
 		return list;
 	}
-	/*
+	/**
 	 * zyq_spider_更新软件
 	 */
 	public static List<ConfigurePersistence> update_Configure(String configurename,String filesize,String url,String downloadtimes,String producer,String configuretime){
@@ -191,7 +190,5 @@ public class ConfigureHelper {
 		session.close();
 		return list;
 	}
-	
-
-	
+		
 }

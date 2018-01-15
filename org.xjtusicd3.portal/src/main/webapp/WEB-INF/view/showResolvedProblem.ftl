@@ -32,7 +32,7 @@
                         <h5>问题信息</h5>
                          
                     </div>
-                    <div class="ibox-content">
+                    <div class="ibox-content" style="padding-bottom: 50px">
                         <form method="get" class="form-horizontal">
                            
                            <div class="form-group" style="display: none;">
@@ -59,7 +59,16 @@
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
-        
+					       
+					       <div class="form-group" > 
+					        <label class="col-sm-2 control-label">关键字：</label> 
+					        <div class="col-sm-10"> 					        
+					        <input type="text" class="form-control" id="keywords" placeholder="在输入关键词时请使用半角逗号间隔" style="width:  69%;float: left;">
+					                           <div class="validate_faqadd spa3"></div>
+					        
+					        </div> 
+					       </div> 
+                            <div class="hr-line-dashed"></div>
                             
                             <div class="form-group" style="display: none;">
                                 <div class="col-sm-10" >
@@ -78,13 +87,7 @@
                           </div>
                             
                            <div class="hr-line-dashed"></div> 
-                            
-                            
-                            
-                            
-                            
-                            
-                            
+                           
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">提问用户</label>
 
@@ -128,14 +131,15 @@
                                 </div>
                             </div>
                             <div class="hr-line-dashed"></div>
-                            
-                            <div class="form-group">
-                                <div class="col-sm-4 col-sm-offset-2">
-                                    <button class="btn btn-primary" ><a href="/org.xjtusicd3.portal/problemPage.html">返回</a></button>
-                                    <button class="btn btn-primary" "><a href="javascript:void(0);" onclick="addToFaq()">添加至知识库</a></button> 
-                                </div>
-                            </div>
+                                                      
                         </form>
+                        
+                       
+                        <div class="col-sm-4 col-sm-offset-2">
+                           <button class="btn btn-primary" onclick="window.history.back(-1)">返回</button>
+                           <input class="btn btn-primary" value="添加至知识库" id="sub" type="button"> 
+                        </div>
+
                     </div>
 					
                 </div>
@@ -144,6 +148,8 @@
     </div>
  
 </#list>
+   
+   
     <!-- 全局js -->
     <script src="js/jquery.min.js?v=2.1.4"></script>
     <script src="js/bootstrap.min.js?v=3.3.6"></script>
@@ -153,37 +159,9 @@
 
     <!-- iCheck -->
     <script src="js/plugins/iCheck/icheck.min.js"></script>
-    <script>
+    <script src="js/view/showResolvedProblem.js"></script>
     
-    $(document).ready(
-			   function(){
-			         $.ajax({
-			             type: "GET",
-			             url: "/org.xjtusicd3.portal/getFirstLevel.html",            
-			             dataType: "json",
-			             success: function(data){            
-			     			 for(var i in data){ 
-			     			 	 document.getElementById("specialCategoryId").options.add(new Option(data[i].fAQCLASSIFYNAME, data[i].fAQCLASSIFYID));					        
-						      }                                                                      
-			             }
-			         });
-			    })
-			    
-			function selectSecondChild(){
-			var element = document.getElementById("specialCategoryId");
-			var classifyId = element.options[element.selectedIndex].value;
-			$.ajax({
-			     type: "GET",
-			     url: "/org.xjtusicd3.portal/getSecondLevel.html"+"?"+"classifyId="+classifyId,            
-			     dataType: "json",
-			     success: function(data){
-			     			 document.getElementById("subspecialCategoryId").options.length=0;              	
-			     			 for(var i in data){ 
-			     			 	 document.getElementById("subspecialCategoryId").options.add(new Option(data[i].fAQCLASSIFYNAME, data[i].fAQCLASSIFYID));					        
-							      }                                                                      
-			                  }
-			     });         
-			}
+    <script>
     
     
         $(document).ready(function () {
@@ -194,58 +172,7 @@
         });
         
         
-        function addToFaq(){
-        	if($("#subspecialCategoryId").val()){
-        	var communityQuestionId = document.getElementById("communityQuestionId").value;    		
-    		var title = document.getElementById("title").innerText;
-    		var content = document.getElementById("content").innerText;
-    		//var classifyId = document.getElementById("classifyId").value;
-    		var classifyId = document.getElementById("subspecialCategoryId").value;
-    		
-    		var problemUser = document.getElementById("problemUser").innerText;   		
-    		var userId = document.getElementById("userId").value;
-    		var problemTime = document.getElementById("problemTime").innerText;  		
-    		var answerContent = document.getElementById("answerContent").innerText;
-    		var answerUser = document.getElementById("answerUser").innerText;
-    		var answerTime = document.getElementById("answerTime").innerText;
-    	 	  $.ajax({
-    			type:"POST",
-    			url:"/org.xjtusicd3.portal/saveCommunityQuestionToFAQ.html",
-    			data:{
-    				"communityQuestionId":communityQuestionId,
-    				"title":title,
-    				"content":content,
-    				"classifyId":classifyId,
-    				"problemUser":problemUser,
-    				"problemTime":problemTime,
-    				"userId":userId,
-    				"answerContent":answerContent,
-    				"answerUser":answerUser,
-    				"answerTime":answerTime
-    			},
-    			dataType:"json",
-    			success:function(data){
-    				if(data.value=="0"){
-    					self.location='login.html';
-    				}else if(data.value=="1"){
-    					alert("添加成功");
-    					self.location.href = "/org.xjtusicd3.portal/problemPage.html#tab-32";
-    				}else{
-    					alert("重复添加");
-    					self.location.href = "/org.xjtusicd3.portal/problemPage.html";
-    				} 
-    				
-    			}
-    		}) 
-        	
-        	}else{
-        		if($("#subspecialCategoryId").val()==null){
-    				$(".spa4").text('请您选择知识分类')
-    			} 
-    			
-    			return false;
-        	}
-    	}
+       
     </script>
 
     

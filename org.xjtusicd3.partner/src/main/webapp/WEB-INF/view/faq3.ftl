@@ -1,4 +1,3 @@
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -20,7 +19,11 @@
     <script type="text/javascript" charset="utf-8" src="ueditor/lang/zh-cn/zh-cn.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/starScore.js"></script>
-    <script type="text/javascript" src="js/browserEvent.js"></script>
+    <script type="text/javascript" src="js/browserEvent.js"></script>'
+    <link rel="stylesheet" href="share/css/share.min.css">
+    <script src="http://apps.bdimg.com/libs/jquery/1.8.2/jquery.js"></script>
+    <script src="share/js/jquery.share.min.js"></script>
+    
 	<script type="text/javascript">
     $(function(){
     	if(document.URL.indexOf("n=")>0){
@@ -226,6 +229,9 @@
 								</div>
 								</#if>
 							</#if>
+							 <span class="share">|</span>
+                            <span class="share">分享至：</span>
+                            <div class="social-share fl" data-sites="weibo,qzone"></div>
 						</div>
 						<#if scoreSize gt 0>
 							<#list scoreList as scoreList>
@@ -353,6 +359,37 @@
 	        $(this).css("width",www);
 	        $(this).parent(".atar_Show2").siblings("span").text(num+"分");
 	    });
+	    
+	  //关注
+	    function attention(id){
+	       var touserId = id;
+	       var userId = document.getElementById("duoduo").innerHTML;
+	       
+	       if(userId!=null){
+	    	   if(userId!=touserId){
+		   		$.ajax({
+		   			type:"POST",
+		   			url:"/org.xjtusicd3.partner/savePay.html",
+		   			data:{
+		   				"userId":userId,
+		   				"touserId":touserId
+		   			},
+		   			dataType:"json",
+		   			success:function(data){
+		   				if(data.value=="0"){
+		   					self.location='login.html';
+		   				}else if(data.value=="1"){
+		   					alert("关注成功！");
+		                    $("#overAttentionLink").removeClass("hidden");
+		                    $("#attentionLink").addClass("hidden");
+		   				}
+		   			}
+		   		})
+	     	}
+	   	}else {
+	   		alert("您还没登录，不能关注！");
+		}
+	    }
     </script> 
 		<div class="success" id="success" style="z-index:1001;position:fixed;top:40%;left:45%;width:220px;background: #f3f3f3;text-align: center;border:1px solid black;border-radius:3px;display:none">
 			<div style="margin-top:30px; margin-bottom:30px;">
@@ -373,5 +410,6 @@
 			</div>
 		</div>
 		<div id="zhao_hidden" style="display:none">${userName}</div>
+		<div id="duoduo" style="display:none">${uid}</div>
 </body>
 </html>

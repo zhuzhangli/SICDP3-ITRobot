@@ -1,6 +1,5 @@
 package org.xjtusicd3.portal.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,15 +20,13 @@ public class ChangeService {
 		return list;
 	}
 
-	
 	//根据macAddress去设备标准库中查找
 	public static EquipmentComputerView FindEquipmentFromBasicByMac(String macAddress) {		
 		EquipmentComputerView computerView = new EquipmentComputerView();
 		
 		List<EquipmentPersistence> equipmentPersistences = EquipmentHelper.FindEquipmentFromBasicByMac(macAddress);
 		
-		for(EquipmentPersistence ePersistence:equipmentPersistences){
-						
+		for(EquipmentPersistence ePersistence:equipmentPersistences){						
 			computerView.setEQUIPMENTID(ePersistence.getEQUIPMENTID());
 			computerView.setMACADDRESS(macAddress);
 			computerView.setEQUIPMENTMODEL(ePersistence.getEQUIPMENTMODEL());
@@ -39,21 +36,15 @@ public class ChangeService {
 			computerView.setSTORAGE(ePersistence.getSTORAGE());
 			computerView.setIP(ePersistence.getIP());
 			computerView.setSTATE(ePersistence.getSTATE());
-			
-			List<ComputerPersistence> cList = ComputerHelper.getComputerInfoById(ePersistence.getEQUIPMENTID());
-			
+		
+			List<ComputerPersistence> cList = ComputerHelper.getComputerInfoById(ePersistence.getEQUIPMENTID());			
 			computerView.setGRAPHICCARD(cList.get(0).getGRAPHICCARD());
 			computerView.setAUDIOCARD(cList.get(0).getAUDIOCARD());
 			computerView.setNETWORKCARD(cList.get(0).getNETWORKCARD());
 			computerView.setMOTHERBOARD(cList.get(0).getMOTHERBOARD());
 			computerView.setOSNAME(cList.get(0).getOSNAME());
 			computerView.setOSID(cList.get(0).getOSID());
-		}
-		
-		
-		
-		
+		}		
 		return computerView;
 	}
-
 }

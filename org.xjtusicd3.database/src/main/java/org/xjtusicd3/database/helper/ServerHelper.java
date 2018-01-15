@@ -16,8 +16,7 @@ public class ServerHelper {
 		session.close();
 		return list;
 	}
-	
-	
+		
 	//添加服务器信息
 	public static void addServerEquipment(String equipmentId, String osVersion, String computerName, String pCI,
 			String uSB, String path, String rAM_EXCHANGEAREAUSE, String pARTATIONUSE, String iDLERAM,
@@ -33,8 +32,7 @@ public class ServerHelper {
 
 		
 	}
-	
-	
+		
 	//更新服务器信息
 	public static void updateServerInfo(String equipmentId, String osVersion, String computerName, String pCI,
 			String uSB, String path, String rAM_EXCHANGEAREAUSE, String pARTATIONUSE, String iDLERAM,
@@ -51,42 +49,14 @@ public class ServerHelper {
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//zpz_get server information
-			public static List<ServerPersistence> getServer()
-			{
-				SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-				ServerPersistenceMapper mapper = session.getMapper(ServerPersistenceMapper.class);
-				List<ServerPersistence> serverlist = mapper.getServer();
-				session.close();
-				return serverlist;
-				
-
-			}
-
-			
-			
-
-
-
-
-
-
-
-
-
-
-
-
-
-			
+	//zpz_get server information			!!!
+	public static List<ServerPersistence> getServer()
+	{
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		ServerPersistenceMapper mapper = session.getMapper(ServerPersistenceMapper.class);
+		List<ServerPersistence> serverlist = mapper.getServer();
+		session.close();
+		return serverlist;
+	}
 			
 }

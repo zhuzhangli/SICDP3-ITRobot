@@ -47,24 +47,15 @@
 			            	<section id="slider">
 				                <div class="box_skitter box_skitter_large">
 				                    <ul>
+										<#list faqPicList as faqPicList>
 										<li>
-				                            <img src="zhao/lunbo_1/images/content/z1.png"  alt="" />
+				                            <img src="${faqPicList.IMGPATH}"  alt="" />
 				                            <div class="label_text">
-				                                <span>Windows 10系统升级、安装、更新热点问题汇总</span>
+				                                <span>${faqPicList.DESCRIPTION}</span>
 				                            </div>
 				                        </li>
-				                        <li>
-				                            <img src="zhao/lunbo_1/images/content/z2.png"  alt="" />
-				                            <div class="label_text">
-				                                <span>联想一键恢复的使用方法</span>
-				                            </div>
-				                        </li>
-				                        <li>
-				                            <img src="zhao/lunbo_1/images/content/z3.jpg"  alt="" />
-				                            <div class="label_text">
-				                                <span>采用RAID SSD的机型安装Win10系统无法识别随机标配的硬盘</span>
-				                            </div>
-				                        </li>
+				                        </#list>
+				                        				                  
 				                    </ul>
 				                </div>
 			                </section>
@@ -79,8 +70,8 @@
 					<div class="topList clearfix">
                         <div class="imagesPotion">
                            
-                            <a href="/detail/dc_143417.html" target="_blank">
-                                <img src="images/test/2${faqlists_index+1}.jpg" alt="">
+                            <a target="_blank">
+                                <img src="images/test/2${faqlists_index}.jpg" alt="">
                             </a>
                         </div>
                         <ul class="topcontent">
@@ -105,11 +96,12 @@
                             </li>
                         </ul>
                     </div>
-                    </#list>	 
-					
-                                 
-                  
+                    </#list>	                             
 			</div> 
+			
+			<div class="topMoreTop" id="querymorelink" value="1" display="block">
+                    <a href="javascript:void(0);" onclick="showMoreRecommend()" >加载更多</a>
+            </div>
            </div>
            
            <!-- 右侧开始 -->
@@ -145,6 +137,8 @@
 	<script type="text/javascript" src="new/front/js/util.js"></script>
 	<script type="text/javascript" src="js/view/faq.js"></script>
 	<script type="text/javascript">
+	var num = 5;
+	
 	jQuery(document).ready(function(){
 		jQuery(".box_skitter_large").skitter({
 			animation: "random",
@@ -160,6 +154,67 @@
 			progressbar: false
 		});
 	});
+	
+	$(document).scroll(function(){
+        if ($('body').scrollTop()>=$(document).height()-$(window).height()||$('html').scrollTop()>=$(document).height()-$(window).height()) {
+            setTimeout(function(){
+                num += 5;
+                showMoreRecommend();
+            },500)
+        }
+    })
+
+	
+
+	
+	//加载更多
+	var pagenow = 1;
+	function showMoreRecommend(){ 
+		//var classifyId = $("#secondNavStep").attr("value");
+			$.ajax({
+				type:"post",
+				url:"/org.xjtusicd3.partner/showMoreRecommend.html",
+				data:{
+					"num":num,
+					//"classifyId":classifyId
+				},
+				dataType:"json",
+				success:function(data){
+					for(var i in data.faqlists){
+						var html = document.getElementById("tplWrapper").innerHTML;
+						//var time = data.faqlist[i].faqModifytime.substring(0,10).replace(/-/,'/');
+						document.getElementById("tplWrapper").innerHTML = html+ '<div class="topList clearfix">'
+						+'<div class="imagesPotion">'                       
+						+'<a target="_blank">'
+						+'<img src="images/test/2'+i+'.jpg" alt="">'
+						+'</a>'
+						+'</div>'
+						+'<ul class="topcontent">'
+						+'<li>'
+						+'<p class="title">'
+						+'<a href="faq3.html?q='+data.faqlists[i].fAQQUESTIONID+'" target="_blank">'+data.faqlists[i].fAQTITLE+'</a>'
+						+'</p>'
+						+'</li>'
+						+'<li class="clearfix">'                        
+						+'<span class="userPic"><img src="'+data.faqlists[i].fAQUSERIMAGE+'"></span>'
+						+'<span class="username">'+data.faqlists[i].fAQUSERNAME+'</span>'
+						+'<span class="dot">-</span>'
+						+'<span class="time">'+data.faqlists[i].mODIFYTIME+'</span>'
+						+'<span class="line">|</span>'
+						+'<span class="showCount">'+data.faqlists[i].sCAN+'</span>'
+						+'<span class="message">'+data.faqlists[i].cOMMENTSUM+'</span>'
+						+'<span class="collection">'+data.faqlists[i].cOLLECTION+'</span>'
+						+'</li>'
+						+'<li class="content">'+data.faqlists[i].fAQDESCRIPTION+'</li>'
+						+'</ul>'
+						+'</div>';
+					}
+					if(data.num<4){
+						document.getElementById("querymorelink").remove();
+					}
+				}
+			});
+	}
 	</script>
 </body>
 </html>

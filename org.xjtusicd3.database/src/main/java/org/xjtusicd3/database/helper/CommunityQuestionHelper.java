@@ -36,11 +36,11 @@ public class CommunityQuestionHelper{
 	}
 	
 	//zyq_ajax_question的增加
-	public static void saveCommunityQuestion(String id,String time,String title,String content,String classifyid,String userid,String scan,int questionState,int isanswer){
+	public static void save(CommunityQuestionPersistence communityQuestion) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
-		mapper.saveCommunityQuestion(id,time,title,content,classifyid,userid,scan,questionState,isanswer);
-		session.close();
+		mapper.save(communityQuestion);
+		session.close();	
 	}
 	
 	//zyq_question_问题展示_根据类别ID 
@@ -68,6 +68,15 @@ public class CommunityQuestionHelper{
 		int size = mapper.questionSizeByClassifyIdLimit(faqClassifyId,isanswer);
 		session.close();
 		return size;
+	}
+	
+	//获取faqClassifyId分类号下的所有社区问题信息
+	public static List<CommunityQuestionPersistence> question_getCommunity2(String classifyid,int isanswer){
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
+		List<CommunityQuestionPersistence> list = mapper.question_getCommunity2(classifyid,isanswer);
+		session.close();
+		return list;
 	}
 	
 	//zyq_question2_问题内容详情
@@ -98,10 +107,10 @@ public class CommunityQuestionHelper{
 	}
 	
 	// zyq_question2_设为最佳答案
-	public static void updateBestAnswer(String questionId) {
+	public static void updateBestAnswer(String questionId, int isanswer) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
-		mapper.updateBestAnswer(questionId);
+		mapper.updateBestAnswer(questionId,isanswer);
 		session.close();
 	}
 	
@@ -116,46 +125,42 @@ public class CommunityQuestionHelper{
 		return list;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-	
-	public static List<CommunityQuestionPersistence> question_getCommunity2(String classifyid,int isanswer){
+	//zzl_获取问题中心中所有没有最佳答案的问题信息_2017年11月6日09:19:48
+	public static List<CommunityQuestionPersistence> problemInfo(int isanswer,int questionState) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
-		List<CommunityQuestionPersistence> list = mapper.question_getCommunity2(classifyid,isanswer);
+		List<CommunityQuestionPersistence> communityquestionlist = mapper.problemInfo(isanswer,questionState);
 		session.close();
-		return list;
+		return communityquestionlist;
 	}
 
+	//问题数量
+	public static int problemCount(int isanswer, int questionState) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
+		int communityquestionCount = mapper.problemCount(isanswer,questionState);
+		session.close();
+		return communityquestionCount;
+	}
+	
+	//zzl_更新社区问题状态_2017年11月12日18:37:38
+	public static void updateCommunityQuestionState(String questionId, int questionState) {
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
+		mapper.updateCommunityQuestionState(questionId, questionState);
+		session.close();	
+	}
+	
+	//zpz_get community problem by ID
+	public static List<CommunityQuestionPersistence> getCommunityQuestionById(String communityProblemId){
+		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
+		CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
+		List<CommunityQuestionPersistence> communityquestionlist = mapper.question2_getCommunity(communityProblemId);
+		session.close();
+		return communityquestionlist;
+	}
+	
+	//根据是否有最佳答案获取社区问题信息
 	public static List<CommunityQuestionPersistence> question_getCommunity2_isanswer(int isanswer){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
@@ -165,7 +170,7 @@ public class CommunityQuestionHelper{
 	}
 	
 	/*
-	 * zyq_notice_查询用户的提问
+	 * zyq_notice_查询用户的提问			 !!!未使用
 	 */
 	public static List<CommunityQuestionPersistence> notice_CommunityQuestion(String userid){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -173,101 +178,5 @@ public class CommunityQuestionHelper{
 		List<CommunityQuestionPersistence> list = mapper.notice_CommunityQuestion(userid);
 		session.close();
 		return list;
-	}
-	
-	
-	//zpz_获取社区问题
-		public static List<CommunityQuestionPersistence> getAllCommunityQuestion()
-		{
-			SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-			CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
-			List<CommunityQuestionPersistence> communityquestionlist = mapper.getAllCommunityQuestion();
-			session.close();
-			return communityquestionlist;
-			
-
-		}
-		
-	//zpz_get community problem by ID
-			public static List<CommunityQuestionPersistence> getCommunityQuestionById(String communityProblemId)
-			{
-				SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-				CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
-				List<CommunityQuestionPersistence> communityquestionlist = mapper.question2_getCommunity(communityProblemId);
-				session.close();
-				return communityquestionlist;
-			}
-			
-			//zpz_delete community problem by ID
-			public static void deleteCommunityQuestionById(String communityProblemId)
-			{
-				SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-				CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
-				mapper.deleteCommunityQuestion(communityProblemId);
-				session.close();
-			 
-			}
-			
-			//zpz_delete community answer by ID
-			public static void deleteCommunityAnswerById(String communityProblemId)
-			{
-				SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-				CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
-				mapper.deleteCommunityAnswer(communityProblemId);
-				session.close();
-				 
-			}
-			
-	
-	//zzl_2017年10月11日20:04:00
-	public static List<CommunityQuestionPersistence> getAllCommunityQuestion2() {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
-		List<CommunityQuestionPersistence> communityquestionlist = mapper.getAllCommunityQuestion2();
-		session.close();
-		return communityquestionlist;
-	}
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	//zzl_获取问题中心中所有没有最佳答案的问题信息_2017年11月6日09:19:48
-	public static List<CommunityQuestionPersistence> unResolvedProblems() {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
-		List<CommunityQuestionPersistence> communityquestionlist = mapper.unResolvedProblems();
-		session.close();
-		return communityquestionlist;
-	}
-	
-	//zzl_获取问题中心中所有有最佳答案的问题信息_2017年11月6日10:25:02
-	public static List<CommunityQuestionPersistence> resolvedProblems() {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
-		List<CommunityQuestionPersistence> communityquestionlist = mapper.resolvedProblems();
-		session.close();
-		return communityquestionlist;
-	}
-	
-	//zzl_更新社区问题状态_2017年11月12日18:37:38
-	public static void updateCommunityQuestionState(String questionId, int questionState) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		CommunityQuestionPersistenceMapper mapper = session.getMapper(CommunityQuestionPersistenceMapper.class);
-		mapper.updateCommunityQuestionState(questionId, questionState);
-		session.close();
-		
-	}
-
-	
-
-	
-
-		
-	
+	}		
 }

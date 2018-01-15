@@ -15,46 +15,72 @@ function addPermission() {
         	if(data.value=="0"){
 				self.location='login.html';
 			}else if(data.value=="1"){
-				alert("添加成功");
-	        	window.location.reload();
+				setTimeout("location.reload()",1000)
+				document.getElementById('myModal').style.display='none';
+				$(".modal-backdrop").remove();
+				document.getElementById('chongfu').style.display='block';
+				setTimeout("codefans2()",3000);
+			}else if(data.value=="2"){
+				setTimeout("location.reload()",1000)
+				document.getElementById('myModal').style.display='none';
+				$(".modal-backdrop").remove();
+				document.getElementById('chongfu2').style.display='block';
+				setTimeout("codefans2()",3000);
+			}else {
+				setTimeout("location.reload()",1000)
+				document.getElementById('myModal').style.display='none';
+				$(".modal-backdrop").remove();
+				document.getElementById('success').style.display='block';
+				setTimeout("codefans()",3000);
 			}      	
         }     
     }) 
 }   
 
-
-
 /* 获取要编辑的权限信息 */
 function editPermission(id) {
 	//获取权限ID
-	var permissionId = document.getElementById(id).id;
-	//alert(permissionId);
-	
+	var permissionId = document.getElementById(id).id;	
 	//获取权限逻辑名
-	var editLogicName = document.getElementById("editLogicName"+permissionId).innerText;
-	//alert(editLogicName)
-	
+	var editLogicName = document.getElementById("editLogicName"+permissionId).innerText;	
 	//获取权限物理名
-	var editPhysicalName = document.getElementById("editPhysicalName"+permissionId).innerText;
-	//alert(editPhysicalName)
-	
+	var editPhysicalName = document.getElementById("editPhysicalName"+permissionId).innerText;	
 	$("#editPermissionId").val(permissionId); 
 	$("#editLogicName").val(editLogicName);
 	$("#editPhysicalName").val(editPhysicalName);
  }
 
+//提交成功
+function codefans(){
+	var box=document.getElementById("success");
+	box.style.display="none"; 
+}
 
+//物理名重复提交
+function codefans2(){
+	var box=document.getElementById("chongfu");
+	box.style.display="none"; 
+}
+
+//逻辑名重复提交
+function codefans3(){
+	var box=document.getElementById("chongfu2");
+	box.style.display="none"; 
+}
+
+//请勿重复提交
+function codefans3(){
+	var box=document.getElementById("chongfu3");
+	box.style.display="none"; 
+}
 
 /* 提交更改  */ 
 function update() {  
     //获取模态框数据  
     var permissionId = $('#editPermissionId').val();  
-    //alert(permissionId);
     var logicName = $('#editLogicName').val(); 
-    //alert(logicName);
     var physicalName = $('#editPhysicalName').val();
-    //alert(physicalName);
-
+    if(permissionId!=null){
     $.ajax({
         type: "POST",
         url: "/org.xjtusicd3.portal/updatePermission.html",
@@ -65,11 +91,24 @@ function update() {
         },
         dataType: "json",
         success: function(data) {
-        	alert("更改成功");
-        	window.location.reload();
-        }
-       
-    }) 	        
+        	if(data.value=="0"){
+				self.location='login.html';
+			}else if(data.value=="1"){
+				setTimeout("location.reload()",1000)
+				document.getElementById('myModalEdit').style.display='none';
+				$(".modal-backdrop").remove();
+				document.getElementById('success').style.display='block';
+				setTimeout("codefans()",3000);
+			}else{
+				setTimeout("location.reload()",1000)
+				document.getElementById('myModalEdit').style.display='none';
+				$(".modal-backdrop").remove();
+				document.getElementById('chongfu3').style.display='block';
+				setTimeout("codefans3()",3000);
+			}    	
+        }      
+    })
+    }
 }  
 
 /* 删除权限 */
@@ -77,6 +116,7 @@ function deletePermission(id){
     //获取模态框数据  
     var permissionId = document.getElementById(id).id; 	       
 
+    if(permissionId!=null){
     $.ajax({
         type: "POST",
         url: "/org.xjtusicd3.portal/deletePermission.html",
@@ -85,9 +125,15 @@ function deletePermission(id){
         },
         dataType: "json",
         success: function(data) {
-        	alert("删除成功");
-        	window.location.reload();
-        }
-       
-    }) 	        
-}  
+        	if(data.value=="0"){
+				self.location='login.html';
+			}else if(data.value=="1"){
+				setTimeout("location.reload()",1000)
+				document.getElementById('success').style.display='block';
+				setTimeout("codefans()",3000);
+			} 
+        }      
+    }) 	
+    }
+} 
+ 

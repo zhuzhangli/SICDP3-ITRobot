@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-import org.xjtusicd3.common.util.JsonUtil;
 import org.xjtusicd3.database.helper.MessageHelper;
 import org.xjtusicd3.database.helper.UserHelper;
 import org.xjtusicd3.database.model.MessageHistoryPersistence;
@@ -18,7 +17,7 @@ import org.xjtusicd3.database.model.UserPersistence;
 import org.xjtusicd3.partner.view.Message_MessageView;
 
 public class MessageService {
-	/*
+	/**
 	 * zyq_message_ajax_添加私信
 	 */
 	public static Message_MessageView message_MessageView(String username, String touserId, String content) {
@@ -45,7 +44,7 @@ public class MessageService {
 		
 		return message_MessageView;
 	}
-	/*
+	/**
 	 * zyq_message_查看聊天信息
 	 */
 	public static List<Message_MessageView> message_MessageViews(String userId){
@@ -65,7 +64,7 @@ public class MessageService {
 		}
 		return message_MessageViews;
 	}
-	/*
+	/**
 	 * zyq_message_查看私信用户列表
 	 */
 	public static List<Message_MessageView> message_userList(String userId){
@@ -131,7 +130,7 @@ public class MessageService {
 		return list;
 	}
 
-	/*
+	/**
 	 * zyq_message_ajax_查询私信内容
 	 */
 	public static List<Message_MessageView> message_getMessage(String postuserId, String username) {
@@ -154,7 +153,7 @@ public class MessageService {
 		}
 		return message_MessageViews;
 	}
-	/*
+	/**
 	 * zyq_message_pushlet_推送未读的消息
 	 */
 	public static List<Message_MessageView> message_getMessage_pushlet(String getuserId){
@@ -180,7 +179,7 @@ public class MessageService {
 		}
 		return message_MessageViews;
 	}
-	/*
+	/**
 	 * zyq_message_ajax_查看历史私信
 	 */
 	public static List<Message_MessageView> message_getMessageHistory(String postuserId,String getuserId,int state,int startnumber){

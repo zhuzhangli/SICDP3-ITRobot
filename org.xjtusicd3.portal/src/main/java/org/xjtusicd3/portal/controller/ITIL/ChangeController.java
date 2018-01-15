@@ -29,19 +29,9 @@ public class ChangeController {
     }
 
 	private void GetDeviceInfo(List<Map<String, Object>> TableList_hardware) {
-        // 设备是否被修改标志
-        Integer Changeflag;
-        
-        // 用于比较的临时字段
-        String tep_cmp_register;
-        String tep_cmp_current;
-        
         // 遍历列表  得到所有设备
 		for(int i=0;i<TableList_hardware.size();i++)
 		{
-			// 初始化当前设备的改变标志   0-未改变   1-改变了   2-未找到
-			Changeflag = 0;
-			
 			// 设备表中的信息
 			Map<String, Object> map = TableList_hardware.get(i);				
 			String macAddress =(String) map.get("MACADDRESS"); 
@@ -80,32 +70,7 @@ public class ChangeController {
 				
 				
 				/************************   软件是否改变功能      ******************************/
-		/*		System.out.println("进入软件信息配置阶段");
-				Integer i_DeviceSoftConfigChangeFlag = 0;
-				
-				//######  返回设备对应的软件列表     ######
-		        List<Map<String, Object>> TableList_software = DevCfgService.FindDeviceSoftwareConfigsByDeviceID(temp_DeviceID);
-		       
-		        if(TableList_software.size()==0)
-		        {
-			        map.put("AllSoftware_Changeflag", 2);
-		        }
-		        else
-		        {
-			        //######  改造返回列表并返回    整个软件是否改变   的标志     ######
-			        i_DeviceSoftConfigChangeFlag = DevCfgService.GetDeviceSoftwareConfigsInfo(TableList_software,temp_DeviceID);
-
-			        if(i_DeviceSoftConfigChangeFlag == 1)
-			        {
-			        	// 当前设备表中有设备  但当前配置表中有该设备的配置   但配置不一致
-			        	map.put("AllSoftware_Changeflag", 1);
-			        }
-			        else
-			        {
-			        	// 当前设备表中有设备  但当前配置表中有该设备的配置   而且配置一致
-			        	map.put("AllSoftware_Changeflag", 0);
-			        }
-		        } */       
+	  
 			}
 			else
 			{
@@ -115,23 +80,11 @@ public class ChangeController {
 			}
 	
 /**************************************************   测试结果输出代码      输出当前软件配置    ****************************************************/				
-//			// 在 map 对象中加入是否改变的标志位
-//			Iterator entries = map.entrySet().iterator();  
-//			System.out.println("##############################   输出客户机展示页面传入的map 第"+ i+ "条设备#####################################");
-//			System.out.println("**********  这是一条设备信息     *********");
-//			while (entries.hasNext()) 
-//			{  	
-//			    Map.Entry entry = (Map.Entry) entries.next();   
-//			    String key = (String)entry.getKey();  
-//			    Object value = entry.getValue();  			  
-//			    System.out.println("Key = " + key + ", Value = " + value);   			  
-//			}  
+ 
 /**************************************************   测试结果输出代码      结束    *********************************************************/	
 		}
 		
 	}
-
-	
 	
 	/*****************      工具函数             ********************/
 	/* 添加当前设备中要和注册设备比较的属性值至传至前台的 map 

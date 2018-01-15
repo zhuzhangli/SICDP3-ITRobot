@@ -82,11 +82,11 @@ public class ClassifyService {
 		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.faq1_SecondClassify(parentId);
 		for(ClassifyPersistence classifyPersistence:classifyPersistences){
 			//查找推荐的第一条数据
-			QuestionPersistence questionPersistences = QuestionHelper.faq1_faqPersistences(classifyPersistence.getFAQCLASSIFYID());
+			QuestionPersistence questionPersistences = QuestionHelper.faq1_faqPersistences(classifyPersistence.getFAQCLASSIFYID(),2,1);
 			Faq1_faqContentView faq1View = new Faq1_faqContentView(questionPersistences);
 			//查找推荐的剩余5条
 			List<Faq1_faqContentView> faq1Views2 = new ArrayList<Faq1_faqContentView>();
-			List<QuestionPersistence> questionPersistences2 = QuestionHelper.faq1_faqPersistences2(classifyPersistence.getFAQCLASSIFYID());
+			List<QuestionPersistence> questionPersistences2 = QuestionHelper.faq1_faqPersistences2(classifyPersistence.getFAQCLASSIFYID(),2,1,5);
 			for(QuestionPersistence questionPersistence:questionPersistences2){
 				Faq1_faqContentView faq2View = new Faq1_faqContentView(questionPersistence);
 				faq1Views2.add(faq2View);
@@ -105,7 +105,7 @@ public class ClassifyService {
 	 */
 	public static List<ClassifyPersistence> faq2_classify(String ClassifyId){
 		//根据分类号查找父id
-		String classifyParentId = ClassifyHelper.faq2_classifyParentId(ClassifyId);
+		String classifyParentId = ClassifyHelper.faq_parentId(ClassifyId);
 		//查找父分类信息
 		List<ClassifyPersistence> classifyPersistences = ClassifyHelper.getInfoById(classifyParentId);
 		return classifyPersistences;

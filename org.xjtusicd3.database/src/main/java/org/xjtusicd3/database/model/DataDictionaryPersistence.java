@@ -17,7 +17,7 @@ public class DataDictionaryPersistence {
 	@TableField(columnName="REMARKS")
 	private String REMARKS;
 	@TableField(columnName="DATATYPE")
-	private String DATATYPE;
+	private int DATATYPE;
 	@TableField(columnName="DATARANGE")
 	private String DATARANGE;
 	public String getDATADICTIONARYID() {
@@ -44,10 +44,10 @@ public class DataDictionaryPersistence {
 	public void setREMARKS(String rEMARKS) {
 		REMARKS = rEMARKS;
 	}
-	public String getDATATYPE() {
+	public int getDATATYPE() {
 		return DATATYPE;
 	}
-	public void setDATATYPE(String dATATYPE) {
+	public void setDATATYPE(int dATATYPE) {
 		DATATYPE = dATATYPE;
 	}
 	public String getDATARANGE() {

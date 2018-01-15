@@ -19,7 +19,6 @@ public class RolePermissionHelper
 		return list;
 	}
 	
-	
 	//为角色增加权限
 	public static void addPermissionToRole(String rolePermissionId, String roleId, String permissionId) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -27,7 +26,6 @@ public class RolePermissionHelper
 		mapper.addPermissionToRole(rolePermissionId,roleId,permissionId);
 		session.close();		
 	}
-	
 	
 	//移除角色已获取的权限
 	public static void deletePermissionToRole(String roleId, String permissionId) {
@@ -37,75 +35,15 @@ public class RolePermissionHelper
 		session.close();		
 	}
 	
-	
-	//超级管理员拥有所有权限
-	public static List<PermissionPersistence> getAllPermission() {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		RolePermissionPersistenceMapper mapper = session.getMapper(RolePermissionPersistenceMapper.class);
-		List<PermissionPersistence> list = mapper.getAllPermission();
-		session.close();
-		return list;
-	}
-
-	
-	
-	
-	
-	
-	
-	
-	/*
-	 * zpz_get role permission By UserId
+	/**
+	 * 通过用户id获取权限
 	 */
-	public static List<PermissionPersistence> getRolePermission(String uId)
-	{
+	public static List<PermissionPersistence> getRolePermission(String uId){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		RolePermissionPersistenceMapper mapper = session.getMapper(RolePermissionPersistenceMapper.class);
 		List<PermissionPersistence> rolePermission = mapper.getRolePermissionByUId(uId);
 		session.close();
 		return rolePermission;
 	}
-	
-	/*
-	 * zpz_get role permission By UserId
-	 */
-	public static List<PermissionPersistence> getRolePermissionByRId(String rId)
-	{
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		RolePermissionPersistenceMapper mapper = session.getMapper(RolePermissionPersistenceMapper.class);
-		List<PermissionPersistence> rolePermission = mapper.getRolePermissionByRId(rId);
-		session.close();
-		return rolePermission;
-	}
-	
-	/*
-	 * zpz_get all role Id
-	 */
-	public static List<String> getAllRoleId()
-	{
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		RolePermissionPersistenceMapper mapper = session.getMapper(RolePermissionPersistenceMapper.class);
-		List<String> roleId = mapper.getAllRoleId();
-		session.close();
-		return roleId;
-	}
-
-	
-
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
 }

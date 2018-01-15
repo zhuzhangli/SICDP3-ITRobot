@@ -32,33 +32,8 @@ public interface ServerPersistenceMapper extends IBaseDao<ServerPersistence, Str
 			String nETWORK, String pROCESS, String rEALTIMEPROCESS, String aCTIVEUSER, String bIOS,
 			String nETWORKCARD);
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//zpz_获取用户所有信息
-		@Select("SELECT * FROM TBL_Server")
-		List<ServerPersistence> getServer();
-		
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
+	//zpz_获取用户所有信息			!!!
+	@Select("SELECT * FROM TBL_Server")
+	List<ServerPersistence> getServer();
 		
 }

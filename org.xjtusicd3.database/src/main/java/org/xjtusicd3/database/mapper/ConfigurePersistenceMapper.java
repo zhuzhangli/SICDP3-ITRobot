@@ -9,9 +9,7 @@ import org.xjtusicd3.database.model.ConfigurePersistence;
 
 public interface ConfigurePersistenceMapper extends IBaseDao<ConfigurePersistence, String>{
 
-	/*
-	 * zpz_get all of information of configure
-	 */
+	//zpz_get all of information of configure
 	@Select("SELECT * FROM TBL_Configure LIMIT 200")
 	public List<ConfigurePersistence> getAllConfig();
 	/*
@@ -19,9 +17,8 @@ public interface ConfigurePersistenceMapper extends IBaseDao<ConfigurePersistenc
 	 */
 	@Select("SELECT * FROM TBL_Configure WHERE CONFIGURENAME=#{0}")
 	public List<ConfigurePersistence> getConfigure(String configurename);
-	/*
-	 * zyq_spider_更新软件
-	 */
+	
+	// zyq_spider_更新软件
 	@Update("UPDATE TBL_Configure SET FILESIZE=#{1},URL=#{2},DOWNLOADTIMES=#{3},PRODUCER=#{4},CONFIGURETIME=#{5} WHERE CONFIGURENAME=#{0}")
 	public List<ConfigurePersistence> update_Configure(String configurename,String filesize,String url,String downloadtimes,String producer,String configuretime);
 	
@@ -83,6 +80,4 @@ public interface ConfigurePersistenceMapper extends IBaseDao<ConfigurePersistenc
 	@Select("SELECT * FROM TBL_Configure,TBL_BasicConfigure WHERE TBL_Configure.CONFIGUREID = TBL_BasicConfigure.CONFIGUREID AND TBL_BasicConfigure.DEPARTMENTID = #{0} AND CONFIGURETYPE = #{1}")
 	public List<ConfigurePersistence> getCfgById(String departmentId, String configureType);
 
-
-	
 }

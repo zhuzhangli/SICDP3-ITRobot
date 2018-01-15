@@ -47,9 +47,9 @@ public class CommentService {
 	 */
 	public static void saveBestAnswer(String questionId,String answerId) {
 		//更新社区答案ISBESTANSWER字段
-		CommunityAnswerHelper.saveBestAnswer(answerId);
+		CommunityAnswerHelper.saveBestAnswer(answerId,1);
 		//更新社区问题ISANSWER字段 = 1
-		CommunityQuestionHelper.updateBestAnswer(questionId);
+		CommunityQuestionHelper.updateBestAnswer(questionId,1);
 	}
 	
 	/**
@@ -193,7 +193,7 @@ public class CommentService {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    String time = format.format(date);
 	    //查看是否回复了自己的评论
-	    String answerUserId = CommunityAnswerHelper.findUserIdByCommunityQuestionId(answerId);
+	    String answerUserId = CommunityAnswerHelper.getUserIdByAnswerId(answerId);
 	    int isnotice = 0;
 	    if (userid.equals(answerUserId)) {
 			isnotice = 0;
@@ -248,16 +248,5 @@ public class CommentService {
 		}
 		return faq3_CommentReplyViews;
 	}
-	
-	/*
-	 * zyq_question2_ajax_添加评论的回复的回复
-	 */
-	/*public static void saveCommunityReply(String userid,String communityquestionId,String comment,String answerId,String touserId){
-		Date date = new Date();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    String time = format.format(date);
-	    int isnotice = 1;
-	    CommentHelper.saveComment(UUID.randomUUID().toString(), null, communityquestionId, userid, comment, time, answerId,isnotice,touserId);
-	}*/
-	
+
 }

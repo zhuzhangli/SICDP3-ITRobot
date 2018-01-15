@@ -9,20 +9,19 @@ import org.xjtusicd3.database.model.DataDictionaryPersistence;
 
 public class DataDictionaryHelper {
 	//查看还未获取该配置的部门
-	public static List<DataDictionaryPersistence> getUnGotDepList(String configureId) {
+	public static List<DataDictionaryPersistence> getUnGotDepList(String configureId,int dataType) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		DataDictionaryPersistenceMapper mapper = session.getMapper(DataDictionaryPersistenceMapper.class);
-		List<DataDictionaryPersistence> list = mapper.getUnGotDepList( configureId);
+		List<DataDictionaryPersistence> list = mapper.getUnGotDepList(configureId,dataType);
 		session.close();
 		return list;
 	}
-
 	
 	//获取所有部门信息
-	public static List<DataDictionaryPersistence> getAllDepartment() {
+	public static List<DataDictionaryPersistence> getAllDepartment(int dataType) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
 		DataDictionaryPersistenceMapper mapper = session.getMapper(DataDictionaryPersistenceMapper.class);
-		List<DataDictionaryPersistence> list = mapper.getAllDepartment();
+		List<DataDictionaryPersistence> list = mapper.getAllDepartment(dataType);
 		session.close();
 		return list;
 	}

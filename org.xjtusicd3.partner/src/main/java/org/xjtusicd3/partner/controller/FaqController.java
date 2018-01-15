@@ -17,19 +17,23 @@ import org.xjtusicd3.database.helper.ClassifyHelper;
 import org.xjtusicd3.database.helper.CollectionHelper;
 import org.xjtusicd3.database.helper.CommentHelper;
 import org.xjtusicd3.database.helper.ITHelper;
+import org.xjtusicd3.database.helper.PayHelper;
 import org.xjtusicd3.database.helper.QuestionHelper;
 import org.xjtusicd3.database.helper.ScoreHelper;
 import org.xjtusicd3.database.helper.ShareHelper;
 import org.xjtusicd3.database.helper.TimeStampHelper;
 import org.xjtusicd3.database.helper.UserHelper;
 import org.xjtusicd3.database.model.ClassifyPersistence;
+import org.xjtusicd3.database.model.FaqPicturePersistence;
 import org.xjtusicd3.database.model.ITPersistence;
+import org.xjtusicd3.database.model.PayPersistence;
 import org.xjtusicd3.database.model.QuestionPersistence;
 import org.xjtusicd3.database.model.ScorePersistence;
 import org.xjtusicd3.partner.annotation.SystemControllerLog;
 import org.xjtusicd3.partner.lucene.LuceneIndex;
 import org.xjtusicd3.partner.service.ClassifyService;
 import org.xjtusicd3.partner.service.CommentService;
+import org.xjtusicd3.partner.service.FaqPicService;
 import org.xjtusicd3.partner.service.QuestionService;
 import org.xjtusicd3.partner.service.RobotService;
 import org.xjtusicd3.partner.service.ScoreService;
@@ -64,26 +68,74 @@ public class FaqController {
 		//查询所有用户发表知识的状态
 		List<Faq_UserDynamics> userDynamics = QuestionService.userDynamics();
 		session.setAttribute("urlPath", urlPath);
-				
+		
+		//faq推荐栏
+		List<FaqPicturePersistence> faqPicList = FaqPicService.faqPicture(1,3);
+		
 		if(username==null){
 			//zzl未登录用户获取推荐faq_2017年9月14日21:43:52
 			int startnum = 0;
-			List<Faq_CommendView> faqlists = QuestionService.faq_recommend_Limit(startnum);
+			List<Faq_CommendView> faqlists = QuestionService.faq_recommend_Limit(2,startnum,5);
 			mv.addObject("faqlists", faqlists);
+			mv.addObject("faqlistSize", faqlists.size());
 		}else{
 			//zzl_已登录用户获取推荐faq_2017年9月14日21:43:52
 			String userId = UserHelper.getUserIdByName(username);
 			int startnum = 0;
-			List<Faq_CommendView> faqlists = QuestionService.user_recommend_Limit(userId,startnum);				
-			mv.addObject("faqlists", faqlists);		
+			List<Faq_CommendView> faqlists = QuestionService.user_recommend_Limit(userId,2,startnum,5);				
+			mv.addObject("faqlists", faqlists);	
+			mv.addObject("faqlistSize", faqlists.size());
 		}		
 		mv.addObject("userDynamics", userDynamics);
+		mv.addObject("faqPicList", faqPicList);
 		
 		long executionTime = System.currentTimeMillis() - startTime;		
 		//记录运行时间
 		TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 		return mv;		
 	}
+	
+	
+	/*
+	 * faq推荐栏加载更多
+	 */
+	@ResponseBody
+	@RequestMapping(value={"/showMoreRecommend"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
+	@SystemControllerLog(description = "faq推荐栏加载更多")
+	public String showMoreRecommend(HttpServletRequest request,HttpServletResponse response,HttpSession session){
+		long startTime = System.currentTimeMillis();//计算开始日期
+		String path = request.getServletPath();			
+		
+		int startnumber = Integer.parseInt(request.getParameter("num"));
+		
+		String username = (String) session.getAttribute("UserName");
+		String userId = UserHelper.getUserIdByName(username);
+
+		JSONObject jsonObject = new JSONObject();
+		if (username==null) {
+			List<Faq_CommendView> faqlists = QuestionService.faq_recommend_Limit(2,startnumber,5);
+			jsonObject.put("faqlists", faqlists);	
+			jsonObject.put("num", startnumber);
+			jsonObject.put("value", "0");
+			String result = JsonUtil.toJsonString(jsonObject);
+			long executionTime = System.currentTimeMillis() - startTime;
+			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+			return result;
+		}else{
+			List<Faq_CommendView> faqlists = QuestionService.user_recommend_Limit(userId,2,startnumber,5);	
+			jsonObject.put("faqlists", faqlists);
+			jsonObject.put("num", startnumber);
+			String result = JsonUtil.toJsonString(jsonObject);
+			
+			long executionTime = System.currentTimeMillis() - startTime;			
+			//记录运行时间
+			TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
+			return result;
+		}
+	 }
+	
 	
 	/*
 	 * zyq_faqadd_FAQ的增加页面
@@ -141,10 +193,8 @@ public class FaqController {
 			}else {
 				jsonObject.put("value", "2");
 				jsonObject.put("urlpath", url);
-				String result = JsonUtil.toJsonString(jsonObject);
-				
-				long executionTime = System.currentTimeMillis() - startTime;
-				
+				String result = JsonUtil.toJsonString(jsonObject);				
+				long executionTime = System.currentTimeMillis() - startTime;				
 				//记录运行时间
 				TimeStampHelper.addTimeStamp(UUID.randomUUID().toString(),path,executionTime,startTime);
 				return result;
@@ -317,6 +367,23 @@ public class FaqController {
 			modelAndView.addObject("scoreSize", scorePersistences.size());
 			//判断是否有分享内容的权利
 			List<ITPersistence> list = ITHelper.IT(userId);
+			
+			String questionUserId = QuestionHelper.findUserIdByQuestionId(q);
+			
+			if (questionUserId.equals(userId)) {
+			
+			}else {
+				//zzl_查看是否关注
+				List<PayPersistence> payPersistences = PayHelper.getpayList(userId,questionUserId);
+				
+				if (payPersistences.size()==0) {
+					modelAndView.addObject("payList","0");
+				}else {
+					modelAndView.addObject("payList","1");
+				}			
+			}
+			
+				
 			if (list.size()==0) {
 				modelAndView.addObject("IsIT", "0");
 			}else{
@@ -338,6 +405,7 @@ public class FaqController {
 		modelAndView.addObject("faq3Views", faq3Views);
 		modelAndView.addObject("comment", faq3_CommentViews);
 		modelAndView.addObject("faqSimilarity", robot_Chats);
+		modelAndView.addObject("uid", userId);
 		String urlPath="";
 		if (request.getQueryString()==null) {
 			urlPath = request.getServletPath();

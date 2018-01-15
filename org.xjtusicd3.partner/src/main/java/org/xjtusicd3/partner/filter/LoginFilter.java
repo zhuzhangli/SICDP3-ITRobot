@@ -35,12 +35,9 @@ public class LoginFilter implements Filter {
 				response.sendRedirect(request.getContextPath() + "/login.html");
 				return;
 			} 
-			chain.doFilter(servletRequest, servletResponse);
-			
+			chain.doFilter(servletRequest, servletResponse);			
 	}
-
 	public void init(FilterConfig arg0) throws ServletException {
 
 	}
-
 }

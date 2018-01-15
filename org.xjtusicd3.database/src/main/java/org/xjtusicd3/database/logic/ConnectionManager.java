@@ -15,9 +15,6 @@ public class ConnectionManager {
 		dataSource.setUrl(url);
 		dataSource.setUsername(username);
 		dataSource.setPassword(password);
-		
-//		dataSource.setPoolMaximumActiveConnections(maxConnection);
-//		dataSource.setPoolMaximumIdleConnections(simultaneousBuildThrottle);
 		return dataSource;
 	}
 }

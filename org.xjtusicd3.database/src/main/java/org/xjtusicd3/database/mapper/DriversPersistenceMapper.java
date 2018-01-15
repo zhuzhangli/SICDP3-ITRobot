@@ -10,5 +10,4 @@ public interface DriversPersistenceMapper extends IBaseDao<DriverPersistence, St
 	//查找驱动具体信息
 	@Select("SELECT * FROM TBL_Driver WHERE CONFIGUREID=#{0}")
 	List<DriverPersistence> getDriverInfo(String configureid);
-
 }

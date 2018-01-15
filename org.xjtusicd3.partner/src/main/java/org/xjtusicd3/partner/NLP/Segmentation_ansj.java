@@ -89,41 +89,7 @@ public class Segmentation_ansj {
 		double score =  TextSimilarity.similarScore(list, list1);
 		return score;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	public static List<robot_ChatView> similarScoreSecond1() throws Exception{
 		//!!!String localurl = System.getProperty("user.dir");
 		
@@ -149,12 +115,10 @@ public class Segmentation_ansj {
 			
 			robot_ChatView.setQuestion(questionPersistence.getFAQTITLE());
 			robot_ChatView.setQuestionId(questionPersistence.getFAQQUESTIONID());
-			List<AnswerPersistence> answerPersistences = AnswerHelper.faq3_faqContent(questionPersistence.getFAQQUESTIONID());
+			List<AnswerPersistence> answerPersistences = AnswerHelper.getAnswerByQuestionId(questionPersistence.getFAQQUESTIONID());
 			robot_ChatView.setAnswer(answerPersistences.get(0).getFAQCONTENT());
 			robot_ChatViews.add(robot_ChatView);
 		}
 		return robot_ChatViews;
 	}
-
-
 }

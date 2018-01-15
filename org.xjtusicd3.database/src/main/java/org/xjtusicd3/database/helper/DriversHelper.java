@@ -5,9 +5,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.xjtusicd3.database.logic.SqlSessionManager;
 import org.xjtusicd3.database.mapper.DriversPersistenceMapper;
-import org.xjtusicd3.database.mapper.SoftPersistenceMapper;
 import org.xjtusicd3.database.model.DriverPersistence;
-import org.xjtusicd3.database.model.SoftPersistence;
 
 public class DriversHelper {
 	/*
@@ -20,7 +18,6 @@ public class DriversHelper {
 		session.close();
 	}
 
-	
 	//查找驱动具体信息
 	public static List<DriverPersistence> getDriverInfo(String configureid) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);

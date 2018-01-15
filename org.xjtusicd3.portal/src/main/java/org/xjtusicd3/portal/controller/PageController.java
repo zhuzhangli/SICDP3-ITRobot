@@ -8,8 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class PageController {
-	
+public class PageController {	
 	@RequestMapping(value="index",method=RequestMethod.GET)
     public ModelAndView  index(HttpServletRequest req){
  	   ModelAndView mv=new ModelAndView("index");
@@ -22,12 +21,7 @@ public class PageController {
   	   ModelAndView mv=new ModelAndView("login");
   	   return mv;
      }
-	
-	
-	
-		
-	
-		
+			
 	//ITIL管理流程_配置管理
 	@RequestMapping(value="configurePage",method=RequestMethod.GET)
     public ModelAndView  configurePage(){
@@ -42,35 +36,18 @@ public class PageController {
  	   return mv;
     }
 
-
-	
-	
-	
-	
-	
-	
-	
-	
-	 
-	
-
-	
-	 
-	
 	@RequestMapping(value="spiderindex",method=RequestMethod.GET)
     public ModelAndView  spider(){
  	   ModelAndView mv=new ModelAndView("spiderindex");
  	   return mv;
     }
 
- 
-	
-
 	 @RequestMapping(value="register",method=RequestMethod.GET)
      public ModelAndView  register(){
   	   ModelAndView mv=new ModelAndView("register");
   	   return mv;
      }
-
-
+	 
+	 
+	
 }

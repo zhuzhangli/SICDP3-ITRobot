@@ -20,8 +20,6 @@ import org.xjtusicd3.database.model.CommunityQuestionPersistence;
 import org.xjtusicd3.database.model.QuestionPersistence;
 import org.xjtusicd3.partner.view.Notice_NoticeCommunityView;
 
-
-
 public class NoticeService {
 	/*
 	 * 推送内容
@@ -36,7 +34,7 @@ public class NoticeService {
 				for(CommentPersistence commentPersistence:commentPersistences){
 					if (commentPersistences.size()!=0) {
 						Notice_NoticeCommunityView notice_NoticeCommunityView = new Notice_NoticeCommunityView();
-						List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(answerPersistence.getFAQQUESTIONID());
+						List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(answerPersistence.getFAQQUESTIONID(),2);
 						notice_NoticeCommunityView.setName(questionPersistences.get(0).getFAQTITLE());
 						notice_NoticeCommunityView.setNotice(commentPersistence.getCOMMENTCONTENT());
 						notice_NoticeCommunityView.setNoticeId(commentPersistence.getCOMMENTID());

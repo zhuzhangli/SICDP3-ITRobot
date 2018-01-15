@@ -697,13 +697,13 @@ function guanzhubutton(){
 								if(data.payView[i].isTogetherPay=="1"){
 									document.getElementById("zhao4").getElementsByClassName("concern-list")[0].getElementsByTagName("ul")[0].innerHTML = html + '<li class="box" id="pay'+data.payView[i].userId+'"><div class="left-img"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><img src="'+data.payView[i].userImage+'" class="top_head"></a></div><div class="right-c"><div class="title"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><span class="nickname">'+data.payView[i].userName+'</span></a></div><p class="desc"></p><div class="fs-line"><a class="u-target"><span class="group"><em>关注</em><em class="u-margin-l-5">'+data.payView[0].payNumber+'</em></span></a><a class="u-target u-margin-l-15"><span class="group"><em>粉丝</em><em class="u-margin-l-5">'+data.payView[i].bepayNumber+'</em></span></a></div><div class="btn-line" ><a href="Javascript:" class="btn-o btn-gray-o  js-concern-already">互相关注</a><a href="message.html?u='+data.payView[i].userId+'" target="_blank" class="btn-o btn-gray-o  js-concern-msg">私信</a></div></div></li>';
 								}else{
-									document.getElementById("zhao4").getElementsByClassName("concern-list")[0].getElementsByTagName("ul")[0].innerHTML = html + '<li class="box" id="pay'+data.payView[i].userId+'"><div class="left-img"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><img src="'+data.payView[i].userImage+'" class="top_head"></a></div><div class="right-c"><div class="title"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><span class="nickname">'+data.payView[i].userName+'</span></a></div><p class="desc"></p><div class="fs-line"><a class="u-target"><span class="group"><em>关注</em><em class="u-margin-l-5">'+data.payView[0].payNumber+'</em></span></a><a class="u-target u-margin-l-15"><span class="group"><em>粉丝</em><em class="u-margin-l-5">'+data.payView[i].bepayNumber+'</em></span></a></div><div class="btn-line" ><a href="Javascript:" class="btn-o btn-gray-o  js-concern-already">已关注</a><a href="message.html?u='+data.payView[i].userId+'" target="_blank" class="btn-o btn-gray-o  js-concern-msg">私信</a></div></div></li>';
+									document.getElementById("zhao4").getElementsByClassName("concern-list")[0].getElementsByTagName("ul")[0].innerHTML = html + '<li class="box" id="pay'+data.payView[i].userId+'"><div class="left-img"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><img src="'+data.payView[i].userImage+'" class="top_head"></a></div><div class="right-c"><div class="title"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><span class="nickname">'+data.payView[i].userName+'</span></a></div><p class="desc"></p><div class="fs-line"><a class="u-target"><span class="group"><em>关注</em><em class="u-margin-l-5">'+data.payView[0].payNumber+'</em></span></a><a class="u-target u-margin-l-15"><span class="group"><em>粉丝</em><em class="u-margin-l-5">'+data.payView[i].bepayNumber+'</em></span></a></div><div class="btn-line" ><button class="btn-o btn-gray-o  js-concern-already" id="'+data.payView[i].userId+'" onclick="cancelAttention(this.id)">已关注</button><a href="message.html?u='+data.payView[i].userId+'" target="_blank" class="btn-o btn-gray-o  js-concern-msg">私信</a></div></div></li>';
 								}
 							}else{
 								if(data.payView[i].isTogetherPay=="1"){
 									document.getElementById("zhao4").getElementsByClassName("concern-list")[0].getElementsByTagName("ul")[0].innerHTML = html + '<li class="box" id="pay'+data.payView[i].userId+'"><div class="left-img"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><img src="'+data.payView[i].userImage+'" class="top_head"></a></div><div class="right-c"><div class="title"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><span class="nickname">'+data.payView[i].userName+'</span></a><ul class="icon-list"><li class="u-icon imooc-teacher"></li></ul></div><p class="desc">'+data.payView[i].work+'</p><div class="fs-line"><a class="u-target"><span class="group"><em>关注</em><em class="u-margin-l-5">'+data.payView[0].payNumber+'</em></span></a><a class="u-target u-margin-l-15"><span class="group"><em>粉丝</em><em class="u-margin-l-5">'+data.payView[i].bepayNumber+'</em></span></a></div><div class="btn-line" ><a href="Javascript:" class="btn-o btn-gray-o  js-concern-already">互相关注</a><a href="message.html?u='+data.payView[i].userId+'" target="_blank" class="btn-o btn-gray-o  js-concern-msg">私信</a></div></div></li>';
 								}else{
-									document.getElementById("zhao4").getElementsByClassName("concern-list")[0].getElementsByTagName("ul")[0].innerHTML = html + '<li class="box" id="pay'+data.payView[i].userId+'"><div class="left-img"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><img src="'+data.payView[i].userImage+'" class="top_head"></a></div><div class="right-c"><div class="title"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><span class="nickname">'+data.payView[i].userName+'</span></a><ul class="icon-list"><li class="u-icon imooc-teacher"></li></ul></div><p class="desc">'+data.payView[i].work+'</p><div class="fs-line"><a class="u-target"><span class="group"><em>关注</em><em class="u-margin-l-5">'+data.payView[0].payNumber+'</em></span></a><a class="u-target u-margin-l-15"><span class="group"><em>粉丝</em><em class="u-margin-l-5">'+data.payView[i].bepayNumber+'</em></span></a></div><div class="btn-line" ><a href="Javascript:" class="btn-o btn-gray-o  js-concern-already">已关注</a><a href="message.html?u='+data.payView[i].userId+'" target="_blank" class="btn-o btn-gray-o  js-concern-msg">私信</a></div></div></li>';
+									document.getElementById("zhao4").getElementsByClassName("concern-list")[0].getElementsByTagName("ul")[0].innerHTML = html + '<li class="box" id="pay'+data.payView[i].userId+'"><div class="left-img"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><img src="'+data.payView[i].userImage+'" class="top_head"></a></div><div class="right-c"><div class="title"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><span class="nickname">'+data.payView[i].userName+'</span></a><ul class="icon-list"><li class="u-icon imooc-teacher"></li></ul></div><p class="desc">'+data.payView[i].work+'</p><div class="fs-line"><a class="u-target"><span class="group"><em>关注</em><em class="u-margin-l-5">'+data.payView[0].payNumber+'</em></span></a><a class="u-target u-margin-l-15"><span class="group"><em>粉丝</em><em class="u-margin-l-5">'+data.payView[i].bepayNumber+'</em></span></a></div><div class="btn-line" ><a href="Javascript:" class="btn-o btn-gray-o  js-concern-already" id="'+data.payView[i].userId+'" onclick="cancelAttention(this.id)">已关注</a><a href="message.html?u='+data.payView[i].userId+'" target="_blank" class="btn-o btn-gray-o  js-concern-msg">私信</a></div></div></li>';
 								}
 							}
 						}
@@ -712,6 +712,57 @@ function guanzhubutton(){
 			}
 		}
 	})
+}
+
+/**
+* 取消关注
+* @param id 关注者id
+*/
+function cancelAttention(id){
+    if(confirm("确定要取消关注吗？")){
+    	var touserId = document.getElementById(id).id;
+    	var userId = document.getElementById("duoduo").innerHTML;
+    	if(userId!=touserId){
+    		$.ajax({
+    			type:"POST",
+    			url:"/org.xjtusicd3.partner/deletePay.html",
+    			data:{
+    				"touserId":touserId
+    			},
+    			dataType:"json",
+    			success:function(data){
+    				if(data.value=="0"){
+    					self.location='login.html';
+    				}else if(data.value=="1"){
+    					alert("已取消关注！");
+    					if(data.payView==""){
+    						document.getElementById("zhao4").getElementsByClassName("article-main")[0].innerHTML='<div class="ques-list"><div class="nodata">您还没有关注任何人</div></div>';
+    					}else{
+    						document.getElementById("zhao4").getElementsByClassName("concern-list")[0].innerHTML='<ul></ul>';
+    						for(var i in data.payView){
+    							if(document.getElementById("pay"+data.payView[i].userId)==null){
+    								var html = document.getElementById("zhao4").getElementsByClassName("concern-list")[0].getElementsByTagName("ul")[0].innerHTML;
+    								if(data.payView[i].work==null){
+    									if(data.payView[i].isTogetherPay=="1"){
+    										document.getElementById("zhao4").getElementsByClassName("concern-list")[0].getElementsByTagName("ul")[0].innerHTML = html + '<li class="box" id="pay'+data.payView[i].userId+'"><div class="left-img"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><img src="'+data.payView[i].userImage+'" class="top_head"></a></div><div class="right-c"><div class="title"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><span class="nickname">'+data.payView[i].userName+'</span></a></div><p class="desc"></p><div class="fs-line"><a class="u-target"><span class="group"><em>关注</em><em class="u-margin-l-5">'+data.payView[0].payNumber+'</em></span></a><a class="u-target u-margin-l-15"><span class="group"><em>粉丝</em><em class="u-margin-l-5">'+data.payView[i].bepayNumber+'</em></span></a></div><div class="btn-line" ><a href="Javascript:" class="btn-o btn-gray-o  js-concern-already">互相关注</a><a href="message.html?u='+data.payView[i].userId+'" target="_blank" class="btn-o btn-gray-o  js-concern-msg">私信</a></div></div></li>';
+    									}else{
+    										document.getElementById("zhao4").getElementsByClassName("concern-list")[0].getElementsByTagName("ul")[0].innerHTML = html + '<li class="box" id="pay'+data.payView[i].userId+'"><div class="left-img"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><img src="'+data.payView[i].userImage+'" class="top_head"></a></div><div class="right-c"><div class="title"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><span class="nickname">'+data.payView[i].userName+'</span></a></div><p class="desc"></p><div class="fs-line"><a class="u-target"><span class="group"><em>关注</em><em class="u-margin-l-5">'+data.payView[0].payNumber+'</em></span></a><a class="u-target u-margin-l-15"><span class="group"><em>粉丝</em><em class="u-margin-l-5">'+data.payView[i].bepayNumber+'</em></span></a></div><div class="btn-line" ><button class="btn-o btn-gray-o  js-concern-already" id="'+data.payView[i].userId+'" onclick="cancelAttention(this.id)">已关注</button><a href="message.html?u='+data.payView[i].userId+'" target="_blank" class="btn-o btn-gray-o  js-concern-msg">私信</a></div></div></li>';
+    									}
+    								}else{
+    									if(data.payView[i].isTogetherPay=="1"){
+    										document.getElementById("zhao4").getElementsByClassName("concern-list")[0].getElementsByTagName("ul")[0].innerHTML = html + '<li class="box" id="pay'+data.payView[i].userId+'"><div class="left-img"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><img src="'+data.payView[i].userImage+'" class="top_head"></a></div><div class="right-c"><div class="title"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><span class="nickname">'+data.payView[i].userName+'</span></a><ul class="icon-list"><li class="u-icon imooc-teacher"></li></ul></div><p class="desc">'+data.payView[i].work+'</p><div class="fs-line"><a class="u-target"><span class="group"><em>关注</em><em class="u-margin-l-5">'+data.payView[0].payNumber+'</em></span></a><a class="u-target u-margin-l-15"><span class="group"><em>粉丝</em><em class="u-margin-l-5">'+data.payView[i].bepayNumber+'</em></span></a></div><div class="btn-line" ><a href="Javascript:" class="btn-o btn-gray-o  js-concern-already">互相关注</a><a href="message.html?u='+data.payView[i].userId+'" target="_blank" class="btn-o btn-gray-o  js-concern-msg">私信</a></div></div></li>';
+    									}else{
+    										document.getElementById("zhao4").getElementsByClassName("concern-list")[0].getElementsByTagName("ul")[0].innerHTML = html + '<li class="box" id="pay'+data.payView[i].userId+'"><div class="left-img"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><img src="'+data.payView[i].userImage+'" class="top_head"></a></div><div class="right-c"><div class="title"><a href="personal2.html?u='+data.payView[i].userId+'" target="_blank"><span class="nickname">'+data.payView[i].userName+'</span></a><ul class="icon-list"><li class="u-icon imooc-teacher"></li></ul></div><p class="desc">'+data.payView[i].work+'</p><div class="fs-line"><a class="u-target"><span class="group"><em>关注</em><em class="u-margin-l-5">'+data.payView[0].payNumber+'</em></span></a><a class="u-target u-margin-l-15"><span class="group"><em>粉丝</em><em class="u-margin-l-5">'+data.payView[i].bepayNumber+'</em></span></a></div><div class="btn-line" ><a href="Javascript:" class="btn-o btn-gray-o  js-concern-already" id="'+data.payView[i].userId+'" onclick="cancelAttention(this.id)">已关注</a><a href="message.html?u='+data.payView[i].userId+'" target="_blank" class="btn-o btn-gray-o  js-concern-msg">私信</a></div></div></li>';
+    									}
+    								}
+    							}
+    						}
+    					}
+    				}
+    			}
+    		})
+    	}
+    }
 }
 
 //我的粉丝

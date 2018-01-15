@@ -1,3 +1,4 @@
+<!DOCTYPE>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -72,7 +73,7 @@
 		                                <li><a href="personal.html">个人信息</a></li>
 		                                <li><!-- <a id="equipment" href="personal3.html" onclick="getCurrentEquipment()">我的设备</a> -->
 		                                
-		                                <a id="equipment" href="500.html" >我的设备</a>
+		                                <a id="equipment" href="personal3.html" >我的设备</a>
 		                                </li>
 		                                <li><a href="personal2.html">我的主页</a></li>
 		                                <li><a href="500.html">消息通知</a></li>

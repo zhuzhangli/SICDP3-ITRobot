@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.xjtusicd3.database.helper.RolePermissionHelper;
 import org.xjtusicd3.database.model.PermissionPersistence;
-import org.xjtusicd3.database.model.RolePermissionPersistence;
 
 public class PermissionRoleService
 {

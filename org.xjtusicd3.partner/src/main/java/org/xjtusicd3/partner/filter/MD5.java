@@ -4,9 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**MD5算法加密
- *  author  zhaoyanqing
- *  date  2017年8月1日 09:32:13
+/**
+ *	MD5算法加密
  */
 public class MD5 {
 	public static void main(String[] args) throws NoSuchAlgorithmException, UnsupportedEncodingException {

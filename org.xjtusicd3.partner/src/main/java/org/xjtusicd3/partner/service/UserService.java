@@ -9,10 +9,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
-import org.xjtusicd3.common.util.JsonUtil;
 import org.xjtusicd3.database.helper.AnswerHelper;
 import org.xjtusicd3.database.helper.ClassifyHelper;
 import org.xjtusicd3.database.helper.CollectionHelper;
@@ -30,7 +28,6 @@ import org.xjtusicd3.database.model.CollectionPersistence;
 import org.xjtusicd3.database.model.CommentPersistence;
 import org.xjtusicd3.database.model.CommunityAnswerPersistence;
 import org.xjtusicd3.database.model.CommunityQuestionPersistence;
-import org.xjtusicd3.database.model.GeneraluserPersistence;
 import org.xjtusicd3.database.model.ITPersistence;
 import org.xjtusicd3.database.model.PayPersistence;
 import org.xjtusicd3.database.model.QuestionPersistence;
@@ -55,7 +52,6 @@ public class UserService {
 		/*USERSTATE = 0表明用户待审核;USERSTATE = 1通过审核*/		 
 		UserHelper.login_register(uuid.toString(),name,password,1,createTime,userimage);
 	}
-
 	
 	//判断用户是否登录	
 	public static boolean isLogin(String username, String password) throws NoSuchAlgorithmException, UnsupportedEncodingException {
@@ -65,7 +61,6 @@ public class UserService {
 		return loginUser;
 	}
 
-	
 	//获取登录用户信息	
 	public static List<UserPersistence> loginUserInfo(String username) {
 		List<UserPersistence> loginUser = UserHelper.getUserInfo(username);
@@ -79,7 +74,7 @@ public class UserService {
 		List<Personal2_indexList> personal2_indexLists = new ArrayList<Personal2_indexList>();		
 		List<UserPersistence> userPersistences = UserHelper.getUserInfo(username);
 		//查看自己的知识库_每次查看5条
-		List<QuestionPersistence> qList = QuestionHelper.personal2_faq_Limit(userPersistences.get(0).getUSERID(),0,5);		
+		List<QuestionPersistence> qList = QuestionHelper.personal2_faq_Limit(userPersistences.get(0).getUSERID(),2,0,5);		
 		if (qList.size()!=0) {
 			for(QuestionPersistence questionPersistence:qList){
 				Personal2_indexList personal2_indexList = new Personal2_indexList();
@@ -197,7 +192,7 @@ public class UserService {
 						personal2_indexList.setUserName(userPersistence.getUSERNAME());
 						personal2_indexList.setUserImage(userPersistence.getAVATAR());
 						personal2_indexList.setHow("推荐了知识");
-						List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(sharePersistence.getFAQQUESTIONID());
+						List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(sharePersistence.getFAQQUESTIONID(),2);
 						if (questionPersistences.size()!=0) {
 							personal2_indexList.setQuestionId(questionPersistences.get(0).getFAQQUESTIONID());
 							personal2_indexList.setTitle(questionPersistences.get(0).getFAQTITLE());
@@ -349,7 +344,7 @@ public class UserService {
 						personal2_indexList.setUserName(userPersistence.getUSERNAME());
 						personal2_indexList.setUserImage(userPersistence.getAVATAR());
 						personal2_indexList.setHow("推荐了知识");
-						List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(sharePersistence.getFAQQUESTIONID());
+						List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(sharePersistence.getFAQQUESTIONID(),2);
 						if (questionPersistences.size()!=0) {
 							personal2_indexList.setQuestionId(questionPersistences.get(0).getFAQQUESTIONID());
 							personal2_indexList.setTitle(questionPersistences.get(0).getFAQTITLE());
@@ -417,13 +412,13 @@ public class UserService {
 	 */
 	public static List<Personal2_FaqView> getpersonalFaq(String userId) {
 		List<Personal2_FaqView> personal2_FaqViews = new ArrayList<Personal2_FaqView>();
-		List<QuestionPersistence> questionPersistences = QuestionHelper.personal2_faq_Limit(userId,0,5);
+		List<QuestionPersistence> questionPersistences = QuestionHelper.personal2_faq_Limit(userId,2,0,5);
 		System.out.println("知识库大小："+questionPersistences.size());
 		for(QuestionPersistence questionPersistence:questionPersistences){
 			Personal2_FaqView personal2_FaqView = new Personal2_FaqView();
 			personal2_FaqView.setFaqId(questionPersistence.getFAQQUESTIONID());
 			personal2_FaqView.setTitle(questionPersistence.getFAQTITLE());
-			List<AnswerPersistence> answerPersistences = AnswerHelper.faq3_faqContent(questionPersistence.getFAQQUESTIONID());
+			List<AnswerPersistence> answerPersistences = AnswerHelper.getAnswerByQuestionId(questionPersistence.getFAQQUESTIONID());
 			if (answerPersistences.size()!=0) {
 				personal2_FaqView.setContent(answerPersistences.get(0).getFAQCONTENT());				
 				String username = UserHelper.getUserNameById(answerPersistences.get(0).getUSERID());
@@ -452,12 +447,12 @@ public class UserService {
 	 */
 	public static List<Personal2_FaqView> getpersonalFaq_More(String userId,int startnumber) {
 		List<Personal2_FaqView> personal2_FaqViews = new ArrayList<Personal2_FaqView>();
-		List<QuestionPersistence> questionPersistences = QuestionHelper.personal2_faq_Limit(userId,startnumber,5);
+		List<QuestionPersistence> questionPersistences = QuestionHelper.personal2_faq_Limit(userId,2,startnumber,5);
 		for(QuestionPersistence questionPersistence:questionPersistences){
 			Personal2_FaqView personal2_FaqView = new Personal2_FaqView();
 			personal2_FaqView.setFaqId(questionPersistence.getFAQQUESTIONID());
 			personal2_FaqView.setTitle(questionPersistence.getFAQTITLE());
-			List<AnswerPersistence> answerPersistences = AnswerHelper.faq3_faqContent(questionPersistence.getFAQQUESTIONID());
+			List<AnswerPersistence> answerPersistences = AnswerHelper.getAnswerByQuestionId(questionPersistence.getFAQQUESTIONID());
 			if (answerPersistences.size()!=0) {
 				personal2_FaqView.setContent(answerPersistences.get(0).getFAQCONTENT());				
 				String username = UserHelper.getUserNameById(answerPersistences.get(0).getUSERID());
@@ -488,10 +483,10 @@ public class UserService {
 		for(CollectionPersistence collectionPersistence:collectionPersistences){
 			Personal2_FaqView personal2_FaqView = new Personal2_FaqView();
 			personal2_FaqView.setFaqId(collectionPersistence.getFAQQUESTIONID());
-			List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(collectionPersistence.getFAQQUESTIONID());
+			List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(collectionPersistence.getFAQQUESTIONID(),2);
 			if (questionPersistences.size()!=0) {
 				personal2_FaqView.setTitle(questionPersistences.get(0).getFAQTITLE());
-				List<AnswerPersistence> answerPersistences = AnswerHelper.faq3_faqContent(questionPersistences.get(0).getFAQQUESTIONID());
+				List<AnswerPersistence> answerPersistences = AnswerHelper.getAnswerByQuestionId(questionPersistences.get(0).getFAQQUESTIONID());
 				personal2_FaqView.setContent(answerPersistences.get(0).getFAQCONTENT());
 				String username = UserHelper.getUserNameById(answerPersistences.get(0).getUSERID());
 				personal2_FaqView.setUsername(username);
@@ -522,10 +517,10 @@ public class UserService {
 		for(CollectionPersistence collectionPersistence:collectionPersistences){
 			Personal2_FaqView personal2_FaqView = new Personal2_FaqView();
 			personal2_FaqView.setFaqId(collectionPersistence.getFAQQUESTIONID());
-			List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(collectionPersistence.getFAQQUESTIONID());
+			List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(collectionPersistence.getFAQQUESTIONID(),2);
 			if (questionPersistences.size()!=0) {
 				personal2_FaqView.setTitle(questionPersistences.get(0).getFAQTITLE());
-				List<AnswerPersistence> answerPersistences = AnswerHelper.faq3_faqContent(questionPersistences.get(0).getFAQQUESTIONID());
+				List<AnswerPersistence> answerPersistences = AnswerHelper.getAnswerByQuestionId(questionPersistences.get(0).getFAQQUESTIONID());
 				personal2_FaqView.setContent(answerPersistences.get(0).getFAQCONTENT());
 				String username = UserHelper.getUserNameById(answerPersistences.get(0).getUSERID());
 				personal2_FaqView.setUsername(username);
@@ -556,10 +551,10 @@ public class UserService {
 		for(CommentPersistence commentPersistence:commentPersistences){
 			Personal2_FaqView personal2_FaqView = new Personal2_FaqView();
 			personal2_FaqView.setFaqId(commentPersistence.getFAQQUESTIONID());
-			List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(commentPersistence.getFAQQUESTIONID());
+			List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(commentPersistence.getFAQQUESTIONID(),2);
 			if (questionPersistences.size()!=0) {
 				personal2_FaqView.setTitle(questionPersistences.get(0).getFAQTITLE());
-				List<AnswerPersistence> answerPersistences = AnswerHelper.faq3_faqContent(questionPersistences.get(0).getFAQQUESTIONID());
+				List<AnswerPersistence> answerPersistences = AnswerHelper.getAnswerByQuestionId(questionPersistences.get(0).getFAQQUESTIONID());
 				personal2_FaqView.setContent(answerPersistences.get(0).getFAQCONTENT());
 				String username = UserHelper.getUserNameById(answerPersistences.get(0).getUSERID());
 				personal2_FaqView.setUsername(username);
@@ -598,10 +593,10 @@ public class UserService {
 		for(CommentPersistence commentPersistence:commentPersistences){
 			Personal2_FaqView personal2_FaqView = new Personal2_FaqView();
 			personal2_FaqView.setFaqId(commentPersistence.getFAQQUESTIONID());
-			List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(commentPersistence.getFAQQUESTIONID());
+			List<QuestionPersistence> questionPersistences = QuestionHelper.faq3_faqcontent(commentPersistence.getFAQQUESTIONID(),2);
 			if (questionPersistences.size()!=0) {
 				personal2_FaqView.setTitle(questionPersistences.get(0).getFAQTITLE());
-				List<AnswerPersistence> answerPersistences = AnswerHelper.faq3_faqContent(questionPersistences.get(0).getFAQQUESTIONID());
+				List<AnswerPersistence> answerPersistences = AnswerHelper.getAnswerByQuestionId(questionPersistences.get(0).getFAQQUESTIONID());
 				personal2_FaqView.setContent(answerPersistences.get(0).getFAQCONTENT());
 				String username = UserHelper.getUserNameById(answerPersistences.get(0).getUSERID());
 				personal2_FaqView.setUsername(username);

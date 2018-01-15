@@ -7,9 +7,7 @@ import org.xjtusicd3.database.logic.IBaseDao;
 import org.xjtusicd3.database.model.RobotPersistence;
 
 public interface RobotPersistenceMapper extends IBaseDao<RobotPersistence, String>{
-	/*
-	 * robot_ajax获取机器人信息
-	 */
+	// robot_ajax获取机器人信息
 	@Select("SELECT * FROM TBL_Robot")
 	public List<RobotPersistence> robotinfo();
 }

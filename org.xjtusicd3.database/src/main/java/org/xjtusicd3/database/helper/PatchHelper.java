@@ -8,7 +8,7 @@ import org.xjtusicd3.database.mapper.PatchPersistenceMapper;
 import org.xjtusicd3.database.model.PatchPersistence;
 
 public class PatchHelper {
-	/*
+	/**
 	 * spider_补丁的增加
 	 */
 	public static void save(PatchPersistence patchSpiderPersistence) throws Exception{

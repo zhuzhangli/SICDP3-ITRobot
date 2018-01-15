@@ -11,9 +11,7 @@ import org.xjtusicd3.common.util.JsonUtil;
 import org.xjtusicd3.database.helper.ClassifyHelper;
 import org.xjtusicd3.database.model.ClassifyPersistence;
 /**
- * 
  * @author zzl
- *
  */
 @Controller
 public class ClassifyController {

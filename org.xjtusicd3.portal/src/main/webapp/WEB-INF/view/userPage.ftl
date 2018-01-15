@@ -143,9 +143,10 @@
                   <td class="center">${a.CREATETIME }</td>
                   <td style="text-align: center;" >
                  	 <button class="btn btn-white btn-sm fa fa-plus"  data-placement="top" title="角色变更" id="${a.USERID }" onclick="changeRole(this.id)" data-toggle="modal" data-target="#myModalSoft"></button>
+                  	 <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看用户详情" ><a class="userinfo" href="/org.xjtusicd3.portal/showUserInfo.html?u=${a.USERID}"><i class="fa fa-eye"></i></a></button>
                   </td> 
                   <td style="text-align: center;" id = ""> 
-                  	<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="查看用户详情" ><a class="userinfo" href="/org.xjtusicd3.portal/showUserInfo.html?u=${a.USERID}"><i class="fa fa-eye"></i></a></button>
+                  	 <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top"  id="reset_${a.USERID }" onclick="resetPass(this.id)">重置密码</button>
                   </td>
                  </tr>
                  </#list> 
@@ -591,12 +592,45 @@
         }) 	         
     }  
     
+  //操作成功
+    function codefans(){
+    	var box=document.getElementById("success");
+    	box.style.display="none"; 
+    }
     
+    /* 密码修改 */
+    function resetPass(id){  
+        //获取模态框数据  
+        var userId = document.getElementById(id).id; 	       
+
+        if (confirm("确认重置密码？")) {
+    		$.ajax({
+    			type : "post",
+    			url : "/org.xjtusicd3.portal/resetPass.html",
+    			data : {
+    				"userId" : userId
+    			},
+    			dataType : "json",
+    			success : function(data) {
+    			 if(data.value=="0"){
+    	 				self.location='login.html';
+    	 			}else if(data.value=="1"){
+    					document.getElementById('success').style.display='block';
+    					setTimeout("codefans()",3000);
+    					window.location.reload(); 
+    	         	}	
+    			}
+    		});
+    	} else {
+    		return;
+    	} 	        
+    } 
     
     
     
     </script>  
    </div>
   </div>
+   <div class="success" id="success" style="z-index:1001;position:fixed;top:40%;left:45%;width:220px;background: #f3f3f3;text-align: center;border:1px solid black;border-radius:3px;display:none"><div style="margin-top:30px; margin-bottom:30px;"><img src="images/true.png" style="width:20px;height:20px;margin-right:10px;"><h2 style="font-size:16px;display:inline-block;line-height:22px;vertical-align:top">操作成功</h2></div></div>
  </body>
 </html>

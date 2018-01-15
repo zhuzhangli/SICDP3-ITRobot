@@ -56,7 +56,5 @@ public class AgreePersistence {
 	}
 	public void setTIME(String tIME) {
 		TIME = tIME;
-	}
-	
+	}	
 }
-

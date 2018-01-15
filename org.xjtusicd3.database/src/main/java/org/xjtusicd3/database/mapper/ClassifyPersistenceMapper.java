@@ -11,10 +11,6 @@ public interface ClassifyPersistenceMapper  extends IBaseDao<ClassifyPersistence
 	@Select("SELECT FAQCLASSIFYID,FAQCLASSIFYNAME FROM TBL_FAQclassify WHERE FAQPARENTID='0'")
 	public List<ClassifyPersistence> FirstClassify_robot();
 	
-	// zyq_robot_分类_获取二级分类
-	@Select("SELECT TBL_FAQclassify.FAQCLASSIFYID,TBL_FAQclassify.FAQCLASSIFYNAME,sum(TBL_FAQquestion.COLLECTION) as a FROM TBL_FAQclassify,TBL_FAQquestion WHERE TBL_FAQclassify.FAQCLASSIFYID=TBL_FAQquestion.FAQCLASSIFYID AND TBL_FAQclassify.FAQPARENTID=#{0} GROUP BY TBL_FAQquestion.FAQCLASSIFYID ORDER BY a DESC")
-	public List<ClassifyPersistence> SecondClassify_robot(String ParentId);
-	
 	// zyq_question_查看问答模块的分类
 	@Select("SELECT FAQCLASSIFYID FROM TBL_FAQclassify WHERE FAQCLASSIFYNAME=#{0} AND FAQPARENTID=#{1}")
 	public String question_ClassifyListByName(String ClassifyName,String faqParentId);
@@ -31,36 +27,19 @@ public interface ClassifyPersistenceMapper  extends IBaseDao<ClassifyPersistence
 	@Select("SELECT * FROM TBL_FAQclassify WHERE FAQCLASSIFYID=#{0} ")
 	public List<ClassifyPersistence> getInfoById(String classifyId);
 	
-	// 获取parentId的下一级分类信息	
+	// zyq_robot_分类_获取二级分类_按照收藏量
+	@Select("SELECT TBL_FAQclassify.FAQCLASSIFYID,TBL_FAQclassify.FAQCLASSIFYNAME,sum(TBL_FAQquestion.COLLECTION) as a FROM TBL_FAQclassify,TBL_FAQquestion WHERE TBL_FAQclassify.FAQCLASSIFYID=TBL_FAQquestion.FAQCLASSIFYID AND TBL_FAQclassify.FAQPARENTID=#{0} GROUP BY TBL_FAQquestion.FAQCLASSIFYID ORDER BY a DESC")
+	public List<ClassifyPersistence> SecondClassify_robot(String ParentId);
+	
+	// 获取parentId的下一级分类信息_按照浏览量和收藏量的加权	
 	@Select("SELECT TBL_FAQclassify.FAQCLASSIFYID,TBL_FAQclassify.FAQCLASSIFYNAME,sum(TBL_FAQquestion.SCAN+TBL_FAQquestion.COLLECTION*10) as a FROM TBL_FAQclassify,TBL_FAQquestion WHERE TBL_FAQclassify.FAQCLASSIFYID=TBL_FAQquestion.FAQCLASSIFYID AND TBL_FAQclassify.FAQPARENTID=#{0} GROUP BY TBL_FAQquestion.FAQCLASSIFYID ORDER BY a DESC")
 	public List<ClassifyPersistence> SecondClassify_robot2(String ParentId);
 	
 	//zyq_faq1_下面4栏推荐_按照浏览量	 
 	@Select("SELECT TBL_FAQclassify.FAQCLASSIFYID,TBL_FAQclassify.FAQCLASSIFYNAME,sum(SCAN) as a FROM TBL_FAQquestion,TBL_FAQclassify WHERE TBL_FAQquestion.FAQCLASSIFYID = TBL_FAQclassify.FAQCLASSIFYID AND TBL_FAQclassify.FAQPARENTID=#{0} AND TBL_FAQquestion.FAQSTATE = 2 GROUP BY TBL_FAQquestion.FAQCLASSIFYID ORDER BY a DESC LIMIT 4")
 	public List<ClassifyPersistence> faq1_SecondClassify(String ParentId);
-	
-	//根据分类号查找父id
-	@Select("SELECT FAQPARENTID FROM TBL_FAQclassify WHERE FAQCLASSIFYID=#{0}")
-	public String faq2_classifyParentId(String ClassifyId);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	 * zyq_spider_按照分类名称查找
-	 */
+		
+	// zyq_spider_按照分类名称查找
 	@Select("SELECT * FROM TBL_FAQclassify WHERE FAQCLASSIFYNAME=#{0} AND FAQPARENTID=#{1}")
 	public List<ClassifyPersistence> spider_ClassifyListByName(String ClassifyName,String parentId);
 }

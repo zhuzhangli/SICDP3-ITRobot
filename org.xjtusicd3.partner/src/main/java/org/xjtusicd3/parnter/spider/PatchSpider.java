@@ -119,7 +119,7 @@ public class PatchSpider implements PageProcessor {
     	return string;
     }
 
-    public static void spider_patch(){
+    public void spider_patch(){
     	for(int i=1;i<=919;i++){
             Spider.create(new PatchSpider()).addUrl("http://down.tech.sina.com.cn/list/716_3_"+i+".html").thread(15).run();
             }

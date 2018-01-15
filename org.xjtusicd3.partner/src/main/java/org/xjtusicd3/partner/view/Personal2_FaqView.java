@@ -20,8 +20,6 @@ public class Personal2_FaqView {
 	private String replyNumber;
 	private String parentId;
 	
-	
-	
 	public String getReplyId() {
 		return replyId;
 	}

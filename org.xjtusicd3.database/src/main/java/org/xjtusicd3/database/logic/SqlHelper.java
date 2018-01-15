@@ -23,8 +23,6 @@ import org.xjtusicd3.database.ann.TableKey;
 import org.xjtusicd3.database.ann.TableKey.Strategy;
 import org.xjtusicd3.database.model.Page;
 
-
-
 public class SqlHelper {
 	public static final String BASE_INSERT = "base_insert";
 	public static final String BASE_DELETE = "base_delete";
@@ -164,8 +162,7 @@ public class SqlHelper {
 		// select * from (select u.*, rownum r from (select * from t_user) u  where rownum < 31) where r >= 16
 		return sqlBuffer.toString();
 	}
-	
-	
+		
 	@SuppressWarnings("unchecked")
 	private static String selectOne(Object object) {
 		BEGIN();

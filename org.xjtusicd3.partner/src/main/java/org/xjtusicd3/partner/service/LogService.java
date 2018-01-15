@@ -17,10 +17,7 @@ public class LogService {
 	}
 	
 	/**
-	 * author:zzl
 	 * abstract:获取用户日志
-	 * data:2017年9月15日09:14:27
-	 * @param userid 
 	 */
 	public static List<LogPersistence> getLogs(String userid) {
 		List<LogPersistence> logs = LogHelper.getLogs(userid);

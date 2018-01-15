@@ -9,27 +9,21 @@ import org.xjtusicd3.database.logic.IBaseDao;
 import org.xjtusicd3.database.model.EquipmentPersistence;
 
 public interface EquipmentPersistenceMapper extends IBaseDao<EquipmentPersistence, String>{
-	/**
-	 * author:zhaoyanqing
-	 * date:2017年9月9日 21:08:18
-	 * abstract:根据MAC地址查看是否存在配置表中
-	 */
+	// abstract:根据MAC地址查看是否存在配置表中
 	@Select("SELECT * FROM TBL_Equipment WHERE MACADDRESS=#{0}")
 	List<EquipmentPersistence> getEquipmentList(String macaddress);
-
 	
 	//获取所有计算机信息 
-	@Select("SELECT * FROM TBL_Equipment,TBL_Computer WHERE TBL_Equipment.EQUIPMENTID = TBL_Computer.EQUIPMENTID AND TBL_Equipment.STATE=1")
-	List<EquipmentPersistence> getAllComupters();
+	@Select("SELECT * FROM TBL_Equipment,TBL_Computer WHERE TBL_Equipment.EQUIPMENTID = TBL_Computer.EQUIPMENTID AND TBL_Equipment.STATE=#{0}")
+	List<EquipmentPersistence> getAllComupters(int state);
 
 	//获取计算机总数
-	@Select("SELECT COUNT(1) FROM TBL_Equipment,TBL_Computer WHERE TBL_Equipment.EQUIPMENTID = TBL_Computer.EQUIPMENTID AND TBL_Equipment.STATE=1")
-	int getAllComputerCounts();
+	@Select("SELECT COUNT(1) FROM TBL_Equipment,TBL_Computer WHERE TBL_Equipment.EQUIPMENTID = TBL_Computer.EQUIPMENTID AND TBL_Equipment.STATE=#{0}")
+	int getAllComputerCounts(int state);
 
 	//添加至通用设备表
 	@Insert("INSERT INTO TBL_Equipment VALUES(#{0},#{1},#{2},#{3},#{4},#{5},#{6},#{7},#{8})")
-	void addEquipment(String equipmentId, String macAddress, String equipmentModel, String buytime, String cPU,
-			String rAM, String storage, String iP, int state);
+	void addEquipment(String equipmentId, String macAddress, String equipmentModel, String buytime, String cPU,String rAM, String storage, String iP, int state);
 
 	//获取设备通用信息
 	@Select("SELECT * FROM TBL_Equipment WHERE EQUIPMENTID = #{0}")
@@ -44,10 +38,10 @@ public interface EquipmentPersistenceMapper extends IBaseDao<EquipmentPersistenc
 	void updateEquipmentState(String equipmentId, int state);
 
 	//获取服务器信息
-	@Select("SELECT * FROM TBL_Equipment,TBL_Server WHERE TBL_Equipment.EQUIPMENTID = TBL_Server.EQUIPMENTID AND TBL_Equipment.STATE=1")
-	List<EquipmentPersistence> getAllServers();
+	@Select("SELECT * FROM TBL_Equipment,TBL_Server WHERE TBL_Equipment.EQUIPMENTID = TBL_Server.EQUIPMENTID AND TBL_Equipment.STATE=#{0}")
+	List<EquipmentPersistence> getAllServers(int state);
 
 	//获取服务器总数
-	@Select("SELECT COUNT(1) FROM TBL_Equipment,TBL_Server WHERE TBL_Equipment.EQUIPMENTID = TBL_Server.EQUIPMENTID AND TBL_Equipment.STATE=1")
-	int getAllServerCounts();
+	@Select("SELECT COUNT(1) FROM TBL_Equipment,TBL_Server WHERE TBL_Equipment.EQUIPMENTID = TBL_Server.EQUIPMENTID AND TBL_Equipment.STATE=#{0}")
+	int getAllServerCounts(int state);
 }

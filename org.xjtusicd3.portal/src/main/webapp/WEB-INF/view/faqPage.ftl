@@ -69,9 +69,9 @@
                   <td style="text-align: center;width: 22%">${a.FAQCONTENT}</td> 
                   <td style="text-align: center;width: 5%">${a.USERNAME }</td>
                   <td style="text-align: center;width: 6%"><a href="/org.xjtusicd3.portal/faqEdit.html?q=${a.FAQQUESTIONID}">审核通过</a></td>
-                  <td style="text-align: center;width: 8%"><a onclick="deleteFAQ()">删除</a></td>
+                  <td style="text-align: center;width: 8%"><a id="del_${a.FAQQUESTIONID}" onclick="deleteFAQ(this.id)">删除</a></td>
                   <td style="text-align: center;width: 5%" >
-                  	<button class="btn btn-white btn-sm" type="button" id="computer_${a.EQUIPMENTID }" title="更多详情" onclick="lookMoreComputerInfo(this.id)" data-toggle="modal" data-target="#myModalComputer"><i class="fa fa-eye"></i></button>
+                  	<button class="btn btn-white btn-sm" type="button" id="${a.FAQQUESTIONID }" title="更多详情" onclick="lookMoreFaqInfo(this.id)" data-toggle="modal" data-target="#myModal"><i class="fa fa-eye"></i></button>
                   </td> 
                   
                  </tr>
@@ -87,9 +87,22 @@
              <div id="tab-32" class="tab-pane"> 
                <div class="ibox-title"> 
                <h5>FAQ信息列表</h5> 
+               <div class="ibox-tools" style="width: 25%"> 
+		       <div class="form-group"> 
+		        <label class="col-sm-2 control-label" style="width: 30%">选择分类：</label> 
+		        <div class="col-sm-10" style="width: 70%;margin-top: -5px;"> 
+		         <select class="form-control m-b" name="account" style="width: 70%;height: 32px" id="classifyId" onchange="selectClassify()"> 
+		          <#list classifyList as a> 
+		          <option value="${a.FAQCLASSIFYID }">${a.FAQCLASSIFYNAME}</option> 
+		          </#list> 
+		         </select> 
+		        </div> 
+		       </div> 
+		      </div> 
+               
               </div> 
               <div class="ibox-content"> 
-		       <table class="table table-striped table-bordered table-hover dataTables-example"> 
+		       <table class="table table-striped table-bordered table-hover dataTables-example" id = "option2"> 
 		        <thead> 
                  <tr> 
                   <th style="text-align: center;">序号</th> 
@@ -101,7 +114,7 @@
                  </tr> 
                 </thead> 
                 
-                <tbody id = "option1">    
+                <tbody >    
                  <#list faqAudited as b>
                  <tr class="gradeX"> 
                   <td style="text-align: center;width: 4%">${b_index+1}</td>
@@ -188,7 +201,9 @@
     <script src="js/plugins/dataTables/jquery.dataTables.js"></script> 
     <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script> 
     <!-- 自定义js --> 
-    <script src="js/content.js?v=1.0.0"></script> 
+    <script src="js/content.js?v=1.0.0"></script>
+    <script src="js/view/faqPage.js"></script>
+       
     <!-- Page-Level Scripts --> 
     <script>
         $(document).ready(function () {
@@ -227,86 +242,12 @@
 
         }
     </script> 
-    
-    <script>
-    /* 查看更多faq信息 */
-    function lookMoreFaqInfo(id) {
-    	//获取权限ID
-    	var faqQuestionId = document.getElementById(id).id;
-    	//alert(permissionId);
-    	
-    	$.ajax({
-            type: "POST",
-            url: "/org.xjtusicd3.portal/lookMoreFaqInfo.html",
-            data: {
-                "faqQuestionId":faqQuestionId
-            },
-            dataType: "json",
-            success: function(data) {
-            	
-            	var moreFaqInfo = data.moreFaqInfo; //获取后台json'
 
-            	
-            	$("#faqTitle").val(moreFaqInfo.fAQTITLE);
-            	$("#faqClassifyName").val(moreFaqInfo.fAQCLASSIFYNAME);
-            	//$("#faqContent").val(moreFaqInfo.fAQCONTENT);
-            	
-            	if(moreFaqInfo.length == 0){
-    				$("#tbody1").html("");
-            	}else{
-            		var permissionHtml = "";
-    				
-    				permissionHtml = permissionHtml+moreFaqInfo.fAQCONTENT;
- 						
- 						
- 						
- 					$("#tbody1")[0].innerHTML = permissionHtml;    
-    				
-    				
-            	}
-            	
-            	
-            	
-
-            }           
-        }) 	   	    	
-     }
-    
-   
-    </script>
-    
-   
- 
-    
-   <script>
-  
-    
-    /* 删除配置 */
-	function deleteFAQ(id){  
-        //获取模态框数据  
-        var faqQuestionId = document.getElementById(id).id; 	       
-
-        if (confirm("确认删除？")) {
-			$.ajax({
-				type : "post",
-				url : "/org.xjtusicd3.portal/deleteFAQ.html",
-				data : {
-					"faqQuestionId" : faqQuestionId
-				},
-				dataType : "json",
-				success : function(data) {
-					alert("删除成功");
-					window.location.reload(); 
-				}
-			});
-		} else {
-			return;
-		} 	        
-    }  
-   </script> 
-   
 
    </div> 
-  </div>  
+  </div> 
+  
+  <div class="success" id="success" style="z-index:1001;position:fixed;top:40%;left:45%;width:220px;background: #f3f3f3;text-align: center;border:1px solid black;border-radius:3px;display:none"><div style="margin-top:30px; margin-bottom:30px;"><img src="images/true.png" style="width:20px;height:20px;margin-right:10px;"><h2 style="font-size:16px;display:inline-block;line-height:22px;vertical-align:top">操作成功</h2></div></div>
+  <div class="success" id="chongfu" style="z-index:1001;position:fixed;top:40%;left:45%;width:220px;background: #f3f3f3;text-align: center;border:1px solid black;border-radius:3px;display:none"><div style="margin-top:30px; margin-bottom:30px;"><img src="images/cuo.png" style="width:20px;height:20px;margin-right:10px;"><h2 style="font-size:16px;display:inline-block;line-height:22px;vertical-align:top">重复提交</h2></div></div> 
  </body>
 </html>

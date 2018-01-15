@@ -22,9 +22,7 @@ import us.codecraft.webmagic.processor.PageProcessor;
 public class SoftSpider implements PageProcessor {
 
     public static final String URL_LIST = "http://rj\\.baidu\\.com/soft/lists/1/\\a+";
-
     public static final String URL_POST = "http://rj\\.baidu\\.com/soft/detail/\\w+\\.html";
-
     private Site site = Site.me().setRetryTimes(5).setSleepTime(1000);
 
     @Override

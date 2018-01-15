@@ -3,7 +3,7 @@ get$("#register").click(function(){
 	var us = /^\w{2,10}$/;
 	var pw = /^\w{6,16}$/;
 	var rpw = $("#repassword").val();
-	if(na.test($("#me").val())&&us.test($("#user").val())&&pw.test($("#password").val())&&(rpw==($("#password").val()))){
+	if(us.test($("#me").val())&&pw.test($("#password").val())&&(rpw==($("#password").val()))){
 		$.ajax({
 			type:"POST",
 			url:"/org.xjtusicd3.partner/saveRegister.html",
@@ -27,10 +27,7 @@ get$("#register").click(function(){
 		return true;
 	}else{
 		if($("#me").val()==""){
-			$(".spa1").text('请填写注册的邮箱');
-		}
-		if($("#user").val()==""){
-			$(".spa2").text('请填写用户名');
+			$(".spa1").text('请填写用户名');
 		}
 		if($("#password").val()==""){
 			$(".spa3").text('请填写密码');

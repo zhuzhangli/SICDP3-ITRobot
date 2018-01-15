@@ -62,7 +62,7 @@ public class EquipmentService {
 	public static List<EquipmentComputerView> getAllComputers() {
 		List<EquipmentComputerView> configureComputerViews = new ArrayList<EquipmentComputerView>();
 		
-		List<EquipmentPersistence> computerLists = EquipmentHelper.getAllComupters();
+		List<EquipmentPersistence> computerLists = EquipmentHelper.getAllComupters(1);
 
 		for(EquipmentPersistence computerList:computerLists){
 			EquipmentComputerView configureComputerView = new EquipmentComputerView();
@@ -94,7 +94,6 @@ public class EquipmentService {
 		return configureComputerViews;
 	}
 	
-	
 	//添加用户设备
 	public static void addUserEquipment(String macAddress, String equipmentModel, String buytime, String CPU,
 			String RAM, String storage, String IP, String graphicCard, String audioCard, String networkCard,
@@ -122,20 +121,18 @@ public class EquipmentService {
 		//更新计算机信息
 		ComputerHelper.updateComputerInfo(equipmentId,graphicCard,audioCard,networkCard,motherboard,oSName,oSID);
 	}
-	
-	
+		
 	//更改计算机状态
 	public static void updateEquipmentState(String equipmentId, int state) {
 		EquipmentHelper.updateEquipmentState(equipmentId,state);
 		
 	}
-
 	
 	//获取服务器信息
 	public static List<EquipmentServerView> getAllServers() {
 		List<EquipmentServerView> configureServerViews = new ArrayList<EquipmentServerView>();
 		
-		List<EquipmentPersistence> serverLists = EquipmentHelper.getAllServers();
+		List<EquipmentPersistence> serverLists = EquipmentHelper.getAllServers(1);
 
 		for(EquipmentPersistence serverList:serverLists){
 			EquipmentServerView configureServerView = new EquipmentServerView();
@@ -178,7 +175,6 @@ public class EquipmentService {
 		
 		return configureServerViews;
 	}
-
 	
 	//添加服务器信息
 	public static void addServerEquipment(String macAddress, String equipmentModel, String buytime, String cPU,
@@ -200,7 +196,6 @@ public class EquipmentService {
 				 rEALTIMEPROCESS,  aCTIVEUSER,  bIOS,  networkCard);
 		
 	}
-
 	
 	//获取ID对应服务器特有信息
 	public static EquipmentServerView getServerInfoById(String equipmentId) {
@@ -288,8 +283,6 @@ public class EquipmentService {
 		
 		//更新服务器信息
 		ServerHelper.updateServerInfo(equipmentId, osVersion,  computerName,  pCI,uSB,  path,  rAM_EXCHANGEAREAUSE,  pARTATIONUSE,  iDLERAM,
-				 oS_TIME_USERNUM_LOAD,  oSLOAD,  fIREWALL,  rOUTINGTABLE,  hASCONTACT,nETWORK,  pROCESS,  rEALTIMEPROCESS,  aCTIVEUSER,  bIOS, nETWORKCARD);
-		
+				 oS_TIME_USERNUM_LOAD,  oSLOAD,  fIREWALL,  rOUTINGTABLE,  hASCONTACT,nETWORK,  pROCESS,  rEALTIMEPROCESS,  aCTIVEUSER,  bIOS, nETWORKCARD);		
 	}
-
 }

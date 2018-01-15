@@ -1,26 +1,35 @@
 /* 忽略未处理事件 */	    
-function ignore(id) {
-	
-	var userQuestionId = document.getElementById(id).parentElement.id;
-	alert(userQuestionId);
-	 
-     $.ajax({
-         type: "POST",
-         url: "/org.xjtusicd3.portal/ignoreUserQuestion.html",
-         data: {
-             "userQuestionId":userQuestionId                
-         },
-         dataType: "json",
-         success: function(data) {
-         	alert("忽略该问题成功");
-         	window.location.reload();
-         }
-        
-     }) 
+function ignore(id) {	
+	var userQuestionId = document.getElementById(id).id;
+	 if(userQuestionId!=null){
+		  $.ajax({
+		         type: "POST",
+		         url: "/org.xjtusicd3.portal/ignoreUserQuestion.html",
+		         data: {
+		             "userQuestionId":userQuestionId                
+		         },
+		         dataType: "json",
+		         success: function(data) {
+		        	 if(data.value=="0"){
+		 				self.location='login.html';
+		 			}else if(data.value=="1"){
+		 				setTimeout("location.reload()",1000)
+						document.getElementById('success').style.display='block';
+						setTimeout("codefans()",3000);
+		         	}
+		         }
+		        
+		     })  
+	 }   
     return true;
-
  }	
-	
+
+//提交成功
+function codefans(){
+	var box=document.getElementById("success");
+	box.style.display="none"; 
+}
+
 function getResolvedEvent(){
 	$.ajax({
 		type:"POST",
@@ -32,49 +41,81 @@ function getResolvedEvent(){
 			if(data.value=="0"){
 				self.location='login.html';
 			}else if(data.value=="1"){
-				if(data.eventResolvedView==""){
-					document.getElementById("ibox-content").innerHTML='<p class="notattend">你还没有收藏任何原创知识，快去<a href="faq.html" class="red" target="_blank">发表知识</a>吧</p>';
+				var eventResolvedList = data.eventResolvedView; //获取已解决事件
+				
+				if(eventResolvedList==""){
+					$("#option1").html("");
 				}else{
-					for(var i in data.eventResolvedView){
-						if(document.getElementById("tab-32").getElementsByClassName("ibox-title")[0]==null){
-							document.getElementById("tab-32").innerHTML='<div class="ibox-title"><div class="ibox-tools"></div></div>';
-						}
-						if(document.getElementById("resolvedEvent"+data.eventResolvedView[i].uSERQUESTIONID)==null){
-							var html = document.getElementById("tab-32").getElementsByClassName("ibox-title")[0].innerHTML;
-							document.getElementById("tab-32").getElementsByClassName("ibox-title")[0].innerHTML=html + '<table class="table table-striped table-bordered table-hover dataTables-example">'
-							+'<thead> '
-							+'<tr>'
-								+'<th style="text-align: center;">序号</th>'
-								+'<th style="text-align: center;">问题名称</th>'
-								+'<th style="text-align: center;">提问用户</th>'
-								+'<th style="text-align: center;">问题时间</th>'																		
-								+'<th style="text-align: center;">操作</th>'
-							+'</tr>'
-							+'</thead>'
-			                
-							+'<tbody id = "option1"> '   
-							+'<#list eventResolved as eventResolved>'
-								+'<tr class="" id = "${eventResolved.USERQUESTIONID}">'
-									+'<td style="width: 5%;text-align: center;">${eventResolved_index+1}</td>'
-									+'<td style="width: 35%;">${eventResolved.QUESTIONTITLE}</td>		'																		
-									+'<td style="width: 10%;text-align: center;">${eventResolved.USERNAME}</td>'
-									+'<td style="width: 10%;text-align: center;">${eventResolved.QUESTIONTIME}</td>'
-									+'<td style="width: 7%;text-align: center;">'
-									+'<a class="questioninfo" href="/org.xjtusicd3.portal/showResolvedEvent.html?q=${eventResolved.USERQUESTIONID}">查看详情</a>'
-									+'</td>'
-									+'</tr>'
-									+'</#list>  ' 
-									+' </tbody> '
-									+' </table> '}
+					var eventResolvedHtml = '<thead> <tr><th style="text-align: center;">序号</th><th style="text-align: center;">问题名称</th><th style="text-align: center;">提问用户</th><th style="text-align: center;">问题时间</th><th style="text-align: center;">操作</th></tr></thead>';
+										
+					for (var i = 0; i < eventResolvedList.length; i++) {
+						eventResolvedHtml = eventResolvedHtml
+						+'<tr class="" id = "'+eventResolvedList[i].uSERQUESTIONID+'">'
+						+'<td style="width: 5%;text-align: center;">'+i+'</td>'
+						+'<td style="width: 35%;">'+eventResolvedList[i].qUESTIONTITLE+'</td>'
+						+'<td style="width: 10%;text-align: center;">'+eventResolvedList[i].uSERNAME+'</td>'
+						+'<td style="width: 10%;text-align: center;">'+eventResolvedList[i].qUESTIONTIME+'</td>'
+						+'<td style="width: 7%;text-align: center;">'
+						+'<a class="questioninfo" href="/org.xjtusicd3.portal/showResolvedEvent.html?q='+eventResolvedList[i].uSERQUESTIONID+'">查看详情</a>'
+						+'</td>'
+						+'</tr>'
+		
+						$("#option1")[0].innerHTML = eventResolvedHtml;    
 					}
-					/*if(document.getElementById("getMoreCollection")==null){
-						if(data.faqView[0].isMore=="1"){
-							var html = document.getElementById("zhao2_article-main2").getElementsByClassName("articles-list")[0].innerHTML;
-							document.getElementById("zhao2_article-main2").getElementsByClassName("articles-list")[0].innerHTML=html+'<p class="js-noreload dynamicLoad js-dynamicLoadwrap" id="getMoreCollection"> <span class="js-dynamicLoad " onclick="getMoreCollectFaq()">点击显示更多</span> </p>';
-						}
-					}*/
 				}
 			}
 		}
 	})
 }
+
+//获取待解决事件
+function getUnResolvedEvent(){
+	$.ajax({
+		type:"POST",
+		url:"/org.xjtusicd3.portal/getUnResolvedEvent.html",
+		data:{
+		},
+		dataType:"json",
+		success:function(data){
+			if(data.value=="0"){
+				self.location='login.html';
+			}else if(data.value=="1"){
+				var eventUnresolvedList = data.eventUnresolved; //获取待解决事件
+				
+				if(eventUnresolvedList==""){
+					$("#option1").html("");
+				}else{
+					var eventUnresolvedHtml = '<thead> '
+						+'<tr>'
+						+'<th style="text-align: center;">序号</th>'
+						+'<th style="text-align: center;">问题名称</th>'
+						+'<th style="text-align: center;">提问用户</th>'
+						+'<th style="text-align: center;">问题时间</th>'
+						+'<th style="text-align: center;">查看</th>'
+						+'<th style="text-align: center;">忽略</th>'
+						+'</tr>'
+						+'</thead>';
+										
+					for (var i = 0; i < eventUnresolvedList.length; i++) {
+						eventUnresolvedHtml = eventUnresolvedHtml
+						+'<tr class="" id = "'+eventUnresolvedList[i].userQuestionId+'">'
+						+'<td style="width: 5%;text-align: center;">'+i+'</td>'
+						+'<td style="width: 70%;">'+eventUnresolvedList[i].userQuestionTitle+'</td>'
+						+'<td style="width: 8%;text-align: center;">'+eventUnresolvedList[i].userName+'</td>'
+						+'<td style="width: 12%;text-align: center;">'+eventUnresolvedList[i].userQuestionTime+'</td>'
+						+'<td style="width: 7%;text-align: center;">'
+						+'<a class="eventinfo" href="/org.xjtusicd3.portal/showUnResolvedEvent.html?q='+eventUnresolvedList[i].userQuestionId+'">查看详情</a>'
+						+'</td>'
+						+'<td style="width: 5%;text-align: center;" >'
+						+'<button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="忽略此问题" id = "'+eventUnresolvedList[i].userQuestionId+'" onclick="ignore(this.id)"><i class="fa fa-trash-o"></i>'
+						+'</td>'
+						+'</tr>'
+		
+						$("#option1")[0].innerHTML = eventUnresolvedHtml;    
+					}
+				}
+			}
+		}
+	})
+}
+

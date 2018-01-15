@@ -1,13 +1,12 @@
-
 $(function(){
 	if(navigator.userAgent.indexOf('Trident') > -1){//IE内核
 		getInformation();
 	}else if(navigator.userAgent.indexOf('Presto') > -1){//opera内核
-		
+		getInformation();
 	}else if(navigator.userAgent.indexOf('AppleWebKit') > -1){//苹果、谷歌内核
-		
+		getInformation();
 	}else if(navigator.userAgent.indexOf('Firefox') > -1){//火狐内核Gecko
-		
+		getInformation();
 	}
 });
 function getInformation(){
@@ -31,7 +30,7 @@ function getInformation(){
 		var audioCard = informationOfHardware.audioCard;
 		var softWare = informationOfHardware.software;
 		var path = informationOfHardware.path;
-	$.ajax({
+		$.ajax({
 		type:"POST",
 		url:"/org.xjtusicd3.partner/getInformation.html",
 		traditional: true,

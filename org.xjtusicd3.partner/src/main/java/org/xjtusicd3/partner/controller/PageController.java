@@ -13,6 +13,12 @@ public class PageController {
 	/*
 	 * aaaa
 	 */
+	
+	@RequestMapping(value="register",method=RequestMethod.GET)
+	public ModelAndView register(HttpSession session,HttpServletRequest request){
+		ModelAndView mv = new ModelAndView("register");
+		return mv;
+	}
 	@RequestMapping(value="faqSearch",method=RequestMethod.GET)
 	public ModelAndView faqSearch(HttpSession session,HttpServletRequest request){
 		ModelAndView mv = new ModelAndView("faqSearch");

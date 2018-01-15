@@ -8,12 +8,10 @@ import org.xjtusicd3.database.model.DataDictionaryPersistence;
 
 public interface DataDictionaryPersistenceMapper extends IBaseDao<DataDictionaryPersistence, String>{
 	//查看还未获取该配置的部门
-	@Select("SELECT * FROM tbl_datadictionary WHERE  DATATYPE = '1' AND DATADICTIONARYID NOT IN (SELECT DEPARTMENTID FROM tbl_basicConfigure WHERE CONFIGUREID=#{0})")
-	List<DataDictionaryPersistence> getUnGotDepList(String configureId);
-
+	@Select("SELECT * FROM tbl_datadictionary WHERE  DATATYPE = #{1} AND DATADICTIONARYID NOT IN (SELECT DEPARTMENTID FROM tbl_basicConfigure WHERE CONFIGUREID=#{0})")
+	List<DataDictionaryPersistence> getUnGotDepList(String configureId,int dataType);
 	
 	//获取所有部门信息
-	@Select("SELECT * FROM tbl_datadictionary  WHERE  DATATYPE = '1'")
-	List<DataDictionaryPersistence> getAllDepartment();
-
+	@Select("SELECT * FROM tbl_datadictionary  WHERE  DATATYPE = #{0}")
+	List<DataDictionaryPersistence> getAllDepartment(int dataType);
 }

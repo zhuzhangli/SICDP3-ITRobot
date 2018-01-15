@@ -1,13 +1,12 @@
 package org.xjtusicd3.partner.view;
 
-
 /**
  * author:zzl
  * abstract:已登录用户推荐View
  * data:2017年9月15日09:05:05
  */
 public class Faq_CommendView {
-	private	String userId;//登录用户
+	private	String userId;
 	private String FAQQUESTIONID;
 	private String faqParentId;
 	private String FAQTITLE;
@@ -19,8 +18,6 @@ public class Faq_CommendView {
 	private int COMMENTSUM;
 	private String FAQUSERNAME;
 	private String FAQUSERIMAGE;
-	
-	
 	
 	public String getFAQUSERNAME() {
 		return FAQUSERNAME;
@@ -51,9 +48,7 @@ public class Faq_CommendView {
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
-	}
-	
-	
+	}	
 	public String getFAQQUESTIONID() {
 		return FAQQUESTIONID;
 	}
@@ -83,9 +78,7 @@ public class Faq_CommendView {
 	}
 	public void setFAQDESCRIPTION(String fAQDESCRIPTION) {
 		FAQDESCRIPTION = fAQDESCRIPTION;
-	}
-	
-	
+	}	
 	public String getCOLLECTION() {
 		return COLLECTION;
 	}
@@ -98,7 +91,5 @@ public class Faq_CommendView {
 	public void setSCAN(String sCAN) {
 		SCAN = sCAN;
 	}
-	
-	
-	
+
 }

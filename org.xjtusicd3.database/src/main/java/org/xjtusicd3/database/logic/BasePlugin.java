@@ -13,7 +13,6 @@ import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
 import org.xjtusicd3.common.util.ReflectUtil;
 
-
 @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }) })
 
 public class BasePlugin implements Interceptor{
@@ -36,8 +35,6 @@ public class BasePlugin implements Interceptor{
 		return Plugin.wrap(object, this);
 	}
 
-	public void setProperties(Properties arg0) {
-		
+	public void setProperties(Properties arg0) {		
 	}
-
 }

@@ -1,6 +1,5 @@
 package org.xjtusicd3.database.model;
 
-
 import org.xjtusicd3.database.ann.Table;
 import org.xjtusicd3.database.ann.TableField;
 import org.xjtusicd3.database.ann.TableKey;

@@ -24,9 +24,7 @@ import org.xjtusicd3.portal.view.UserView;
 
 import com.alibaba.fastjson.JSONObject;
 /**
- * 
  * @author zzl
- *
  */
 @Controller
 public class UserController 
@@ -37,7 +35,6 @@ public class UserController
 		String username = request.getParameter("nameOrEmail");
 		String psw = request.getParameter("userPassword");
 		String password = StringToMd5(psw);
-		System.out.println(password);
 		Boolean isExist = UserHelper.isLogin(username, password);
 		if (isExist == false) 
 		{
@@ -55,15 +52,8 @@ public class UserController
 		}	
 	}
 	
-	
-	
-	
-	
-	
 	/**
-	 * @author zzl
 	 * @abstract:用户管理_userPage.ftl
-	 * @data:2017年11月9日21:13:13
 	 */
 	@RequestMapping(value="userPage",method=RequestMethod.GET)
 	public ModelAndView userPage()
@@ -107,9 +97,6 @@ public class UserController
 	
 	/**
 	 * 用户通过审核
-	 * @param request
-	 * @param session
-	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="/throughAudit",method=RequestMethod.POST)
@@ -121,14 +108,10 @@ public class UserController
 		UserService.updateUserState(userId,2);
 		
 		return "1";
-	}
-	
+	}	
 	
 	/**
 	 * 用户未通过审核
-	 * @param request
-	 * @param session
-	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="/noAudit",method=RequestMethod.POST)
@@ -142,12 +125,8 @@ public class UserController
 		return "1";
 	}
 	
-	
 	/**
 	 * 查看用户详情
-	 * @param request
-	 * @param session
-	 * @return
 	 */
 	@RequestMapping(value="showUserInfo",method=RequestMethod.GET)
 	public ModelAndView showUserInfo(String u){
@@ -160,13 +139,8 @@ public class UserController
 		return mv;
 	}
 	
-	
-	
 	/**
 	 * 批量审核用户通过
-	 * @param request
-	 * @param session
-	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="/selectUserPass",method=RequestMethod.GET)
@@ -175,24 +149,18 @@ public class UserController
 		
 		String id=request.getParameter("checkedIds");    //获取前台隐藏域存着的选中的复选框的value
         String checkedIds[]=id.split(","); //进行分割存到数组
-
         
         for(int i =0;i<checkedIds.length;i++){
             if(!checkedIds[i].equals("")){
               //  System.out.println(checkedIds[i]);
               UserService.updateUserState(checkedIds[i],2);
             }
-        }
-		
-	
+        }	
 		return "1";
 	}
 	
 	/**
 	 * 批量审核用户不通过
-	 * @param request
-	 * @param session
-	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="/selectUserUnPass",method=RequestMethod.GET)
@@ -201,21 +169,16 @@ public class UserController
 		
 		String id=request.getParameter("checkedIds");    //获取前台隐藏域存着的选中的复选框的value
         String checkedIds[]=id.split(","); //进行分割存到数组
-
-        
+      
         for(int i =0;i<checkedIds.length;i++){
             if(!checkedIds[i].equals("")){
               //  System.out.println(checkedIds[i]);
               UserService.updateUserState(checkedIds[i],0);
             }
-        }
-		
-	
+        }	
 		return "1";
 	}
-	
-	
-	
+		
 	//更换员工角色
 	@ResponseBody
 	@RequestMapping(value="/changeRole",method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
@@ -224,8 +187,7 @@ public class UserController
 		String userId = request.getParameter("userId");
 		
 		//获取该员工本身角色外的其他角色
-		List<RolePersistence> list = RoleHelper.getUnGotRoleList(userId);
-		
+		List<RolePersistence> list = RoleHelper.getUnGotRoleList(userId);	
 		
 		System.out.println("长度"+list.size());
 		
@@ -245,7 +207,6 @@ public class UserController
 		}
 	}
 	
-	
 	//更新员工角色
 	@ResponseBody
 	@RequestMapping(value="/updateUserRole",method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="application/json;charset=UTF-8")
@@ -254,7 +215,6 @@ public class UserController
 		String userId = request.getParameter("userId");
 		String roleId = request.getParameter("roleId");
 		
-
 		JSONObject jsonObject = new JSONObject();
 		
 		if (userId!=null && roleId!=null) {
@@ -271,94 +231,6 @@ public class UserController
 		
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/*
-	 * zpz_show User information
-	 */
-	@RequestMapping(value="userindex",method=RequestMethod.GET)
-	public ModelAndView user()
-	{
-		ModelAndView mv = new ModelAndView("userindex");
-		List<UserPersistence> userlist = UserService.getAllUserList();
-		mv.addObject("allUserList",userlist);
-		return mv;
-		
-	}
-	
-	
-	
-	
-	/*
-	 * ZPZ_deleteUser
-	 */
-	@ResponseBody
-	@RequestMapping(value={"/deleteUser"},method={org.springframework.web.bind.annotation.RequestMethod.POST},produces="text/html;charset=UTF-8")
-	public void deleteUser(HttpServletRequest request){
-		String userEmail = request.getParameter("userEmail");
-		UserHelper.deleteUser(userEmail);
-		System.out.println(userEmail);
-	}
-
-
-	/*
-	 * zpz_addUserInfo
-	 */
-	@RequestMapping(value="addUserInformation",method=RequestMethod.GET)
-	public ModelAndView addUserInformation(){
-//		List<UserPersistence> userPersistences = UserHelper.getEmail_id();
-		ModelAndView modelAndView = new ModelAndView("addUserInformation");
-//		modelAndView.addObject("userInfoList", userPersistences);
-		return modelAndView;
-	}
-
-	/*
-	 * zpz_editUserInfo
-	 */
-	@RequestMapping(value="editUserInformation",method=RequestMethod.GET)
-	public ModelAndView editUserInformation(String u){
-		List<UserPersistence> userPersistences = UserHelper.getUserInfoById(u);
-		ModelAndView modelAndView = new ModelAndView("editUserInformation");
-		modelAndView.addObject("userInfoList", userPersistences);
-		return modelAndView;
-	}
-	
-	/*
-	 * zpz_editUserInfo2
-	 */
-	@RequestMapping(value="editUserInformation2",method=RequestMethod.POST)
-	public ModelAndView editUserInformation2(HttpServletRequest request){
-		System.out.println("asdasdasda");
-		String username = request.getParameter("username");
-		String userid = request.getParameter("userid");
-		UserHelper.updateUser(userid, username);
-		ModelAndView modelAndView = new ModelAndView("userindex");
-		List<UserPersistence> userlist = UserService.getAllUserList();
-		modelAndView.addObject("allUserList",userlist);
-		return modelAndView;
-	}
 	//psw转md5
 	public static String StringToMd5(String psw) {  
         {  
@@ -384,5 +256,38 @@ public class UserController
             }  
         }  
     } 
+	
+	//密码重置
+	@ResponseBody
+	@RequestMapping(value="/resetPass",method=RequestMethod.POST)
+	public String deleteFAQ(HttpServletRequest request,HttpSession session) throws NoSuchAlgorithmException, UnsupportedEncodingException{
+		String username = (String) session.getAttribute("UserName");
+		JSONObject jsonObject = new JSONObject();
+		if (username==null) {
+			jsonObject.put("value", "0");
+			String result = JsonUtil.toJsonString(jsonObject); 			
+			return result;
+		}else{
+			String userId = request.getParameter("userId");
+			String[] str = userId.split("_");
+			String userid = str[1];		
+			//重置密码
+			UserService.resetPass(userid,"000000");		
+			jsonObject.put("value", "1");
+			String result = JsonUtil.toJsonString(jsonObject);
+			return result;
+		}
+	}
+	
+	/*
+	 * zpz_editUserInfo				！！！
+	 */
+	@RequestMapping(value="editUserInformation",method=RequestMethod.GET)
+	public ModelAndView editUserInformation(String u){
+		List<UserPersistence> userPersistences = UserHelper.getUserInfoById(u);
+		ModelAndView modelAndView = new ModelAndView("editUserInformation");
+		modelAndView.addObject("userInfoList", userPersistences);
+		return modelAndView;
+	}
 	
 }

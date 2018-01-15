@@ -8,7 +8,7 @@ import org.xjtusicd3.database.mapper.CommentPersistenceMapper;
 import org.xjtusicd3.database.model.CommentPersistence;
 
 public class CommentHelper {
-	/*
+	/**
 	 * zyq_question2_查看回复_前五条
 	 */
 	public static List<CommentPersistence> question2_getComment_Limit(String questionid,String parentId){
@@ -19,7 +19,7 @@ public class CommentHelper {
 		return list;
 	}
 	
-	/*
+	/**
 	 * zyq_question2_查看回复总数
 	 */
 	public static int question2_getComment(String questionid,String parentId){
@@ -30,7 +30,7 @@ public class CommentHelper {
 		return commentSize;
 	}
 	
-	/*
+	/**
 	 * zyq_question2_获得更多的回复
 	 */
 	public static List<CommentPersistence> question2_getMoreComment(String questionId,String answerId,int startnumber){
@@ -42,9 +42,7 @@ public class CommentHelper {
 	}
 	
 	/**
-	 * author:zzl
 	 * abstract:获取评论数
-	 * data:2017年9月15日19:19:24
 	 */
 	public static int commentInfo(String faqquestionId) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -53,19 +51,6 @@ public class CommentHelper {
 		session.close();
 		return list;
 	}
-	
-	/*
-	 * zyq_faq3_查看评论
-	 */
-	/*public static List<CommentPersistence> getComment(String faqquestionid){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		CommentPersistenceMapper mapper = session.getMapper(CommentPersistenceMapper.class);
-		List<CommentPersistence> list = mapper.getComment(faqquestionid);
-		session.close();
-		return list;
-	}*/
-	
-	
 	
 	/**
 	 * zyq_faq1_查看活跃用户
@@ -167,16 +152,6 @@ public class CommentHelper {
 		session.close();
 		return list;
 	}
-	/**
-	 * zyq_faq3_根据评论ID获取用户信息
-	 */
-/*	public static String faq3_getCommentUserIdById(String commentId) {
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		CommentPersistenceMapper mapper = session.getMapper(CommentPersistenceMapper.class);
-		String list = mapper.faq3_getCommentUserIdById(commentId);
-		session.close();
-		return list;
-	}*/
 	
 	/**
 	 * zyq_faq3_ajax_删除自己的回复
@@ -231,44 +206,9 @@ public class CommentHelper {
 		session.close();
 		return list;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-	
-
-	
-	/*
-	 * zyq_question2_查看回复的回复
-	 */
-	public static List<CommentPersistence> question2_getComment3(String answerId,String userId,String content,String questionId,String touserId){
-		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
-		CommentPersistenceMapper mapper = session.getMapper(CommentPersistenceMapper.class);
-		List<CommentPersistence> list = mapper.question2_getComment3(answerId,userId,content,questionId,touserId);
-		session.close();
-		return list;
-	}
-	
-
-	
-	
-	
 
 	/*
-	 * zyq_notice_pushlet_查看评论的回复
+	 * zyq_notice_pushlet_查看评论的回复		 !!!未使用
 	 */
 	public static List<CommentPersistence> notice_getComment(String communityquestionId,String commentId,int isnotice){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -278,7 +218,7 @@ public class CommentHelper {
 		return list;
 	}
 	/*
-	 * zyq_notice_查看FAQ的评论
+	 * zyq_notice_查看FAQ的评论			 !!!未使用
 	 */
 	public static List<CommentPersistence> notice_getFaqComment(String faqquestionId,String parentId,int isnotice){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -295,7 +235,7 @@ public class CommentHelper {
 		return list;
 	}
 	/*
-	 * zyq_notice_pushlet_查看评论的回复的回复
+	 * zyq_notice_pushlet_查看评论的回复的回复		 !!!未使用
 	 */
 	public static List<CommentPersistence> notice_getReply(String communityquestionId,String commentId,int isnotice){
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -305,7 +245,7 @@ public class CommentHelper {
 		return list;
 	}
 	/*
-	 * zyq_notice_查看FAQ评论的回复
+	 * zyq_notice_查看FAQ评论的回复		 !!!未使用
 	 */
 	public static List<CommentPersistence> notice_getFaqReply(String parentId,int isnotice) {
 		SqlSession session = SqlSessionManager.getSqlSessionFactory().openSession(true);
@@ -322,7 +262,7 @@ public class CommentHelper {
 		return list;
 	}
 	/*
-	 * zyq_ajax_更改消息通知的被查阅后的状态
+	 * zyq_ajax_更改消息通知的被查阅后的状态		 !!!未使用
 	 */
 	//更改知识库的评论、回复、回复的回复以及问吧的回复、回复的回复
 	public static void updateNotice(String id) {
@@ -351,18 +291,5 @@ public class CommentHelper {
 		mapper.deleteNotice2(0,id);
 		session.close();
 	}
-
-	
-	
-
-	
-
-	
-
-	
-
-	
-	
-
 	
 }

@@ -92,7 +92,7 @@
         
         <div class="form-group"> 
          <div class="col-sm-4 col-sm-offset-2"> 
-          <button class="btn btn-primary"><a href="/org.xjtusicd3.portal/userPage.html">返回</a></button> 
+          <input type="button" name="Submit" class="btn btn-primary" onclick="javascript:history.back(-1);" value="返回">
          </div> 
         </div> 
        </form> 

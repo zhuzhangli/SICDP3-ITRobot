@@ -6,7 +6,6 @@ import java.util.Properties;
 
 import org.xjtusicd3.common.util.JsonUtil;
 
-
 public class Dbconfig {
 	private String driver = "oracle.jdbc.driver.OracleDriver";
 	private String url;

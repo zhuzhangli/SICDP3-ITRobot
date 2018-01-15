@@ -7,14 +7,7 @@ import org.xjtusicd3.database.logic.IBaseDao;
 import org.xjtusicd3.database.model.ConfigureHistoryPersistence;
 
 public interface ConfigureHistoryPersistenceMapper extends IBaseDao<ConfigureHistoryPersistence, String>{
-	/**
-	 * author:
-	 * abstract:变更列表
-	 * data:2017年10月12日17:58:31
-	 * @param startNumber 
-	 */
+	// abstract:变更列表
 	@Select("SELECT * FROM TBL_Configure,TBL_ConfigureHistory where TBL_ConfigureHistory.CONFIGUREID = TBL_Configure.CONFIGUREID   ORDER BY UPDATETIME DESC LIMIT #{0},100")
 	List<ConfigureHistoryPersistence> getUpdateCfgs(int startNumber);
-	
-
 }
